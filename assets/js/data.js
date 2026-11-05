@@ -34,7 +34,7 @@ window.TRC = {
         mapEmbed: 'https://www.google.com/maps?q=SVNIT+Surat+Civil+Engineering+Department&output=embed',
 
         // Thin bar at the top of every page. Set to '' to hide it.
-        previewNotice: 'Preview version for feedback. Projects, news, publications and team details are samples.',
+        previewNotice: '',
 
         // Contact form: leave '' to open the visitor's email app with the enquiry filled in.
         // To receive enquiries without the email app, paste a form-service link here
