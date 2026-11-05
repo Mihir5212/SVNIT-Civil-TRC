@@ -1,7 +1,7 @@
 # TRC website: preview version (HTML, CSS, JavaScript)
 
 Preview of the **Transportation Research & Consultancy (TRC)** website, Department of Civil Engineering, SVNIT Surat.
-It is for sharing a link and collecting feedback. It has the same design and pages as the PHP version, which will be used later on the SVNIT server.
+It is for sharing a link and collecting feedback. It has the same pages as the PHP version, which will be used later on the SVNIT server. The road-sign design was made on this version first.
 
 - No server, database or PHP needed
 - All content (services, projects, news, publications, team, contact details) is in **one file: `assets/js/data.js`**
@@ -62,6 +62,22 @@ For client logos, use the `images/clients` folder and set `logo`, e.g. `logo: 'i
 
 Keep photos under about 500 KB each so pages load quickly. Wide (landscape) photos suit projects; square photos suit team members.
 
+### The road-sign design
+The whole site is built from road furniture. Each kind has one job, and most of them follow your content by themselves:
+
+| On the site | Used for | What controls it |
+|---|---|---|
+| Green direction board | Completed projects, page titles, the last call to action | A project's `status: 'completed'` |
+| Yellow work-zone board | Ongoing projects, on their cards and their own pages | A project's `status: 'ongoing'` |
+| Small traffic signal | Project status (amber or green lamp) and the filter buttons | A project's `status` |
+| Blue facility sign with a white picture square | Services, team and contact details | Automatic |
+| Km-stone | News dates, publication years and the steps on the About page | `date` in `news`, `year` in `publications` |
+| Red ring signs | The numbers on the About page | Counted from your lists |
+
+So when a project finishes, change its `status` to `'completed'` and its board turns green everywhere.
+
+A new service shows a traffic cone until you choose its picture: add its `id` to `SERVICE_PICTS` in `assets/js/main.js`.
+
 ---
 
 ## 4. The contact form
@@ -92,9 +108,7 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 - `services` → `includes/content.php`
 - `site` (contact details) → `includes/config.php`
 
-Design changes agreed during feedback can be copied across, because both versions use the same `assets/css/style.css`.
-
-The SVNIT logo in the header and footer and the moving client strip on the Home page were added after the PHP version was made, so they need to be added there too.
+The road-sign design, the SVNIT logo and the moving client strip were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
 
 ---
 
@@ -118,7 +132,7 @@ publications.html, news.html, news-item.html, team.html, contact.html, 404.html
 assets/
   js/data.js      ← all the content
   js/main.js      builds the pages from data.js
-  css/style.css   design (shared with the PHP version)
+  css/style.css   the road-sign design
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
 images/           photos for projects, news and team, and client logos
