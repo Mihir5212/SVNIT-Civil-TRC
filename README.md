@@ -50,12 +50,15 @@ The top of `data.js` explains the rules. In short:
 | News | `news` (newest date appears first) |
 | Publications | `publications` |
 | Team | `team` (`order`: lower numbers appear first) |
+| Client logos moving across the Home page | `clients` (add one line per client; `clients: []` hides the strip) |
 
 **Text that is in the HTML files instead:** the Home page headline and intro (`index.html`), and the About page (`about.html`).
 
 ### Adding photos
 1. On GitHub, open the `images/projects` folder (or `images/news`, `images/team`) and use **Add file → Upload files**.
 2. In `data.js`, set the item's `image` (or `photo` for team) to the path, e.g. `image: 'images/projects/ring-road.jpg'`.
+
+For client logos, use the `images/clients` folder and set `logo`, e.g. `logo: 'images/clients/client-name.png'`. A PNG with a transparent background, around 400 px wide, works best.
 
 Keep photos under about 500 KB each so pages load quickly. Wide (landscape) photos suit projects; square photos suit team members.
 
@@ -91,6 +94,8 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 
 Design changes agreed during feedback can be copied across, because both versions use the same `assets/css/style.css`.
 
+The SVNIT logo in the header and footer and the moving client strip on the Home page were added after the PHP version was made, so they need to be added there too.
+
 ---
 
 ## 7. Troubleshooting
@@ -116,6 +121,6 @@ assets/
   css/style.css   design (shared with the PHP version)
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
-images/           photos for projects, news and team
+images/           photos for projects, news and team, and client logos
 .nojekyll         tells GitHub Pages to serve the files as they are
 ```

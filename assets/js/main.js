@@ -242,6 +242,23 @@
             return '<li><a href="services.html#' + esc(s.id) + '"><h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p></a></li>';
         }).join(''));
 
+        // Moving client strip. The list repeats until it can fill a very wide screen,
+        // then the whole set is doubled so the scroll loops without a visible jump.
+        var clients = D.clients || [];
+        if (clients.length) {
+            var loop = [];
+            while (loop.length < 12) { loop = loop.concat(clients); }
+            set('home-clients', '<ul class="client-track" style="animation-duration:' + (loop.length * 3.5) + 's">' +
+                loop.concat(loop).map(function (c, i) {
+                    var copy = i >= clients.length;
+                    return '<li class="client-tile"' + (copy ? ' aria-hidden="true"' : '') + '>' +
+                        (c.logo ? '<img src="' + esc(c.logo) + '" alt="' + (copy ? '' : esc(c.name)) + '">' : '<span>' + esc(c.name) + '</span>') +
+                        '</li>';
+                }).join('') + '</ul>');
+        } else {
+            hide('clients-section');
+        }
+
         var featured = D.projects.filter(function (p) { return p.featured; }).slice(0, 3);
         if (featured.length < 3) {
             featured = featured.concat(sortProjects(D.projects.filter(function (p) { return !p.featured; })).slice(0, 3 - featured.length));

@@ -293,6 +293,18 @@ window.TRC = {
         { authors: 'Author, C., Author, A.', title: 'Sample paper title on pedestrian safety at urban intersections', venue: 'Conference name, City', type: 'conference', year: 2024, link: '' },
     ],
 
+    /* ---------- Clients (moving strip on the Home page) ---------- */
+    // name: the client's name. logo: path to the logo, e.g. 'images/clients/client-name.png'.
+    // Leave logo as '' to show the name as text. An empty list (clients: []) hides the whole strip.
+    clients: [
+        { name: 'Municipal corporation (sample)', logo: '' },
+        { name: 'Highway authority (sample)', logo: '' },
+        { name: 'State agency (sample)', logo: '' },
+        { name: 'Traffic police (sample)', logo: '' },
+        { name: 'Urban local body (sample)', logo: '' },
+        { name: 'Private developer (sample)', logo: '' },
+    ],
+
     /* ---------- Team ---------- */
     // group: 'faculty', 'scholar' or 'staff'. order: lower numbers appear first.
     team: [
