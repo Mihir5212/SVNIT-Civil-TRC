@@ -181,7 +181,7 @@
             html += '<div class="preview-bar" role="note"><div class="wrap">' + esc(S.previewNotice) + '</div></div>';
         }
         html += '<header class="site-header"><div class="wrap header-inner">' +
-            '<a class="brand" href="index.html"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46">' +
+            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="50" height="48"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46"></span>' +
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
             '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
             '<nav id="site-nav" class="site-nav" aria-label="Main"><ul>' +
@@ -196,7 +196,7 @@
 
     function renderFooter() {
         var html = '<footer class="site-footer"><div class="wrap footer-grid">' +
-            '<div class="footer-about"><a class="brand brand-footer" href="index.html"><img src="assets/img/logo-mark.svg" alt="" width="40" height="40">' +
+            '<div class="footer-about"><a class="brand brand-footer" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="46" height="44"><img src="assets/img/logo-mark.svg" alt="" width="40" height="40"></span>' +
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + '</span></span></a>' +
             '<p>' + esc(S.institute) + '</p></div>' +
             '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +

@@ -143,7 +143,7 @@ address { font-style: normal; }
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 16px;
     min-height: 76px;
 }
 
@@ -156,16 +156,17 @@ address { font-style: normal; }
     min-width: 0;
 }
 .brand img { flex: none; }
+.brand-logos { display: flex; align-items: center; gap: 8px; flex: none; }
 .brand-text { display: flex; flex-direction: column; font-family: var(--font-ui); line-height: 1.2; min-width: 0; }
 .brand-text strong { font-size: 1.02rem; font-weight: 800; }
 .brand-text span { font-size: .84rem; color: var(--muted); }
 .brand:hover { color: var(--asphalt); }
 
-.site-nav { display: flex; align-items: center; gap: 18px; }
-.site-nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.site-nav { display: flex; align-items: center; gap: 12px; }
+.site-nav ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
 .site-nav ul a {
     display: block;
-    padding: 10px 10px 8px;
+    padding: 10px 8px 8px;
     font-family: var(--font-ui);
     font-size: .98rem;
     font-weight: 600;
@@ -176,7 +177,7 @@ address { font-style: normal; }
 /* Current page: a dashed yellow lane-marking underline */
 .site-nav ul a[aria-current="page"] {
     color: var(--green-dark);
-    background: repeating-linear-gradient(90deg, var(--yellow) 0 12px, transparent 12px 18px) 10px calc(100% - 2px) / calc(100% - 20px) 3px no-repeat;
+    background: repeating-linear-gradient(90deg, var(--yellow) 0 12px, transparent 12px 18px) 8px calc(100% - 2px) / calc(100% - 16px) 3px no-repeat;
 }
 .nav-cta { white-space: nowrap; }
 
@@ -208,7 +209,7 @@ address { font-style: normal; }
 .nav-toggle-bars::before { top: -6px; }
 .nav-toggle-bars::after { top: 6px; }
 
-@media (max-width: 1120px) {
+@media (max-width: 1200px) {
     .nav-toggle { display: inline-flex; }
     .site-nav {
         display: none;
@@ -232,6 +233,23 @@ address { font-style: normal; }
 @media (max-width: 520px) {
     .brand-text span { display: none; }
     .brand-text strong { font-size: .95rem; }
+    .header-inner { gap: 12px; }
+    .site-header .brand { gap: 10px; }
+    .site-header .brand-logo-svnit { width: 42px; }
+    .site-header .brand-logos img:last-child { width: 38px; }
+    .site-header .brand-text strong { font-size: .88rem; }
+}
+/* Very small phones: keep "Menu" for screen readers but show only the icon, so the title fits */
+@media (max-width: 359px) {
+    .nav-toggle { padding: 8px 12px; }
+    .nav-toggle > span:last-child {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }
 
 /* ---------- Home: hero with the direction sign ---------- */
@@ -855,6 +873,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--green); outline:
 .brand-footer .brand-text strong { color: var(--white); }
 .brand-footer .brand-text span { color: #aeb5b9; }
 .brand-footer:hover { color: var(--white); }
+/* The crest has dark lines and a transparent background, so it needs a white backing on the dark footer */
+.brand-footer .brand-logo-svnit { background: var(--white); padding: 3px; border-radius: 6px; }
 .footer-head { font-size: 1rem; color: var(--white); margin-bottom: 12px; }
 .footer-links { list-style: none; margin: 0; padding: 0; }
 .footer-links li { margin-bottom: 6px; }

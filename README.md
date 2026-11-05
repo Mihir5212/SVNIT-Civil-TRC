@@ -115,6 +115,7 @@ assets/
   js/main.js      builds the pages from data.js
   css/style.css   design (shared with the PHP version)
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
+  img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
 images/           photos for projects, news and team
 .nojekyll         tells GitHub Pages to serve the files as they are
 ```
