@@ -24,6 +24,10 @@ window.TRC = {
     site: {
         name: 'Transportation Research & Consultancy',
         short: 'TRC',
+        // The name beside the logos in the top navigation bar.
+        // The third line there is made from dept and instituteShort, below.
+        headerName: 'Transportation Engineering & Planning Section',
+        headerCell: 'Research & Consultancy Cell',
         dept: 'Department of Civil Engineering',
         institute: 'Sardar Vallabhbhai National Institute of Technology, Surat',
         instituteShort: 'SVNIT Surat',
@@ -155,7 +159,7 @@ window.TRC = {
     },
     statuses: { ongoing: 'Ongoing', completed: 'Completed' },
     pubTypes: { journal: 'Journal article', conference: 'Conference paper', report: 'Technical report', chapter: 'Book chapter' },
-    teamGroups: { faculty: 'Faculty', scholar: 'Research scholars', staff: 'Project staff' },
+    teamGroups: { professors: 'Professors & Project Consultants', staff: 'Project staff' },
 
     /* ---------- Projects ---------- */
     // id: a unique number (used in the page link).
@@ -328,13 +332,11 @@ window.TRC = {
     ],
 
     /* ---------- Team ---------- */
-    // group: 'faculty', 'scholar' or 'staff'. order: lower numbers appear first.
+    // group: 'professors' or 'staff'. order: lower numbers appear first.
     team: [
-        { name: 'Faculty name', designation: 'Professor, Transportation Engineering', group: 'faculty', expertise: 'Traffic flow, road safety, traffic simulation', email: '', profile: '', photo: '', order: 10 },
-        { name: 'Faculty name', designation: 'Associate Professor, Transportation Engineering', group: 'faculty', expertise: 'Transport planning, travel behaviour', email: '', profile: '', photo: '', order: 20 },
-        { name: 'Faculty name', designation: 'Assistant Professor, Transportation Engineering', group: 'faculty', expertise: 'Pavement engineering, highway materials', email: '', profile: '', photo: '', order: 30 },
-        { name: 'Scholar name', designation: 'PhD scholar', group: 'scholar', expertise: 'Crash analysis and safety modelling', email: '', profile: '', photo: '', order: 40 },
-        { name: 'Scholar name', designation: 'PhD scholar', group: 'scholar', expertise: 'Video-based traffic data and trajectories', email: '', profile: '', photo: '', order: 50 },
+        { name: 'Professor name', designation: 'Professor, Transportation Engineering', group: 'professors', expertise: 'Traffic flow, road safety, traffic simulation', email: '', profile: '', photo: '', order: 10 },
+        { name: 'Professor name', designation: 'Associate Professor, Transportation Engineering', group: 'professors', expertise: 'Transport planning, travel behaviour', email: '', profile: '', photo: '', order: 20 },
+        { name: 'Professor name', designation: 'Assistant Professor, Transportation Engineering', group: 'professors', expertise: 'Pavement engineering, highway materials', email: '', profile: '', photo: '', order: 30 },
         { name: 'Staff name', designation: 'Project associate', group: 'staff', expertise: 'Field surveys and data processing', email: '', profile: '', photo: '', order: 60 },
     ],
 };

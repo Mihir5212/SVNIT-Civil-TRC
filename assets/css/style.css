@@ -381,13 +381,17 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
 .brand-text { display: flex; flex-direction: column; font-family: var(--font-ui); line-height: 1.2; min-width: 0; }
 .brand-text strong { font-size: 1.02rem; font-weight: 800; }
 .brand-text span { font-size: .84rem; color: var(--muted); }
+/* The header's three-line name: section, cell, department */
+.site-header .brand-text strong { font-size: .9rem; }
+.site-header .brand-text span { font-size: .8rem; }
+.site-header .brand-text .brand-cell { color: var(--asphalt); font-weight: 700; }
 .brand:hover { color: var(--asphalt); }
 
-.site-nav { display: flex; align-items: center; gap: 12px; }
-.site-nav ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.site-nav { display: flex; align-items: center; gap: 10px; }
+.site-nav ul { display: flex; gap: 1px; list-style: none; margin: 0; padding: 0; }
 .site-nav ul a {
     display: block;
-    padding: 10px 8px 8px;
+    padding: 10px 7px 8px;
     border-radius: 6px;
     font-family: var(--font-ui);
     font-size: .98rem;
@@ -429,7 +433,7 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
     .site-nav ul a { white-space: nowrap; }
     .site-nav ul a:hover {
         color: var(--green-dark);
-        background: repeating-linear-gradient(90deg, var(--yellow) 0 10px, transparent 10px 15px) 8px calc(100% - 2px) / calc(100% - 16px) 3px no-repeat;
+        background: repeating-linear-gradient(90deg, var(--yellow) 0 10px, transparent 10px 15px) 7px calc(100% - 2px) / calc(100% - 14px) 3px no-repeat;
     }
     /* Current page: a small direction plate */
     .site-nav ul a[aria-current="page"],
@@ -495,10 +499,17 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
     .site-header .brand { gap: 10px; }
     .site-header .brand-logo-svnit { width: 42px; }
     .site-header .brand-logos img:last-child { width: 38px; }
-    .site-header .brand-text strong { font-size: .88rem; }
+    .site-header .brand-text strong { font-size: .8rem; }
+    /* Phones: the section and cell names stay; the department line is dropped to save height */
+    .site-header .brand-text .brand-cell { display: block; font-size: .72rem; }
 }
-/* Very small phones: keep "Menu" for screen readers but show only the icon, so the title fits */
-@media (max-width: 359px) {
+/* The department line needs a little more room than this, so it joins the phone layout early */
+@media (max-width: 580px) {
+    .site-header .brand-text span:not(.brand-cell) { display: none; }
+}
+/* Phones: keep "Menu" for screen readers but show only the icon, so the long name fits */
+@media (max-width: 430px) {
+    .header-inner { padding-top: 6px; padding-bottom: 6px; }
     .nav-toggle { padding: 8px 12px; }
     .nav-toggle > span:last-child {
         position: absolute;
@@ -1186,6 +1197,10 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
     background: var(--post);
 }
 .fact-panel dt {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 8px 6px 6px;
     background: var(--white);
@@ -1639,7 +1654,7 @@ html:has(.viewer[open]) { overflow: hidden; }
     object-fit: cover;
     background: var(--white);
 }
-.team-grid.is-faculty .person-photo { width: 104px; height: 104px; }
+.team-grid.is-professors .person-photo { width: 104px; height: 104px; }
 .person-photo.is-initials {
     display: flex;
     align-items: center;

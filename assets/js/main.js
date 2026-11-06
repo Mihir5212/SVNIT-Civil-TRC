@@ -227,18 +227,17 @@
             ['about.html', 'About', 'about'],
             ['projects.html', 'Research &amp; Projects', 'projects'],
             ['publications.html', 'Publications', 'publications'],
-            ['news.html', 'News', 'news'],
             ['gallery.html', 'Gallery', 'gallery'],
             ['team.html', 'Team', 'team'],
         ];
-        var active = { project: 'projects', 'news-item': 'news' }[page] || page;
+        var active = { project: 'projects' }[page] || page;
         var html = '';
         if (S.previewNotice) {
             html += '<div class="preview-bar" role="note"><div class="wrap">' + esc(S.previewNotice) + '</div></div>';
         }
         html += '<header class="site-header"><div class="wrap header-inner">' +
             '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="50" height="48"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46"></span>' +
-            '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
+            '<span class="brand-text"><strong>' + esc(S.headerName) + '</strong><span class="brand-cell">' + esc(S.headerCell) + '</span><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
             '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
             '<nav id="site-nav" class="site-nav" aria-label="Main"><ul>' +
             menu.map(function (m) {
@@ -258,7 +257,7 @@
             '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +
             '<li><a href="about.html">About TRC</a></li><li><a href="about.html#capabilities">Our capabilities</a></li>' +
             '<li><a href="projects.html">Research &amp; Projects</a></li><li><a href="publications.html">Publications</a></li>' +
-            '<li><a href="news.html">News</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
+            '<li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
             '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
             '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a><br>' +
             '<a href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></address>' +
@@ -336,7 +335,7 @@
     pages.about = function () {
         set('count-projects', String(D.projects.length));
         set('count-pubs', String(D.publications.length));
-        set('count-faculty', String(D.team.filter(function (m) { return m.group === 'faculty'; }).length));
+        set('count-professors', String(D.team.filter(function (m) { return m.group === 'professors'; }).length));
 
         // Our capabilities: a blue sign for each, with a plate of details below
         set('capability-list', D.capabilities.map(function (s) {
@@ -582,7 +581,7 @@
         Object.keys(D.teamGroups).forEach(function (g) {
             var list = members.filter(function (m) { return m.group === g; });
             if (!list.length) { return; }
-            html += '<section class="team-group"><div class="section-head section-head-blue"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'faculty' ? ' is-faculty' : '') + '">' +
+            html += '<section class="team-group"><div class="section-head section-head-blue"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
                 list.map(function (m) {
                     var photo = m.photo
                         ? '<img class="person-photo" src="' + esc(m.photo) + '" alt="" loading="lazy">'

@@ -47,7 +47,7 @@ The top of `data.js` explains the rules. In short:
 | Yellow "preview" bar at the top | `site.previewNotice` (set to `''` to hide it) |
 | Our capabilities (Home, About page, form) | `capabilities` (the first four appear on the green sign on the Home page) |
 | Research & Projects | `projects` (`featured: true` puts one on the Home page; the first featured one is shown large; `associatedWith` is the organisation you worked with) |
-| News | `news` (newest date appears first) |
+| News | `news` (newest date appears first; the latest three show on the Home page, whose "All news" link opens the full list, as News is not in the menu) |
 | Publications | `publications` |
 | Team | `team` (`order`: lower numbers appear first) |
 | Our Associations: logos moving across the Home page | `associations` (add one line per organisation; `associations: []` hides the strip) |
