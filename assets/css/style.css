@@ -48,7 +48,7 @@
     --font-ui: "Overpass", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-text: "Source Serif 4", Georgia, "Times New Roman", serif;
 
-    --wrap: 1180px;
+    --wrap: 1256px;
     --gutter: clamp(16px, 4vw, 32px);
     --focus: var(--ink-black);
 
@@ -425,7 +425,7 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
 .nav-toggle-bars::before { top: -6px; }
 .nav-toggle-bars::after { top: 6px; }
 
-@media (min-width: 1201px) {
+@media (min-width: 1271px) {
     .site-nav ul a:hover {
         color: var(--green-dark);
         background: repeating-linear-gradient(90deg, var(--yellow) 0 10px, transparent 10px 15px) 8px calc(100% - 2px) / calc(100% - 16px) 3px no-repeat;
@@ -441,7 +441,7 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
 }
 
 /* Small screens: the menu opens as a direction board */
-@media (max-width: 1200px) {
+@media (max-width: 1270px) {
     .nav-toggle { display: inline-flex; }
     .site-nav {
         --focus: var(--yellow);
@@ -1458,6 +1458,185 @@ a.board:focus-visible { outline-color: var(--ink-black); border-radius: 14px; }
 }
 .pager span { color: var(--muted); font-weight: 600; }
 
+/* ---------- Gallery: photos on roadside hoardings, with a caption plate below ---------- */
+
+.gallery-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+    gap: 30px 26px;
+}
+.gallery-grid li { display: flex; min-width: 0; }
+.gallery-item { display: flex; flex-direction: column; width: 100%; margin: 0; }
+.hoarding {
+    position: relative;
+    display: block;
+    padding: 8px;
+    background: var(--ink-black);
+    border-radius: 8px;
+    box-shadow: 0 2px 0 #000, 0 10px 22px rgba(20, 30, 28, .16);
+    color: var(--white);
+    font-family: var(--font-ui);
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.hoarding:hover {
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 3px var(--yellow), 0 16px 30px rgba(20, 30, 28, .22);
+}
+.hoarding:focus-visible { outline-offset: 3px; border-radius: 10px; }
+.hoarding img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    background: var(--asphalt-2);
+    border-radius: 3px;
+}
+/* A small yellow plate in the corner shows the photo can be opened */
+.hoarding::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px var(--ink-black);
+    background: var(--yellow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2315181a' stroke-width='2.600' stroke-linecap='round'%3E%3Ccircle cx='10.500' cy='10.500' r='6'/%3E%3Cpath d='M15 15l5 5M10.500 8v5M8 10.500h5'/%3E%3C/svg%3E") center / 24px no-repeat;
+}
+.gallery-caption {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 14px;
+    padding: 14px 18px 12px;
+    font-family: var(--font-ui);
+    line-height: 1.3;
+}
+.gallery-caption strong { color: var(--asphalt); font-size: 1rem; }
+.gallery-caption span { color: var(--muted); font-size: .9rem; }
+/* The plate is fixed under the hoarding on two short brackets */
+.gallery-caption::before, .gallery-caption::after {
+    content: "";
+    position: absolute;
+    top: -16px;
+    width: 8px;
+    height: 18px;
+    background: var(--post);
+}
+.gallery-caption::before { left: 20%; }
+.gallery-caption::after { right: 20%; }
+
+/* Full-screen viewer: a photo at night, with direction-sign arrows */
+.viewer {
+    --focus: var(--yellow);
+    --shield-bg: var(--yellow);
+    --shield-ink: var(--ink-black);
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: rgba(12, 14, 15, .97);
+    color: var(--white);
+}
+.viewer[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.viewer::backdrop { background: rgba(12, 14, 15, .97); }
+html:has(.viewer[open]) { overflow: hidden; }
+.viewer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px var(--gutter);
+}
+.viewer-close::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 3l7 7 7-7 2 2-7 7 7 7-2 2-7-7-7 7-2-2 7-7-7-7z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 3l7 7 7-7 2 2-7 7 7 7-2 2-7-7-7 7-2-2 7-7-7-7z'/%3E%3C/svg%3E");
+}
+.btn.viewer-close:hover::after { transform: none; }
+.viewer-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0 var(--gutter);
+}
+.viewer-stage img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+}
+.viewer-bottom {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: calc(860px + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 14px var(--gutter) 18px;
+}
+.viewer-caption {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    font-family: var(--font-ui);
+    line-height: 1.3;
+    text-align: center;
+}
+.viewer-caption strong { font-size: 1.05rem; }
+.viewer-caption span { color: #c6ccc8; font-size: .92rem; }
+.viewer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: var(--green);
+    box-shadow: inset 0 0 0 4px var(--green), inset 0 0 0 6px var(--white);
+    color: var(--white);
+    cursor: pointer;
+}
+.viewer-nav:hover { background: var(--green-dark); box-shadow: inset 0 0 0 4px var(--green-dark), inset 0 0 0 6px var(--white); }
+.viewer-nav svg { width: 30px; height: 30px; }
+#viewer-next { grid-column: 3; }
+
+/* Short screens, such as a phone held sideways: controls move to the sides so the photo keeps its height */
+@media (max-height: 480px) {
+    .viewer[open] {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 4px 12px;
+        padding: 10px 12px;
+    }
+    .viewer-top, .viewer-bottom { display: contents; }
+    .viewer-count { grid-column: 1; grid-row: 1; align-self: start; justify-self: start; }
+    .viewer-close { grid-column: 3; grid-row: 1; align-self: start; justify-self: end; }
+    .viewer-stage { grid-column: 2; grid-row: 1; height: 100%; padding: 0; }
+    #viewer-prev { grid-column: 1; grid-row: 1; align-self: center; justify-self: start; }
+    #viewer-next { grid-column: 3; grid-row: 1; align-self: center; justify-self: end; }
+    .viewer-caption { grid-column: 1 / -1; grid-row: 2; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 10px; }
+    .viewer-caption strong { font-size: .95rem; }
+    .viewer-caption span { font-size: .88rem; }
+}
+
 /* ---------- Team: blue facility signs, with the person in the white square ---------- */
 
 .team-group + .team-group { margin-top: 56px; }
@@ -1864,8 +2043,8 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .road-line { animation: none; }
-    .sign-arrow, .go, .btn::after, .text-link::after, a.board, .project-card, a.board .board-face, .project-card .board-face { transition: none; }
-    a.board:hover, .project-card:hover { transform: none; }
+    .sign-arrow, .go, .btn::after, .text-link::after, a.board, .project-card, a.board .board-face, .project-card .board-face, .hoarding { transition: none; }
+    a.board:hover, .project-card:hover, .hoarding:hover { transform: none; }
     /* The signal rests on green */
     .is-cycling .lamp { animation: none; }
     .is-cycling .lamp-green { background: var(--lamp-green); box-shadow: 0 0 12px 3px rgba(34, 214, 127, .6); }
@@ -1891,7 +2070,10 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
         box-shadow: none;
     }
     .has-posts { margin-bottom: 0; }
-    .detail-facts .btn, .service-ask, .service-plate::before, .service-plate::after, .gantry-board::before, .gantry-board::after { display: none; }
+    .detail-facts .btn, .service-ask, .service-plate::before, .service-plate::after, .gantry-board::before, .gantry-board::after,
+    .hoarding::after, .gallery-caption::before, .gallery-caption::after { display: none; }
+    .hoarding { padding: 0; background: none; box-shadow: none; }
+    .gallery-item { break-inside: avoid; }
 }
 
 /* ---------- Static preview additions ---------- */

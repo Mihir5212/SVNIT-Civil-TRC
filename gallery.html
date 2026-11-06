@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview site: keeps search engines from listing it. Remove this line when the site becomes official. -->
+<meta name="robots" content="noindex">
+<title>Gallery | TRC, SVNIT Surat</title>
+<meta name="description" content="Photos of field surveys, site inspections, workshops and events from TRC, SVNIT Surat.">
+<meta name="theme-color" content="#0B5D45">
+<link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="gallery">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+<noscript><p class="noscript">This website needs JavaScript turned on to show its content.</p></noscript>
+<section class="page-head">
+    <div class="wrap">
+        <div class="board gantry-board">
+            <div class="board-face gantry-face">
+                <div class="gantry-text">
+                    <h1>Gallery</h1>
+                    <p class="lead">Photos from our field surveys, site inspections, workshops and events.</p>
+                </div>
+                <span class="pict" data-pict="photo" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="filters" id="gallery-filters">
+            <div class="chips" id="gallery-chips" role="group" aria-label="Photo category"></div>
+        </div>
+        <p class="result-count" id="gallery-count"></p>
+        <ul class="gallery-grid" id="gallery-grid"></ul>
+        <div class="empty" id="gallery-empty"></div>
+    </div>
+</section>
+
+<!-- Full-screen photo viewer: main.js fills it in when a photo is opened -->
+<dialog class="viewer" id="photo-viewer" aria-label="Photo viewer">
+    <div class="viewer-top">
+        <span class="shield viewer-count" id="viewer-count"></span>
+        <button type="button" class="btn btn-yellow viewer-close" id="viewer-close">Close</button>
+    </div>
+    <div class="viewer-stage" id="viewer-stage"><img id="viewer-image" alt=""></div>
+    <div class="viewer-bottom">
+        <button type="button" class="viewer-nav" id="viewer-prev" aria-label="Previous photo"></button>
+        <p class="viewer-caption" id="viewer-caption" aria-live="polite"></p>
+        <button type="button" class="viewer-nav" id="viewer-next" aria-label="Next photo"></button>
+    </div>
+</dialog>
+
+</main>
+
+<div id="site-footer"></div>
+<!-- data.js holds the content; main.js builds the pages from it -->
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

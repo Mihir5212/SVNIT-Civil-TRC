@@ -305,6 +305,28 @@ window.TRC = {
         { name: 'Private developer (sample)', logo: '' },
     ],
 
+    /* ---------- Gallery ---------- */
+    // Photos appear in the order listed here, so put your best ones first.
+    // image: path to the photo, e.g. 'images/gallery/ring-road-survey.jpg'.
+    // title: a short caption. category: one of the keys in galleryCategories.
+    // place and year are optional: leave '' if not needed.
+    galleryCategories: {
+        field: 'Field surveys',
+        site: 'Site inspections',
+        workshop: 'Workshops and training',
+        events: 'Events and visits',
+    },
+    gallery: [
+        { image: 'images/gallery/sample-1.svg', title: 'Video survey at a city junction (sample)', category: 'field', place: 'Surat, Gujarat', year: 2026 },
+        { image: 'images/gallery/sample-4.svg', title: 'Road safety audit on a highway stretch (sample)', category: 'site', place: 'Gujarat', year: 2025 },
+        { image: 'images/gallery/sample-6.svg', title: 'Workshop on road safety audits (sample)', category: 'workshop', place: 'SVNIT Surat', year: 2026 },
+        { image: 'images/gallery/sample-2.svg', title: 'Classified traffic count beside an arterial road (sample)', category: 'field', place: 'Surat, Gujarat', year: 2025 },
+        { image: 'images/gallery/sample-5.svg', title: 'Junction layout review for signal design (sample)', category: 'site', place: 'Gujarat', year: 2024 },
+        { image: 'images/gallery/sample-8.svg', title: 'Group visit to the institute (sample)', category: 'events', place: 'SVNIT Surat', year: 2026 },
+        { image: 'images/gallery/sample-3.svg', title: 'Spot speed survey (sample)', category: 'field', place: 'Gujarat', year: 2024 },
+        { image: 'images/gallery/sample-7.svg', title: 'Hands-on traffic data session (sample)', category: 'workshop', place: 'SVNIT Surat', year: 2025 },
+    ],
+
     /* ---------- Team ---------- */
     // group: 'faculty', 'scholar' or 'staff'. order: lower numbers appear first.
     team: [

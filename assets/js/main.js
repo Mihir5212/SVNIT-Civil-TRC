@@ -70,6 +70,7 @@
         bus: '<path fill-rule="evenodd" d="M5 9h38a3 3 0 0 1 3 3v22a2 2 0 0 1-2 2h-2.500a5.500 5.500 0 0 0-11 0H17.500a5.500 5.500 0 0 0-11 0H4a2 2 0 0 1-2-2V12a3 3 0 0 1 3-3zm1.500 4.500V23h8v-9.500zm12 0V23h9v-9.500zm13 0V23h10v-9.500z"/><circle cx="12" cy="37" r="4"/><circle cx="36" cy="37" r="4"/>',
         review: '<circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="5"/><path d="M30.500 30.500 44 44" fill="none" stroke="currentColor" stroke-width="6.500" stroke-linecap="round"/><path d="M12.500 20.500l5.200 5.200 9.800-10.600" fill="none" stroke="currentColor" stroke-width="4.200" stroke-linecap="round" stroke-linejoin="round"/>',
         camera: '<rect x="3" y="12" width="29" height="24" rx="3"/><path d="M34 21l11-7.500v21L34 27z"/>',
+        photo: '<path fill-rule="evenodd" d="M17 8h14l3 5h8a3 3 0 0 1 3 3v22a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3h8zm7 9a9.500 9.500 0 1 0 0 19 9.500 9.500 0 0 0 0-19zm0 4.500a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/>',
         cap: '<path d="M24 7 1.500 18 24 29l17-8.300V33h4V18.700z"/><path d="M10.500 26.500V35c0 3.600 6.100 6.500 13.500 6.500S37.500 38.600 37.500 35v-8.500L24 33.200z"/>',
         info: '<circle cx="24" cy="9.500" r="5.500"/><path d="M16.500 19h13v19h4.500v6H14v-6h4.500V25h-2z"/>',
         cone: '<path d="M20.600 5h6.800l2.600 9.600H18zM17 18.600h14l2.700 10H14.300zM13.200 32.600h21.600L37 40h5a2 2 0 0 1 2 2v2H4v-2a2 2 0 0 1 2-2h5z"/>',
@@ -228,6 +229,7 @@
             ['projects.html', 'Projects', 'projects'],
             ['publications.html', 'Publications', 'publications'],
             ['news.html', 'News', 'news'],
+            ['gallery.html', 'Gallery', 'gallery'],
             ['team.html', 'Team', 'team'],
         ];
         var active = { project: 'projects', 'news-item': 'news' }[page] || page;
@@ -257,7 +259,7 @@
             '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +
             '<li><a href="about.html">About TRC</a></li><li><a href="services.html">Services</a></li>' +
             '<li><a href="projects.html">Projects</a></li><li><a href="publications.html">Publications</a></li>' +
-            '<li><a href="news.html">News</a></li><li><a href="team.html">Team</a></li></ul></div>' +
+            '<li><a href="news.html">News</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
             '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
             '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a><br>' +
             '<a href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></address>' +
@@ -489,6 +491,108 @@
             (n.image ? '<figure class="detail-image"><img src="' + esc(n.image) + '" alt=""></figure>' : '') +
             (n.summary ? '<p class="lead-text">' + esc(n.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(n.body) + '</div></div></section>');
+    };
+
+    // "Surat, Gujarat, 2026": whichever of the place and year are filled in
+    function photoDetails(p) { return [p.place, p.year].filter(Boolean).join(', '); }
+
+    // Opens a photo full-screen, with next and previous. If a browser cannot do this, the
+    // gallery links simply open the photo file itself.
+    function startPhotoViewer(list) {
+        var viewer = document.getElementById('photo-viewer');
+        var grid = document.getElementById('gallery-grid');
+        if (!viewer || !grid || typeof viewer.showModal !== 'function') { return; }
+
+        var image = document.getElementById('viewer-image');
+        var caption = document.getElementById('viewer-caption');
+        var count = document.getElementById('viewer-count');
+        var prev = document.getElementById('viewer-prev');
+        var next = document.getElementById('viewer-next');
+        var stage = document.getElementById('viewer-stage');
+        var at = 0, opener = null, touchX = null;
+
+        prev.innerHTML = arrowSvg('left');
+        next.innerHTML = arrowSvg('right');
+        prev.hidden = next.hidden = list.length < 2;
+
+        function show(index) {
+            at = (index + list.length) % list.length;
+            var p = list[at], details = photoDetails(p);
+            image.src = p.image;
+            image.alt = p.title;
+            caption.innerHTML = '<strong>' + esc(p.title) + '</strong>' + (details ? '<span>' + esc(details) + '</span>' : '');
+            count.textContent = (at + 1) + ' of ' + list.length;
+            // Load the photos on either side, so moving between them feels instant
+            [at + 1, at - 1].forEach(function (n) { new Image().src = list[(n + list.length) % list.length].image; });
+        }
+
+        grid.addEventListener('click', function (e) {
+            var link = e.target.closest('a[data-photo]');
+            if (!link || e.ctrlKey || e.metaKey || e.shiftKey) { return; } // Let "open in new tab" work as usual
+            e.preventDefault();
+            opener = link;
+            show(parseInt(link.getAttribute('data-photo'), 10));
+            viewer.showModal();
+        });
+        document.getElementById('viewer-close').addEventListener('click', function () { viewer.close(); });
+        prev.addEventListener('click', function () { show(at - 1); });
+        next.addEventListener('click', function () { show(at + 1); });
+        viewer.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') { show(at - 1); }
+            if (e.key === 'ArrowRight') { show(at + 1); }
+        });
+        // Clicking the dark area around the photo closes the viewer
+        viewer.addEventListener('click', function (e) {
+            if (e.target === viewer || e.target === stage) { viewer.close(); }
+        });
+        // Swipe left or right on a phone
+        stage.addEventListener('touchstart', function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
+        stage.addEventListener('touchend', function (e) {
+            if (touchX === null) { return; }
+            var moved = e.changedTouches[0].clientX - touchX;
+            touchX = null;
+            if (Math.abs(moved) > 50 && list.length > 1) { show(moved < 0 ? at + 1 : at - 1); }
+        });
+        viewer.addEventListener('close', function () {
+            image.removeAttribute('src'); // So the last photo does not flash when the viewer next opens
+            if (opener) { opener.focus(); }
+        });
+    }
+
+    pages.gallery = function () {
+        var photos = D.gallery || [];
+        var cats = D.galleryCategories || {};
+        var used = {};
+        photos.forEach(function (p) { used[p.category] = true; });
+        var usedCats = Object.keys(cats).filter(function (k) { return used[k]; });
+
+        var cat = params.get('category') || '';
+        if (usedCats.indexOf(cat) === -1) { cat = ''; }
+
+        if (usedCats.length > 1) {
+            set('gallery-chips', chip('gallery.html', 'All', !cat) + usedCats.map(function (k) {
+                return chip('gallery.html?category=' + k, cats[k], cat === k);
+            }).join(''));
+        } else {
+            hide('gallery-filters');
+        }
+
+        var list = photos.filter(function (p) { return !cat || p.category === cat; });
+        if (!list.length) {
+            hide('gallery-grid');
+            set('gallery-empty', '<p>Photos will be added here soon.</p>');
+            return;
+        }
+        set('gallery-count', list.length + (list.length === 1 ? ' photo' : ' photos'));
+        set('gallery-grid', list.map(function (p, i) {
+            var details = photoDetails(p);
+            return '<li><figure class="gallery-item">' +
+                '<a class="hoarding" href="' + esc(p.image) + '" data-photo="' + i + '" aria-label="Open larger photo: ' + esc(p.title) + '">' +
+                '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></a>' +
+                '<figcaption class="sign-plate gallery-caption"><strong>' + esc(p.title) + '</strong>' +
+                (details ? '<span>' + esc(details) + '</span>' : '') + '</figcaption></figure></li>';
+        }).join(''));
+        startPhotoViewer(list);
     };
 
     pages.team = function () {

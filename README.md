@@ -51,6 +51,7 @@ The top of `data.js` explains the rules. In short:
 | Publications | `publications` |
 | Team | `team` (`order`: lower numbers appear first) |
 | Client logos moving across the Home page | `clients` (add one line per client; `clients: []` hides the strip) |
+| Gallery photos and their captions | `gallery` (shown in the order listed; the filter buttons come from `galleryCategories`) |
 
 **Text that is in the HTML files instead:** the Home page headline and intro (`index.html`), and the About page (`about.html`).
 
@@ -59,6 +60,10 @@ The top of `data.js` explains the rules. In short:
 2. In `data.js`, set the item's `image` (or `photo` for team) to the path, e.g. `image: 'images/projects/ring-road.jpg'`.
 
 For client logos, use the `images/clients` folder and set `logo`, e.g. `logo: 'images/clients/client-name.png'`. A PNG with a transparent background, around 400 px wide, works best.
+
+For the gallery, use the `images/gallery` folder and add one line to `gallery` in `data.js` for each photo:
+`{ image: 'images/gallery/ring-road-survey.jpg', title: 'Video survey on the ring road', category: 'field', place: 'Surat', year: 2026 },`
+Wide (landscape) photos work best, because the gallery shows them in a 3:2 frame and trims anything that does not fit; the full photo appears when it is opened. About 1600 px wide and under 500 KB each is plenty. Delete the `sample-*.svg` drawings and their lines once real photos are in. To hide the gallery photos altogether, use `gallery: []`.
 
 Keep photos under about 500 KB each so pages load quickly. Wide (landscape) photos suit projects; square photos suit team members.
 
@@ -108,7 +113,7 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 - `services` → `includes/content.php`
 - `site` (contact details) → `includes/config.php`
 
-The road-sign design, the SVNIT logo and the moving client strip were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
+The road-sign design, the SVNIT logo, the moving client strip and the Gallery page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
 
 ---
 
@@ -128,13 +133,13 @@ The road-sign design, the SVNIT logo and the moving client strip were made after
 
 ```
 index.html, about.html, services.html, projects.html, project.html,
-publications.html, news.html, news-item.html, team.html, contact.html, 404.html
+publications.html, news.html, news-item.html, gallery.html, team.html, contact.html, 404.html
 assets/
   js/data.js      ← all the content
   js/main.js      builds the pages from data.js
   css/style.css   the road-sign design
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
-images/           photos for projects, news and team, and client logos
+images/           photos for projects, news, team and the gallery, and client logos
 .nojekyll         tells GitHub Pages to serve the files as they are
 ```
