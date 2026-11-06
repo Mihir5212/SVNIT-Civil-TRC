@@ -87,8 +87,8 @@
         return '<svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true" focusable="false">' + (PICTS[name] || PICTS.info) + '</svg>';
     }
 
-    // The pictogram on each service's sign. A new service uses the traffic cone until it is given one here.
-    var SERVICE_PICTS = {
+    // The pictogram on each capability's sign. A new capability uses the traffic cone until it is given one here.
+    var CAPABILITY_PICTS = {
         'traffic-studies': 'car',
         'road-safety': 'warning',
         'traffic-impact': 'building',
@@ -98,7 +98,7 @@
         'its-analytics': 'camera',
         'training': 'cap',
     };
-    function servicePict(s) { return '<span class="pict">' + pict(SERVICE_PICTS[s.id] || 'cone') + '</span>'; }
+    function capabilityPict(s) { return '<span class="pict">' + pict(CAPABILITY_PICTS[s.id] || 'cone') + '</span>'; }
 
     // A date on a km-stone: the month in the yellow top, then the day and year
     function dateStone(iso) {
@@ -176,7 +176,7 @@
             (p.image ? '<div class="project-media"><img src="' + esc(p.image) + '" alt="" loading="lazy"></div>' : '') +
             '<div class="project-top">' + (sector ? '<span class="shield">' + esc(sector) + '</span>' : '') + statusTag(p) + '</div>' +
             '<h3><a href="project.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.title) + '</a></h3>' +
-            (p.client ? '<p class="project-client">' + esc(p.client) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
+            (p.associatedWith ? '<p class="project-partner">' + esc(p.associatedWith) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
             (large && p.summary ? '<p class="project-summary">' + esc(excerpt(p.summary, 240)) + '</p>' : '') +
             (large && !p.image ? ROUTE_DIAGRAM : '') +
             '<p class="project-foot"><span>' + esc(years) + '</span>' + arrowSvg('right', 'go') + '</p>' +
@@ -225,8 +225,7 @@
         var menu = [
             ['index.html', 'Home', 'home'],
             ['about.html', 'About', 'about'],
-            ['services.html', 'Services', 'services'],
-            ['projects.html', 'Projects', 'projects'],
+            ['projects.html', 'Research &amp; Projects', 'projects'],
             ['publications.html', 'Publications', 'publications'],
             ['news.html', 'News', 'news'],
             ['gallery.html', 'Gallery', 'gallery'],
@@ -257,8 +256,8 @@
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + '</span></span></a>' +
             '<p>' + esc(S.institute) + '</p></div>' +
             '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +
-            '<li><a href="about.html">About TRC</a></li><li><a href="services.html">Services</a></li>' +
-            '<li><a href="projects.html">Projects</a></li><li><a href="publications.html">Publications</a></li>' +
+            '<li><a href="about.html">About TRC</a></li><li><a href="about.html#capabilities">Our capabilities</a></li>' +
+            '<li><a href="projects.html">Research &amp; Projects</a></li><li><a href="publications.html">Publications</a></li>' +
             '<li><a href="news.html">News</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
             '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
             '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a><br>' +
@@ -287,34 +286,34 @@
     var pages = {};
 
     pages.home = function () {
-        var sign = D.services.slice(0, 4);
+        var sign = D.capabilities.slice(0, 4);
         set('hero-sign',
             '<span class="sign-shield" aria-hidden="true">' + esc(S.short) + '</span><ul>' +
             sign.map(function (s) {
-                return '<li><a href="services.html#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
+                return '<li><a href="about.html#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
             }).join('') + '</ul>' +
-            '<a class="sign-more" href="services.html">All ' + D.services.length + ' services</a>');
+            '<a class="sign-more" href="about.html#capabilities">All ' + D.capabilities.length + ' capabilities</a>');
 
-        set('home-services', D.services.map(function (s) {
-            return '<li><a class="board board-blue service-card" href="services.html#' + esc(s.id) + '"><div class="board-face">' +
-                servicePict(s) + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p>' + arrowSvg('right', 'go') + '</div></a></li>';
+        set('home-capabilities', D.capabilities.map(function (s) {
+            return '<li><a class="board board-blue capability-card" href="about.html#' + esc(s.id) + '"><div class="board-face">' +
+                capabilityPict(s) + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p>' + arrowSvg('right', 'go') + '</div></a></li>';
         }).join(''));
 
-        // Moving client strip. The list repeats until it can fill a very wide screen,
+        // Moving associations strip. The list repeats until it can fill a very wide screen,
         // then the whole set is doubled so the scroll loops without a visible jump.
-        var clients = D.clients || [];
-        if (clients.length) {
+        var associations = D.associations || [];
+        if (associations.length) {
             var loop = [];
-            while (loop.length < 12) { loop = loop.concat(clients); }
-            set('home-clients', '<ul class="client-track" style="animation-duration:' + (loop.length * 3.5) + 's">' +
+            while (loop.length < 12) { loop = loop.concat(associations); }
+            set('home-associations', '<ul class="association-track" style="animation-duration:' + (loop.length * 3.5) + 's">' +
                 loop.concat(loop).map(function (c, i) {
-                    var copy = i >= clients.length;
-                    return '<li class="client-tile"' + (copy ? ' aria-hidden="true"' : '') + '>' +
+                    var copy = i >= associations.length;
+                    return '<li class="association-tile"' + (copy ? ' aria-hidden="true"' : '') + '>' +
                         (c.logo ? '<img src="' + esc(c.logo) + '" alt="' + (copy ? '' : esc(c.name)) + '">' : '<span>' + esc(c.name) + '</span>') +
                         '</li>';
                 }).join('') + '</ul>');
         } else {
-            hide('clients-section');
+            hide('associations-section');
         }
 
         var featured = D.projects.filter(function (p) { return p.featured; }).slice(0, 3);
@@ -338,38 +337,20 @@
         set('count-projects', String(D.projects.length));
         set('count-pubs', String(D.publications.length));
         set('count-faculty', String(D.team.filter(function (m) { return m.group === 'faculty'; }).length));
-    };
 
-    pages.services = function () {
-        set('services-index', '<div class="board-face"><ul>' + D.services.map(function (s) {
-            return '<li><a href="#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'go') + '</a></li>';
-        }).join('') + '</ul></div>');
-        set('services-detail', D.services.map(function (s) {
-            return '<article class="service" id="' + esc(s.id) + '">' +
-                '<div class="board board-blue service-head"><div class="board-face">' + servicePict(s) + '<h2>' + esc(s.title) + '</h2></div></div>' +
-                '<div class="sign-plate service-plate"><p>' + esc(s.text) + '</p>' +
-                '<h3>Typical outputs</h3><ul class="chevrons">' + s.outputs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' +
-                '<p class="service-ask"><a class="text-link" href="contact.html?service=' + encodeURIComponent(s.id) + '">Ask about ' +
+        // Our capabilities: a blue sign for each, with a plate of details below
+        set('capability-list', D.capabilities.map(function (s) {
+            return '<article class="capability" id="' + esc(s.id) + '">' +
+                '<div class="board board-blue capability-head"><div class="board-face">' + capabilityPict(s) + '<h3>' + esc(s.title) + '</h3></div></div>' +
+                '<div class="sign-plate capability-plate"><p>' + esc(s.text) + '</p>' +
+                '<h4>Typical outputs</h4><ul class="chevrons">' + s.outputs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' +
+                '<p class="capability-ask"><a class="text-link" href="contact.html?work=' + encodeURIComponent(s.id) + '">Ask about ' +
                 esc(s.title.charAt(0).toLowerCase() + s.title.slice(1)) + '</a></p></div></article>';
         }).join(''));
-        // Jump to the service in the link (content is added after the page loads)
+        // Jump to the capability named in the link (content is added after the page loads)
         if (window.location.hash) {
             var target = document.getElementById(window.location.hash.slice(1));
             if (target) { setTimeout(function () { target.scrollIntoView(); }, 0); }
-        }
-        // Highlight the service being read in the side list
-        var links = {};
-        document.querySelectorAll('#services-index a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
-        if ('IntersectionObserver' in window) {
-            var obs = new IntersectionObserver(function (entries) {
-                entries.forEach(function (en) {
-                    if (en.isIntersecting && links[en.target.id]) {
-                        Object.keys(links).forEach(function (k) { links[k].classList.remove('is-active'); });
-                        links[en.target.id].classList.add('is-active');
-                    }
-                });
-            }, { rootMargin: '-20% 0px -70% 0px' });
-            document.querySelectorAll('.service[id]').forEach(function (s) { obs.observe(s); });
         }
     };
 
@@ -406,24 +387,24 @@
             return (!status || p.status === status) && (!sector || p.sector === sector);
         }));
         if (list.length) {
-            set('result-count', list.length + (list.length === 1 ? ' project' : ' projects'));
+            set('result-count', list.length + ' listed');
             set('project-grid', list.map(function (p) { return projectCard(p, false); }).join(''));
         } else {
             set('result-count', '');
             set('project-grid', '');
-            set('projects-empty', '<p>No projects match these filters.</p><p><a class="text-link" href="projects.html">Show all projects</a></p>');
+            set('projects-empty', '<p>Nothing matches these filters.</p><p><a class="text-link" href="projects.html">Show all research &amp; projects</a></p>');
         }
     };
 
     pages.project = function () {
         var id = params.get('id');
         var p = D.projects.filter(function (x) { return String(x.id) === id; })[0];
-        if (!p) { set('content', notFound('project', 'projects.html', 'Show all projects')); return; }
+        if (!p) { set('content', notFound('item', 'projects.html', 'Show all research & projects')); return; }
 
         document.title = p.title + ' | ' + S.short + ', ' + S.instituteShort;
         var years = projectYears(p);
         var facts = '';
-        if (p.client) { facts += '<div><dt>Client</dt><dd>' + esc(p.client) + '</dd></div>'; }
+        if (p.associatedWith) { facts += '<div><dt>In association with</dt><dd>' + esc(p.associatedWith) + '</dd></div>'; }
         if (p.location) { facts += '<div><dt>Location</dt><dd>' + esc(p.location) + '</dd></div>'; }
         if (D.sectors[p.sector]) { facts += '<div><dt>Area of work</dt><dd>' + esc(D.sectors[p.sector]) + '</dd></div>'; }
         if (years) { facts += '<div><dt>Period</dt><dd>' + esc(years) + '</dd></div>'; }
@@ -433,14 +414,14 @@
         var boardClass = projectBoardClass(p);
 
         set('content',
-            pageHead(p.title, '', 'projects.html', 'All projects', 'road', boardClass) +
+            pageHead(p.title, '', 'projects.html', 'All research & projects', 'road', boardClass) +
             '<section class="section section-tight"><div class="wrap detail-layout"><div class="detail-main">' +
             (p.image ? '<figure class="detail-image"><img src="' + esc(p.image) + '" alt=""></figure>' : '') +
             (p.summary ? '<p class="lead-text">' + esc(p.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(p.description) + '</div></div>' +
             '<aside class="detail-facts board ' + boardClass + '"><div class="board-face"><dl>' + facts + '</dl>' +
             '<a class="btn ' + (boardClass ? 'btn-primary' : 'btn-yellow') + ' btn-block" href="contact.html">Discuss a similar project</a></div></aside></div></section>' +
-            (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related projects</h2></div><div class="project-grid">' +
+            (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related work</h2></div><div class="project-grid">' +
                 related.map(function (r) { return projectCard(r, false); }).join('') + '</div></div></section>' : ''));
     };
 
@@ -629,9 +610,9 @@
 
         var form = document.getElementById('enquiry-form');
         if (!form) { return; }
-        var select = form.elements.service;
+        var select = form.elements.work;
         var labels = {};
-        D.services.forEach(function (s) { labels[s.id] = s.title; });
+        D.capabilities.forEach(function (s) { labels[s.id] = s.title; });
         labels.other = 'Something else';
         Object.keys(labels).forEach(function (k) {
             var o = document.createElement('option');
@@ -639,7 +620,7 @@
             o.textContent = labels[k];
             select.appendChild(o);
         });
-        if (labels[params.get('service')]) { select.value = params.get('service'); }
+        if (labels[params.get('work')]) { select.value = params.get('work'); }
 
         var usingEmailApp = !S.formEndpoint;
         if (usingEmailApp) {
@@ -680,7 +661,7 @@
             if (!v('name')) { showError('name', 'Enter your name.'); errors++; }
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) { showError('email', 'Enter a valid email address so we can reply.'); errors++; }
             if (v('phone') && !/^[0-9+\-\s()]{6,20}$/.test(v('phone'))) { showError('phone', 'Enter the phone number using digits only.'); errors++; }
-            if (!labels[v('service')]) { showError('service', 'Choose the type of work.'); errors++; }
+            if (!labels[v('work')]) { showError('work', 'Choose the type of work.'); errors++; }
             if (v('message').length < 20) { showError('message', 'Describe the work in a few sentences (at least 20 characters).'); errors++; }
             if (errors) {
                 status('error', '<p>Some details need fixing. Check the highlighted fields below.</p>');
@@ -692,11 +673,11 @@
                 return;
             }
 
-            var service = labels[v('service')];
+            var work = labels[v('work')];
             if (usingEmailApp) {
                 var body = 'Name: ' + v('name') + '\nOrganisation: ' + v('organisation') + '\nEmail: ' + v('email') +
-                    '\nPhone: ' + v('phone') + '\nType of work: ' + service + '\n\n' + v('message');
-                window.location.href = 'mailto:' + S.email + '?subject=' + encodeURIComponent('Website enquiry: ' + service) +
+                    '\nPhone: ' + v('phone') + '\nType of work: ' + work + '\n\n' + v('message');
+                window.location.href = 'mailto:' + S.email + '?subject=' + encodeURIComponent('Website enquiry: ' + work) +
                     '&body=' + encodeURIComponent(body);
                 status('success', '<h2>Your email app should now be open</h2><p>The enquiry is filled in there. Press <strong>Send</strong> in your email app to deliver it. ' +
                     'If no email app opened, write to <a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a> directly.</p>');
@@ -704,8 +685,8 @@
             }
 
             var data = new FormData(form);
-            data.set('service', service);
-            data.append('_subject', 'Website enquiry: ' + service);
+            data.set('work', work);
+            data.append('_subject', 'Website enquiry: ' + work);
             var btn = form.querySelector('button[type="submit"]');
             btn.disabled = true;
             btn.textContent = 'Sending…';

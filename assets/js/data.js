@@ -37,14 +37,14 @@ window.TRC = {
         previewNotice: '',
 
         // Contact form: leave '' to open the visitor's email app with the enquiry filled in.
-        // To receive enquiries without the email app, paste a form-service link here
+        // To receive enquiries without the email app, paste a form link here
         // (for example a Formspree form endpoint like 'https://formspree.io/f/xxxxxxx').
         formEndpoint: '',
     },
 
-    /* ---------- Services (Home page, Services page, contact form) ---------- */
+    /* ---------- Our capabilities (Home page, About page, contact form) ---------- */
     // The first four appear on the green sign at the top of the Home page.
-    services: [
+    capabilities: [
         {
             id: 'traffic-studies',
             title: 'Traffic surveys and studies',
@@ -126,7 +126,7 @@ window.TRC = {
                 'Vehicle detection, tracking and trajectory data',
                 'Speed, gap and conflict analysis from video',
                 'Interactive traffic and safety dashboards',
-                'Data processing workflows handed over to clients',
+                'Data processing workflows handed over to partner agencies',
             ],
         },
         {
@@ -160,12 +160,12 @@ window.TRC = {
     /* ---------- Projects ---------- */
     // id: a unique number (used in the page link).
     // sector: one of the keys in "sectors" above. status: 'ongoing' or 'completed'.
-    // featured: true shows it under "Selected projects" on the Home page (first one is shown large).
+    // featured: true shows it under "Selected research & projects" on the Home page (first one is shown large).
     projects: [
         {
             id: 3,
             title: 'Independent traffic assessment review for four cities',
-            client: 'State agency (sample)',
+            associatedWith: 'State agency (sample)',
             location: 'Gujarat',
             sector: 'review',
             status: 'ongoing',
@@ -182,7 +182,7 @@ window.TRC = {
         {
             id: 2,
             title: 'Road safety audit of a national highway stretch',
-            client: 'Highway authority (sample)',
+            associatedWith: 'Highway authority (sample)',
             location: 'Gujarat',
             sector: 'safety',
             status: 'completed',
@@ -199,7 +199,7 @@ window.TRC = {
         {
             id: 1,
             title: 'Comprehensive traffic study for an urban arterial corridor',
-            client: 'Municipal corporation (sample)',
+            associatedWith: 'Municipal corporation (sample)',
             location: 'Surat, Gujarat',
             sector: 'traffic',
             status: 'completed',
@@ -216,7 +216,7 @@ window.TRC = {
         {
             id: 4,
             title: 'Video-based vehicle tracking and safety dashboard',
-            client: 'Traffic police (sample)',
+            associatedWith: 'Traffic police (sample)',
             location: 'Gujarat',
             sector: 'analytics',
             status: 'ongoing',
@@ -229,7 +229,7 @@ window.TRC = {
         {
             id: 5,
             title: 'Traffic impact assessment for a commercial development',
-            client: 'Private developer (sample)',
+            associatedWith: 'Private developer (sample)',
             location: 'Surat, Gujarat',
             sector: 'traffic',
             status: 'completed',
@@ -242,7 +242,7 @@ window.TRC = {
         {
             id: 6,
             title: 'Signal timing and channelisation for a city intersection',
-            client: 'Urban local body (sample)',
+            associatedWith: 'Urban local body (sample)',
             location: 'Gujarat',
             sector: 'traffic',
             status: 'completed',
@@ -289,14 +289,14 @@ window.TRC = {
         { authors: 'Author, A., Author, B.', title: 'Sample journal article title on crash frequency modelling', venue: 'Journal name, Vol. X, pp. 1–20', type: 'journal', year: 2026, link: '' },
         { authors: 'Author, A., Author, C.', title: 'Sample conference paper title on blackspot identification', venue: 'Conference name, City', type: 'conference', year: 2026, link: '' },
         { authors: 'Author, B., Author, D.', title: 'Sample paper title on mixed-traffic vehicle trajectories', venue: 'Journal name', type: 'journal', year: 2025, link: '' },
-        { authors: 'Author, A.', title: 'Sample technical report title on corridor traffic study', venue: 'Report for client (sample)', type: 'report', year: 2025, link: '' },
+        { authors: 'Author, A.', title: 'Sample technical report title on corridor traffic study', venue: 'Report for a partner agency (sample)', type: 'report', year: 2025, link: '' },
         { authors: 'Author, C., Author, A.', title: 'Sample paper title on pedestrian safety at urban intersections', venue: 'Conference name, City', type: 'conference', year: 2024, link: '' },
     ],
 
-    /* ---------- Clients (moving strip on the Home page) ---------- */
-    // name: the client's name. logo: path to the logo, e.g. 'images/clients/client-name.png'.
-    // Leave logo as '' to show the name as text. An empty list (clients: []) hides the whole strip.
-    clients: [
+    /* ---------- Our Associations (moving strip on the Home page) ---------- */
+    // name: the organisation's name. logo: path to the logo, e.g. 'images/associations/organisation-name.png'.
+    // Leave logo as '' to show the name as text. An empty list (associations: []) hides the whole strip.
+    associations: [
         { name: 'Municipal corporation (sample)', logo: '' },
         { name: 'Highway authority (sample)', logo: '' },
         { name: 'State agency (sample)', logo: '' },

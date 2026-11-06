@@ -1,10 +1,10 @@
 # TRC website: preview version (HTML, CSS, JavaScript)
 
 Preview of the **Transportation Research & Consultancy (TRC)** website, Department of Civil Engineering, SVNIT Surat.
-It is for sharing a link and collecting feedback. It has the same pages as the PHP version, which will be used later on the SVNIT server. The road-sign design was made on this version first.
+It is for sharing a link and collecting feedback. It began with the same pages as the PHP version, which will be used later on the SVNIT server. The road-sign design was made on this version first.
 
 - No server, database or PHP needed
-- All content (services, projects, news, publications, team, contact details) is in **one file: `assets/js/data.js`**
+- All content (capabilities, research and projects, news, publications, team, contact details) is in **one file: `assets/js/data.js`**
 - Publish free on **GitHub Pages** and share the link
 
 ---
@@ -45,12 +45,12 @@ The top of `data.js` explains the rules. In short:
 |---|---|
 | Email, phone, address, office hours, map | `site` |
 | Yellow "preview" bar at the top | `site.previewNotice` (set to `''` to hide it) |
-| Services (Home, Services page, form) | `services` (the first four appear on the green sign on the Home page) |
-| Projects | `projects` (`featured: true` puts one on the Home page; the first featured one is shown large) |
+| Our capabilities (Home, About page, form) | `capabilities` (the first four appear on the green sign on the Home page) |
+| Research & Projects | `projects` (`featured: true` puts one on the Home page; the first featured one is shown large; `associatedWith` is the organisation you worked with) |
 | News | `news` (newest date appears first) |
 | Publications | `publications` |
 | Team | `team` (`order`: lower numbers appear first) |
-| Client logos moving across the Home page | `clients` (add one line per client; `clients: []` hides the strip) |
+| Our Associations: logos moving across the Home page | `associations` (add one line per organisation; `associations: []` hides the strip) |
 | Gallery photos and their captions | `gallery` (shown in the order listed; the filter buttons come from `galleryCategories`) |
 
 **Text that is in the HTML files instead:** the Home page headline and intro (`index.html`), and the About page (`about.html`).
@@ -59,7 +59,7 @@ The top of `data.js` explains the rules. In short:
 1. On GitHub, open the `images/projects` folder (or `images/news`, `images/team`) and use **Add file → Upload files**.
 2. In `data.js`, set the item's `image` (or `photo` for team) to the path, e.g. `image: 'images/projects/ring-road.jpg'`.
 
-For client logos, use the `images/clients` folder and set `logo`, e.g. `logo: 'images/clients/client-name.png'`. A PNG with a transparent background, around 400 px wide, works best.
+For the logos in Our Associations, use the `images/associations` folder and set `logo`, e.g. `logo: 'images/associations/organisation-name.png'`. A PNG with a transparent background, around 400 px wide, works best.
 
 For the gallery, use the `images/gallery` folder and add one line to `gallery` in `data.js` for each photo:
 `{ image: 'images/gallery/ring-road-survey.jpg', title: 'Video survey on the ring road', category: 'field', place: 'Surat', year: 2026 },`
@@ -75,13 +75,13 @@ The whole site is built from road furniture. Each kind has one job, and most of 
 | Green direction board | Completed projects, page titles, the last call to action | A project's `status: 'completed'` |
 | Yellow work-zone board | Ongoing projects, on their cards and their own pages | A project's `status: 'ongoing'` |
 | Small traffic signal | Project status (amber or green lamp) and the filter buttons | A project's `status` |
-| Blue facility sign with a white picture square | Services, team and contact details | Automatic |
+| Blue facility sign with a white picture square | Our capabilities, team and contact details | Automatic |
 | Km-stone | News dates, publication years and the steps on the About page | `date` in `news`, `year` in `publications` |
 | Red ring signs | The numbers on the About page | Counted from your lists |
 
 So when a project finishes, change its `status` to `'completed'` and its board turns green everywhere.
 
-A new service shows a traffic cone until you choose its picture: add its `id` to `SERVICE_PICTS` in `assets/js/main.js`.
+A new capability shows a traffic cone until you choose its picture: add its `id` to `CAPABILITY_PICTS` in `assets/js/main.js`.
 
 ---
 
@@ -89,16 +89,16 @@ A new service shows a traffic cone until you choose its picture: add its `id` to
 
 By default, pressing **Send enquiry** opens the visitor's email app with the enquiry filled in, addressed to `site.email`. The visitor then presses Send in their email app.
 
-To receive enquiries **without** the visitor's email app, use a free form service such as Formspree:
+To receive enquiries **without** the visitor's email app, use a free form tool such as Formspree:
 1. Create an account and a new form there. It gives you a link like `https://formspree.io/f/abcdwxyz`.
 2. Paste that link into `site.formEndpoint` in `data.js`.
-Enquiries are then emailed to you directly. The form has a hidden spam trap that these services recognise.
+Enquiries are then emailed to you directly. The form has a hidden spam trap that these tools recognise.
 
 ---
 
 ## 5. Collecting feedback
 
-Ask reviewers to mention the **page** and **section** with each comment (e.g. "Home, Selected projects: …").
+Ask reviewers to mention the **page** and **section** with each comment (e.g. "Home, Selected research & projects: …").
 If your reviewers use GitHub, they can also open an **Issue** in the repository for each comment.
 
 ---
@@ -110,10 +110,10 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 - `news` → Admin → News
 - `publications` → Admin → Publications
 - `team` → Admin → Team
-- `services` → `includes/content.php`
+- `capabilities` → `includes/content.php`
 - `site` (contact details) → `includes/config.php`
 
-The road-sign design, the SVNIT logo, the moving client strip and the Gallery page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
+The road-sign design, the SVNIT logo, the moving Our Associations strip, the Gallery page and the move of the capabilities into the About page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
 
 ---
 
@@ -132,7 +132,7 @@ The road-sign design, the SVNIT logo, the moving client strip and the Gallery pa
 ## 8. Files
 
 ```
-index.html, about.html, services.html, projects.html, project.html,
+index.html, about.html, projects.html, project.html,
 publications.html, news.html, news-item.html, gallery.html, team.html, contact.html, 404.html
 assets/
   js/data.js      ← all the content
@@ -140,6 +140,6 @@ assets/
   css/style.css   the road-sign design
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
-images/           photos for projects, news, team and the gallery, and client logos
+images/           photos for projects, news, team and the gallery, and logos for Our Associations
 .nojekyll         tells GitHub Pages to serve the files as they are
 ```
