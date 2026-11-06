@@ -588,7 +588,7 @@
                         : '<span class="person-photo is-initials" aria-hidden="true">' + esc(initials(m.name)) + '</span>';
                     var links = '';
                     if (m.email) { links += '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a>'; }
-                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener">Profile</a>'; }
+                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Website</a>'; }
                     return '<li class="person board board-blue"><div class="board-face person-face">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
                         (m.designation ? '<p class="person-role">' + esc(m.designation) + '</p>' : '') +
                         (m.expertise ? '<p class="person-areas">' + esc(m.expertise) + '</p>' : '') +

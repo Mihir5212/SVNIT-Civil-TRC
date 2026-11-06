@@ -333,10 +333,17 @@ window.TRC = {
 
     /* ---------- Team ---------- */
     // group: 'professors' or 'staff'. order: lower numbers appear first.
+    // profile: the person's own website, shown as a "Website" link. Leave '' to hide it.
     team: [
-        { name: 'Professor name', designation: 'Professor, Transportation Engineering', group: 'professors', expertise: 'Traffic flow, road safety, traffic simulation', email: '', profile: '', photo: '', order: 10 },
-        { name: 'Professor name', designation: 'Associate Professor, Transportation Engineering', group: 'professors', expertise: 'Transport planning, travel behaviour', email: '', profile: '', photo: '', order: 20 },
-        { name: 'Professor name', designation: 'Assistant Professor, Transportation Engineering', group: 'professors', expertise: 'Pavement engineering, highway materials', email: '', profile: '', photo: '', order: 30 },
-        { name: 'Staff name', designation: 'Project associate', group: 'staff', expertise: 'Field surveys and data processing', email: '', profile: '', photo: '', order: 60 },
+        { name: 'Dr. Gaurang J. Joshi', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://gjjoshisvnit.com/', photo: 'images/team/gaurang-joshi.jpg', order: 10 },
+        { name: 'Dr. Shriniwas S. Arkatkar', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://shriniwasprofile.wordpress.com/', photo: 'images/team/shriniwas-arkatkar.jpg', order: 20 },
+        { name: 'Dr. Ashish Dhamaniya', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://sites.google.com/view/drashishdhamaniya', photo: 'images/team/ashish-dhamaniya.jpg', order: 30 },
+        { name: 'Maitrik Bhadresa', designation: 'Senior Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/maitrik-bhadresa.jpg', order: 60 },
+        { name: 'Krushnaraj Chaudhari', designation: 'Senior Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/krushnaraj-chaudhari.jpg', order: 70 },
+        { name: 'Siddharth Umrigar', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/siddharth-umrigar.jpg', order: 80 },
+        { name: 'Ayush Patel', designation: 'Project Planner', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/ayush-patel.jpg', order: 90 },
+        { name: 'Meshvi Patel', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/meshvi-patel.jpg', order: 100 },
+        { name: 'Darshit Lad', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/darshit-lad.jpg', order: 110 },
+        { name: 'Sunil Kumar', designation: 'Draftsman', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/sunil-kumar.jpg', order: 120 },
     ],
 };
