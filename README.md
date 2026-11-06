@@ -1,6 +1,6 @@
 # TRC website: preview version (HTML, CSS, JavaScript)
 
-Preview of the **Transportation Research & Consultancy (TRC)** website, Department of Civil Engineering, SVNIT Surat.
+Preview of the **TEP Research & Consultancy Cell (TRC)** website, Department of Civil Engineering, SVNIT Surat.
 It is for sharing a link and collecting feedback. It began with the same pages as the PHP version, which will be used later on the SVNIT server. The road-sign design was made on this version first.
 
 - No server, database or PHP needed

@@ -22,12 +22,8 @@ window.TRC = {
 
     /* ---------- Site details ---------- */
     site: {
-        name: 'Transportation Research & Consultancy',
+        name: 'TEP Research & Consultancy Cell',
         short: 'TRC',
-        // The name beside the logos in the top navigation bar.
-        // The third line there is made from dept and instituteShort, below.
-        headerName: 'Transportation Engineering & Planning Section',
-        headerCell: 'Research & Consultancy Cell',
         dept: 'Department of Civil Engineering',
         institute: 'Sardar Vallabhbhai National Institute of Technology, Surat',
         instituteShort: 'SVNIT Surat',
@@ -265,7 +261,7 @@ window.TRC = {
             id: 1,
             date: '2026-11-05',
             title: 'TRC website preview shared for feedback',
-            summary: 'A first version of the Transportation Research & Consultancy website is ready for review by faculty and students.',
+            summary: 'A first version of the TEP Research & Consultancy Cell website is ready for review by faculty and students.',
             body: `Send comments on the layout, wording and content to the website team.`,
             image: '',
         },
