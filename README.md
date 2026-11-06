@@ -45,15 +45,17 @@ The top of `data.js` explains the rules. In short:
 |---|---|
 | Email, phone, address, office hours, map | `site` |
 | Yellow "preview" bar at the top | `site.previewNotice` (set to `''` to hide it) |
-| Our capabilities (Home, About page, form) | `capabilities` (the first four appear on the green sign on the Home page) |
-| Research & Projects | `projects` (`featured: true` puts one on the Home page; the first featured one is shown large; `associatedWith` is the organisation you worked with) |
-| News | `news` (newest date appears first; the latest three show on the Home page, whose "All news" link opens the full list, as News is not in the menu) |
+| Our capabilities (About page, form) and the Our Expertise board on the Home page | `capabilities` |
+| Research & Projects | `projects` (the first one with `featured: true` appears on the Featured Project board on the Home page; `associatedWith` is the organisation you worked with) |
+| News | `news` (newest date appears first; `featured: true` chooses the story on the Featured News board on the Home page, whose "All news" link opens the full list, as News is not in the menu) |
 | Publications | `publications` |
 | Team | `team` (`order`: lower numbers appear first) |
-| Our Associations: logos moving across the Home page | `associations` (add one line per organisation; `associations: []` hides the strip) |
+| Our Associations & Collaboration board on the Home page | `associations` (one line per organisation; the first six are shown; with `associations: []` the board keeps only its title and button) |
 | Gallery photos and their captions | `gallery` (shown in the order listed; the filter buttons come from `galleryCategories`) |
 
-**Text that is in the HTML files instead:** the Home page headline and intro (`index.html`), and the About page (`about.html`).
+**Text that is in the HTML files instead:** the Home page welcome, About TEP and Vision & Mission boards (`index.html`), and the About page (`about.html`).
+
+**The Home page** is a night drive: scrolling moves along a road from a rural highway into the city, with each section on an overhead board. It has its own styles inside `index.html` and does not use `style.css` or `main.js`; its lists come from `data.js`, and the road is drawn by `assets/js/night-road.js`. Every other page opens at the place on the road where its board stands on Home (set by `ROAD_SPOTS` in `main.js`). Visitors who ask for less motion, and very short screens, see the boards as a simple list.
 
 ### Adding photos
 1. On GitHub, open the `images/projects` folder (or `images/news`, `images/team`) and use **Add file → Upload files**.
@@ -98,7 +100,7 @@ Enquiries are then emailed to you directly. The form has a hidden spam trap that
 
 ## 5. Collecting feedback
 
-Ask reviewers to mention the **page** and **section** with each comment (e.g. "Home, Selected research & projects: …").
+Ask reviewers to mention the **page** and **section** with each comment (e.g. "Home, Featured Project board: …").
 If your reviewers use GitHub, they can also open an **Issue** in the repository for each comment.
 
 ---
@@ -113,7 +115,7 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 - `capabilities` → `includes/content.php`
 - `site` (contact details) → `includes/config.php`
 
-The road-sign design, the SVNIT logo, the moving Our Associations strip, the Gallery page and the move of the capabilities into the About page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
+The road-sign design, the SVNIT logo, the night-drive Home page, the Gallery page and the move of the capabilities into the About page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
 
 ---
 
@@ -136,8 +138,9 @@ index.html, about.html, projects.html, project.html,
 publications.html, news.html, news-item.html, gallery.html, team.html, contact.html, 404.html
 assets/
   js/data.js      ← all the content
-  js/main.js      builds the pages from data.js
-  css/style.css   the road-sign design
+  js/main.js      builds the pages from data.js (all except Home)
+  js/night-road.js draws the night road on every page
+  css/style.css   the look of every page except Home
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
 images/           photos for projects, news, team and the gallery, and logos for Our Associations

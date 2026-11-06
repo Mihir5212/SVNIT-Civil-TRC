@@ -2,150 +2,657 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Preview site: keeps search engines from listing it. Remove this line when the site becomes official. -->
 <meta name="robots" content="noindex">
 <title>TEP Research &amp; Consultancy Cell | SVNIT Surat</title>
 <meta name="description" content="Traffic studies, road safety audits and transport planning by the TEP Research &amp; Consultancy Cell, Department of Civil Engineering, SVNIT Surat.">
-<meta name="theme-color" content="#0B5D45">
+<meta name="theme-color" content="#03060c">
 <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@400&display=swap">
+<style>
+/* The Home page: a night drive from a rural highway into the city. Every section of the site is a real overhead board on the road.
+   This page has its own styles and drawing code; it does not use style.css or main.js. Its content comes from data.js. */
+:root {
+    --night: #03060c;
+    --on-night: #f5f6f4;
+    --on-night-soft: #aab1b6;
+    --line-amber: #f2be1a;
+    --font: "Overpass", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono: "Overpass Mono", Consolas, "Courier New", monospace;
+    --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+    --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+    color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: var(--night);
+    color: var(--on-night);
+    font-family: var(--font);
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night);
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--line-amber); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, p, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+
+.skip-link { position: absolute; left: 12px; top: -70px; z-index: 40; padding: 10px 16px 8px; border-radius: 8px; background: var(--line-amber); color: #0b0d0f; font-weight: 700; text-decoration: none; }
+.skip-link:focus { top: 10px; }
+
+/* Navigation */
+.nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: rgba(3, 6, 12, .72);
+    -webkit-backdrop-filter: saturate(170%) blur(18px);
+    backdrop-filter: saturate(170%) blur(18px);
+}
+.nav-in {
+    max-width: 1280px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 58px;
+}
+.nav-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; min-width: 0; }
+.nav-chip { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #fff; }
+.nav-chip img { width: 26px; height: 25px; object-fit: contain; display: block; }
+.nav-mark { flex: none; width: 32px; height: 32px; display: block; }
+.nav-name { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; padding-left: 3px; }
+.nav-name strong { font-size: 13.5px; font-weight: 700; letter-spacing: -.005em; }
+.nav-name span { font-size: 11px; color: var(--on-night-soft); }
+.nav-links { display: flex; align-items: center; gap: 24px; font-size: 13.5px; }
+.nav-menu { display: flex; align-items: center; gap: 24px; }
+.nav-menu .phone-only, .nav-btn { display: none; }
+.nav-menu a { text-decoration: none; color: #d9dcde; padding-block: 12px; }
+.nav-menu a:hover { color: #fff; }
+.nav-menu a[aria-current="page"] { color: #fff; font-weight: 700; box-shadow: inset 0 -2px 0 var(--line-amber); }
+.nav-enquiry {
+    white-space: nowrap; text-decoration: none; color: #0b0d0f; background: var(--line-amber);
+    font-weight: 700; padding: 8px 15px 6px; border-radius: 999px;
+}
+.nav-enquiry:hover { background: #ffd23f; }
+@media (max-width: 1040px) {
+    .nav-links { gap: 10px; }
+    .nav-menu {
+        display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+        padding: 8px var(--gutter-r) 16px var(--gutter-l); background: rgba(3, 6, 12, .97); font-size: 18px;
+        max-height: calc(100vh - 58px); max-height: calc(100svh - 58px); overflow-y: auto;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu a[aria-current="page"] { box-shadow: none; color: var(--line-amber); }
+    .nav-btn { display: grid; place-items: center; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #fff; cursor: pointer; }
+    .nav-btn span, .nav-btn span::before, .nav-btn span::after { display: block; width: 20px; height: 2px; border-radius: 1px; background: currentColor; }
+    .nav-btn span { position: relative; }
+    .nav-btn span::before, .nav-btn span::after { content: ""; position: absolute; left: 0; }
+    .nav-btn span::before { top: -6px; }
+    .nav-btn span::after { top: 6px; }
+}
+@media (max-width: 460px) {
+    .nav-name span { display: none; }
+    .nav-in { gap: 10px; }
+}
+@media (max-width: 420px) {
+    .nav-enquiry { display: none; }
+    .nav-menu .phone-only { display: block; }
+}
+
+/* The drive */
+.drive { position: relative; height: 1100vh; margin-top: -58px; }
+.drive-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; }
+#road { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 78% 82% at 50% 58%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, .58)); }
+.boards { position: absolute; inset: 0; }
+
+/* The boards: real text and links, moved and scaled to sit on their gantries in the road scene */
+.board {
+    position: absolute; left: 0; top: 0; width: 880px; transform-origin: 0 0; visibility: hidden;
+    padding: 9px; border-radius: 16px; text-align: center; color: #fff;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 0 70px rgba(70, 150, 190, .22);
+}
+.board-green { background: radial-gradient(90% 120% at 50% 100%, #118361, #0a5a43 72%); --sign: #0a5a43; --soft: #e6f1ec; }
+.board-blue { background: radial-gradient(90% 120% at 50% 100%, #1662b8, #0b4280 72%); --sign: #0b4280; --soft: #e6eef8; }
+.board-face {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 34px 26px; border: 3px solid #fff; border-radius: 9px;
+}
+.board-head { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.board-pict { flex: none; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 10px; background: #fff; color: var(--sign); }
+.board-pict svg { width: 36px; height: 36px; display: block; }
+.board h2 { font-size: 45px; line-height: 1.06; font-weight: 800; letter-spacing: -.028em; text-wrap: balance; }
+.board-text { margin-top: 14px; max-width: 37em; font-size: 23px; line-height: 1.34; text-wrap: pretty; }
+.board-soft { color: var(--soft); }
+.board-actions { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.plate {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 11px 18px 9px; border-radius: 7px;
+    font-size: 18px; line-height: 1.2; font-weight: 700; text-decoration: none; transition: background .2s ease, color .2s ease;
+}
+.plate::after { content: ""; width: 19px; height: 12px; flex: none; margin-top: -2px; background: currentColor; clip-path: polygon(0 38%, 62% 38%, 62% 0, 100% 50%, 62% 100%, 62% 62%, 0 62%); }
+.plate-yellow { background: var(--line-amber); color: #101214; }
+.plate-yellow:hover { background: #ffd23f; }
+.plate-white { box-shadow: inset 0 0 0 2px #fff; color: #fff; }
+.plate-white:hover { background: #fff; color: var(--sign); }
+
+/* The welcome board */
+.board-welcome { font-size: 25px; line-height: 1.2; font-weight: 400; letter-spacing: -.005em; }
+.board h1 { margin-top: 4px; font-size: 52px; line-height: 1.05; font-weight: 800; letter-spacing: -.03em; text-wrap: balance; }
+.board-section { margin-top: 14px; font-size: 25px; line-height: 1.22; font-weight: 600; letter-spacing: -.005em; text-wrap: balance; }
+.board-dept { margin-top: 3px; font-size: 20px; line-height: 1.25; color: var(--soft); text-wrap: balance; }
+
+/* Vision and mission */
+.pair { margin-top: 18px; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; text-align: left; }
+.pair-card { padding: 16px 20px 16px; border-radius: 8px; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .55); }
+.pair-card h3 { font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -.012em; }
+.pair-card p { margin-top: 8px; font-size: 21px; line-height: 1.34; text-wrap: pretty; }
+
+/* Expertise */
+.exp-list { margin-top: 16px; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 26px; text-align: left; }
+.exp-list a {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 46px; padding-block: 9px 7px;
+    border-bottom: 1px solid rgba(255, 255, 255, .34); font-size: 20px; line-height: 1.2; font-weight: 600; text-decoration: none;
+}
+.exp-list a::after { content: ""; width: 16px; height: 11px; flex: none; margin-top: -2px; background: currentColor; clip-path: polygon(0 38%, 62% 38%, 62% 0, 100% 50%, 62% 100%, 62% 62%, 0 62%); }
+.exp-list a:hover { color: var(--line-amber); }
+
+/* Associations */
+.assoc { margin-top: 18px; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.assoc li { display: grid; place-items: center; min-height: 66px; padding: 8px 12px 6px; border-radius: 7px; background: #fff; color: #10202c; font-size: 18px; line-height: 1.22; font-weight: 700; text-wrap: balance; }
+.assoc img { max-width: 100%; max-height: 50px; object-fit: contain; display: block; }
+
+/* Project and news */
+.lamp-row { margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 19px; line-height: 1.2; font-weight: 600; }
+.lamp { flex: none; width: 13px; height: 13px; border-radius: 50%; }
+.lamp-amber { background: #ffb300; box-shadow: 0 0 12px 2px rgba(255, 179, 0, .8); }
+.lamp-green { background: #22d67f; box-shadow: 0 0 12px 2px rgba(34, 214, 127, .8); }
+.lamp-date { background: var(--line-amber); border-radius: 3px; }
+.board-story { margin-top: 8px; font-size: 33px; line-height: 1.14; font-weight: 700; letter-spacing: -.016em; text-wrap: balance; }
+.board-meta { margin-top: 8px; font-size: 19px; line-height: 1.3; color: var(--soft); }
+
+/* Publications */
+.pubs { margin-top: 14px; width: 100%; text-align: left; }
+.pubs li { padding-block: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, .34); }
+.pubs strong { display: block; font-size: 21px; line-height: 1.24; font-weight: 700; }
+.pubs span { display: block; margin-top: 2px; font-size: 19px; line-height: 1.3; color: var(--soft); }
+
+/* Team */
+.people { margin-top: 18px; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.people img { display: block; width: 100%; height: auto; max-width: 168px; margin-inline: auto; aspect-ratio: 1; object-fit: cover; border-radius: 10px; box-shadow: 0 0 0 3px #fff; }
+.people strong { display: block; margin-top: 12px; font-size: 21px; line-height: 1.18; font-weight: 700; text-wrap: balance; }
+.people span { display: block; margin-top: 3px; font-size: 18px; line-height: 1.25; color: var(--soft); text-wrap: balance; }
+
+/* All pages */
+.where { margin-top: 18px; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.where a { display: flex; width: 100%; justify-content: space-between; font-size: 20px; min-height: 52px; }
+.where li:last-child { grid-column: 1 / -1; }
+
+@media (min-width: 721px) and (max-height: 820px) {
+    .people img { max-width: 122px; }
+    .people strong { margin-top: 8px; font-size: 20px; }
+}
+@media (min-width: 721px) and (max-height: 680px) {
+    .short-hide, .pubs li:nth-child(3) { display: none; }
+    .people img { max-width: 96px; }
+    .board-face { padding: 18px 30px 20px; }
+    .board-actions { margin-top: 14px; }
+    .pair, .exp-list, .assoc, .people { margin-top: 12px; }
+}
+@media (max-width: 720px) {
+    .board { width: 440px; padding: 7px; border-radius: 13px; }
+    .board-face { padding: 20px 16px 22px; }
+    .board-head { gap: 12px; }
+    .board-pict { width: 46px; height: 46px; border-radius: 9px; }
+    .board-pict svg { width: 30px; height: 30px; }
+    .board h2 { font-size: 34px; }
+    .board-text { font-size: 22px; }
+    .desk-only { display: none; }
+    .plate { font-size: 19px; }
+    .board-actions { flex-direction: column; align-items: center; margin-top: 16px; gap: 10px; }
+    .board-welcome { font-size: 21px; }
+    .board h1 { font-size: 45px; }
+    .board-section { margin-top: 12px; font-size: 23px; }
+    .board-dept { font-size: 19px; }
+    .pair { grid-template-columns: minmax(0, 1fr); }
+    .pair-card { padding: 12px 16px; }
+    .pair-card p { font-size: 20px; }
+    .exp-list { grid-template-columns: minmax(0, 1fr); }
+    .exp-list a { min-height: 44px; padding-block: 8px 6px; font-size: 19px; }
+    .assoc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .board-story { font-size: 29px; }
+    .pubs strong { font-size: 20px; }
+    .people { gap: 10px; }
+    .people strong { font-size: 18px; }
+    .people span { font-size: 16px; }
+    .where { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .where a { min-height: 44px; padding-block: 8px 6px; }
+}
+
+/* The route: jump to any stop on the drive */
+.route { position: absolute; top: 50%; right: max(12px, env(safe-area-inset-right, 0px)); transform: translateY(-50%); }
+.route ol { position: relative; display: flex; flex-direction: column; }
+.route ol::before { content: ""; position: absolute; top: 14px; bottom: 14px; right: 11px; width: 2px; background: rgba(255, 255, 255, .26); }
+.route button { position: relative; display: flex; align-items: center; justify-content: flex-end; gap: 9px; width: 100%; min-height: 30px; padding: 0 5px; border: 0; background: transparent; color: #fff; font: 600 13px/1 var(--font); cursor: pointer; }
+.route .dot { flex: none; width: 14px; height: 14px; border-radius: 50%; background: #171c21; box-shadow: inset 0 0 0 2px #cdd3d6; transition: background .2s ease; }
+.route .lbl { padding: 5px 9px 3px; border-radius: 999px; background: rgba(3, 6, 12, .84); white-space: nowrap; opacity: 0; transition: opacity .15s ease; }
+.route button:hover .lbl, .route button:focus-visible .lbl { opacity: 1; }
+.route li.on .dot { background: var(--line-amber); box-shadow: 0 0 12px rgba(242, 190, 26, .9); }
+@media (min-width: 1320px) { .route li.on .lbl { opacity: 1; } }
+.route-mini { display: none; }
+.scroll-hint {
+    position: absolute; left: 50%; transform: translateX(-50%); bottom: 14px;
+    padding: 5px 12px 3px; border-radius: 999px; background: rgba(3, 6, 12, .86);
+    white-space: nowrap; font-size: 13px; color: #d3d7d9; transition: opacity .25s linear;
+}
+.trip {
+    position: absolute; right: var(--gutter-r); bottom: 14px;
+    padding: 4px 9px 3px; border-radius: 999px; background: rgba(3, 6, 12, .78);
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; color: #c3c9cc; font-variant-numeric: tabular-nums;
+}
+@media (max-width: 860px) {
+    .route, .trip { display: none; }
+    .route-mini {
+        position: absolute; left: 50%; bottom: max(10px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+        display: flex; align-items: center; gap: 4px; padding: 3px; border-radius: 999px; background: rgba(3, 6, 12, .9);
+    }
+    .route-mini button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
+    .route-mini button:disabled { opacity: .35; cursor: default; }
+    .route-mini span { min-width: 148px; text-align: center; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+    .scroll-hint { bottom: 64px; }
+}
+
+/* Less motion or a very short screen: a still road with the boards as a simple list */
+html.still .drive { height: auto; margin-top: 0; }
+html.still .drive-stage { position: static; height: auto; overflow: visible; }
+html.still #road, html.still .vignette { position: fixed; inset: 0; }
+html.still .boards { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 12px 60px; }
+html.still .board { position: relative; visibility: visible; max-width: 100%; }
+html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .trip { display: none; }
+@media (prefers-reduced-motion: reduce) {
+    .plate, .scroll-hint, .route .lbl, .route .dot { transition: none; }
+}
+</style>
+<noscript><style>
+.drive { height: auto; margin-top: 0; }
+.drive-stage { position: static; height: auto; overflow: visible; }
+#road, .vignette, .route, .route-mini, .scroll-hint, .trip { display: none; }
+.boards { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 12px 60px; }
+.board { position: relative; visibility: visible; max-width: 100%; }
+.noscript { padding: 16px 20px; text-align: center; }
+</style></noscript>
 </head>
-<body data-page="home">
+<body>
 <a class="skip-link" href="#main">Skip to content</a>
-<div id="site-header"></div>
+
+<header class="nav" id="top">
+    <div class="nav-in">
+        <a class="nav-brand" id="nav-brand" href="index.html" aria-label="TEP Research &amp; Consultancy Cell, home">
+            <span class="nav-chip"><img src="assets/img/svnit-logo.png" alt="SVNIT Surat" width="26" height="25"></span>
+            <img class="nav-mark" src="assets/img/logo-mark.svg" alt="" width="32" height="32">
+            <span class="nav-name"><strong>TEP Research &amp; Consultancy Cell</strong><span>Department of Civil Engineering, SVNIT Surat</span></span>
+        </a>
+        <nav class="nav-links" aria-label="Main">
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Research &amp; Projects</a>
+                <a href="publications.html">Publications</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="team.html">Team</a>
+                <a class="phone-only" href="contact.html">Send an enquiry</a>
+            </div>
+            <a class="nav-enquiry" href="contact.html">Send an enquiry</a>
+            <button class="nav-btn" id="nav-btn" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><span aria-hidden="true"></span></button>
+        </nav>
+    </div>
+</header>
 
 <main id="main">
-<noscript><p class="noscript">This website needs JavaScript turned on to show its content.</p></noscript>
-<section class="hero">
-    <div class="wrap hero-grid">
-        <div class="hero-text">
-            <h1>Independent traffic and road safety studies for the agencies that build and run our roads.</h1>
-            <p class="hero-lead">The TEP Research &amp; Consultancy Cell (TRC) brings the transportation engineering group at SVNIT to practical projects: traffic surveys, road safety audits, junction design and transport planning for government agencies, traffic police and developers.</p>
-            <div class="hero-actions">
-                <a class="btn btn-primary btn-lg" href="contact.html">Discuss a project</a>
-                <a class="text-link" href="projects.html">See our research &amp; projects</a>
-            </div>
-        </div>
-        <div class="hero-scene">
-            <div class="sign-assembly">
-                <nav class="sign board" aria-label="Main capabilities">
-                    <div class="sign-face board-face" id="hero-sign"></div>
-                </nav>
-                <div class="sign-posts" aria-hidden="true">
-                    <span class="kmstone"><span class="kmstone-top">TRC</span><span class="kmstone-main">0</span><span class="kmstone-sub">km Surat</span></span>
+    <noscript><p class="noscript">This website needs JavaScript turned on to show all of its content.</p></noscript>
+    <section class="drive" id="drive" aria-labelledby="hero-title">
+        <div class="drive-stage">
+            <canvas id="road" role="img" aria-label="A night drive from a rural highway into the city, passing crash barriers, delineators, a widening road, kerbs, footpaths with guard rails, buildings and two signalled junctions with pedestrian crossings."></canvas>
+            <div class="vignette" aria-hidden="true"></div>
+
+            <div class="boards" id="boards">
+                <div class="board board-green" data-label="Welcome">
+                    <div class="board-face">
+                        <p class="board-welcome">Welcome to</p>
+                        <h1 id="hero-title">TEP Research &amp; Consultancy Cell</h1>
+                        <p class="board-section">Transportation Engineering &amp; Planning Section</p>
+                        <p class="board-dept">Department of Civil Engineering, SVNIT Surat</p>
+                        <div class="board-actions">
+                            <a class="plate plate-yellow" href="contact.html">Discuss a project</a>
+                            <a class="plate plate-white" href="projects.html">See our research &amp; projects</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="signal-pole" aria-hidden="true">
-                <span class="signal-head is-cycling"><i class="lamp lamp-red"></i><i class="lamp lamp-amber"></i><i class="lamp lamp-green"></i></span>
-            </div>
-        </div>
-    </div>
-    <div class="road" aria-hidden="true"><span class="road-line"></span></div>
-</section>
 
-<section class="associations-strip" id="associations-section" aria-labelledby="associations-heading">
-    <div class="wrap">
-        <h2 class="associations-title" id="associations-heading">Our Associations</h2>
-    </div>
-    <div class="association-marquee" id="home-associations"></div>
-</section>
+                <section class="board board-green" data-label="About TEP">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="info" aria-hidden="true"></span><h2>About TEP</h2></div>
+                        <p class="board-text">The TEP Research &amp; Consultancy Cell (TRC) carries out consultancy and sponsored research for government departments, urban local bodies, traffic police and private organisations.</p>
+                        <p class="board-text board-soft desk-only short-hide">Being part of SVNIT Surat gives the agencies we work with the institute&rsquo;s survey equipment, laboratories and research experience, with the independence of an academic organisation.</p>
+                        <div class="board-actions"><a class="plate plate-yellow" href="about.html">More about us</a></div>
+                    </div>
+                </section>
 
-<section class="section">
-    <div class="wrap">
-        <div class="section-head">
-            <h2>Our capabilities</h2>
-            <a class="text-link" href="about.html#capabilities">See them in detail</a>
-        </div>
-        <ul class="capability-list" id="home-capabilities"></ul>
-    </div>
-</section>
+                <section class="board board-green" data-label="Vision &amp; Mission">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="road" aria-hidden="true"></span><h2>Vision &amp; Mission</h2></div>
+                        <div class="pair">
+                            <div class="pair-card"><h3>Vision</h3><p>Safer roads and better-run traffic systems in Gujarat and across India, built on careful measurement and sound engineering.</p></div>
+                            <div class="pair-card"><h3>Mission</h3><p>To end every study with clear findings that our partner agencies can defend and act on.</p></div>
+                        </div>
+                        <div class="board-actions"><a class="plate plate-yellow" href="about.html">How a project runs</a></div>
+                    </div>
+                </section>
 
-<section class="section section-concrete" id="featured-section">
-    <div class="wrap">
-        <div class="section-head">
-            <h2>Selected research &amp; projects</h2>
-            <a class="text-link" href="projects.html">View all</a>
-        </div>
-        <div class="featured-grid" id="home-featured"></div>
-    </div>
-</section>
+                <section class="board board-green" data-label="Our Expertise">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="cone" aria-hidden="true"></span><h2>Our Expertise</h2></div>
+                        <div class="exp-list" id="exp-list"></div>
+                    </div>
+                </section>
 
-<section class="section">
-    <div class="wrap">
-        <div class="section-head"><h2>Why agencies work with TRC</h2></div>
-        <div class="reasons">
-            <div class="reason">
-                <span class="roadsign roadsign-ring" data-pict="scale" aria-hidden="true"></span>
-                <div class="sign-plate">
-                    <h3>Impartial by design</h3>
-                    <p>As part of a national institute, we have no stake in contracts or construction. Our reviews and recommendations rest on the data alone.</p>
-                </div>
-            </div>
-            <div class="reason">
-                <span class="roadsign roadsign-tri" data-pict="bars" aria-hidden="true"></span>
-                <div class="sign-plate">
-                    <h3>Measured, not assumed</h3>
-                    <p>Our studies start in the field, with video-based surveys, counters and crash records, so recommendations reflect how traffic actually behaves on Indian roads.</p>
-                </div>
-            </div>
-            <div class="reason">
-                <span class="roadsign roadsign-blue" data-pict="doc" aria-hidden="true"></span>
-                <div class="sign-plate">
-                    <h3>Research methods, usable outputs</h3>
-                    <p>Faculty and research scholars apply current methods, then deliver reports, drawings and dashboards that engineers and officers can act on.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                <section class="board board-blue" data-label="Associations">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="building" aria-hidden="true"></span><h2>Our Associations &amp; Collaboration</h2></div>
+                        <ul class="assoc" id="assoc-list"></ul>
+                        <div class="board-actions"><a class="plate plate-yellow" href="contact.html">Discuss a collaboration</a></div>
+                    </div>
+                </section>
 
-<section class="section section-concrete" id="updates-section">
-    <div class="wrap updates-grid">
-        <div id="home-news-col">
-            <div class="section-head">
-                <h2>News</h2>
-                <a class="text-link" href="news.html">All news</a>
-            </div>
-            <ul class="news-list" id="home-news"></ul>
-        </div>
-        <div id="home-pubs-col">
-            <div class="section-head">
-                <h2>Recent publications</h2>
-                <a class="text-link" href="publications.html">All publications</a>
-            </div>
-            <ul class="pub-list pub-list-compact" id="home-pubs"></ul>
-        </div>
-    </div>
-</section>
+                <section class="board board-blue" data-label="Featured Project">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="review" aria-hidden="true"></span><h2>Featured Project</h2></div>
+                        <div id="project-body" style="display: contents"></div>
+                    </div>
+                </section>
 
-<section class="cta-band">
-    <div class="wrap">
-        <div class="board has-posts cta-board">
-            <div class="board-face cta-inner">
-                <span class="signal-head signal-go" aria-hidden="true"><i class="lamp lamp-red"></i><i class="lamp lamp-amber"></i><i class="lamp lamp-green"></i></span>
-                <div class="cta-text">
-                    <h2>Planning a study or need an independent review?</h2>
-                    <p>Tell us about the location, the problem and your timeline. We will get back to you by email or phone.</p>
-                </div>
-                <div class="cta-actions">
-                    <a class="btn btn-yellow btn-lg" href="contact.html">Send an enquiry</a>
-                    <a class="cta-mail" data-email href="#"></a>
-                </div>
-            </div>
-        </div>
-        <div class="cta-spacer" aria-hidden="true"></div>
-    </div>
-</section>
+                <section class="board board-blue" data-label="Featured News">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="paper" aria-hidden="true"></span><h2>Featured News</h2></div>
+                        <div id="news-body" style="display: contents"></div>
+                    </div>
+                </section>
 
+                <section class="board board-blue" data-label="Publications">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="book" aria-hidden="true"></span><h2>Publications</h2></div>
+                        <ul class="pubs" id="pub-list"></ul>
+                        <div class="board-actions"><a class="plate plate-yellow" href="publications.html">All publications</a></div>
+                    </div>
+                </section>
+
+                <section class="board board-blue" data-label="Team">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="people" aria-hidden="true"></span><h2>Team</h2></div>
+                        <div class="people" id="team-list"></div>
+                        <div class="board-actions"><a class="plate plate-yellow" href="team.html">Meet the whole team</a></div>
+                    </div>
+                </section>
+
+                <section class="board board-blue" data-label="All Pages">
+                    <div class="board-face">
+                        <div class="board-head"><span class="board-pict" data-pict="signal" aria-hidden="true"></span><h2>Where would you like to go?</h2></div>
+                        <ul class="where">
+                            <li><a class="plate plate-white" href="about.html">About</a></li>
+                            <li><a class="plate plate-white" href="projects.html">Research &amp; Projects</a></li>
+                            <li><a class="plate plate-white" href="publications.html">Publications</a></li>
+                            <li><a class="plate plate-white" href="news.html">News</a></li>
+                            <li><a class="plate plate-white" href="gallery.html">Gallery</a></li>
+                            <li><a class="plate plate-white" href="team.html">Team</a></li>
+                            <li><a class="plate plate-yellow" href="contact.html">Send an enquiry</a></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <nav class="route" id="route" aria-label="Stops on the road"><ol id="route-list"></ol></nav>
+            <div class="route-mini" id="route-mini">
+                <button type="button" id="mini-prev" aria-label="Previous stop">&#8249;</button>
+                <span id="mini-label" aria-live="polite"></span>
+                <button type="button" id="mini-next" aria-label="Next stop">&#8250;</button>
+            </div>
+            <span class="scroll-hint" id="hint" aria-hidden="true">Scroll to drive</span>
+            <span class="trip" id="trip" aria-hidden="true">TRIP 0.00 KM</span>
+        </div>
+    </section>
 </main>
 
-<div id="site-footer"></div>
-<!-- data.js holds the content; main.js builds the pages from it -->
 <script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/night-road.js"></script>
+<script>
+(function () {
+    'use strict';
+    var D = window.TRC || {};
+    // Visitors who ask for less motion, and very short screens such as a phone held sideways, get the boards as a simple list
+    var askedLessMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var startedShort = window.innerHeight < 480;
+    var reduce = askedLessMotion || startedShort;
+    if (reduce) { document.documentElement.classList.add('still'); }
+    var KEEP_DETAIL = location.hash === '#hq';
+
+    function esc(s) {
+        return String(s === null || s === undefined ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+    }
+    function $(id) { return document.getElementById(id); }
+
+    var navBtn = $('nav-btn'), navMenu = $('nav-menu');
+    navBtn.addEventListener('click', function () {
+        var open = navMenu.classList.toggle('open');
+        navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    function closeMenu(refocus) {
+        if (!navMenu.classList.contains('open')) { return; }
+        navMenu.classList.remove('open');
+        navBtn.setAttribute('aria-expanded', 'false');
+        if (refocus) { navBtn.focus(); }
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMenu(true); } });
+    document.addEventListener('click', function (e) {
+        if (!navMenu.contains(e.target) && !navBtn.contains(e.target)) { closeMenu(false); }
+    });
+
+    $('nav-brand').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+
+    /* ---------- Board content comes from the site's own data file ---------- */
+    var PICTS = {
+        info: '<circle cx="24" cy="9.500" r="5.500"/><path d="M16.500 19h13v19h4.500v6H14v-6h4.500V25h-2z"/>',
+        road: '<path fill-rule="evenodd" d="M19 4h10l13 40H6zM22.700 8l-.4 8h3.400l-.4-8zm-1 13-.5 9h5.600l-.5-9zm-1 14-.4 7h7.400l-.4-7z"/>',
+        cone: '<path d="M20.600 5h6.800l2.600 9.600H18zM17 18.600h14l2.700 10H14.300zM13.200 32.600h21.600L37 40h5a2 2 0 0 1 2 2v2H4v-2a2 2 0 0 1 2-2h5z"/>',
+        building: '<path fill-rule="evenodd" d="M7 42V8.500L27 4v38h-7v-8h-6v8zm5-28v4h4v-4zm7 0v4h4v-4zm-7 8v4h4v-4zm7 0v4h4v-4zM30 42V17l11 3v22zm4-17v3h3v-3zm0 7v3h3v-3z"/><rect x="2" y="42" width="44" height="3.500" rx="1"/>',
+        review: '<circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="5"/><path d="M30.500 30.500 44 44" fill="none" stroke="currentColor" stroke-width="6.500" stroke-linecap="round"/><path d="M12.500 20.500l5.200 5.200 9.800-10.600" fill="none" stroke="currentColor" stroke-width="4.200" stroke-linecap="round" stroke-linejoin="round"/>',
+        paper: '<path fill-rule="evenodd" d="M4 8h31v29c0 2.200 1.300 4 3.300 4H8a4 4 0 0 1-4-4zm5 5v9h10v-9zm14 0v3h8v-3zm0 6v3h8v-3zM9 26v3h22v-3zm0 6v3h22v-3z"/><path d="M38 15h6v22.500a3 3 0 0 1-6 0z"/>',
+        book: '<path d="M3 9.500C9.500 7.200 16.500 7.500 22 11.200V41c-5.500-3.400-12.500-3.700-19-1.700zM45 9.500C38.500 7.200 31.500 7.500 26 11.200V41c5.500-3.400 12.500-3.700 19-1.700z"/>',
+        people: '<circle cx="17" cy="13" r="8"/><path d="M3 43c0-11 6-18 14-18s14 7 14 18z"/><circle cx="35" cy="16" r="6.500"/><path d="M33 25.500c7.500-.8 12 5.500 12 17.500H34.500c0-6.500-1.500-12.500-5-16.200 1-.7 2.200-1.200 3.500-1.300z"/>',
+        signal: '<path d="M16 2h16a3 3 0 0 1 3 3v29a3 3 0 0 1-3 3h-5v9h-6v-9h-5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z"/><circle cx="24" cy="10" r="4.400" fill="#ff4438"/><circle cx="24" cy="20" r="4.400" fill="#ffb300"/><circle cx="24" cy="30" r="4.400" fill="#22d67f"/>'
+    };
+    [].forEach.call(document.querySelectorAll('[data-pict]'), function (el) {
+        el.innerHTML = '<svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">' + (PICTS[el.getAttribute('data-pict')] || '') + '</svg>';
+    });
+    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    function longDate(s) {
+        var p = String(s || '').split('-');
+        return p.length === 3 ? (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0] : '';
+    }
+    (function fillBoards() {
+        $('exp-list').innerHTML = (D.capabilities || []).map(function (c) {
+            return '<a href="about.html#' + encodeURIComponent(c.id) + '">' + esc(c.title) + '</a>';
+        }).join('');
+        $('assoc-list').innerHTML = (D.associations || []).slice(0, 6).map(function (a) {
+            return '<li>' + (a.logo ? '<img src="' + esc(a.logo) + '" alt="' + esc(a.name) + '">' : esc(a.name)) + '</li>';
+        }).join('');
+        var featured = (D.projects || []).filter(function (p) { return p.featured; })[0] || (D.projects || [])[0];
+        if (featured) {
+            var on = featured.status === 'ongoing';
+            var years = on ? 'since ' + featured.startYear : (featured.startYear === featured.endYear ? featured.endYear : featured.startYear + '–' + featured.endYear);
+            $('project-body').innerHTML = '<p class="lamp-row"><i class="lamp ' + (on ? 'lamp-amber' : 'lamp-green') + '"></i>' + (on ? 'Ongoing' : 'Completed') + ', ' + esc(years) + '</p>' +
+                '<h3 class="board-story">' + esc(featured.title) + '</h3>' +
+                '<p class="board-text desk-only short-hide">' + esc(featured.summary) + '</p>' +
+                '<p class="board-meta">' + esc(featured.associatedWith) + ', ' + esc(featured.location) + '</p>' +
+                '<div class="board-actions"><a class="plate plate-yellow" href="project.html?id=' + encodeURIComponent(featured.id) + '">View this project</a><a class="plate plate-white" href="projects.html">All research &amp; projects</a></div>';
+        }
+        var newsList = (D.news || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+        var news = newsList.filter(function (n) { return n.featured; })[0] || newsList[0];
+        if (news) {
+            $('news-body').innerHTML = '<p class="lamp-row"><i class="lamp lamp-date"></i>' + esc(longDate(news.date)) + '</p>' +
+                '<h3 class="board-story">' + esc(news.title) + '</h3>' +
+                '<p class="board-text">' + esc(String(news.summary).split(/(?<=\.)\s/)[0]) + '</p>' +
+                '<div class="board-actions"><a class="plate plate-yellow" href="news-item.html?id=' + encodeURIComponent(news.id) + '">Read this story</a><a class="plate plate-white" href="news.html">All news</a></div>';
+        }
+        $('pub-list').innerHTML = (D.publications || []).slice(0, 3).map(function (p) {
+            return '<li><strong>' + esc(p.title) + '</strong><span>' + esc(p.venue) + ', ' + esc(p.year) + '</span></li>';
+        }).join('');
+        var profs = (D.team || []).filter(function (m) { return m.group === 'professors'; }).sort(function (a, b) { return (a.order || 0) - (b.order || 0); }).slice(0, 3);
+        $('team-list').innerHTML = profs.map(function (m) {
+            return '<div><img src="' + esc(m.photo) + '" alt="" width="168" height="168"><strong>' + esc(m.name) + '</strong><span>' + esc(m.designation) + '</span></div>';
+        }).join('');
+    })();
+
+    /* ---------- The road itself is drawn by night-road.js ---------- */
+    var drive = $('drive'), hint = $('hint'), trip = $('trip');
+    var HOLD = 45, MOVE = 75;   // scroll, in screen heights x 100: how long the road pauses at a board, and how long it travels between boards
+    var BOARDS = [].map.call(document.querySelectorAll('.board'), function (el) { return { el: el, label: el.getAttribute('data-label') }; });
+    var VH = 8, KEYS = [], TOTAL = 0;
+    var cam = reduce ? 0 : -22, target = 0, lastDraw = null, lastTime = performance.now();
+
+    // Scroll position to distance along the road: a slow pause at each board, then a smooth drive to the next
+    function buildRoute() {
+        var last = BOARDS.length - 1;
+        KEYS = []; var v = 0;
+        BOARDS.forEach(function (b, n) {
+            var stop = b.z - b.rest;
+            KEYS.push({ v: v, c: Math.max(0, stop - 3), ease: n > 0 });
+            b.v = v;
+            b.stopV = v + HOLD * .92;
+            v += HOLD;
+            KEYS.push({ v: v, c: stop, ease: false });
+            if (n < last) { v += MOVE; }
+            b.el.setAttribute('data-stop-v', String(b.stopV));
+        });
+        TOTAL = v;
+        if (!reduce) { drive.style.height = Math.round((TOTAL + 100) * VH + 58) + 'px'; }
+    }
+    var scene = window.NightRoad($('road'), {
+        boards: BOARDS,
+        still: reduce,
+        onLayout: function () { VH = window.innerHeight / 100; buildRoute(); lastDraw = null; }
+    });
+    var draw = scene.draw, placeBoards = scene.placeBoards, layout = scene.layout, makeFacades = scene.makeFacades;
+
+    /* ---------- Scrolling ---------- */
+    function scrollV() { return Math.max(0, Math.min(TOTAL, -drive.getBoundingClientRect().top / VH)); }
+    function camAt(v) {
+        for (var i = 1; i < KEYS.length; i++) {
+            if (v <= KEYS[i].v) {
+                var a = KEYS[i - 1], b = KEYS[i], t = (v - a.v) / (b.v - a.v);
+                if (b.ease) { t = t * t * (3 - 2 * t); }
+                return a.c + (b.c - a.c) * t;
+            }
+        }
+        return KEYS[KEYS.length - 1].c;
+    }
+    var current = -1, pendingFocus = null;
+    var routeItems = [], miniLabel = $('mini-label'), miniPrev = $('mini-prev'), miniNext = $('mini-next');
+    function stopIndex(c) {
+        for (var i = 0; i < BOARDS.length; i++) { if (BOARDS[i].z - c > 6) { return i; } }
+        return BOARDS.length - 1;
+    }
+    function goTo(i) {
+        var b = BOARDS[Math.max(0, Math.min(BOARDS.length - 1, i))];
+        var top = drive.getBoundingClientRect().top + window.scrollY + b.stopV * VH;
+        window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    function markStop(c) {
+        var i = stopIndex(c);
+        if (i === current) { return; }
+        current = i;
+        routeItems.forEach(function (li, n) { li.classList.toggle('on', n === i); });
+        miniLabel.textContent = (i + 1) + ' of ' + BOARDS.length + ': ' + BOARDS[i].label;
+        miniPrev.disabled = i === 0;
+        miniNext.disabled = i === BOARDS.length - 1;
+    }
+    $('route-list').innerHTML = BOARDS.map(function (b, i) {
+        return '<li><button type="button" data-go="' + i + '" aria-label="Go to ' + esc(b.label) + '"><span class="lbl">' + esc(b.label) + '</span><span class="dot"></span></button></li>';
+    }).join('');
+    routeItems = [].slice.call($('route-list').children);
+    $('route-list').addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('button[data-go]') : null;
+        if (btn) {
+            goTo(+btn.getAttribute('data-go'));
+            if (e.detail === 0) { pendingFocus = +btn.getAttribute('data-go'); }
+        }
+    });
+    miniPrev.addEventListener('click', function () { goTo(current - 1); });
+    miniNext.addEventListener('click', function () { goTo(current + 1); });
+
+    var frameTime = 0, frameCount = 0;
+    function frame() {
+        var v = scrollV();
+        var was = target;
+        target = camAt(v);
+        var now = performance.now(), dt = Math.min(120, now - lastTime); lastTime = now;
+        if (Math.abs(target - was) > 120) { cam = target; }
+        cam += (target - cam) * (1 - Math.exp(-dt / 190));
+        if (Math.abs(target - cam) < .002) { cam = target; }
+        if (cam !== lastDraw) {
+            var t0 = performance.now();
+            draw(cam); placeBoards(cam);
+            hint.style.opacity = v > 6 ? 0 : 1;
+            trip.textContent = 'TRIP ' + (Math.max(0, cam) / 1000).toFixed(2) + ' KM';
+            markStop(cam);
+            lastDraw = cam;
+            // On a slower computer, draw at a lower resolution so the drive stays smooth
+            if (!KEEP_DETAIL) {
+                frameTime += performance.now() - t0; frameCount++;
+                if (frameCount >= 30) {
+                    if (frameTime / frameCount > 30) { scene.lowerQuality(); }
+                    frameTime = 0; frameCount = 0;
+                }
+            }
+        }
+        if (pendingFocus !== null && Math.abs(camAt(BOARDS[pendingFocus].stopV) - cam) < 1.5) {
+            var firstLink = BOARDS[pendingFocus].el.querySelector('a');
+            if (firstLink) { firstLink.focus({ preventScroll: true }); }
+            pendingFocus = null;
+        }
+        requestAnimationFrame(frame);
+    }
+    function still() { layout(); draw(0); }
+
+    var lastW = window.innerWidth, lastH = window.innerHeight;
+    window.addEventListener('resize', function () {
+        // A phone's address bar sliding in and out is not a real resize
+        if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 120) { return; }
+        lastW = window.innerWidth; lastH = window.innerHeight;
+        if (!askedLessMotion && ((startedShort && lastH > 520) || (!startedShort && lastH < 440))) { location.reload(); return; }
+        if (reduce) { still(); } else { layout(); }
+    });
+
+    makeFacades();
+    layout();
+    if (reduce) {
+        draw(0);
+    } else {
+        draw(Math.max(cam, 0)); placeBoards(Math.max(cam, 0)); markStop(Math.max(cam, 0));
+        requestAnimationFrame(frame);
+    }
+    if (document.fonts && document.fonts.ready) {
+        Promise.all([document.fonts.load('700 40px Overpass'), document.fonts.load('800 56px Overpass'), document.fonts.ready]).then(function () {
+            makeFacades();
+            if (reduce) { still(); } else { layout(); }
+        });
+    }
+    // Team photos change a board's height once they load
+    window.addEventListener('load', function () { if (reduce) { still(); } else { layout(); } });
+})();
+</script>
 </body>
 </html>
