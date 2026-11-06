@@ -19,7 +19,7 @@ window.NightRoad = function (canvas, options) {
     var URB = 7;            // half width of the four-lane city road
     var CAM_H = 2.2;        // eye height, as from a bus or a survey vehicle
     var BOARD_W = 16;       // every overhead board is this wide
-    var CLEARANCE = 5.2;    // height of the underside of every board
+    var CLEARANCE = 4.8;    // height of the underside of every board
     var COLUMN = 9.5;       // gantry columns stand this far from the centre line
     var CW = 7, RAD = 4, FOOT = 3, XFAR = 220;   // cross road half width, corner radius, footpath width, how far the cross road runs
     var GAP = 78, JOFF = 22;                     // metres between boards, and from a board to the junction after it
@@ -27,10 +27,10 @@ window.NightRoad = function (canvas, options) {
     var TEX = 18, TEXW = 24, TEXH = 60;
 
     var BOARDS = options.boards;
-    var W = 0, H = 0, DPR = 1, F = 1, CX = 0, HY = 0, NEAR = 1, QUALITY = 1;
+    var W = 0, H = 0, DPR = 1, F = 1, CX = 0, HY = 0, NEAR = 1, QUALITY = 1, MOTION = 1, MOVING = false;
     var U0 = 0, U1 = 0, K0 = 0, W0 = 0, W1 = 0, JUNCTIONS = [], BLOCKS = [], LAMPS = [], ROADSIGNS = [], BUS = 0, CLOSURE = 0;
     var CAM = 0;
-    var SKY = null, CITY = null, LAND = null, FACADES = [], cityH = 0;
+    var SKY = null, DAWN = null, CITY = null, LAND = null, FACADES = [], cityH = 0;
 
     function seeded(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
     function px(x, y, dz) { var s = F / dz; return [CX + x * s, HY + (CAM_H - y) * s, s]; }
@@ -281,6 +281,15 @@ window.NightRoad = function (canvas, options) {
         g.setTransform(1, 0, 0, 1, 0, 0);
         g.fillStyle = g.createPattern(noise, 'repeat'); g.fillRect(0, 0, cw, ch);
 
+        DAWN = sheet(32, 256);
+        var dg = DAWN.getContext('2d'), dawnSky = dg.createLinearGradient(0, 0, 0, 256), dawnEnd = HY / H;
+        dawnSky.addColorStop(0, 'rgba(38,48,92,.1)');
+        dawnSky.addColorStop(dawnEnd * .55, 'rgba(92,74,120,.42)');
+        dawnSky.addColorStop(dawnEnd * .86, 'rgba(226,134,104,.62)');
+        dawnSky.addColorStop(dawnEnd, 'rgba(255,186,120,.78)');
+        dawnSky.addColorStop(Math.min(1, dawnEnd + .001), 'rgba(255,186,120,0)');
+        dg.fillStyle = dawnSky; dg.fillRect(0, 0, 32, 256);
+
         // The skyline of Surat, on its own sheet so it can grow as the drive approaches the city
         var unit = Math.max(.72, H / 900);
         cityH = 64 * unit;
@@ -389,8 +398,11 @@ window.NightRoad = function (canvas, options) {
                 var afterJunction = false;
                 JUNCTIONS.forEach(function (one) { if (Math.abs(at - (one.z + CW + FOOT + 1.5)) < .01) { afterJunction = true; } });
                 if (afterJunction) { depth = 70; floors = Math.max(floors, 6); }
+                var prev = null;
+                for (var bi = BLOCKS.length - 1; bi >= 0; bi--) { if (BLOCKS[bi].side === side) { prev = BLOCKS[bi]; break; } }
+                var hidden = !!prev && at - prev.z2 < 3 && prev.h >= 4.6 + floors * 3.2 && prev.x0 <= (city ? URB + FOOT + .4 : prev.x0);
                 BLOCKS.push({
-                    side: side, z1: at, z2: at + len, depth: depth, h: 4.6 + floors * 3.2, floors: floors, house: at < K0, seed: key * 3.1,
+                    hiddenFront: hidden, side: side, z1: at, z2: at + len, depth: depth, h: 4.6 + floors * 3.2, floors: floors, house: at < K0, seed: key * 3.1,
                     x0: city ? URB + FOOT + .4 : Math.max(road(at) + 7, 12) + seeded(key * 4) * 10,
                     tex: at < K0 ? 6 : Math.floor(seeded(key * 5) * 6) % 6, u0: seeded(key * 6) * 20, tank: seeded(key * 7) > .45
                 });
@@ -399,14 +411,18 @@ window.NightRoad = function (canvas, options) {
         });
     }
 
+    function applyResolution() {
+        DPR = Math.min(window.devicePixelRatio || 1, 1.5) * QUALITY * MOTION;
+        canvas.width = Math.round(W * DPR);
+        canvas.height = Math.round(H * DPR);
+    }
     function layout() {
-        DPR = Math.min(window.devicePixelRatio || 1, 1.5) * QUALITY;
         var r = canvas.getBoundingClientRect();
         W = r.width; H = r.height;
-        canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+        applyResolution();
         F = Math.min(H * 0.98, W * 1.08);
         CX = W / 2;
-        HY = H * (W < 720 ? .73 : .7);
+        HY = H * (W < 720 ? .75 : .74);
         NEAR = Math.max(.9, F * CAM_H / (H - HY) * .55);
         var top = 70;
         BOARDS.forEach(function (b) {
@@ -587,7 +603,7 @@ window.NightRoad = function (canvas, options) {
             ctx.fillStyle = '#16191b'; ctx.fill(pathDark);
             ctx.fillStyle = '#cfd1cc'; ctx.fill(pathLight);
             // Paving joints close to the viewer
-            var jn = Math.floor(Math.min(s[1], c + 60) / 1.2), j0 = Math.floor(s[0] / 1.2), j, lines = new Path2D();
+            var jn = Math.floor(Math.min(s[1], c + (MOVING ? 0 : 60)) / 1.2), j0 = Math.floor(s[0] / 1.2), j, lines = new Path2D();
             for (j = jn; j >= j0; j--) {
                 var zj = j * 1.2, dj = zj - c;
                 if (dj < NEAR) { continue; }
@@ -802,7 +818,7 @@ window.NightRoad = function (canvas, options) {
                 var r = seeded(b.seed + f * 7.3 + col * 13.1), lit = r > (glass ? .55 : .62);
                 var which = lit ? (seeded(r * 91) > .24 ? (seeded(r * 37) > .5 ? 1 : 2) : 3) : 0, g = groups[which];
                 g.moveTo(a1[0], a1[1]); g.lineTo(a2[0], a2[1]); g.lineTo(b2[0], b2[1]); g.lineTo(b1[0], b1[1]); g.closePath();
-                if (lit && !glass) {
+                if (lit && !glass && !MOVING) {
                     // A curtain drawn part way, and the frame down the middle
                     var cut = zA + 1.8 * (.15 + seeded(r * 53) * .35), dC = cut - CAM;
                     if (dC > 1.8) {
@@ -810,7 +826,7 @@ window.NightRoad = function (canvas, options) {
                         curtains.moveTo(a1[0], a1[1]); curtains.lineTo(a2[0], a2[1]); curtains.lineTo(c2[0], c2[1]); curtains.lineTo(c1[0], c1[1]); curtains.closePath();
                     }
                 }
-                if (!glass) {
+                if (!glass && !MOVING) {
                     var mz = (zA + zB) / 2 - CAM;
                     if (mz > 1.8) { var m1 = px(xw, y1, mz), m2 = px(xw, y2, mz); sills.moveTo(m1[0], m1[1]); sills.lineTo(m2[0], m2[1]); }
                     var s1 = px(xw, y0 + .66, dA), s2 = px(xw, y0 + .66, dB);
@@ -826,7 +842,7 @@ window.NightRoad = function (canvas, options) {
     }
     function drawShopStrip(b, xw, dn, d2, tex) {
         // The shop fronts: thin vertical slices sheared to follow the line of the footpath
-        var a = CX + xw * F / dn, c = CX + xw * F / d2, n = Math.max(2, Math.min(72, Math.ceil(Math.abs(a - c) / 8))), i, TW = TEXW, sh = 4.6, srcH = sh * TEX, srcY = (TEXH - sh) * TEX;
+        var a = CX + xw * F / dn, c = CX + xw * F / d2, n = Math.max(2, Math.min(72, Math.ceil(Math.abs(a - c) / (MOVING ? 16 : 8)))), i, TW = TEXW, sh = 4.6, srcH = sh * TEX, srcY = (TEXH - sh) * TEX;
         // Clip to the true outline of the shop fronts, so their top edge is one straight line
         ctx.save();
         ctx.beginPath();
@@ -861,9 +877,12 @@ window.NightRoad = function (canvas, options) {
             if (wide > 130) {
                 drawWindows(b, xw, dn, d2);
                 if (!b.house) { drawShopStrip(b, xw, dn, d2, tex); }
+            } else if (wide < 14) {
+                // So far away that a plain tinted wall is enough
+                outline(); ctx.fillStyle = BASES[b.tex][1]; ctx.fill();
             } else {
                 ctx.save(); outline(); ctx.clip();
-                var n = Math.max(1, Math.min(10, Math.ceil(wide / 14))), i;
+                var n = Math.max(1, Math.min(MOVING ? 5 : 10, Math.ceil(wide / (MOVING ? 24 : 14)))), i;
                 for (i = 0; i < n; i++) {
                     var ia = 1 / dn + (1 / d2 - 1 / dn) * i / n, ib = 1 / dn + (1 / d2 - 1 / dn) * (i + 1) / n;
                     var da = 1 / ia, db = 1 / ib, sm = F * (ia + ib) / 2;
@@ -881,7 +900,7 @@ window.NightRoad = function (canvas, options) {
             ctx.strokeStyle = '#0a0d11'; ctx.lineWidth = Math.max(1, .28 * F / Math.max(dn, 8));
             ctx.beginPath(); ctx.moveTo(a1[0], a1[1]); ctx.lineTo(b1[0], b1[1]); ctx.stroke();
         }
-        if (d1 > 1.8) {
+        if (d1 > 1.8 && !b.hiddenFront) {
             var xo = b.side * (b.x0 + b.depth), p0 = px(xw, 0, d1), p1 = px(xo, 0, d1), pt = px(xw, b.h, d1);
             var left = Math.min(p0[0], p1[0]), wideF = Math.abs(p1[0] - p0[0]);
             if (!(left > W || left + wideF < 0)) {
@@ -1008,7 +1027,7 @@ window.NightRoad = function (canvas, options) {
                         var xp = side * (road(zp) + .36), pb = px(xp, .16, dp), pt = px(xp, 1.1, dp);
                         posts.moveTo(pb[0], pb[1]); posts.lineTo(pt[0], pt[1]);
                     }
-                    var k0 = Math.floor(part[0] / .5), k1 = Math.floor(Math.min(part[1], c + 26) / .5);
+                    var k0 = Math.floor(part[0] / .5), k1 = Math.floor(Math.min(part[1], c + (MOVING ? 0 : 26)) / .5);
                     for (j = k1; j >= k0; j--) {
                         var zb2 = j * .5, db2 = zb2 - c;
                         if (db2 < NEAR || zb2 < part[0]) { continue; }
@@ -1369,6 +1388,12 @@ window.NightRoad = function (canvas, options) {
         ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
         ctx.clearRect(0, 0, W, H);
         ctx.drawImage(SKY, 0, 0, W, H);
+        var dawn = smooth(U1 - 60, BOARDS[BOARDS.length - 1].z, c);
+        if (dawn > 0) {
+            ctx.globalAlpha = dawn * .8;
+            ctx.drawImage(DAWN, 0, 0, W, H);
+            ctx.globalAlpha = 1;
+        }
         var grow = smooth(0, U1, c), scale = 1 + grow * 1.7, sw = W * scale, sh = cityH * scale;
         ctx.drawImage(CITY, CX - sw / 2, HY - sh + 1, sw, sh);
         if (grow > 0) {
@@ -1402,7 +1427,7 @@ window.NightRoad = function (canvas, options) {
                 });
             }
         });
-        BLOCKS.forEach(function (b) { if (b.z2 - c > 1.8 && b.z1 - c < RANGE) { behind(b.z1 - c, function () { drawBlock(b); }); } });
+        BLOCKS.forEach(function (b) { if (b.z2 - c > 1.8 && b.z1 - c < (MOVING ? RANGE * .72 : RANGE)) { behind(b.z1 - c, function () { drawBlock(b); }); } });
         JUNCTIONS.forEach(function (J) {
             var dz = J.z + CW + 1.2 - c;
             if (dz < 4 || dz > RANGE) { return; }
@@ -1442,7 +1467,7 @@ window.NightRoad = function (canvas, options) {
         for (i = n20 + 16; i >= n20; i--) {
             z = i * 20 + 10;
             if (z > K0 - 8) { continue; }
-            (function (dz) { add(dz, function () { delineator(-5.25, dz, -1); delineator(5.25, dz, 1); }); })(z - c);
+            (function (dz, clearOfStone) { add(dz, function () { if (clearOfStone) { delineator(-5.25, dz, -1); } delineator(5.25, dz, 1); }); })(z - c, Math.abs(z - BOARDS[0].z) > 12);
         }
         LAMPS.forEach(function (L) {
             var dz = L.z - c;
@@ -1461,10 +1486,10 @@ window.NightRoad = function (canvas, options) {
                 if (S.type === 'speed') { speedSign(S.z, dz, S.text); } else if (S.type === 'city') { citySign(S.z, dz); } else { warnSign(S.z, dz, S.type); }
             });
         });
-        BOARDS.forEach(function (b) {
-            var dz = b.z - c;
-            if (!b.el || options.still || dz < 1.7 || dz > 300) { return; }
-            add(dz, function () { gantry(dz, CLEARANCE + b.boardH + .4, CLEARANCE, CLEARANCE + b.boardH, Math.min(1, (dz - 1.7) / 3) * Math.min(1, (300 - dz) / 110)); });
+        BOARDS.forEach(function (b, n) {
+            var dz = b.z - c, seen = revealed(n, c);
+            if (!b.el || options.still || dz < 1.7 || dz > 300 || seen <= .01) { return; }
+            add(dz, function () { gantry(dz, CLEARANCE + b.boardH + .4, CLEARANCE, CLEARANCE + b.boardH, Math.min(1, (dz - 1.7) / 3) * Math.min(1, (300 - dz) / 110) * seen); });
         });
         // City trees in guards on the footpath, and people walking
         var nt = Math.floor((c - U1) / 30);
@@ -1537,16 +1562,22 @@ window.NightRoad = function (canvas, options) {
         mist.addColorStop(0, 'rgba(160,172,190,0)'); mist.addColorStop(.5, 'rgba(160,172,190,.09)'); mist.addColorStop(1, 'rgba(160,172,190,0)');
         ctx.fillStyle = mist; ctx.fillRect(0, HY - H * .05, W, H * .1);
     }
+    // One board at a time: the next board stays hidden until the visitor has driven on from the one before it
+    function revealed(i, c) {
+        if (i === 0) { return 1; }
+        var stop = BOARDS[i - 1].z - BOARDS[i - 1].rest;
+        return smooth(stop + .4, stop + 9, c);
+    }
     function placeBoards(c) {
-        BOARDS.forEach(function (b) {
+        BOARDS.forEach(function (b, i) {
             if (!b.el) { return; }
-            var d = b.z - c, el = b.el;
-            if (d < 2.6 || d > 280) {
+            var d = b.z - c, el = b.el, seen = revealed(i, c);
+            if (d < 2.6 || d > 280 || seen <= .01) {
                 if (el.style.visibility !== 'hidden') { el.style.visibility = 'hidden'; }
                 return;
             }
             var tl = px(-BOARD_W / 2, CLEARANCE + b.boardH, d), br = px(BOARD_W / 2, CLEARANCE, d);
-            var k = (br[0] - tl[0]) / b.domW, o = Math.min(1, (d - 2.6) / 4) * Math.min(1, (280 - d) / 120);
+            var k = (br[0] - tl[0]) / b.domW, near = Math.min(1, (d - 2.6) / 7), o = near * near * (3 - 2 * near) * Math.min(1, (280 - d) / 120) * seen;
             el.style.visibility = 'visible';
             el.style.opacity = o.toFixed(3);
             var active = o >= .6 && k >= .4;
@@ -1560,9 +1591,15 @@ window.NightRoad = function (canvas, options) {
     function lowerQuality() {
         if (QUALITY <= .6) { return false; }
         QUALITY = Math.max(.6, QUALITY - .2);
-        layout();
+        applyResolution();
         return true;
     }
+    function setMotion(moving) {
+        MOVING = moving;
+        MOTION = moving ? .72 : 1;
+        applyResolution();
+    }
+
     return {
         boards: BOARDS,
         layout: layout,
@@ -1570,6 +1607,7 @@ window.NightRoad = function (canvas, options) {
         placeBoards: placeBoards,
         makeFacades: makeFacades,
         lowerQuality: lowerQuality,
+        setMotion: setMotion,
         stopOf: function (i) { return BOARDS[i].z - BOARDS[i].rest; }
     };
 };

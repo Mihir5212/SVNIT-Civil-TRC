@@ -105,6 +105,10 @@ ul, ol { list-style: none; }
 .drive { position: relative; height: 1100vh; margin-top: -58px; }
 .drive-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; }
 #road { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* When the visitor stops at a board, the road softens and dims behind it, so the eye goes to the words */
+#road { transform-origin: 50% 70%; transition: filter .7s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
+.is-reading:not(.is-first) #road { filter: blur(2.4px) brightness(.62) saturate(.82); transform: scale(1.018); }
+.light-focus.is-reading:not(.is-first) #road { filter: brightness(.62) saturate(.82); transform: none; }
 .vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 78% 82% at 50% 58%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, .58)); }
 .boards { position: absolute; inset: 0; }
 
@@ -155,6 +159,9 @@ ul, ol { list-style: none; }
     display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 46px; padding-block: 9px 7px;
     border-bottom: 1px solid rgba(255, 255, 255, .34); font-size: 20px; line-height: 1.2; font-weight: 600; text-decoration: none;
 }
+.exp-ico { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 7px; background: #fff; color: var(--sign); }
+.exp-ico svg { width: 24px; height: 24px; display: block; }
+.exp-name { flex: 1; min-width: 0; }
 .exp-list a::after { content: ""; width: 16px; height: 11px; flex: none; margin-top: -2px; background: currentColor; clip-path: polygon(0 38%, 62% 38%, 62% 0, 100% 50%, 62% 100%, 62% 62%, 0 62%); }
 .exp-list a:hover { color: var(--line-amber); }
 
@@ -194,7 +201,7 @@ ul, ol { list-style: none; }
     .people strong { margin-top: 8px; font-size: 20px; }
 }
 @media (min-width: 721px) and (max-height: 680px) {
-    .short-hide, .pubs li:nth-child(3) { display: none; }
+    .short-hide, .pubs li:nth-child(3), .exp-ico { display: none; }
     .people img { max-width: 96px; }
     .board-face { padding: 18px 30px 20px; }
     .board-actions { margin-top: 14px; }
@@ -216,6 +223,8 @@ ul, ol { list-style: none; }
     .board-section { margin-top: 12px; font-size: 23px; }
     .board-dept { font-size: 19px; }
     .pair { grid-template-columns: minmax(0, 1fr); }
+    .exp-ico { width: 30px; height: 30px; }
+    .exp-ico svg { width: 21px; height: 21px; }
     .pair-card { padding: 12px 16px; }
     .pair-card p { font-size: 20px; }
     .exp-list { grid-template-columns: minmax(0, 1fr); }
@@ -251,7 +260,23 @@ ul, ol { list-style: none; }
     padding: 4px 9px 3px; border-radius: 999px; background: rgba(3, 6, 12, .78);
     font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; color: #c3c9cc; font-variant-numeric: tabular-nums;
 }
+.next-stop {
+    position: absolute; left: 50%; bottom: 14px; display: inline-flex; align-items: center; gap: 9px; min-height: 40px; padding: 8px 17px 6px;
+    border: 0; border-radius: 999px; background: rgba(3, 6, 12, .86); color: #fff; font: 600 14.5px/1.2 var(--font); cursor: pointer; white-space: nowrap;
+    opacity: 0; transform: translate(-50%, 8px); pointer-events: none; transition: opacity .45s ease .25s, transform .45s ease .25s, background .2s ease;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+.next-stop[hidden] { display: none; }
+.next-stop::after { content: ""; width: 11px; height: 15px; background: var(--line-amber); clip-path: polygon(38% 0, 62% 0, 62% 60%, 100% 60%, 50% 100%, 0 60%, 38% 60%); }
+.next-stop:hover { background: #151b24; }
+.is-reading .next-stop { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.trip { transition: opacity .4s ease; }
+.is-reading:not(.is-first) .trip { opacity: 0; }
+.route { transition: opacity .4s ease; }
+.is-reading:not(.is-first) .route { opacity: .62; }
+.route:hover, .route:focus-within { opacity: 1 !important; }
 @media (max-width: 860px) {
+    .next-stop { display: none; }
     .route, .trip { display: none; }
     .route-mini {
         position: absolute; left: 50%; bottom: max(10px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -269,7 +294,7 @@ html.still .drive-stage { position: static; height: auto; overflow: visible; }
 html.still #road, html.still .vignette { position: fixed; inset: 0; }
 html.still .boards { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 12px 60px; }
 html.still .board { position: relative; visibility: visible; max-width: 100%; }
-html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .trip { display: none; }
+html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .trip, html.still .next-stop { display: none; }
 @media (prefers-reduced-motion: reduce) {
     .plate, .scroll-hint, .route .lbl, .route .dot { transition: none; }
 }
@@ -312,7 +337,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
 <main id="main">
     <noscript><p class="noscript">This website needs JavaScript turned on to show all of its content.</p></noscript>
     <section class="drive" id="drive" aria-labelledby="hero-title">
-        <div class="drive-stage">
+        <div class="drive-stage" id="stage">
             <canvas id="road" role="img" aria-label="A night drive from a rural highway into the city, passing crash barriers, delineators, a widening road, kerbs, footpaths with guard rails, buildings and two signalled junctions with pedestrian crossings."></canvas>
             <div class="vignette" aria-hidden="true"></div>
 
@@ -418,6 +443,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                 <button type="button" id="mini-next" aria-label="Next stop">&#8250;</button>
             </div>
             <span class="scroll-hint" id="hint" aria-hidden="true">Scroll to drive</span>
+            <button class="next-stop" id="next-stop" type="button" hidden><span id="next-label"></span></button>
             <span class="trip" id="trip" aria-hidden="true">TRIP 0.00 KM</span>
         </div>
     </section>
@@ -463,7 +489,13 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
     });
 
     /* ---------- Board content comes from the site's own data file ---------- */
+    var EXPERTISE_PICTS = { 'traffic-studies': 'car', 'road-safety': 'warning', 'traffic-impact': 'building', 'junction-design': 'signal', 'transport-planning': 'bus', 'independent-review': 'review', 'its-analytics': 'camera', 'training': 'cap' };
     var PICTS = {
+        car: '<path fill-rule="evenodd" d="M13 9h22a5 5 0 0 1 4.700 3.300L43 21.600c1.800.8 3 2.600 3 4.600V37a2 2 0 0 1-2 2h-1v2a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-2H12v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2H4a2 2 0 0 1-2-2V26.200c0-2 1.200-3.800 3-4.600l3.300-9.300A5 5 0 0 1 13 9zm.6 4.500a1.600 1.600 0 0 0-1.500 1.100L9.800 21h28.400l-2.300-6.400a1.600 1.600 0 0 0-1.500-1.100zM10.500 26a3.500 3.500 0 1 0 0 7 3.500 3.500 0 0 0 0-7zm27 0a3.500 3.500 0 1 0 0 7 3.500 3.500 0 0 0 0-7zM18 28v3h12v-3z"/>',
+        warning: '<path d="M24 6 45 42H3z" fill="#fff" stroke="#c8202f" stroke-width="5" stroke-linejoin="round"/><rect x="21.600" y="17" width="4.800" height="13" rx="1"/><circle cx="24" cy="35" r="2.800"/>',
+        bus: '<path fill-rule="evenodd" d="M5 9h38a3 3 0 0 1 3 3v22a2 2 0 0 1-2 2h-2.500a5.500 5.500 0 0 0-11 0H17.500a5.500 5.500 0 0 0-11 0H4a2 2 0 0 1-2-2V12a3 3 0 0 1 3-3zm1.500 4.500V23h8v-9.500zm12 0V23h9v-9.500zm13 0V23h10v-9.500z"/><circle cx="12" cy="37" r="4"/><circle cx="36" cy="37" r="4"/>',
+        camera: '<rect x="3" y="12" width="29" height="24" rx="3"/><path d="M34 21l11-7.500v21L34 27z"/>',
+        cap: '<path d="M24 7 1.500 18 24 29l17-8.300V33h4V18.700z"/><path d="M10.500 26.500V35c0 3.600 6.100 6.500 13.500 6.500S37.500 38.600 37.500 35v-8.500L24 33.200z"/>',
         info: '<circle cx="24" cy="9.500" r="5.500"/><path d="M16.500 19h13v19h4.500v6H14v-6h4.500V25h-2z"/>',
         road: '<path fill-rule="evenodd" d="M19 4h10l13 40H6zM22.700 8l-.4 8h3.400l-.4-8zm-1 13-.5 9h5.600l-.5-9zm-1 14-.4 7h7.400l-.4-7z"/>',
         cone: '<path d="M20.600 5h6.800l2.600 9.600H18zM17 18.600h14l2.700 10H14.300zM13.200 32.600h21.600L37 40h5a2 2 0 0 1 2 2v2H4v-2a2 2 0 0 1 2-2h5z"/>',
@@ -484,7 +516,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
     }
     (function fillBoards() {
         $('exp-list').innerHTML = (D.capabilities || []).map(function (c) {
-            return '<a href="about.html#' + encodeURIComponent(c.id) + '">' + esc(c.title) + '</a>';
+            return '<a href="about.html#' + encodeURIComponent(c.id) + '"><span class="exp-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor">' + (PICTS[EXPERTISE_PICTS[c.id]] || PICTS.cone) + '</svg></span><span class="exp-name">' + esc(c.title) + '</span></a>';
         }).join('');
         $('assoc-list').innerHTML = (D.associations || []).slice(0, 6).map(function (a) {
             return '<li>' + (a.logo ? '<img src="' + esc(a.logo) + '" alt="' + esc(a.name) + '">' : esc(a.name)) + '</li>';
@@ -553,7 +585,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
         for (var i = 1; i < KEYS.length; i++) {
             if (v <= KEYS[i].v) {
                 var a = KEYS[i - 1], b = KEYS[i], t = (v - a.v) / (b.v - a.v);
-                if (b.ease) { t = t * t * (3 - 2 * t); }
+                if (b.ease) { t = t * t * t * (t * (t * 6 - 15) + 10); }
                 return a.c + (b.c - a.c) * t;
             }
         }
@@ -592,32 +624,66 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
     });
     miniPrev.addEventListener('click', function () { goTo(current - 1); });
     miniNext.addEventListener('click', function () { goTo(current + 1); });
+    $('next-stop').addEventListener('click', function () { goTo(current + 1); });
 
-    var frameTime = 0, frameCount = 0;
+    var stage = $('stage'), nextBtn = $('next-stop'), nextLabel = $('next-label');
+    var reading = -1, moving = false, lastMoved = 0;
+    var level = 0, slowSum = 0, slowCount = 0, watchFrom = performance.now() + 2000;
+
+    function updateFocus() {
+        var at = -1;
+        BOARDS.forEach(function (b, i) {
+            if (Math.abs(b.z - b.rest - cam) < 3.6 && Math.abs(target - cam) < 1.2) { at = i; }
+        });
+        if (at === reading) { return; }
+        reading = at;
+        stage.classList.toggle('is-reading', at >= 0);
+        stage.classList.toggle('is-first', at === 0);
+        var hasNext = at > 0 && at < BOARDS.length - 1;
+        nextBtn.hidden = !hasNext;
+        if (hasNext) { nextLabel.textContent = 'Next: ' + BOARDS[at + 1].label; }
+    }
+    // On a slower computer, step down gently so the drive stays smooth: first resolution, then the blur
+    function watchSpeed(now, dt) {
+        if (KEEP_DETAIL || level >= 3 || now < watchFrom || document.hidden) { return; }
+        slowSum += dt; slowCount++;
+        if (slowCount < 45) { return; }
+        var slow = slowSum / slowCount > 27;
+        slowSum = 0; slowCount = 0;
+        if (!slow) { return; }
+        level++;
+        if (level === 2) {
+            stage.classList.add('light-focus');
+        } else {
+            scene.lowerQuality();
+            lastDraw = null;
+        }
+    }
     function frame() {
         var v = scrollV();
         var was = target;
         target = camAt(v);
         var now = performance.now(), dt = Math.min(120, now - lastTime); lastTime = now;
         if (Math.abs(target - was) > 120) { cam = target; }
-        cam += (target - cam) * (1 - Math.exp(-dt / 190));
+        cam += (target - cam) * (1 - Math.exp(-dt / 230));
         if (Math.abs(target - cam) < .002) { cam = target; }
+        // Fine detail returns a moment after the road stops
+        var movingNow = Math.abs(target - cam) > .1;
+        if (movingNow) { lastMoved = now; }
+        if (movingNow !== moving && (movingNow || now - lastMoved > 220)) {
+            moving = movingNow;
+            scene.setMotion(moving);
+            lastDraw = null;
+        }
         if (cam !== lastDraw) {
-            var t0 = performance.now();
             draw(cam); placeBoards(cam);
             hint.style.opacity = v > 6 ? 0 : 1;
             trip.textContent = 'TRIP ' + (Math.max(0, cam) / 1000).toFixed(2) + ' KM';
             markStop(cam);
             lastDraw = cam;
-            // On a slower computer, draw at a lower resolution so the drive stays smooth
-            if (!KEEP_DETAIL) {
-                frameTime += performance.now() - t0; frameCount++;
-                if (frameCount >= 30) {
-                    if (frameTime / frameCount > 30) { scene.lowerQuality(); }
-                    frameTime = 0; frameCount = 0;
-                }
-            }
         }
+        updateFocus();
+        watchSpeed(now, dt);
         if (pendingFocus !== null && Math.abs(camAt(BOARDS[pendingFocus].stopV) - cam) < 1.5) {
             var firstLink = BOARDS[pendingFocus].el.querySelector('a');
             if (firstLink) { firstLink.focus({ preventScroll: true }); }
