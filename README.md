@@ -55,7 +55,7 @@ The top of `data.js` explains the rules. In short:
 
 **Text that is in the HTML files instead:** the Home page welcome, About TEP and Vision & Mission boards (`index.html`), and the About page (`about.html`).
 
-**The Home page** is a night drive: scrolling moves along a road from a rural highway into the city, with each section on an overhead board. It has its own styles inside `index.html` and does not use `style.css` or `main.js`; its lists come from `data.js`, and the road is drawn by `assets/js/night-road.js`. Every other page opens at the place on the road where its board stands on Home (set by `ROAD_SPOTS` in `main.js`). Visitors who ask for less motion, and very short screens, see the boards as a simple list.
+**The Home page** is a night drive: scrolling moves along a road from a rural highway into the city, with each section on an overhead board. It has its own styles inside `index.html` and does not use `style.css` or `main.js`; its lists come from `data.js`, and the road is drawn by `assets/js/night-road.js`. Visitors who ask for less motion, and very short screens, see the boards as a simple list.
 
 ### Adding photos
 1. On GitHub, open the `images/projects` folder (or `images/news`, `images/team`) and use **Add file → Upload files**.
@@ -139,8 +139,8 @@ publications.html, news.html, news-item.html, gallery.html, team.html, contact.h
 assets/
   js/data.js      ← all the content
   js/main.js      builds the pages from data.js (all except Home)
-  js/night-road.js draws the night road on every page
-  css/style.css   the look of every page except Home
+  js/night-road.js draws the night road on the Home page
+  css/style.css   the road-sign design (all pages except Home)
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
 images/           photos for projects, news, team and the gallery, and logos for Our Associations

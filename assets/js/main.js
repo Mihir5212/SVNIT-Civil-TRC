@@ -146,9 +146,9 @@
 
     /* ---------- Shared pieces ---------- */
 
-    // A page title on an overhead board. startRoadHead() below puts it on the road.
-    function pageHead(title, lead, backHref, backLabel, pictName) {
-        return '<section class="page-head"><div class="wrap"><div class="board gantry-board">' +
+    // A page title on a sign hung from an overhead gantry. The sign is yellow for work still in progress.
+    function pageHead(title, lead, backHref, backLabel, pictName, boardClass) {
+        return '<section class="page-head"><div class="wrap"><div class="board gantry-board' + (boardClass ? ' ' + boardClass : '') + '">' +
             '<div class="board-face gantry-face"><div class="gantry-text">' +
             (backHref ? '<p class="back-link"><a href="' + backHref + '">' + arrowSvg('left') + esc(backLabel) + '</a></p>' : '') +
             '<h1>' + esc(title) + '</h1>' +
@@ -162,14 +162,23 @@
             esc(D.statuses[p.status] || p.status) + '</span>';
     }
 
-    function projectCard(p) {
+    // Completed projects are green direction boards; ongoing ones are yellow work-zone boards
+    function projectBoardClass(p) { return p.status === 'ongoing' ? 'board-yellow' : ''; }
+
+    // The junction diagram from an advance direction sign: fills a large board that has no photo
+    var ROUTE_DIAGRAM = '<svg class="route-diagram" viewBox="0 0 320 110" fill="currentColor" aria-hidden="true" focusable="false">' +
+        '<path d="M6 76h268V60l40 25-40 25V94H6z"/><path d="M146 76V34h-15l24-34 24 34h-15v42z"/></svg>';
+
+    function projectCard(p, large) {
         var years = projectYears(p);
         var sector = D.sectors[p.sector];
-        return '<article class="project-card board board-blue"><div class="board-face">' +
+        return '<article class="project-card board has-posts ' + projectBoardClass(p) + (large ? ' is-large' : '') + '"><div class="board-face">' +
             (p.image ? '<div class="project-media"><img src="' + esc(p.image) + '" alt="" loading="lazy"></div>' : '') +
             '<div class="project-top">' + (sector ? '<span class="shield">' + esc(sector) + '</span>' : '') + statusTag(p) + '</div>' +
             '<h3><a href="project.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.title) + '</a></h3>' +
             (p.associatedWith ? '<p class="project-partner">' + esc(p.associatedWith) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
+            (large && p.summary ? '<p class="project-summary">' + esc(excerpt(p.summary, 240)) + '</p>' : '') +
+            (large && !p.image ? ROUTE_DIAGRAM : '') +
             '<p class="project-foot"><span>' + esc(years) + '</span>' + arrowSvg('right', 'go') + '</p>' +
             '</div></article>';
     }
@@ -193,15 +202,16 @@
             '</li>';
     }
 
-    // Road closed: a yellow diversion board, with barricades across the road behind it
+    // Road closed: a barricade, a no-entry sign and a yellow diversion board
     function notFound(what, backHref, backLabel) {
         document.title = 'Not found | ' + S.short + ', ' + S.instituteShort;
-        return '<section class="page-head"><div class="wrap"><div class="board gantry-board board-yellow">' +
-            '<div class="board-face gantry-face"><div class="gantry-text">' +
+        return '<section class="closure"><div class="barricade" aria-hidden="true"></div><div class="wrap closure-grid">' +
+            '<div class="closure-sign" aria-hidden="true"><div class="no-entry"></div></div><div class="closure-text">' +
             '<h1>This ' + what + ' could not be found</h1>' +
-            '<p class="lead">The link may be old, or the item may have been removed.</p>' +
-            '<p class="diversion-links"><a href="' + backHref + '">' + esc(backLabel) + '</a><a href="index.html">Home</a></p>' +
-            '</div><span class="pict">' + pict('warning') + '</span></div></div></div></section>';
+            '<p>The link may be old, or the item may have been removed.</p>' +
+            '<div class="board board-yellow diversion"><div class="board-face"><p class="diversion-title">Diversion</p>' +
+            '<ul><li><a href="' + backHref + '">' + esc(backLabel) + '</a></li><li><a href="index.html">Home</a></li></ul>' +
+            '</div></div></div></div></section>';
     }
 
     // One filter button: a lamp that lights when this filter is on
@@ -226,28 +236,26 @@
             html += '<div class="preview-bar" role="note"><div class="wrap">' + esc(S.previewNotice) + '</div></div>';
         }
         html += '<header class="site-header"><div class="wrap header-inner">' +
-            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="32" height="32"><img src="assets/img/logo-mark.svg" alt="" width="32" height="32"></span>' +
+            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="50" height="48"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46"></span>' +
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
+            '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
             '<nav id="site-nav" class="site-nav" aria-label="Main"><ul>' +
             menu.map(function (m) {
                 return '<li><a href="' + m[0] + '"' + (active === m[2] ? ' aria-current="page"' : '') + '>' + m[1] + '</a></li>';
             }).join('') +
-            '<li class="phone-only"><a href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a></li>' +
-            '</ul></nav>' +
-            '<a class="nav-cta" href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a>' +
-            '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
-            '</div></header>';
+            '</ul><a class="btn btn-yellow nav-cta" href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a></nav>' +
+            '</div><div class="header-road" aria-hidden="true"><span class="header-car"></span></div></header>';
         var slot = document.getElementById('site-header');
         if (slot) { slot.outerHTML = html; }
     }
 
     function renderFooter() {
         var html = '<footer class="site-footer"><div class="wrap footer-grid">' +
-            '<div class="footer-about"><a class="brand brand-footer" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="40" height="40"><img src="assets/img/logo-mark.svg" alt="" width="40" height="40"></span>' +
+            '<div class="footer-about"><a class="brand brand-footer" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="46" height="44"><img src="assets/img/logo-mark.svg" alt="" width="40" height="40"></span>' +
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + '</span></span></a>' +
             '<p>' + esc(S.institute) + '</p></div>' +
             '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +
-            '<li><a href="about.html">About TEP</a></li><li><a href="about.html#capabilities">Our capabilities</a></li>' +
+            '<li><a href="about.html">About TRC</a></li><li><a href="about.html#capabilities">Our capabilities</a></li>' +
             '<li><a href="projects.html">Research &amp; Projects</a></li><li><a href="publications.html">Publications</a></li>' +
             '<li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
             '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
@@ -275,6 +283,54 @@
     /* ---------- Pages ---------- */
 
     var pages = {};
+
+    pages.home = function () {
+        var sign = D.capabilities.slice(0, 4);
+        set('hero-sign',
+            '<span class="sign-shield" aria-hidden="true">' + esc(S.short) + '</span><ul>' +
+            sign.map(function (s) {
+                return '<li><a href="about.html#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
+            }).join('') + '</ul>' +
+            '<a class="sign-more" href="about.html#capabilities">All ' + D.capabilities.length + ' capabilities</a>');
+
+        set('home-capabilities', D.capabilities.map(function (s) {
+            return '<li><a class="board board-blue capability-card" href="about.html#' + esc(s.id) + '"><div class="board-face">' +
+                capabilityPict(s) + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p>' + arrowSvg('right', 'go') + '</div></a></li>';
+        }).join(''));
+
+        // Moving associations strip. The list repeats until it can fill a very wide screen,
+        // then the whole set is doubled so the scroll loops without a visible jump.
+        var associations = D.associations || [];
+        if (associations.length) {
+            var loop = [];
+            while (loop.length < 12) { loop = loop.concat(associations); }
+            set('home-associations', '<ul class="association-track" style="animation-duration:' + (loop.length * 3.5) + 's">' +
+                loop.concat(loop).map(function (c, i) {
+                    var copy = i >= associations.length;
+                    return '<li class="association-tile"' + (copy ? ' aria-hidden="true"' : '') + '>' +
+                        (c.logo ? '<img src="' + esc(c.logo) + '" alt="' + (copy ? '' : esc(c.name)) + '">' : '<span>' + esc(c.name) + '</span>') +
+                        '</li>';
+                }).join('') + '</ul>');
+        } else {
+            hide('associations-section');
+        }
+
+        var featured = D.projects.filter(function (p) { return p.featured; }).slice(0, 3);
+        if (featured.length < 3) {
+            featured = featured.concat(sortProjects(D.projects.filter(function (p) { return !p.featured; })).slice(0, 3 - featured.length));
+        }
+        if (featured.length) {
+            set('home-featured', featured.map(function (p, i) { return projectCard(p, i === 0); }).join(''));
+        } else {
+            hide('featured-section');
+        }
+
+        var news = D.news.slice().sort(byDateDesc).slice(0, 3);
+        var pubs = sortPubs(D.publications).slice(0, 3);
+        if (news.length) { set('home-news', news.map(function (n) { return newsListItem(n, 'h3', false); }).join('')); } else { hide('home-news-col'); }
+        if (pubs.length) { set('home-pubs', pubs.map(pubItem).join('')); } else { hide('home-pubs-col'); }
+        if (!news.length && !pubs.length) { hide('updates-section'); }
+    };
 
     pages.about = function () {
         set('count-projects', String(D.projects.length));
@@ -331,7 +387,7 @@
         }));
         if (list.length) {
             set('result-count', list.length + ' listed');
-            set('project-grid', list.map(function (p) { return projectCard(p); }).join(''));
+            set('project-grid', list.map(function (p) { return projectCard(p, false); }).join(''));
         } else {
             set('result-count', '');
             set('project-grid', '');
@@ -354,17 +410,18 @@
         facts += '<div><dt>Status</dt><dd>' + statusTag(p) + '</dd></div>';
 
         var related = D.projects.filter(function (x) { return x.id !== p.id && x.sector === p.sector; }).slice(0, 3);
+        var boardClass = projectBoardClass(p);
 
         set('content',
-            pageHead(p.title, '', 'projects.html', 'All research & projects', 'road') +
+            pageHead(p.title, '', 'projects.html', 'All research & projects', 'road', boardClass) +
             '<section class="section section-tight"><div class="wrap detail-layout"><div class="detail-main">' +
             (p.image ? '<figure class="detail-image"><img src="' + esc(p.image) + '" alt=""></figure>' : '') +
             (p.summary ? '<p class="lead-text">' + esc(p.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(p.description) + '</div></div>' +
-            '<aside class="detail-facts board board-blue"><div class="board-face"><dl>' + facts + '</dl>' +
-            '<a class="btn btn-yellow btn-block" href="contact.html">Discuss a similar project</a></div></aside></div></section>' +
+            '<aside class="detail-facts board ' + boardClass + '"><div class="board-face"><dl>' + facts + '</dl>' +
+            '<a class="btn ' + (boardClass ? 'btn-primary' : 'btn-yellow') + ' btn-block" href="contact.html">Discuss a similar project</a></div></aside></div></section>' +
             (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related work</h2></div><div class="project-grid">' +
-                related.map(function (r) { return projectCard(r); }).join('') + '</div></div></section>' : ''));
+                related.map(function (r) { return projectCard(r, false); }).join('') + '</div></div></section>' : ''));
     };
 
     pages.publications = function () {
@@ -524,7 +581,7 @@
         Object.keys(D.teamGroups).forEach(function (g) {
             var list = members.filter(function (m) { return m.group === g; });
             if (!list.length) { return; }
-            html += '<section class="team-group"><div class="section-head"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
+            html += '<section class="team-group"><div class="section-head section-head-blue"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
                 list.map(function (m) {
                     var photo = m.photo
                         ? '<img class="person-photo" src="' + esc(m.photo) + '" alt="" loading="lazy">'
@@ -658,96 +715,22 @@
         });
     }
 
-    // Each page opens at the place on the road where its board stands on the Home page.
-    // The numbers are the board's position there: 1 is About TEP, 5 is Featured Project, and so on.
-    var ROAD_SPOTS = { about: 1, gallery: 3, contact: 4, projects: 5, project: 5, news: 6, 'news-item': 6, publications: 7, team: 8, 'not-found': 0 };
-
-    function startRoadHead() {
-        var head = document.querySelector('.page-head');
-        var board = head && head.querySelector('.gantry-board');
-        if (!board) { return; }
-        var spot = ROAD_SPOTS[page] === undefined ? 1 : ROAD_SPOTS[page];
-        var closed = board.classList.contains('board-yellow');
-        if (!closed) { board.classList.add(spot <= 3 ? 'board-green' : 'board-blue'); }
-
-        var startedShort = window.innerHeight < 480;
-        if (!window.NightRoad || startedShort) { head.classList.add('is-plain'); return; }
-
-        var lessMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var keepDetail = window.location.hash === '#hq';
-        var canvas = document.createElement('canvas');
-        canvas.className = 'road-canvas';
-        canvas.setAttribute('aria-hidden', 'true');
-        var vignette = document.createElement('div');
-        vignette.className = 'vignette';
-        vignette.setAttribute('aria-hidden', 'true');
-        head.insertBefore(vignette, head.firstChild);
-        head.insertBefore(canvas, vignette);
-        head.classList.add('has-road');
-
-        var boards = [];
-        for (var i = 0; i < 10; i++) { boards.push(i === spot ? { el: board } : {}); }
-        var cam = null, target = 0, drawn = null, lastTime = 0, running = false, slow = 0, frames = 0;
-        var scene = window.NightRoad(canvas, {
-            boards: boards,
-            closure: closed,
-            onLayout: function () { drawn = null; wake(); }
-        });
-
-        // Arrive at the board, then drive slowly on under it as the content slides up over the road
-        function aim() {
-            var y = lessMotion ? 0 : Math.max(0, window.scrollY);
-            var rest = scene.stopOf(spot);
-            var height = head.offsetHeight || 1;
-            target = rest + Math.min(1, y / height) * (boards[spot].rest - 2);
-            if (cam === null) { cam = lessMotion ? target : target - 7; }
-            return y;
+    // Drive the little car along the road under the header as the page scrolls
+    function startCar() {
+        var car = document.querySelector('.header-car');
+        if (!car) { return; }
+        var waiting = false;
+        function place() {
+            waiting = false;
+            var distance = document.documentElement.scrollHeight - window.innerHeight;
+            car.style.setProperty('--trip', distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)).toFixed(4) : '0');
         }
-        function frame(now) {
-            running = false;
-            var y = aim();
-            var dt = Math.min(120, now - (lastTime || now));
-            lastTime = now;
-            cam += (target - cam) * (1 - Math.exp(-dt / 170));
-            if (Math.abs(target - cam) < .002) { cam = target; }
-            if (cam !== drawn && y < head.offsetHeight * 1.1) {
-                var t0 = window.performance.now();
-                scene.draw(cam);
-                scene.placeBoards(cam);
-                drawn = cam;
-                if (!keepDetail) {
-                    slow += window.performance.now() - t0;
-                    frames++;
-                    if (frames >= 30) {
-                        if (slow / frames > 30) { scene.lowerQuality(); }
-                        slow = 0; frames = 0;
-                    }
-                }
-            }
-            if (cam !== target) { wake(); } else { lastTime = 0; }
+        function request() {
+            if (!waiting) { waiting = true; window.requestAnimationFrame(place); }
         }
-        function wake() {
-            if (!running) { running = true; window.requestAnimationFrame(frame); }
-        }
-        window.addEventListener('scroll', wake, { passive: true });
-        var lastW = window.innerWidth, lastH = window.innerHeight;
-        window.addEventListener('resize', function () {
-            // A phone's address bar sliding in and out is not a real resize
-            if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 120) { return; }
-            lastW = window.innerWidth;
-            lastH = window.innerHeight;
-            if (lastH < 440) { window.location.reload(); return; }
-            scene.layout();
-        });
-        scene.makeFacades();
-        scene.layout();
-        if (document.fonts && document.fonts.ready) {
-            Promise.all([document.fonts.load('700 40px Overpass'), document.fonts.load('800 50px Overpass'), document.fonts.ready]).then(function () {
-                scene.makeFacades();
-                scene.layout();
-            });
-        }
-        window.addEventListener('load', function () { scene.layout(); });
+        window.addEventListener('scroll', request, { passive: true });
+        window.addEventListener('resize', request);
+        place();
     }
 
     renderHeader();
@@ -755,7 +738,7 @@
     fillContactBits();
     if (pages[page]) { pages[page](); }
     fillPicts();
-    startRoadHead();
+    startCar();
 
     // Mobile menu
     var toggle = document.querySelector('.nav-toggle');
