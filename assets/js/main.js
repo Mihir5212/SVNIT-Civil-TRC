@@ -87,11 +87,25 @@
         return '<svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true" focusable="false">' + (PICTS[name] || PICTS.info) + '</svg>';
     }
 
-    // A date as a small block: the day large, the month and year beside it
-    function dateBlock(iso) {
+    // The pictogram on each capability's sign. A new capability uses the traffic cone until it is given one here.
+    var CAPABILITY_PICTS = {
+        'traffic-studies': 'car',
+        'road-safety': 'warning',
+        'traffic-impact': 'building',
+        'junction-design': 'signal',
+        'transport-planning': 'bus',
+        'independent-review': 'review',
+        'its-analytics': 'camera',
+        'training': 'cap',
+    };
+    function capabilityPict(s) { return '<span class="pict">' + pict(CAPABILITY_PICTS[s.id] || 'cone') + '</span>'; }
+
+    // A date on a km-stone: the month in the yellow top, then the day and year
+    function dateStone(iso) {
         var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
-        if (!m) { return '<time class="date" datetime="' + esc(iso) + '">' + esc(iso) + '</time>'; }
-        return '<time class="date" datetime="' + esc(iso) + '"><span class="date-d">' + parseInt(m[3], 10) + '</span><span class="date-my">' + MONTHS[parseInt(m[2], 10) - 1] + ' ' + m[1] + '</span></time>';
+        if (!m) { return '<time class="kmstone" datetime="' + esc(iso) + '"><span class="kmstone-sub">' + esc(iso) + '</span></time>'; }
+        return '<time class="kmstone" datetime="' + esc(iso) + '"><span class="kmstone-top">' + MONTHS[parseInt(m[2], 10) - 1] + '</span>' +
+            '<span class="kmstone-main">' + parseInt(m[3], 10) + '</span><span class="kmstone-sub">' + m[1] + '</span></time>';
     }
 
     function initials(name) {
@@ -132,92 +146,77 @@
 
     /* ---------- Shared pieces ---------- */
 
-    // The opening of a detail page: back link, title and a drawing of the kind of work
-    function detailHead(title, lead, backHref, backLabel, artHtml, statusHtml) {
-        return '<section class="hero hero-detail"><div class="wrap hero-grid">' +
-            '<div class="hero-text"><p class="back-link"><a href="' + backHref + '">' + arrowSvg('left') + esc(backLabel) + '</a></p>' + arrivalNote() +
-            (statusHtml ? '<p class="hero-tags">' + statusHtml + '</p>' : '') +
-            '<h1>' + esc(title) + '</h1>' + (lead ? '<p class="lead">' + esc(lead) + '</p>' : '') + '</div>' +
-            (artHtml ? '<div class="hero-art hero-art-small">' + artHtml + '</div>' : '') + '</div></section>';
+    // A page title on a sign hung from an overhead gantry. The sign is yellow for work still in progress.
+    function pageHead(title, lead, backHref, backLabel, pictName, boardClass) {
+        return '<section class="page-head"><div class="wrap"><div class="board gantry-board' + (boardClass ? ' ' + boardClass : '') + '">' +
+            '<div class="board-face gantry-face"><div class="gantry-text">' +
+            (backHref ? '<p class="back-link"><a href="' + backHref + '">' + arrowSvg('left') + esc(backLabel) + '</a></p>' : '') +
+            '<h1>' + esc(title) + '</h1>' +
+            (lead ? '<p class="lead">' + esc(lead) + '</p>' : '') +
+            '</div>' + (pictName ? '<span class="pict">' + pict(pictName) + '</span>' : '') + '</div></div></div></section>';
     }
 
-    // The status of a project: amber for ongoing, green once completed
+    // A small signal: amber lit while ongoing, green lit once completed
     function statusTag(p) {
-        return '<span class="status status-' + esc(p.status) + '"><i aria-hidden="true"></i>' + esc(D.statuses[p.status] || p.status) + '</span>';
-    }
-    function sectorTag(p) {
-        return D.sectors[p.sector] ? '<span class="sector sector-' + esc(p.sector) + '">' + esc(D.sectors[p.sector]) + '</span>' : '';
+        return '<span class="status status-' + esc(p.status) + '"><span class="lamps" aria-hidden="true"><i></i><i></i><i></i></span>' +
+            esc(D.statuses[p.status] || p.status) + '</span>';
     }
 
-    function projectArt(p) {
-        if (!window.TRCArt) { return ''; }
-        var t = String(p.title);
-        var kind = /impact/i.test(t) ? 'impact' : /signal|junction|intersection/i.test(t) ? 'junction' : window.TRCArt.SECTOR[p.sector] || 'traffic';
-        return window.TRCArt.small(kind);
-    }
+    // Completed projects are green direction boards; ongoing ones are yellow work-zone boards
+    function projectBoardClass(p) { return p.status === 'ongoing' ? 'board-yellow' : ''; }
+
+    // The junction diagram from an advance direction sign: fills a large board that has no photo
+    var ROUTE_DIAGRAM = '<svg class="route-diagram" viewBox="0 0 320 110" fill="currentColor" aria-hidden="true" focusable="false">' +
+        '<path d="M6 76h268V60l40 25-40 25V94H6z"/><path d="M146 76V34h-15l24-34 24 34h-15v42z"/></svg>';
+
     function projectCard(p, large) {
-        var href = 'project.html?id=' + encodeURIComponent(p.id);
-        var art = p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy">' : projectArt(p);
-        return '<article class="pcard' + (large ? ' is-wide' : '') + '">' +
-            '<a class="pcard-art" href="' + href + '" tabindex="-1" aria-hidden="true">' + art + '</a>' +
-            '<div class="pcard-body"><p class="pcard-meta">' + sectorTag(p) + statusTag(p) + '</p>' +
-            '<h3><a href="' + href + '">' + esc(p.title) + '</a></h3>' +
-            (p.associatedWith ? '<p class="pcard-partner">' + esc(p.associatedWith) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
-            (large && p.summary ? '<p class="pcard-summary">' + esc(excerpt(p.summary, 240)) + '</p>' : '') +
-            '<p class="pcard-foot"><span>' + esc(projectYears(p)) + '</span>' + arrowSvg('right', 'go') + '</p></div></article>';
+        var years = projectYears(p);
+        var sector = D.sectors[p.sector];
+        return '<article class="project-card board has-posts ' + projectBoardClass(p) + (large ? ' is-large' : '') + '"><div class="board-face">' +
+            (p.image ? '<div class="project-media"><img src="' + esc(p.image) + '" alt="" loading="lazy"></div>' : '') +
+            '<div class="project-top">' + (sector ? '<span class="shield">' + esc(sector) + '</span>' : '') + statusTag(p) + '</div>' +
+            '<h3><a href="project.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.title) + '</a></h3>' +
+            (p.associatedWith ? '<p class="project-partner">' + esc(p.associatedWith) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
+            (large && p.summary ? '<p class="project-summary">' + esc(excerpt(p.summary, 240)) + '</p>' : '') +
+            (large && !p.image ? ROUTE_DIAGRAM : '') +
+            '<p class="project-foot"><span>' + esc(years) + '</span>' + arrowSvg('right', 'go') + '</p>' +
+            '</div></article>';
     }
 
     function pubItem(p) {
         var title = p.link
             ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a>'
             : esc(p.title);
-        return '<li class="pub pub-' + esc(p.type) + '">' +
-            '<p class="pub-type"><i aria-hidden="true"></i>' + esc(D.pubTypes[p.type] || p.type) + '</p>' +
-            '<p class="pub-title">' + title + '</p>' +
+        return '<li class="pub">' +
             '<p class="pub-authors">' + esc(p.authors) + ' (' + esc(p.year) + ')</p>' +
-            '<p class="pub-venue">' + esc(p.venue || '') + '</p>' +
+            '<p class="pub-title">' + title + '</p>' +
+            '<p class="pub-venue">' + esc(p.venue || '') + ' <span class="pub-type pub-type-' + esc(p.type) + '">' + esc(D.pubTypes[p.type] || p.type) + '</span></p>' +
             '</li>';
     }
 
-    function newsListItem(n, lead) {
-        var href = 'news-item.html?id=' + encodeURIComponent(n.id);
-        var cover = n.image
-            ? '<img src="' + esc(n.image) + '" alt="" loading="lazy">'
-            : (window.TRCArt ? window.TRCArt.cover(n.date + n.title) : '');
-        return '<li class="story' + (lead ? ' is-lead' : '') + '">' +
-            '<a class="story-cover" href="' + href + '" tabindex="-1" aria-hidden="true">' + cover + '</a>' +
-            '<div class="story-text">' + dateBlock(n.date) +
-            '<h2><a href="' + href + '">' + esc(n.title) + '</a></h2>' +
-            (n.summary ? '<p>' + esc(lead ? n.summary : excerpt(n.summary, 170)) + '</p>' : '') + '</div></li>';
+    function newsListItem(n, headingTag, showThumb) {
+        return '<li>' + dateStone(n.date) +
+            '<div><' + headingTag + '><a href="news-item.html?id=' + encodeURIComponent(n.id) + '">' + esc(n.title) + '</a></' + headingTag + '>' +
+            (n.summary ? '<p>' + esc(headingTag === 'h3' ? excerpt(n.summary, 160) : n.summary) + '</p>' : '') + '</div>' +
+            (showThumb && n.image ? '<img class="news-thumb" src="' + esc(n.image) + '" alt="" loading="lazy">' : '') +
+            '</li>';
     }
 
-    // Road closed: a barricade and the ways round it
+    // Road closed: a barricade, a no-entry sign and a yellow diversion board
     function notFound(what, backHref, backLabel) {
         document.title = 'Not found | ' + S.short + ', ' + S.instituteShort;
-        return '<section class="closure"><div class="wrap"><div class="barricade" aria-hidden="true"></div>' +
+        return '<section class="closure"><div class="barricade" aria-hidden="true"></div><div class="wrap closure-grid">' +
+            '<div class="closure-sign" aria-hidden="true"><div class="no-entry"></div></div><div class="closure-text">' +
             '<h1>This ' + what + ' could not be found</h1>' +
-            '<p class="lead">The link may be old, or the item may have been removed.</p>' +
-            '<ul class="diversion"><li><a href="' + backHref + '">' + arrowSvg('right') + esc(backLabel) + '</a></li><li><a href="index.html">' + arrowSvg('right') + 'Home</a></li></ul>' +
-            '</div></section>';
+            '<p>The link may be old, or the item may have been removed.</p>' +
+            '<div class="board board-yellow diversion"><div class="board-face"><p class="diversion-title">Diversion</p>' +
+            '<ul><li><a href="' + backHref + '">' + esc(backLabel) + '</a></li><li><a href="index.html">Home</a></li></ul>' +
+            '</div></div></div></div></section>';
     }
 
-    /* If the visitor reached this page by turning off the road on the Home page, say so, and offer the way back */
-    var arrivalInfo = null;
-    try {
-        arrivalInfo = JSON.parse(sessionStorage.getItem('trc-arrival') || 'null');
-        sessionStorage.removeItem('trc-arrival');
-        if (arrivalInfo && Date.now() - arrivalInfo.t > 15000) { arrivalInfo = null; }
-    } catch (e) { arrivalInfo = null; }
-    function arrivalNote() {
-        if (!arrivalInfo) { return ''; }
-        var a = arrivalInfo, went = a.dir === 'straight' ? 'Straight on from ' : a.dir === 'left' ? 'Turned left at ' : 'Turned right at ';
-        return '<p class="arrival-note">' + arrowSvg(a.dir === 'straight' ? 'up' : a.dir, 'arrival-arrow') + esc(went + a.from) +
-            ' <a href="index.html#stop-' + (+a.i || 0) + '">Back to the road</a></p>';
-    }
-
-    // One filter button
-    function chip(href, label, current, count) {
-        return '<a class="chip" href="' + href + '"' + (current ? ' aria-current="true"' : '') + '>' + esc(label) + (count !== undefined ? '<span class="chip-n">' + count + '</span>' : '') + '</a>';
+    // One filter button: a lamp that lights when this filter is on
+    function chip(href, label, current, lampClass) {
+        return '<a class="chip" href="' + href + '"' + (current ? ' aria-current="true"' : '') + '><i class="lamp' + (lampClass ? ' ' + lampClass : '') + '" aria-hidden="true"></i>' + esc(label) + '</a>';
     }
 
     /* ---------- Header and footer ---------- */
@@ -237,15 +236,15 @@
             html += '<div class="preview-bar" role="note"><div class="wrap">' + esc(S.previewNotice) + '</div></div>';
         }
         html += '<header class="site-header"><div class="wrap header-inner">' +
-            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="42" height="40"><img src="assets/img/logo-mark.svg" alt="" width="38" height="38"></span>' +
+            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="50" height="48"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46"></span>' +
             '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
             '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
             '<nav id="site-nav" class="site-nav" aria-label="Main"><ul>' +
             menu.map(function (m) {
                 return '<li><a href="' + m[0] + '"' + (active === m[2] ? ' aria-current="page"' : '') + '>' + m[1] + '</a></li>';
             }).join('') +
-            '</ul><a class="btn btn-primary nav-cta" href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a></nav>' +
-            '</div></header>';
+            '</ul><a class="btn btn-yellow nav-cta" href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a></nav>' +
+            '</div><div class="header-road" aria-hidden="true"><span class="header-car"></span></div></header>';
         var slot = document.getElementById('site-header');
         if (slot) { slot.outerHTML = html; }
     }
@@ -262,7 +261,7 @@
             '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
             '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a><br>' +
             '<a href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></address>' +
-            '<p><a class="btn btn-light" href="contact.html">Send an enquiry</a></p></div>' +
+            '<p><a class="btn btn-yellow" href="contact.html">Send an enquiry</a></p></div>' +
             '</div><div class="wrap footer-bottom"><p>&copy; ' + new Date().getFullYear() + ' ' + esc(S.name) + ', ' +
             esc(S.dept) + ', ' + esc(S.instituteShort) + '</p></div></footer>';
         var slot = document.getElementById('site-footer');
@@ -274,12 +273,10 @@
         document.querySelectorAll('[data-email]').forEach(function (a) {
             a.textContent = S.email;
             a.setAttribute('href', 'mailto:' + S.email);
-            if (/example\.com$/.test(S.email)) { a.insertAdjacentHTML('afterend', ' <span class="placeholder-tag">placeholder</span>'); }
         });
         document.querySelectorAll('[data-phone]').forEach(function (a) {
             a.textContent = S.phone;
             a.setAttribute('href', telHref(S.phone));
-            if (/00000 00000/.test(S.phone)) { a.insertAdjacentHTML('afterend', ' <span class="placeholder-tag">placeholder</span>'); }
         });
     }
 
@@ -287,30 +284,72 @@
 
     var pages = {};
 
+    pages.home = function () {
+        var sign = D.capabilities.slice(0, 4);
+        set('hero-sign',
+            '<span class="sign-shield" aria-hidden="true">' + esc(S.short) + '</span><ul>' +
+            sign.map(function (s) {
+                return '<li><a href="about.html#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
+            }).join('') + '</ul>' +
+            '<a class="sign-more" href="about.html#capabilities">All ' + D.capabilities.length + ' capabilities</a>');
+
+        set('home-capabilities', D.capabilities.map(function (s) {
+            return '<li><a class="board board-blue capability-card" href="about.html#' + esc(s.id) + '"><div class="board-face">' +
+                capabilityPict(s) + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p>' + arrowSvg('right', 'go') + '</div></a></li>';
+        }).join(''));
+
+        // Moving associations strip. The list repeats until it can fill a very wide screen,
+        // then the whole set is doubled so the scroll loops without a visible jump.
+        var associations = D.associations || [];
+        if (associations.length) {
+            var loop = [];
+            while (loop.length < 12) { loop = loop.concat(associations); }
+            set('home-associations', '<ul class="association-track" style="animation-duration:' + (loop.length * 3.5) + 's">' +
+                loop.concat(loop).map(function (c, i) {
+                    var copy = i >= associations.length;
+                    return '<li class="association-tile"' + (copy ? ' aria-hidden="true"' : '') + '>' +
+                        (c.logo ? '<img src="' + esc(c.logo) + '" alt="' + (copy ? '' : esc(c.name)) + '">' : '<span>' + esc(c.name) + '</span>') +
+                        '</li>';
+                }).join('') + '</ul>');
+        } else {
+            hide('associations-section');
+        }
+
+        var featured = D.projects.filter(function (p) { return p.featured; }).slice(0, 3);
+        if (featured.length < 3) {
+            featured = featured.concat(sortProjects(D.projects.filter(function (p) { return !p.featured; })).slice(0, 3 - featured.length));
+        }
+        if (featured.length) {
+            set('home-featured', featured.map(function (p, i) { return projectCard(p, i === 0); }).join(''));
+        } else {
+            hide('featured-section');
+        }
+
+        var news = D.news.slice().sort(byDateDesc).slice(0, 3);
+        var pubs = sortPubs(D.publications).slice(0, 3);
+        if (news.length) { set('home-news', news.map(function (n) { return newsListItem(n, 'h3', false); }).join('')); } else { hide('home-news-col'); }
+        if (pubs.length) { set('home-pubs', pubs.map(pubItem).join('')); } else { hide('home-pubs-col'); }
+        if (!news.length && !pubs.length) { hide('updates-section'); }
+    };
+
     pages.about = function () {
         set('count-projects', String(D.projects.length));
         set('count-pubs', String(D.publications.length));
         set('count-professors', String(D.team.filter(function (m) { return m.group === 'professors'; }).length));
 
-        // Our capabilities: a drawing of the work, what we do, and what it delivers
-        set('capability-list', D.capabilities.map(function (s, i) {
-            return '<article class="cap" id="' + esc(s.id) + '">' +
-                '<div class="cap-art">' + (window.TRCArt ? window.TRCArt.small(window.TRCArt.CAP[s.id] || 'traffic') : '') + '</div>' +
-                '<div class="cap-body"><p class="cap-no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</p><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p>' +
-                '<p class="cap-ask"><a class="text-link" href="contact.html?work=' + encodeURIComponent(s.id) + '">Ask about ' + esc(s.title.charAt(0).toLowerCase() + s.title.slice(1)) + '</a></p></div>' +
-                '<div class="cap-out"><h4>Typical outputs</h4><ul class="ticks">' + s.outputs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul></div>' +
-                '</article>';
+        // Our capabilities: a blue sign for each, with a plate of details below
+        set('capability-list', D.capabilities.map(function (s) {
+            return '<article class="capability" id="' + esc(s.id) + '">' +
+                '<div class="board board-blue capability-head"><div class="board-face">' + capabilityPict(s) + '<h3>' + esc(s.title) + '</h3></div></div>' +
+                '<div class="sign-plate capability-plate"><p>' + esc(s.text) + '</p>' +
+                '<h4>Typical outputs</h4><ul class="chevrons">' + s.outputs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' +
+                '<p class="capability-ask"><a class="text-link" href="contact.html?work=' + encodeURIComponent(s.id) + '">Ask about ' +
+                esc(s.title.charAt(0).toLowerCase() + s.title.slice(1)) + '</a></p></div></article>';
         }).join(''));
         // Jump to the capability named in the link (content is added after the page loads)
         if (window.location.hash) {
             var target = document.getElementById(window.location.hash.slice(1));
-            if (target) {
-                var jump = function () { target.scrollIntoView({ behavior: 'instant' }); };
-                setTimeout(jump, 0);
-                // Web fonts and pictures can still shift the page while it loads
-                window.addEventListener('load', jump);
-                if (document.fonts && document.fonts.ready) { document.fonts.ready.then(jump); }
-            }
+            if (target) { setTimeout(function () { target.scrollIntoView(); }, 0); }
         }
     };
 
@@ -327,9 +366,9 @@
             return 'projects.html' + (q.length ? '?' + q.join('&') : '');
         }
 
-        var chips = chip(link('', sector), 'All', !status, D.projects.length) +
+        var chips = chip(link('', sector), 'All', !status) +
             Object.keys(D.statuses).map(function (k) {
-                return chip(link(k, sector), D.statuses[k], status === k, D.projects.filter(function (p) { return p.status === k; }).length);
+                return chip(link(k, sector), D.statuses[k], status === k, k === 'ongoing' ? 'lamp-amber' : '');
             }).join('');
         set('status-chips', chips);
 
@@ -348,7 +387,7 @@
         }));
         if (list.length) {
             set('result-count', list.length + ' listed');
-            set('project-grid', list.map(function (p, i) { return projectCard(p, i === 0); }).join(''));
+            set('project-grid', list.map(function (p) { return projectCard(p, false); }).join(''));
         } else {
             set('result-count', '');
             set('project-grid', '');
@@ -371,27 +410,26 @@
         facts += '<div><dt>Status</dt><dd>' + statusTag(p) + '</dd></div>';
 
         var related = D.projects.filter(function (x) { return x.id !== p.id && x.sector === p.sector; }).slice(0, 3);
-        var art = projectArt(p);
+        var boardClass = projectBoardClass(p);
 
         set('content',
-            detailHead(p.title, '', 'projects.html', 'All research & projects', art, sectorTag(p) + statusTag(p)) +
-            '<section class="section"><div class="wrap detail-layout"><div class="detail-main">' +
+            pageHead(p.title, '', 'projects.html', 'All research & projects', 'road', boardClass) +
+            '<section class="section section-tight"><div class="wrap detail-layout"><div class="detail-main">' +
             (p.image ? '<figure class="detail-image"><img src="' + esc(p.image) + '" alt=""></figure>' : '') +
             (p.summary ? '<p class="lead-text">' + esc(p.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(p.description) + '</div></div>' +
-            '<aside class="facts"><dl>' + facts + '</dl>' +
-            '<a class="btn btn-primary btn-block" href="contact.html">Discuss a similar project</a></aside></div></section>' +
-            (related.length ? '<section class="section section-tint"><div class="wrap"><h2 class="section-title">Related work</h2><div class="project-grid">' +
+            '<aside class="detail-facts board ' + boardClass + '"><div class="board-face"><dl>' + facts + '</dl>' +
+            '<a class="btn ' + (boardClass ? 'btn-primary' : 'btn-yellow') + ' btn-block" href="contact.html">Discuss a similar project</a></div></aside></div></section>' +
+            (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related work</h2></div><div class="project-grid">' +
                 related.map(function (r) { return projectCard(r, false); }).join('') + '</div></div></section>' : ''));
     };
 
     pages.publications = function () {
         var type = params.get('type') || '';
         if (!D.pubTypes[type]) { type = ''; }
-        function countOf(k) { return D.publications.filter(function (x) { return x.type === k; }).length; }
-        set('type-chips', chip('publications.html', 'All', !type, D.publications.length) +
-            Object.keys(D.pubTypes).filter(function (k) { return countOf(k) > 0; }).map(function (k) {
-                return chip('publications.html?type=' + k, D.pubTypes[k] + 's', type === k, countOf(k));
+        set('type-chips', chip('publications.html', 'All', !type) +
+            Object.keys(D.pubTypes).map(function (k) {
+                return chip('publications.html?type=' + k, D.pubTypes[k] + 's', type === k);
             }).join(''));
 
         var list = sortPubs(D.publications.filter(function (p) { return !type || p.type === type; }));
@@ -404,7 +442,7 @@
             if (p.year !== year) {
                 if (year !== null) { html += '</ul></section>'; }
                 year = p.year;
-                html += '<section class="pub-year"><h2 class="year">' + esc(year) + '</h2><ul class="pub-list">';
+                html += '<section class="pub-year"><h2 class="kmstone"><span class="kmstone-top" aria-hidden="true">Year</span><span class="kmstone-main">' + esc(year) + '</span></h2><ul class="pub-list">';
             }
             html += pubItem(p);
         });
@@ -414,7 +452,7 @@
     pages.news = function () {
         var list = D.news.slice().sort(byDateDesc);
         if (list.length) {
-            set('news-list', list.map(function (n, i) { return newsListItem(n, i === 0); }).join(''));
+            set('news-list', list.map(function (n) { return newsListItem(n, 'h2', true); }).join(''));
         } else {
             set('news-list', '');
             set('news-empty', '<p>No news posted yet.</p>');
@@ -427,8 +465,9 @@
         if (!n) { set('content', notFound('news item', 'news.html', 'Show all news')); return; }
         document.title = n.title + ' | ' + S.short + ', ' + S.instituteShort;
         set('content',
-            detailHead(n.title, '', 'news.html', 'All news', '', dateBlock(n.date)) +
-            '<section class="section"><div class="wrap narrow article">' +
+            pageHead(n.title, '', 'news.html', 'All news', 'paper') +
+            '<section class="section section-tight"><div class="wrap narrow">' +
+            '<p class="news-date">' + dateStone(n.date) + '</p>' +
             (n.image ? '<figure class="detail-image"><img src="' + esc(n.image) + '" alt=""></figure>' : '') +
             (n.summary ? '<p class="lead-text">' + esc(n.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(n.body) + '</div></div></section>');
@@ -455,15 +494,6 @@
         prev.innerHTML = arrowSvg('left');
         next.innerHTML = arrowSvg('right');
         prev.hidden = next.hidden = list.length < 2;
-        var thumbs = document.getElementById('viewer-thumbs');
-        if (thumbs) {
-            thumbs.innerHTML = list.map(function (p, i) { return '<button type="button" data-go="' + i + '" aria-label="Show photo ' + (i + 1) + ': ' + esc(p.title) + '"><img src="' + esc(p.image) + '" alt=""></button>'; }).join('');
-            thumbs.hidden = list.length < 2;
-            thumbs.addEventListener('click', function (e) {
-                var b = e.target.closest('button[data-go]');
-                if (b) { show(parseInt(b.getAttribute('data-go'), 10)); }
-            });
-        }
 
         function show(index) {
             at = (index + list.length) % list.length;
@@ -472,9 +502,6 @@
             image.alt = p.title;
             caption.innerHTML = '<strong>' + esc(p.title) + '</strong>' + (details ? '<span>' + esc(details) + '</span>' : '');
             count.textContent = (at + 1) + ' of ' + list.length;
-            if (thumbs) {
-                [].forEach.call(thumbs.children, function (b, i) { b.classList.toggle('is-on', i === at); if (i === at) { b.setAttribute('aria-current', 'true'); } else { b.removeAttribute('aria-current'); } });
-            }
             // Load the photos on either side, so moving between them feels instant
             [at + 1, at - 1].forEach(function (n) { new Image().src = list[(n + list.length) % list.length].image; });
         }
@@ -523,8 +550,8 @@
         if (usedCats.indexOf(cat) === -1) { cat = ''; }
 
         if (usedCats.length > 1) {
-            set('gallery-chips', chip('gallery.html', 'All', !cat, photos.length) + usedCats.map(function (k) {
-                return chip('gallery.html?category=' + k, cats[k], cat === k, photos.filter(function (p) { return p.category === k; }).length);
+            set('gallery-chips', chip('gallery.html', 'All', !cat) + usedCats.map(function (k) {
+                return chip('gallery.html?category=' + k, cats[k], cat === k);
             }).join(''));
         } else {
             hide('gallery-filters');
@@ -539,44 +566,34 @@
         set('gallery-count', list.length + (list.length === 1 ? ' photo' : ' photos'));
         set('gallery-grid', list.map(function (p, i) {
             var details = photoDetails(p);
-            var group = cats[p.category] || '';
-            return '<li class="shot' + (i % 5 < 2 ? ' shot-large' : '') + '"><figure>' +
-                '<a href="' + esc(p.image) + '" data-photo="' + i + '" aria-label="Open larger photo: ' + esc(p.title) + '">' +
+            return '<li><figure class="gallery-item">' +
+                '<a class="hoarding" href="' + esc(p.image) + '" data-photo="' + i + '" aria-label="Open larger photo: ' + esc(p.title) + '">' +
                 '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></a>' +
-                '<figcaption><strong>' + esc(p.title) + '</strong><span>' + esc([group, details].filter(Boolean).join(' · ')) + '</span></figcaption></figure></li>';
+                '<figcaption class="sign-plate gallery-caption"><strong>' + esc(p.title) + '</strong>' +
+                (details ? '<span>' + esc(details) + '</span>' : '') + '</figcaption></figure></li>';
         }).join(''));
         startPhotoViewer(list);
     };
 
     pages.team = function () {
         var members = D.team.slice().sort(function (a, b) { return (a.order || 100) - (b.order || 100) || a.name.localeCompare(b.name); });
-        // The opening of the page shows the actual team
-        var band = document.getElementById('team-band');
-        if (band) {
-            var profs = members.filter(function (m) { return m.group === 'professors' && m.photo; });
-            var staff = members.filter(function (m) { return m.group !== 'professors' && m.photo; });
-            band.innerHTML = '<div class="band-profs">' + profs.map(function (m) { return '<img src="' + esc(m.photo) + '" alt="">'; }).join('') + '</div>' +
-                '<div class="band-staff">' + staff.map(function (m) { return '<img src="' + esc(m.photo) + '" alt="">'; }).join('') + '</div>';
-        }
-        function person(m, big) {
-            var photo = m.photo
-                ? '<img class="person-photo" src="' + esc(m.photo) + '" alt="" loading="' + (big ? 'eager' : 'lazy') + '">'
-                : '<span class="person-photo is-initials" aria-hidden="true">' + esc(initials(m.name)) + '</span>';
-            var links = '';
-            if (m.email) { links += '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a>'; }
-            if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Website</a>'; }
-            return '<li class="person' + (big ? ' person-big' : '') + '">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
-                (m.designation ? '<p class="person-role">' + esc(m.designation) + '</p>' : '') +
-                (m.expertise ? '<p class="person-areas">' + esc(m.expertise) + '</p>' : '') +
-                (links ? '<p class="person-links">' + links + '</p>' : '') + '</div></li>';
-        }
         var html = '';
         Object.keys(D.teamGroups).forEach(function (g) {
             var list = members.filter(function (m) { return m.group === g; });
             if (!list.length) { return; }
-            var big = g === 'professors';
-            html += '<section class="team-group team-' + esc(g) + '"><h2 class="section-title">' + esc(D.teamGroups[g]) + '</h2><ul class="' + (big ? 'prof-list' : 'staff-grid') + '">' +
-                list.map(function (m) { return person(m, big); }).join('') + '</ul></section>';
+            html += '<section class="team-group"><div class="section-head section-head-blue"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
+                list.map(function (m) {
+                    var photo = m.photo
+                        ? '<img class="person-photo" src="' + esc(m.photo) + '" alt="" loading="lazy">'
+                        : '<span class="person-photo is-initials" aria-hidden="true">' + esc(initials(m.name)) + '</span>';
+                    var links = '';
+                    if (m.email) { links += '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a>'; }
+                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Website</a>'; }
+                    return '<li class="person board board-blue"><div class="board-face person-face">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
+                        (m.designation ? '<p class="person-role">' + esc(m.designation) + '</p>' : '') +
+                        (m.expertise ? '<p class="person-areas">' + esc(m.expertise) + '</p>' : '') +
+                        (links ? '<p class="person-links">' + links + '</p>' : '') + '</div></div></li>';
+                }).join('') + '</ul></section>';
         });
         set('team-groups', html || '<div class="empty"><p>Team details will be added soon.</p></div>');
     };
@@ -691,36 +708,37 @@
 
     /* ---------- Start ---------- */
 
-    // Draw the pictogram for any element marked data-pict
+    // Draw the pictogram for any element marked data-pict (signs written directly in the HTML pages)
     function fillPicts() {
         document.querySelectorAll('[data-pict]').forEach(function (el) {
             el.innerHTML = pict(el.getAttribute('data-pict'));
         });
     }
-    // The drawing that opens a page
-    function fillArt() {
-        var A = window.TRCArt;
-        if (!A) { return; }
-        document.querySelectorAll('[data-art]').forEach(function (el) {
-            var kind = el.getAttribute('data-art');
-            if (kind === 'about') { el.innerHTML = A.crossSection(); }
-            if (kind === 'projects') { el.innerHTML = A.corridor(sortProjects(D.projects), D.sectors); }
-            if (kind === 'publications') { el.innerHTML = A.paperAndPlot(); }
-            if (kind === 'news') { el.innerHTML = A.newsLine(D.news, MONTHS); }
-            if (kind === 'gallery') {
-                el.innerHTML = (D.gallery || []).slice(0, 5).map(function (p, i) { return '<a class="mosaic-' + i + '" href="gallery.html" tabindex="-1"><img src="' + esc(p.image) + '" alt=""></a>'; }).join('');
-            }
-        });
-        var slot = document.getElementById('arrival-slot');
-        if (slot) { slot.innerHTML = arrivalNote(); }
+
+    // Drive the little car along the road under the header as the page scrolls
+    function startCar() {
+        var car = document.querySelector('.header-car');
+        if (!car) { return; }
+        var waiting = false;
+        function place() {
+            waiting = false;
+            var distance = document.documentElement.scrollHeight - window.innerHeight;
+            car.style.setProperty('--trip', distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)).toFixed(4) : '0');
+        }
+        function request() {
+            if (!waiting) { waiting = true; window.requestAnimationFrame(place); }
+        }
+        window.addEventListener('scroll', request, { passive: true });
+        window.addEventListener('resize', request);
+        place();
     }
 
     renderHeader();
     renderFooter();
     fillContactBits();
-    fillArt();
     if (pages[page]) { pages[page](); }
     fillPicts();
+    startCar();
 
     // Mobile menu
     var toggle = document.querySelector('.nav-toggle');

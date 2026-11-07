@@ -43,7 +43,7 @@ window.TRC = {
     },
 
     /* ---------- Our capabilities (Home page, About page, contact form) ---------- */
-    // All of them appear on the Our Expertise board on the Home page.
+    // The first four appear on the green sign at the top of the Home page.
     capabilities: [
         {
             id: 'traffic-studies',
@@ -160,7 +160,7 @@ window.TRC = {
     /* ---------- Projects ---------- */
     // id: a unique number (used in the page link).
     // sector: one of the keys in "sectors" above. status: 'ongoing' or 'completed'.
-    // featured: true marks a project to feature. The first one marked appears on the Featured Project board on the Home page.
+    // featured: true shows it under "Selected research & projects" on the Home page (first one is shown large).
     projects: [
         {
             id: 3,
@@ -256,7 +256,6 @@ window.TRC = {
 
     /* ---------- News ---------- */
     // date: 'YYYY-MM-DD'. Newest items appear first automatically.
-    // featured: true chooses the story for the Featured News board on the Home page. If none is marked, the newest is shown.
     news: [
         {
             id: 1,
@@ -268,7 +267,6 @@ window.TRC = {
         },
         {
             id: 2,
-            featured: true,
             date: '2026-10-16',
             title: 'Workshop on road safety audits for agency engineers (sample)',
             summary: 'A two-day hands-on workshop covering audit stages, site inspection and reporting. Replace this sample item with real news.',
@@ -295,9 +293,9 @@ window.TRC = {
         { authors: 'Author, C., Author, A.', title: 'Sample paper title on pedestrian safety at urban intersections', venue: 'Conference name, City', type: 'conference', year: 2024, link: '' },
     ],
 
-    /* ---------- Our Associations & Collaboration (board on the Home page; the first six are shown) ---------- */
+    /* ---------- Our Associations (moving strip on the Home page) ---------- */
     // name: the organisation's name. logo: path to the logo, e.g. 'images/associations/organisation-name.png'.
-    // Leave logo as '' to show the name as text. With an empty list (associations: []) the board keeps only its title and button.
+    // Leave logo as '' to show the name as text. An empty list (associations: []) hides the whole strip.
     associations: [
         { name: 'Municipal corporation (sample)', logo: '' },
         { name: 'Highway authority (sample)', logo: '' },

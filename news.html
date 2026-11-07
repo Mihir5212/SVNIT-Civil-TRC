@@ -7,13 +7,12 @@
 <meta name="robots" content="noindex">
 <title>News | TRC, SVNIT Surat</title>
 <meta name="description" content="News and updates from TRC, SVNIT Surat.">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0B5D45">
 <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<script>try{var a=JSON.parse(sessionStorage.getItem('trc-arrival')||'null');if(a&&Date.now()-a.t<15000){document.documentElement.className='arrived arrived-'+a.dir;}}catch(e){}</script>
 </head>
 <body data-page="news">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -21,19 +20,23 @@
 
 <main id="main">
 <noscript><p class="noscript">This website needs JavaScript turned on to show its content.</p></noscript>
-<section class="hero hero-news">
+<section class="page-head">
     <div class="wrap">
-        <div id="arrival-slot"></div>
-        <p class="eyebrow">TEP Research &amp; Consultancy Cell</p>
-        <h1>News</h1>
-        <p class="lead">Project milestones, workshops, publications and other updates.</p>
-        <div class="hero-art hero-art-line" data-art="news"></div>
+        <div class="board gantry-board">
+            <div class="board-face gantry-face">
+                <div class="gantry-text">
+                    <h1>News</h1>
+                    <p class="lead">Project milestones, workshops, publications and other updates.</p>
+                </div>
+                <span class="pict" data-pict="paper" aria-hidden="true"></span>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="section">
-    <div class="wrap">
-        <ul class="news-list" id="news-list"></ul>
+    <div class="wrap narrow">
+        <ul class="news-list news-list-full road-rail" id="news-list"></ul>
         <div class="empty" id="news-empty"></div>
     </div>
 </section>
@@ -41,9 +44,8 @@
 </main>
 
 <div id="site-footer"></div>
-<!-- data.js holds the content; art.js has the drawings; main.js builds the pages from them -->
+<!-- data.js holds the content; main.js builds the pages from it -->
 <script src="assets/js/data.js"></script>
-<script src="assets/js/art.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
