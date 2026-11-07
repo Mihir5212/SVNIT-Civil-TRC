@@ -1,0 +1,4 @@
+Textures used by the road on the Home page. All sources are CC0 (public domain); no attribution is required, it is listed for the record.
+
+Poly Haven (polyhaven.com): asphalt_02, bark_brown_02, clay_roof_tiles_02, corrugated_iron_02, dirty_concrete, farm_soil, gravelly_sand, interlocking_concrete_pavers, large_red_bricks, leafy_grass, long_white_tiles, painted_metal_shutter, palm_bark, rough_plaster_03, white_plaster_02.
+ambientCG (ambientcg.com): LeafSet024, LeafSet026, Foliage001 (composed into foliage and grass cards).

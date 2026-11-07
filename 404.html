@@ -7,12 +7,13 @@
 <meta name="robots" content="noindex">
 <title>Page not found | TRC, SVNIT Surat</title>
 <meta name="description" content="Traffic studies, road safety audits and transport planning by the TEP Research &amp; Consultancy Cell, Department of Civil Engineering, SVNIT Surat.">
-<meta name="theme-color" content="#0B5D45">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<script>try{var a=JSON.parse(sessionStorage.getItem('trc-arrival')||'null');if(a&&Date.now()-a.t<15000){document.documentElement.className='arrived arrived-'+a.dir;}}catch(e){}</script>
 </head>
 <body data-page="not-found">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -21,32 +22,25 @@
 <main id="main">
 <noscript><p class="noscript">This website needs JavaScript turned on to show its content.</p></noscript>
 <section class="closure">
-    <div class="barricade" aria-hidden="true"></div>
-    <div class="wrap closure-grid">
-        <div class="closure-sign" aria-hidden="true"><div class="no-entry"></div></div>
-        <div class="closure-text">
-            <h1>This page could not be found</h1>
-            <p>The link may be old, or the page may have moved. Try one of these pages instead.</p>
-            <div class="board board-yellow diversion">
-                <div class="board-face">
-                    <p class="diversion-title">Diversion</p>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html#capabilities">Our capabilities</a></li>
-                        <li><a href="projects.html">Research &amp; Projects</a></li>
-                        <li><a href="contact.html">Send an enquiry</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="wrap">
+        <div class="barricade" aria-hidden="true"></div>
+        <h1>This page could not be found</h1>
+        <p class="lead">The link may be old, or the page may have moved. Try one of these pages instead.</p>
+        <ul class="diversion">
+            <li><a href="index.html"><svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10h11V5l8 7-8 7v-5H3z" fill="currentColor"/></svg>Home</a></li>
+            <li><a href="about.html#capabilities"><svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10h11V5l8 7-8 7v-5H3z" fill="currentColor"/></svg>Our capabilities</a></li>
+            <li><a href="projects.html"><svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10h11V5l8 7-8 7v-5H3z" fill="currentColor"/></svg>Research &amp; Projects</a></li>
+            <li><a href="contact.html"><svg class="arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10h11V5l8 7-8 7v-5H3z" fill="currentColor"/></svg>Send an enquiry</a></li>
+        </ul>
     </div>
 </section>
 
 </main>
 
 <div id="site-footer"></div>
-<!-- data.js holds the content; main.js builds the pages from it -->
+<!-- data.js holds the content; art.js has the drawings; main.js builds the pages from them -->
 <script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

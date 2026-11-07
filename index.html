@@ -7,14 +7,14 @@
 <meta name="robots" content="noindex">
 <title>TEP Research &amp; Consultancy Cell | SVNIT Surat</title>
 <meta name="description" content="Traffic studies, road safety audits and transport planning by the TEP Research &amp; Consultancy Cell, Department of Civil Engineering, SVNIT Surat.">
-<meta name="theme-color" content="#03060c">
+<meta name="theme-color" content="#0f1a2a">
 <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@400&display=swap">
 <style>
-/* The Home page: a night drive from a rural highway into the city. Every section of the site is a real overhead board on the road.
-   This page has its own styles and drawing code; it does not use style.css or main.js. Its content comes from data.js. */
+/* The Home page: a drive from a rural highway by day into the city at night. Every section of the site is a real overhead board on the road.
+   This page has its own styles and its 3D world (assets/js/drive/); it does not use style.css or main.js. Its content comes from data.js. */
 :root {
     --night: #03060c;
     --on-night: #f5f6f4;
@@ -46,6 +46,7 @@ ul, ol { list-style: none; }
 
 .skip-link { position: absolute; left: 12px; top: -70px; z-index: 40; padding: 10px 16px 8px; border-radius: 8px; background: var(--line-amber); color: #0b0d0f; font-weight: 700; text-decoration: none; }
 .skip-link:focus { top: 10px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Navigation */
 .nav {
@@ -104,20 +105,21 @@ ul, ol { list-style: none; }
 /* The drive */
 .drive { position: relative; height: 1100vh; margin-top: -58px; }
 .drive-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; }
-#road { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-/* When the visitor stops at a board, the road softens and dims behind it, so the eye goes to the words */
-#road { transform-origin: 50% 70%; transition: filter .7s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
-.is-reading:not(.is-first) #road { filter: blur(2.4px) brightness(.62) saturate(.82); transform: scale(1.018); }
-.light-focus.is-reading:not(.is-first) #road { filter: brightness(.62) saturate(.82); transform: none; }
-.vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 78% 82% at 50% 58%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, .58)); }
+.drive-stage { background: #8fb3d9 url("assets/img/road-still.jpg") center 74% / cover no-repeat; }
+#road { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .7s ease; }
+.world-ready #road { opacity: 1; }
+.vignette { display: none; }
 .boards { position: absolute; inset: 0; }
+.load-note { position: absolute; left: 50%; transform: translateX(-50%); bottom: 54px; padding: 5px 13px 3px; border-radius: 999px; background: rgba(3, 6, 12, .78); color: #e4e7e9; font-size: 13px; white-space: nowrap; transition: opacity .4s ease; }
+.world-ready .load-note { opacity: 0; pointer-events: none; }
 
 /* The boards: real text and links, moved and scaled to sit on their gantries in the road scene */
 .board {
     position: absolute; left: 0; top: 0; width: 880px; transform-origin: 0 0; visibility: hidden;
     padding: 9px; border-radius: 16px; text-align: center; color: #fff;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 0 70px rgba(70, 150, 190, .22);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 18px 46px rgba(4, 10, 20, .38);
 }
+.board-moving { will-change: transform, filter; }
 .board-green { background: radial-gradient(90% 120% at 50% 100%, #118361, #0a5a43 72%); --sign: #0a5a43; --soft: #e6f1ec; }
 .board-blue { background: radial-gradient(90% 120% at 50% 100%, #1662b8, #0b4280 72%); --sign: #0b4280; --soft: #e6eef8; }
 .board-face {
@@ -136,6 +138,24 @@ ul, ol { list-style: none; }
     font-size: 18px; line-height: 1.2; font-weight: 700; text-decoration: none; transition: background .2s ease, color .2s ease;
 }
 .plate::after { content: ""; width: 19px; height: 12px; flex: none; margin-top: -2px; background: currentColor; clip-path: polygon(0 38%, 62% 38%, 62% 0, 100% 50%, 62% 100%, 62% 62%, 0 62%); }
+.way::after { display: none; }
+/* The arrow on a direction plate: drawn like the arrow on a road sign, and pointing the way the road turns */
+.way-arrow { flex: none; width: 30px; height: 24px; background: currentColor; transition: transform .22s ease; }
+.way-right .way-arrow { clip-path: polygon(0 34%, 56% 34%, 56% 0, 100% 50%, 56% 100%, 56% 66%, 0 66%); }
+.way-left .way-arrow { clip-path: polygon(100% 34%, 44% 34%, 44% 0, 0 50%, 44% 100%, 44% 66%, 100% 66%); }
+.way-ahead .way-arrow, .way-straight .way-arrow { width: 24px; height: 28px; clip-path: polygon(34% 100%, 34% 44%, 0 44%, 50% 0, 100% 44%, 66% 44%, 66% 100%); }
+.way-right:hover .way-arrow { transform: translateX(4px); }
+.way-left:hover .way-arrow { transform: translateX(-4px); }
+.way-ahead:hover .way-arrow, .way-straight:hover .way-arrow { transform: translateY(-4px); }
+/* Left turn, straight on and right turn each keep their own place on the board */
+.ways { margin-top: 20px; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; }
+.ways .way-left { grid-column: 1; justify-self: start; }
+.ways .way-ahead { grid-column: 2; }
+.ways .way-right { grid-column: 3; justify-self: end; }
+.way-ahead { border: 0; font-family: inherit; background: transparent; color: #fff; cursor: pointer; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5); }
+.way-ahead:hover { background: rgba(255, 255, 255, .14); }
+.way-text { text-wrap: balance; }
+.way-left, .way-right { text-align: left; }
 .plate-yellow { background: var(--line-amber); color: #101214; }
 .plate-yellow:hover { background: #ffd23f; }
 .plate-white { box-shadow: inset 0 0 0 2px #fff; color: #fff; }
@@ -162,7 +182,7 @@ ul, ol { list-style: none; }
 .exp-ico { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 7px; background: #fff; color: var(--sign); }
 .exp-ico svg { width: 24px; height: 24px; display: block; }
 .exp-name { flex: 1; min-width: 0; }
-.exp-list a::after { content: ""; width: 16px; height: 11px; flex: none; margin-top: -2px; background: currentColor; clip-path: polygon(0 38%, 62% 38%, 62% 0, 100% 50%, 62% 100%, 62% 62%, 0 62%); }
+.exp-list .way-arrow { width: 22px; height: 16px; }
 .exp-list a:hover { color: var(--line-amber); }
 
 /* Associations */
@@ -193,8 +213,11 @@ ul, ol { list-style: none; }
 
 /* All pages */
 .where { margin-top: 18px; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.where a { display: flex; width: 100%; justify-content: space-between; font-size: 20px; min-height: 52px; }
-.where li:last-child { grid-column: 1 / -1; }
+.where a { display: flex; width: 100%; font-size: 20px; min-height: 52px; }
+.where .way-left { justify-content: flex-start; }
+.where .way-right { justify-content: flex-end; }
+.where .where-ahead { grid-column: 1 / -1; }
+.where .where-ahead a { justify-content: center; }
 
 @media (min-width: 721px) and (max-height: 820px) {
     .people img { max-width: 122px; }
@@ -207,6 +230,17 @@ ul, ol { list-style: none; }
     .board-actions { margin-top: 14px; }
     .pair, .exp-list, .assoc, .people { margin-top: 12px; }
 }
+@media (max-width: 720px) and (max-height: 700px) {
+    .board-face { padding: 14px 14px 16px !important; }
+    .exp-ico { display: none; }
+    .exp-list a { min-height: 38px !important; padding-block: 6px 4px !important; }
+    .pair { margin-top: 12px; gap: 8px; }
+    .pair-card { padding: 9px 13px !important; }
+    .pair-card h3 { font-size: 23px; }
+    .ways { margin-top: 10px !important; }
+    .people img { max-width: 104px; }
+    .people strong { margin-top: 8px; }
+}
 @media (max-width: 720px) {
     .board { width: 440px; padding: 7px; border-radius: 13px; }
     .board-face { padding: 20px 16px 22px; }
@@ -218,6 +252,12 @@ ul, ol { list-style: none; }
     .desk-only { display: none; }
     .plate { font-size: 19px; }
     .board-actions { flex-direction: column; align-items: center; margin-top: 16px; gap: 10px; }
+    .ways { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 16px; gap: 9px; }
+    .ways .way-left { grid-column: 1; justify-self: stretch; }
+    .ways .way-right { grid-column: 2; justify-self: stretch; }
+    .ways .way-ahead { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+    .ways .plate { padding-inline: 12px; gap: 8px; }
+    .ways .only-way { grid-column: 1 / -1; justify-self: center; }
     .board-welcome { font-size: 21px; }
     .board h1 { font-size: 45px; }
     .board-section { margin-top: 12px; font-size: 23px; }
@@ -260,23 +300,12 @@ ul, ol { list-style: none; }
     padding: 4px 9px 3px; border-radius: 999px; background: rgba(3, 6, 12, .78);
     font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; color: #c3c9cc; font-variant-numeric: tabular-nums;
 }
-.next-stop {
-    position: absolute; left: 50%; bottom: 14px; display: inline-flex; align-items: center; gap: 9px; min-height: 40px; padding: 8px 17px 6px;
-    border: 0; border-radius: 999px; background: rgba(3, 6, 12, .86); color: #fff; font: 600 14.5px/1.2 var(--font); cursor: pointer; white-space: nowrap;
-    opacity: 0; transform: translate(-50%, 8px); pointer-events: none; transition: opacity .45s ease .25s, transform .45s ease .25s, background .2s ease;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
-}
-.next-stop[hidden] { display: none; }
-.next-stop::after { content: ""; width: 11px; height: 15px; background: var(--line-amber); clip-path: polygon(38% 0, 62% 0, 62% 60%, 100% 60%, 50% 100%, 0 60%, 38% 60%); }
-.next-stop:hover { background: #151b24; }
-.is-reading .next-stop { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 .trip { transition: opacity .4s ease; }
 .is-reading:not(.is-first) .trip { opacity: 0; }
 .route { transition: opacity .4s ease; }
 .is-reading:not(.is-first) .route { opacity: .62; }
 .route:hover, .route:focus-within { opacity: 1 !important; }
 @media (max-width: 860px) {
-    .next-stop { display: none; }
     .route, .trip { display: none; }
     .route-mini {
         position: absolute; left: 50%; bottom: max(10px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
@@ -291,18 +320,34 @@ ul, ol { list-style: none; }
 /* Less motion or a very short screen: a still road with the boards as a simple list */
 html.still .drive { height: auto; margin-top: 0; }
 html.still .drive-stage { position: static; height: auto; overflow: visible; }
-html.still #road, html.still .vignette { position: fixed; inset: 0; }
+html.still body { background: #8fb3d9 url("assets/img/road-still.jpg") center / cover fixed no-repeat; }
+html.still .drive-stage { background: none; }
+html.still #road { display: none; }
 html.still .boards { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 12px 60px; }
 html.still .board { position: relative; visibility: visible; max-width: 100%; }
-html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .trip, html.still .next-stop { display: none; }
+html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .trip, html.still .load-note, html.still .way-ahead { display: none; }
+.arrival-left .way-arrow { clip-path: polygon(100% 34%, 44% 34%, 44% 0, 0 50%, 44% 100%, 44% 66%, 100% 66%); }
+.arrival-right .way-arrow { clip-path: polygon(0 34%, 56% 34%, 56% 0, 100% 50%, 56% 100%, 56% 66%, 0 66%); }
+.arrival-straight .way-arrow { width: 24px; height: 28px; clip-path: polygon(34% 100%, 34% 44%, 0 44%, 50% 0, 100% 44%, 66% 44%, 66% 100%); }
+/* The plate above the side road, passed just before arriving at a page, and the fade into that page */
+.arrival {
+    position: absolute; left: 0; top: 0; width: 620px; transform-origin: 0 0; padding: 7px; border-radius: 12px; background: #0b4280; color: #fff; pointer-events: none; z-index: 1200;
+    box-shadow: 0 12px 30px rgba(4, 10, 20, .4);
+}
+.arrival[hidden] { display: none; }
+.arrival-face { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 18px 24px 16px; border: 3px solid #fff; border-radius: 7px; text-align: center; }
+.arrival-name { font-size: 40px; line-height: 1.08; font-weight: 800; letter-spacing: -.022em; text-wrap: balance; }
+.exit-veil { position: fixed; inset: 0; background: #f6f7f8; opacity: 0; pointer-events: none; z-index: 60; }
+.exit-veil[hidden] { display: none; }
+.is-turning .route, .is-turning .route-mini, .is-turning .trip, .is-turning .scroll-hint { opacity: 0 !important; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) {
-    .plate, .scroll-hint, .route .lbl, .route .dot { transition: none; }
+    .plate, .scroll-hint, .route .lbl, .route .dot, .way-arrow { transition: none; }
 }
 </style>
 <noscript><style>
 .drive { height: auto; margin-top: 0; }
 .drive-stage { position: static; height: auto; overflow: visible; }
-#road, .vignette, .route, .route-mini, .scroll-hint, .trip { display: none; }
+#road, .vignette, .route, .route-mini, .scroll-hint, .trip, .load-note, .way-ahead { display: none; }
 .boards { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 12px 60px; }
 .board { position: relative; visibility: visible; max-width: 100%; }
 .noscript { padding: 16px 20px; text-align: center; }
@@ -338,8 +383,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
     <noscript><p class="noscript">This website needs JavaScript turned on to show all of its content.</p></noscript>
     <section class="drive" id="drive" aria-labelledby="hero-title">
         <div class="drive-stage" id="stage">
-            <canvas id="road" role="img" aria-label="A night drive from a rural highway into the city, passing crash barriers, delineators, a widening road, kerbs, footpaths with guard rails, buildings and two signalled junctions with pedestrian crossings."></canvas>
-            <div class="vignette" aria-hidden="true"></div>
+            <canvas id="road" role="img" aria-label="A drive from a rural highway by day into a city at night, passing fields, villages, crash barriers, delineators, shops, buildings and signalled junctions with pedestrian crossings."></canvas>
 
             <div class="boards" id="boards">
                 <div class="board board-green" data-label="Welcome">
@@ -348,9 +392,10 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                         <h1 id="hero-title">TEP Research &amp; Consultancy Cell</h1>
                         <p class="board-section">Transportation Engineering &amp; Planning Section</p>
                         <p class="board-dept">Department of Civil Engineering, SVNIT Surat</p>
-                        <div class="board-actions">
-                            <a class="plate plate-yellow" href="contact.html">Discuss a project</a>
-                            <a class="plate plate-white" href="projects.html">See our research &amp; projects</a>
+                        <div class="ways">
+                            <a class="plate plate-white way way-left" data-turn="left" data-to="Research &amp; Projects" href="projects.html"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">See our research &amp; projects</span></a>
+                            <button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: About TEP"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">About TEP</span></button>
+                            <a class="plate plate-yellow way way-right" data-turn="right" data-to="Send an enquiry" href="contact.html"><span class="way-text">Discuss a project</span><span class="way-arrow" aria-hidden="true"></span></a>
                         </div>
                     </div>
                 </div>
@@ -360,7 +405,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                         <div class="board-head"><span class="board-pict" data-pict="info" aria-hidden="true"></span><h2>About TEP</h2></div>
                         <p class="board-text">The TEP Research &amp; Consultancy Cell (TRC) carries out consultancy and sponsored research for government departments, urban local bodies, traffic police and private organisations.</p>
                         <p class="board-text board-soft desk-only short-hide">Being part of SVNIT Surat gives the agencies we work with the institute&rsquo;s survey equipment, laboratories and research experience, with the independence of an academic organisation.</p>
-                        <div class="board-actions"><a class="plate plate-yellow" href="about.html">More about us</a></div>
+                        <div class="ways"><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Vision &amp; Mission"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Vision &amp; Mission</span></button><a class="plate plate-yellow way way-right" data-turn="right" data-to="About" href="about.html"><span class="way-text">More about us</span><span class="way-arrow" aria-hidden="true"></span></a></div>
                     </div>
                 </section>
 
@@ -371,7 +416,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                             <div class="pair-card"><h3>Vision</h3><p>Safer roads and better-run traffic systems in Gujarat and across India, built on careful measurement and sound engineering.</p></div>
                             <div class="pair-card"><h3>Mission</h3><p>To end every study with clear findings that our partner agencies can defend and act on.</p></div>
                         </div>
-                        <div class="board-actions"><a class="plate plate-yellow" href="about.html">How a project runs</a></div>
+                        <div class="ways"><a class="plate plate-yellow way way-left" data-turn="left" data-to="How a project runs" href="about.html#how-a-project-runs"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">How a project runs</span></a><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Our Expertise"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Our Expertise</span></button></div>
                     </div>
                 </section>
 
@@ -379,6 +424,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                     <div class="board-face">
                         <div class="board-head"><span class="board-pict" data-pict="cone" aria-hidden="true"></span><h2>Our Expertise</h2></div>
                         <div class="exp-list" id="exp-list"></div>
+                        <div class="ways"><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Our Associations &amp; Collaboration"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Our Associations &amp; Collaboration</span></button></div>
                     </div>
                 </section>
 
@@ -386,7 +432,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                     <div class="board-face">
                         <div class="board-head"><span class="board-pict" data-pict="building" aria-hidden="true"></span><h2>Our Associations &amp; Collaboration</h2></div>
                         <ul class="assoc" id="assoc-list"></ul>
-                        <div class="board-actions"><a class="plate plate-yellow" href="contact.html">Discuss a collaboration</a></div>
+                        <div class="ways"><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Featured Project"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Featured Project</span></button><a class="plate plate-yellow way way-right" data-turn="right" data-to="Send an enquiry" href="contact.html"><span class="way-text">Discuss a collaboration</span><span class="way-arrow" aria-hidden="true"></span></a></div>
                     </div>
                 </section>
 
@@ -408,7 +454,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                     <div class="board-face">
                         <div class="board-head"><span class="board-pict" data-pict="book" aria-hidden="true"></span><h2>Publications</h2></div>
                         <ul class="pubs" id="pub-list"></ul>
-                        <div class="board-actions"><a class="plate plate-yellow" href="publications.html">All publications</a></div>
+                        <div class="ways"><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Team"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Team</span></button><a class="plate plate-yellow way way-right" data-turn="right" data-to="Publications" href="publications.html"><span class="way-text">All publications</span><span class="way-arrow" aria-hidden="true"></span></a></div>
                     </div>
                 </section>
 
@@ -416,7 +462,7 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                     <div class="board-face">
                         <div class="board-head"><span class="board-pict" data-pict="people" aria-hidden="true"></span><h2>Team</h2></div>
                         <div class="people" id="team-list"></div>
-                        <div class="board-actions"><a class="plate plate-yellow" href="team.html">Meet the whole team</a></div>
+                        <div class="ways"><button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Where would you like to go?"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Where would you like to go?</span></button><a class="plate plate-yellow way way-right" data-turn="right" data-to="Team" href="team.html"><span class="way-text">Meet the whole team</span><span class="way-arrow" aria-hidden="true"></span></a></div>
                     </div>
                 </section>
 
@@ -424,13 +470,13 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                     <div class="board-face">
                         <div class="board-head"><span class="board-pict" data-pict="signal" aria-hidden="true"></span><h2>Where would you like to go?</h2></div>
                         <ul class="where">
-                            <li><a class="plate plate-white" href="about.html">About</a></li>
-                            <li><a class="plate plate-white" href="projects.html">Research &amp; Projects</a></li>
-                            <li><a class="plate plate-white" href="publications.html">Publications</a></li>
-                            <li><a class="plate plate-white" href="news.html">News</a></li>
-                            <li><a class="plate plate-white" href="gallery.html">Gallery</a></li>
-                            <li><a class="plate plate-white" href="team.html">Team</a></li>
-                            <li><a class="plate plate-yellow" href="contact.html">Send an enquiry</a></li>
+                            <li><a class="plate plate-white way way-left" data-turn="left" href="about.html"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">About</span></a></li>
+                            <li><a class="plate plate-white way way-right" data-turn="right" href="projects.html"><span class="way-text">Research &amp; Projects</span><span class="way-arrow" aria-hidden="true"></span></a></li>
+                            <li><a class="plate plate-white way way-left" data-turn="left" href="publications.html"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Publications</span></a></li>
+                            <li><a class="plate plate-white way way-right" data-turn="right" href="news.html"><span class="way-text">News</span><span class="way-arrow" aria-hidden="true"></span></a></li>
+                            <li><a class="plate plate-white way way-left" data-turn="left" href="gallery.html"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Gallery</span></a></li>
+                            <li><a class="plate plate-white way way-right" data-turn="right" href="team.html"><span class="way-text">Team</span><span class="way-arrow" aria-hidden="true"></span></a></li>
+                            <li class="where-ahead"><a class="plate plate-yellow way way-straight" data-turn="straight" href="contact.html"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Send an enquiry</span></a></li>
                         </ul>
                     </div>
                 </section>
@@ -442,15 +488,19 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                 <span id="mini-label" aria-live="polite"></span>
                 <button type="button" id="mini-next" aria-label="Next stop">&#8250;</button>
             </div>
-            <span class="scroll-hint" id="hint" aria-hidden="true">Scroll to drive</span>
-            <button class="next-stop" id="next-stop" type="button" hidden><span id="next-label"></span></button>
+            <span class="scroll-hint" id="hint" aria-hidden="true">Scroll to drive, or take a turn at the arrows</span>
+            <span class="load-note" id="load-note" role="status">Preparing the road&hellip;</span>
             <span class="trip" id="trip" aria-hidden="true">TRIP 0.00 KM</span>
+            <div class="arrival" id="arrival" hidden aria-hidden="true"><div class="arrival-face"><span class="way-arrow" aria-hidden="true"></span><span class="arrival-name"></span></div></div>
+            <div class="exit-veil" id="exit-veil" hidden></div>
+            <p class="sr-only" id="drive-live" aria-live="polite"></p>
         </div>
     </section>
 </main>
 
 <script src="assets/js/data.js"></script>
-<script src="assets/js/night-road.js"></script>
+<script src="assets/js/drive/route.js"></script>
+<script src="assets/js/drive/stage.js"></script>
 <script>
 (function () {
     'use strict';
@@ -458,9 +508,9 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
     // Visitors who ask for less motion, and very short screens such as a phone held sideways, get the boards as a simple list
     var askedLessMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var startedShort = window.innerHeight < 480;
-    var reduce = askedLessMotion || startedShort;
+    var canDrive = !!(window.TRCDrive && window.TRCDrive.createStage);
+    var reduce = askedLessMotion || startedShort || !canDrive;
     if (reduce) { document.documentElement.classList.add('still'); }
-    var KEEP_DETAIL = location.hash === '#hq';
 
     function esc(s) {
         return String(s === null || s === undefined ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
@@ -515,8 +565,13 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
         return p.length === 3 ? (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0] : '';
     }
     (function fillBoards() {
-        $('exp-list').innerHTML = (D.capabilities || []).map(function (c) {
-            return '<a href="about.html#' + encodeURIComponent(c.id) + '"><span class="exp-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor">' + (PICTS[EXPERTISE_PICTS[c.id]] || PICTS.cone) + '</svg></span><span class="exp-name">' + esc(c.title) + '</span></a>';
+        var caps = D.capabilities || [];
+        $('exp-list').innerHTML = caps.map(function (c, i) {
+            // The road turns left for one half of this list and right for the other
+            var dir = i % 2 === 0 ? 'left' : 'right';
+            var icon = '<span class="exp-ico" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor">' + (PICTS[EXPERTISE_PICTS[c.id]] || PICTS.cone) + '</svg></span>';
+            var arrow = '<span class="way-arrow" aria-hidden="true"></span>';
+            return '<a class="way-' + dir + '" data-turn="' + dir + '" data-to="' + esc(c.title) + '" href="about.html#' + encodeURIComponent(c.id) + '">' + (dir === 'left' ? arrow + icon : icon) + '<span class="exp-name">' + esc(c.title) + '</span>' + (dir === 'right' ? arrow : '') + '</a>';
         }).join('');
         $('assoc-list').innerHTML = (D.associations || []).slice(0, 6).map(function (a) {
             return '<li>' + (a.logo ? '<img src="' + esc(a.logo) + '" alt="' + esc(a.name) + '">' : esc(a.name)) + '</li>';
@@ -529,7 +584,10 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
                 '<h3 class="board-story">' + esc(featured.title) + '</h3>' +
                 '<p class="board-text desk-only short-hide">' + esc(featured.summary) + '</p>' +
                 '<p class="board-meta">' + esc(featured.associatedWith) + ', ' + esc(featured.location) + '</p>' +
-                '<div class="board-actions"><a class="plate plate-yellow" href="project.html?id=' + encodeURIComponent(featured.id) + '">View this project</a><a class="plate plate-white" href="projects.html">All research &amp; projects</a></div>';
+                '<div class="ways">' +
+                '<a class="plate plate-yellow way way-left" data-turn="left" data-to="' + esc(featured.title) + '" href="project.html?id=' + encodeURIComponent(featured.id) + '"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">View this project</span></a>' +
+                '<button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Featured News"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Featured News</span></button>' +
+                '<a class="plate plate-white way way-right" data-turn="right" data-to="Research &amp; Projects" href="projects.html"><span class="way-text">All research &amp; projects</span><span class="way-arrow" aria-hidden="true"></span></a></div>';
         }
         var newsList = (D.news || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
         var news = newsList.filter(function (n) { return n.featured; })[0] || newsList[0];
@@ -537,7 +595,10 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
             $('news-body').innerHTML = '<p class="lamp-row"><i class="lamp lamp-date"></i>' + esc(longDate(news.date)) + '</p>' +
                 '<h3 class="board-story">' + esc(news.title) + '</h3>' +
                 '<p class="board-text">' + esc(String(news.summary).split(/(?<=\.)\s/)[0]) + '</p>' +
-                '<div class="board-actions"><a class="plate plate-yellow" href="news-item.html?id=' + encodeURIComponent(news.id) + '">Read this story</a><a class="plate plate-white" href="news.html">All news</a></div>';
+                '<div class="ways">' +
+                '<a class="plate plate-yellow way way-left" data-turn="left" data-to="' + esc(news.title) + '" href="news-item.html?id=' + encodeURIComponent(news.id) + '"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Read this story</span></a>' +
+                '<button class="plate way way-ahead" type="button" data-ahead aria-label="Straight on: Publications"><span class="way-arrow" aria-hidden="true"></span><span class="way-text">Publications</span></button>' +
+                '<a class="plate plate-white way way-right" data-turn="right" data-to="News" href="news.html"><span class="way-text">All news</span><span class="way-arrow" aria-hidden="true"></span></a></div>';
         }
         $('pub-list').innerHTML = (D.publications || []).slice(0, 3).map(function (p) {
             return '<li><strong>' + esc(p.title) + '</strong><span>' + esc(p.venue) + ', ' + esc(p.year) + '</span></li>';
@@ -548,176 +609,61 @@ html.still .route, html.still .route-mini, html.still .scroll-hint, html.still .
         }).join('');
     })();
 
-    /* ---------- The road itself is drawn by night-road.js ---------- */
-    var drive = $('drive'), hint = $('hint'), trip = $('trip');
-    var HOLD = 45, MOVE = 75;   // scroll, in screen heights x 100: how long the road pauses at a board, and how long it travels between boards
+    /* ---------- The drive: stage.js handles the scrolling and the boards; the 3D world loads behind them ---------- */
     var BOARDS = [].map.call(document.querySelectorAll('.board'), function (el) { return { el: el, label: el.getAttribute('data-label') }; });
-    var VH = 8, KEYS = [], TOTAL = 0;
-    var cam = reduce ? 0 : -22, target = 0, lastDraw = null, lastTime = performance.now();
+    var drive = $('drive'), stageEl = $('stage'), noteEl = $('load-note');
 
-    // Scroll position to distance along the road: a slow pause at each board, then a smooth drive to the next
-    function buildRoute() {
-        var last = BOARDS.length - 1;
-        KEYS = []; var v = 0;
-        BOARDS.forEach(function (b, n) {
-            var stop = b.z - b.rest;
-            KEYS.push({ v: v, c: Math.max(0, stop - 3), ease: n > 0 });
-            b.v = v;
-            b.stopV = v + HOLD * .92;
-            v += HOLD;
-            KEYS.push({ v: v, c: stop, ease: false });
-            if (n < last) { v += MOVE; }
-            b.el.setAttribute('data-stop-v', String(b.stopV));
+    // Very short screens and visitors who ask for less motion stay with the list of boards. Links there simply open their pages.
+    if (reduce) {
+        var lastHeight = window.innerHeight;
+        window.addEventListener('resize', function () {
+            var h = window.innerHeight;
+            if (!askedLessMotion && canDrive && lastHeight < 480 && h > 520) { location.reload(); }
+            lastHeight = h;
         });
-        TOTAL = v;
-        if (!reduce) { drive.style.height = Math.round((TOTAL + 100) * VH + 58) + 'px'; }
+        return;
     }
-    var scene = window.NightRoad($('road'), {
-        boards: BOARDS,
-        still: reduce,
-        onLayout: function () { VH = window.innerHeight / 100; buildRoute(); lastDraw = null; }
-    });
-    var draw = scene.draw, placeBoards = scene.placeBoards, layout = scene.layout, makeFacades = scene.makeFacades;
-
-    /* ---------- Scrolling ---------- */
-    function scrollV() { return Math.max(0, Math.min(TOTAL, -drive.getBoundingClientRect().top / VH)); }
-    function camAt(v) {
-        for (var i = 1; i < KEYS.length; i++) {
-            if (v <= KEYS[i].v) {
-                var a = KEYS[i - 1], b = KEYS[i], t = (v - a.v) / (b.v - a.v);
-                if (b.ease) { t = t * t * t * (t * (t * 6 - 15) + 10); }
-                return a.c + (b.c - a.c) * t;
-            }
-        }
-        return KEYS[KEYS.length - 1].c;
-    }
-    var current = -1, pendingFocus = null;
-    var routeItems = [], miniLabel = $('mini-label'), miniPrev = $('mini-prev'), miniNext = $('mini-next');
-    function stopIndex(c) {
-        for (var i = 0; i < BOARDS.length; i++) { if (BOARDS[i].z - c > 6) { return i; } }
-        return BOARDS.length - 1;
-    }
-    function goTo(i) {
-        var b = BOARDS[Math.max(0, Math.min(BOARDS.length - 1, i))];
-        var top = drive.getBoundingClientRect().top + window.scrollY + b.stopV * VH;
-        window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
-    }
-    function markStop(c) {
-        var i = stopIndex(c);
-        if (i === current) { return; }
-        current = i;
-        routeItems.forEach(function (li, n) { li.classList.toggle('on', n === i); });
-        miniLabel.textContent = (i + 1) + ' of ' + BOARDS.length + ': ' + BOARDS[i].label;
-        miniPrev.disabled = i === 0;
-        miniNext.disabled = i === BOARDS.length - 1;
-    }
-    $('route-list').innerHTML = BOARDS.map(function (b, i) {
-        return '<li><button type="button" data-go="' + i + '" aria-label="Go to ' + esc(b.label) + '"><span class="lbl">' + esc(b.label) + '</span><span class="dot"></span></button></li>';
-    }).join('');
-    routeItems = [].slice.call($('route-list').children);
-    $('route-list').addEventListener('click', function (e) {
-        var btn = e.target.closest ? e.target.closest('button[data-go]') : null;
-        if (btn) {
-            goTo(+btn.getAttribute('data-go'));
-            if (e.detail === 0) { pendingFocus = +btn.getAttribute('data-go'); }
-        }
-    });
-    miniPrev.addEventListener('click', function () { goTo(current - 1); });
-    miniNext.addEventListener('click', function () { goTo(current + 1); });
-    $('next-stop').addEventListener('click', function () { goTo(current + 1); });
-
-    var stage = $('stage'), nextBtn = $('next-stop'), nextLabel = $('next-label');
-    var reading = -1, moving = false, lastMoved = 0;
-    var level = 0, slowSum = 0, slowCount = 0, watchFrom = performance.now() + 2000;
-
-    function updateFocus() {
-        var at = -1;
-        BOARDS.forEach(function (b, i) {
-            if (Math.abs(b.z - b.rest - cam) < 3.6 && Math.abs(target - cam) < 1.2) { at = i; }
-        });
-        if (at === reading) { return; }
-        reading = at;
-        stage.classList.toggle('is-reading', at >= 0);
-        stage.classList.toggle('is-first', at === 0);
-        var hasNext = at > 0 && at < BOARDS.length - 1;
-        nextBtn.hidden = !hasNext;
-        if (hasNext) { nextLabel.textContent = 'Next: ' + BOARDS[at + 1].label; }
-    }
-    // On a slower computer, step down gently so the drive stays smooth: first resolution, then the blur
-    function watchSpeed(now, dt) {
-        if (KEEP_DETAIL || level >= 3 || now < watchFrom || document.hidden) { return; }
-        slowSum += dt; slowCount++;
-        if (slowCount < 45) { return; }
-        var slow = slowSum / slowCount > 27;
-        slowSum = 0; slowCount = 0;
-        if (!slow) { return; }
-        level++;
-        if (level === 2) {
-            stage.classList.add('light-focus');
-        } else {
-            scene.lowerQuality();
-            lastDraw = null;
-        }
-    }
-    function frame() {
-        var v = scrollV();
-        var was = target;
-        target = camAt(v);
-        var now = performance.now(), dt = Math.min(120, now - lastTime); lastTime = now;
-        if (Math.abs(target - was) > 120) { cam = target; }
-        cam += (target - cam) * (1 - Math.exp(-dt / 230));
-        if (Math.abs(target - cam) < .002) { cam = target; }
-        // Fine detail returns a moment after the road stops
-        var movingNow = Math.abs(target - cam) > .1;
-        if (movingNow) { lastMoved = now; }
-        if (movingNow !== moving && (movingNow || now - lastMoved > 220)) {
-            moving = movingNow;
-            scene.setMotion(moving);
-            lastDraw = null;
-        }
-        if (cam !== lastDraw) {
-            draw(cam); placeBoards(cam);
-            hint.style.opacity = v > 6 ? 0 : 1;
-            trip.textContent = 'TRIP ' + (Math.max(0, cam) / 1000).toFixed(2) + ' KM';
-            markStop(cam);
-            lastDraw = cam;
-        }
-        updateFocus();
-        watchSpeed(now, dt);
-        if (pendingFocus !== null && Math.abs(camAt(BOARDS[pendingFocus].stopV) - cam) < 1.5) {
-            var firstLink = BOARDS[pendingFocus].el.querySelector('a');
-            if (firstLink) { firstLink.focus({ preventScroll: true }); }
-            pendingFocus = null;
-        }
-        requestAnimationFrame(frame);
-    }
-    function still() { layout(); draw(0); }
+    var stage = window.TRCDrive.createStage({ boards: BOARDS, drive: drive, stage: stageEl });
+    window.TRCStage = stage;
 
     var lastW = window.innerWidth, lastH = window.innerHeight;
     window.addEventListener('resize', function () {
         // A phone's address bar sliding in and out is not a real resize
         if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 120) { return; }
         lastW = window.innerWidth; lastH = window.innerHeight;
-        if (!askedLessMotion && ((startedShort && lastH > 520) || (!startedShort && lastH < 440))) { location.reload(); return; }
-        if (reduce) { still(); } else { layout(); }
+        if (lastH < 440) { location.reload(); return; }
+        stage.layout();
     });
-
-    makeFacades();
-    layout();
-    if (reduce) {
-        draw(0);
-    } else {
-        draw(Math.max(cam, 0)); placeBoards(Math.max(cam, 0)); markStop(Math.max(cam, 0));
-        requestAnimationFrame(frame);
-    }
     if (document.fonts && document.fonts.ready) {
-        Promise.all([document.fonts.load('700 40px Overpass'), document.fonts.load('800 56px Overpass'), document.fonts.ready]).then(function () {
-            makeFacades();
-            if (reduce) { still(); } else { layout(); }
-        });
+        Promise.all([document.fonts.load('700 40px Overpass'), document.fonts.load('800 56px Overpass'), document.fonts.ready]).then(function () { stage.layout(); });
     }
     // Team photos change a board's height once they load
-    window.addEventListener('load', function () { if (reduce) { still(); } else { layout(); } });
+    window.addEventListener('load', function () { stage.layout(); });
+
+    if (navigator.connection && navigator.connection.saveData) { stageEl.classList.add('world-failed'); noteEl.hidden = true; return; }
+
+    // Load the 3D world one file at a time, after the page itself is on screen
+    var FILES = ['vendor/three.min.js', 'drive/kit.js', 'drive/materials.js', 'drive/atmosphere.js', 'drive/post.js', 'drive/roadworks.js', 'drive/flora.js', 'drive/buildings.js', 'drive/furniture.js', 'drive/traffic.js', 'drive/plan.js', 'drive/world.js', 'drive/engine.js'];
+    function loadFile(src) {
+        return new Promise(function (ok, fail) {
+            var el = document.createElement('script');
+            el.src = 'assets/js/' + src;
+            el.onload = ok;
+            el.onerror = function () { fail(new Error('could not load ' + src)); };
+            document.head.appendChild(el);
+        });
+    }
+    function giveUp() {
+        // No WebGL, or files that would not load: the boards still work over the still picture
+        stageEl.classList.add('world-failed');
+        noteEl.hidden = true;
+    }
+    FILES.reduce(function (chain, f) { return chain.then(function () { return loadFile(f); }); }, Promise.resolve())
+        .then(function () { return window.TRCDrive.startWorld(stage, $('road'), noteEl); })
+        .then(function (ok) {
+            if (ok) { stageEl.classList.add('world-ready'); } else { giveUp(); }
+        })
+        .catch(giveUp);
 })();
 </script>
 </body>

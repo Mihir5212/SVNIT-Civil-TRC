@@ -1,7 +1,7 @@
 # TRC website: preview version (HTML, CSS, JavaScript)
 
 Preview of the **TEP Research & Consultancy Cell (TRC)** website, Department of Civil Engineering, SVNIT Surat.
-It is for sharing a link and collecting feedback. It began with the same pages as the PHP version, which will be used later on the SVNIT server. The road-sign design was made on this version first.
+It is for sharing a link and collecting feedback. It began with the same pages as the PHP version, which will be used later on the SVNIT server. The present designs were made on this version first.
 
 - No server, database or PHP needed
 - All content (capabilities, research and projects, news, publications, team, contact details) is in **one file: `assets/js/data.js`**
@@ -55,7 +55,9 @@ The top of `data.js` explains the rules. In short:
 
 **Text that is in the HTML files instead:** the Home page welcome, About TEP and Vision & Mission boards (`index.html`), and the About page (`about.html`).
 
-**The Home page** is a night drive: scrolling moves along a road from a rural highway into the city, with each section on an overhead board. It has its own styles inside `index.html` and does not use `style.css` or `main.js`; its lists come from `data.js`, and the road is drawn by `assets/js/night-road.js`. Visitors who ask for less motion, and very short screens, see the boards as a simple list.
+**The Home page** is a drive through a 3D world: scrolling moves along a road from a rural highway by day, through a town at golden hour, into a city at night, with each section on an overhead board. Arrows on the boards take the side roads to other pages. It has its own styles inside `index.html` and does not use `style.css` or `main.js`; its lists come from `data.js`, and the world is built by the files in `assets/js/drive/`. Visitors who ask for less motion, and very short screens, see the boards as a simple list over a still picture. So do browsers that cannot run the 3D world, which keep the boards on the road instead.
+
+Where each arrow on a board leads is set in `index.html` by its `href`, and which way it turns by `data-turn` (`left`, `right` or `straight`). Each board's junction must have a road on that side: `ARMS` in `assets/js/drive/route.js` lists them.
 
 ### Adding photos
 1. On GitHub, open the `images/projects` folder (or `images/news`, `images/team`) and use **Add file → Upload files**.
@@ -69,21 +71,19 @@ Wide (landscape) photos work best, because the gallery shows them in a 3:2 frame
 
 Keep photos under about 500 KB each so pages load quickly. Wide (landscape) photos suit projects; square photos suit team members.
 
-### The road-sign design
-The whole site is built from road furniture. Each kind has one job, and most of them follow your content by themselves:
+### The design of the other pages
+A clean research-centre look, with each page opening on its own drawing. Most of it follows your content by itself:
 
-| On the site | Used for | What controls it |
-|---|---|---|
-| Green direction board | Completed projects, page titles, the last call to action | A project's `status: 'completed'` |
-| Yellow work-zone board | Ongoing projects, on their cards and their own pages | A project's `status: 'ongoing'` |
-| Small traffic signal | Project status (amber or green lamp) and the filter buttons | A project's `status` |
-| Blue facility sign with a white picture square | Our capabilities, team and contact details | Automatic |
-| Km-stone | News dates, publication years and the steps on the About page | `date` in `news`, `year` in `publications` |
-| Red ring signs | The numbers on the About page | Counted from your lists |
+| On the site | What controls it |
+|---|---|
+| Project markers on the corridor at the top of Research & Projects: yellow while ongoing, green once completed | `status` of each item in `projects` |
+| Dates on the line at the top of News | `date` of each item in `news` |
+| Photos at the top of Gallery and Team | The first five in `gallery`, and everyone in `team` |
+| The small drawing on a project card, until it has a photo | `sector` of the project, or words such as "signal" or "impact" in its title |
 
-So when a project finishes, change its `status` to `'completed'` and its board turns green everywhere.
+So when a project finishes, change its `status` to `'completed'` and it changes everywhere.
 
-A new capability shows a traffic cone until you choose its picture: add its `id` to `CAPABILITY_PICTS` in `assets/js/main.js`.
+A new capability shows the traffic-survey drawing until you choose another: add its `id` to `CAP` in `assets/js/art.js`.
 
 ---
 
@@ -115,7 +115,7 @@ The PHP version (`trc-website.zip`) has the same design, plus an admin panel and
 - `capabilities` → `includes/content.php`
 - `site` (contact details) → `includes/config.php`
 
-The road-sign design, the SVNIT logo, the night-drive Home page, the Gallery page and the move of the capabilities into the About page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here.
+The present page designs, the SVNIT logo, the 3D Home page, the Gallery page and the move of the capabilities into the About page were made after the PHP version. They changed the structure of the pages as well as `assets/css/style.css`, so copying the stylesheet alone will not be enough: the PHP templates need the same changes as `assets/js/main.js` and the HTML files here. The Home page itself can be copied across unchanged, with its `assets` folder.
 
 ---
 
@@ -128,6 +128,7 @@ The road-sign design, the SVNIT logo, the night-drive Home page, the Gallery pag
 | The live site did not change | Wait 1–2 minutes, then press **Ctrl + F5**. Check **Actions** on GitHub for a failed run. |
 | GitHub link shows "404" | Check **Settings → Pages** is set to `main` and `/ (root)`, and that `index.html` is at the top level of the repository. |
 | Photo does not show | Check the path and file name in `data.js` exactly match the uploaded file, including capital letters (`Photo.JPG` ≠ `photo.jpg`). |
+| The Home page shows the boards but no moving 3D road | The browser has WebGL turned off or the graphics chip is not supported. Everything still works; the road shows as a still picture. |
 
 ---
 
@@ -139,8 +140,22 @@ publications.html, news.html, news-item.html, gallery.html, team.html, contact.h
 assets/
   js/data.js      ← all the content
   js/main.js      builds the pages from data.js (all except Home)
-  js/night-road.js draws the night road on the Home page
-  css/style.css   the road-sign design (all pages except Home)
+  js/art.js       the drawings on those pages
+  js/drive/       the 3D world on the Home page
+    route.js        where the road, boards and junctions go, and the time of day along the way
+    stage.js        scrolling, the boards, the arrows and turning off the road
+    atmosphere.js   sky, sun, haze and time of day
+    roadworks.js    road surface, markings, kerbs, footpaths, fields and the ground
+    buildings.js    houses, shops, flats and commercial blocks
+    flora.js        trees, palms, crops and grass
+    furniture.js    gantries, signals, street lights, barriers, signs and poles
+    traffic.js      vehicles and people, which move only with the scroll
+    plan.js         what stands where along the road
+    materials.js, kit.js, post.js, world.js, engine.js   how it is all drawn
+  js/vendor/      three.js, the 3D library (MIT licence)
+  textures/       photo materials for the 3D world, as script files (CC0, see CREDITS.txt)
+  css/style.css   the design of all pages except Home
+  img/road-still.jpg  the picture shown while the 3D world loads, or when it cannot run
   img/logo-mark.svg   placeholder logo (replace with the official one, same file name)
   img/svnit-logo.png  SVNIT logo, shown beside the TRC logo in the header and footer
 images/           photos for projects, news, team and the gallery, and logos for Our Associations

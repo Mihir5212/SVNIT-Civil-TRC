@@ -7,12 +7,13 @@
 <meta name="robots" content="noindex">
 <title>Gallery | TRC, SVNIT Surat</title>
 <meta name="description" content="Photos of field surveys, site inspections, workshops and events from TRC, SVNIT Surat.">
-<meta name="theme-color" content="#0B5D45">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<script>try{var a=JSON.parse(sessionStorage.getItem('trc-arrival')||'null');if(a&&Date.now()-a.t<15000){document.documentElement.className='arrived arrived-'+a.dir;}}catch(e){}</script>
 </head>
 <body data-page="gallery">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -20,17 +21,15 @@
 
 <main id="main">
 <noscript><p class="noscript">This website needs JavaScript turned on to show its content.</p></noscript>
-<section class="page-head">
-    <div class="wrap">
-        <div class="board gantry-board">
-            <div class="board-face gantry-face">
-                <div class="gantry-text">
-                    <h1>Gallery</h1>
-                    <p class="lead">Photos from our field surveys, site inspections, workshops and events.</p>
-                </div>
-                <span class="pict" data-pict="photo" aria-hidden="true"></span>
-            </div>
+<section class="hero hero-gallery">
+    <div class="wrap hero-grid">
+        <div class="hero-text">
+            <div id="arrival-slot"></div>
+            <p class="eyebrow">TEP Research &amp; Consultancy Cell</p>
+            <h1>Gallery</h1>
+            <p class="lead">Photos from our field surveys, site inspections, workshops and events.</p>
         </div>
+        <div class="hero-art mosaic" data-art="gallery" aria-hidden="true"></div>
     </div>
 </section>
 
@@ -48,8 +47,8 @@
 <!-- Full-screen photo viewer: main.js fills it in when a photo is opened -->
 <dialog class="viewer" id="photo-viewer" aria-label="Photo viewer">
     <div class="viewer-top">
-        <span class="shield viewer-count" id="viewer-count"></span>
-        <button type="button" class="btn btn-yellow viewer-close" id="viewer-close">Close</button>
+        <span class="viewer-count" id="viewer-count"></span>
+        <button type="button" class="btn btn-light viewer-close" id="viewer-close">Close</button>
     </div>
     <div class="viewer-stage" id="viewer-stage"><img id="viewer-image" alt=""></div>
     <div class="viewer-bottom">
@@ -57,13 +56,15 @@
         <p class="viewer-caption" id="viewer-caption" aria-live="polite"></p>
         <button type="button" class="viewer-nav" id="viewer-next" aria-label="Next photo"></button>
     </div>
+    <div class="viewer-thumbs" id="viewer-thumbs"></div>
 </dialog>
 
 </main>
 
 <div id="site-footer"></div>
-<!-- data.js holds the content; main.js builds the pages from it -->
+<!-- data.js holds the content; art.js has the drawings; main.js builds the pages from them -->
 <script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
