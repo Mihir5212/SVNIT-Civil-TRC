@@ -1,0 +1,11 @@
+# Reference folders and design screenshots
+images/Ref/
+Ref/
+**/Ref/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+*.tmp
+.vscode/
+.idea/

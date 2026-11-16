@@ -148,12 +148,11 @@
 
     // A page title on a sign hung from an overhead gantry. The sign is yellow for work still in progress.
     function pageHead(title, lead, backHref, backLabel, pictName, boardClass) {
-        return '<section class="page-head"><div class="wrap"><div class="board gantry-board' + (boardClass ? ' ' + boardClass : '') + '">' +
-            '<div class="board-face gantry-face"><div class="gantry-text">' +
-            (backHref ? '<p class="back-link"><a href="' + backHref + '">' + arrowSvg('left') + esc(backLabel) + '</a></p>' : '') +
-            '<h1>' + esc(title) + '</h1>' +
-            (lead ? '<p class="lead">' + esc(lead) + '</p>' : '') +
-            '</div>' + (pictName ? '<span class="pict">' + pict(pictName) + '</span>' : '') + '</div></div></div></section>';
+        return '<div class="page-hero"><div class="page-hero-content">' +
+            (backHref ? '<p class="page-hero-breadcrumb"><a href="' + backHref + '">&larr; ' + esc(backLabel) + '</a></p>' : '') +
+            '<h1 class="page-hero-title">' + esc(title) + '</h1>' +
+            (lead ? '<p style="color:rgba(255,255,255,0.8);max-width:700px;margin:0.5rem auto 0;">' + esc(lead) + '</p>' : '') +
+            '</div></div>';
     }
 
     // A small signal: amber lit while ongoing, green lit once completed
@@ -172,46 +171,53 @@
     function projectCard(p, large) {
         var years = projectYears(p);
         var sector = D.sectors[p.sector];
-        return '<article class="project-card board has-posts ' + projectBoardClass(p) + (large ? ' is-large' : '') + '"><div class="board-face">' +
-            (p.image ? '<div class="project-media"><img src="' + esc(p.image) + '" alt="" loading="lazy"></div>' : '') +
-            '<div class="project-top">' + (sector ? '<span class="shield">' + esc(sector) + '</span>' : '') + statusTag(p) + '</div>' +
-            '<h3><a href="project.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.title) + '</a></h3>' +
-            (p.associatedWith ? '<p class="project-partner">' + esc(p.associatedWith) + (p.location ? ', ' + esc(p.location) : '') + '</p>' : '') +
-            (large && p.summary ? '<p class="project-summary">' + esc(excerpt(p.summary, 240)) + '</p>' : '') +
-            (large && !p.image ? ROUTE_DIAGRAM : '') +
-            '<p class="project-foot"><span>' + esc(years) + '</span>' + arrowSvg('right', 'go') + '</p>' +
-            '</div></article>';
+        var statusLabel = D.statuses[p.status] || p.status || 'Completed';
+        var statusCls = p.status === 'ongoing' ? 'status-ongoing' : 'status-completed';
+        return '<article class="project-card' + (large ? ' project-card-large' : '') + '">' +
+            (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy">' : '') +
+            '<div class="project-card-overlay"></div>' +
+            '<div class="project-card-content">' +
+            '<span class="status-badge ' + statusCls + '">' + esc(statusLabel) + '</span>' +
+            '<h3 class="project-card-title">' + esc(p.title) + '</h3>' +
+            (p.associatedWith ? '<p class="project-card-org">' + esc(p.associatedWith) + (p.location ? ' &bull; ' + esc(p.location) : '') + '</p>' : '') +
+            '</div>' +
+            '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view" aria-label="View project">View &rarr;</a>' +
+            '</article>';
     }
 
     function pubItem(p) {
         var title = p.link
             ? '<a href="' + esc(p.link) + '" target="_blank" rel="noopener">' + esc(p.title) + '</a>'
             : esc(p.title);
-        return '<li class="pub">' +
-            '<p class="pub-authors">' + esc(p.authors) + ' (' + esc(p.year) + ')</p>' +
-            '<p class="pub-title">' + title + '</p>' +
-            '<p class="pub-venue">' + esc(p.venue || '') + ' <span class="pub-type pub-type-' + esc(p.type) + '">' + esc(D.pubTypes[p.type] || p.type) + '</span></p>' +
+        var typeLabel = D.pubTypes[p.type] || p.type || 'Publication';
+        return '<li class="pub-item">' +
+            '<span class="pub-item-year">' + esc(p.year) + '</span>' +
+            '<div class="pub-item-content">' +
+            '<h4 class="pub-item-title">' + title + '</h4>' +
+            '<p class="pub-item-meta">' + esc(p.authors) + (p.venue ? ' &bull; <em>' + esc(p.venue) + '</em>' : '') + ' &bull; ' + esc(typeLabel) + '</p>' +
+            '</div>' +
             '</li>';
     }
 
     function newsListItem(n, headingTag, showThumb) {
-        return '<li>' + dateStone(n.date) +
-            '<div><' + headingTag + '><a href="news-item.html?id=' + encodeURIComponent(n.id) + '">' + esc(n.title) + '</a></' + headingTag + '>' +
-            (n.summary ? '<p>' + esc(headingTag === 'h3' ? excerpt(n.summary, 160) : n.summary) + '</p>' : '') + '</div>' +
-            (showThumb && n.image ? '<img class="news-thumb" src="' + esc(n.image) + '" alt="" loading="lazy">' : '') +
+        var d = n.date ? new Date(n.date) : null;
+        var pill = d ? MONTHS[d.getMonth()] + ' ' + d.getFullYear() : '';
+        return '<li class="news-card">' +
+            (pill ? '<span class="news-date-pill">' + esc(pill) + '</span>' : '') +
+            '<' + headingTag + ' class="news-card-title"><a class="news-card-title-link" href="news-item.php?id=' + encodeURIComponent(n.id) + '">' + esc(n.title) + '</a></' + headingTag + '>' +
+            (n.summary ? '<p class="news-card-excerpt">' + esc(headingTag === 'h3' ? excerpt(n.summary, 160) : n.summary) + '</p>' : '') +
+            '<a href="news-item.php?id=' + encodeURIComponent(n.id) + '" class="news-card-link">Read More &rarr;</a>' +
             '</li>';
     }
 
     // Road closed: a barricade, a no-entry sign and a yellow diversion board
     function notFound(what, backHref, backLabel) {
         document.title = 'Not found | ' + S.short + ', ' + S.instituteShort;
-        return '<section class="closure"><div class="barricade" aria-hidden="true"></div><div class="wrap closure-grid">' +
-            '<div class="closure-sign" aria-hidden="true"><div class="no-entry"></div></div><div class="closure-text">' +
-            '<h1>This ' + what + ' could not be found</h1>' +
-            '<p>The link may be old, or the item may have been removed.</p>' +
-            '<div class="board board-yellow diversion"><div class="board-face"><p class="diversion-title">Diversion</p>' +
-            '<ul><li><a href="' + backHref + '">' + esc(backLabel) + '</a></li><li><a href="index.html">Home</a></li></ul>' +
-            '</div></div></div></div></section>';
+        return '<section class="section" style="text-align:center;padding:5rem 0;"><div class="wrap">' +
+            '<h1 style="color:var(--green);font-size:2.5rem;margin-bottom:1rem;">This ' + what + ' could not be found</h1>' +
+            '<p style="color:var(--muted);margin-bottom:2rem;">The link may be old, or the item may have been removed.</p>' +
+            '<div><a href="' + backHref + '" class="btn btn-primary">' + esc(backLabel) + '</a> <a href="index.php" class="btn btn-secondary" style="margin-left:0.75rem;">Home</a></div>' +
+            '</div></section>';
     }
 
     // One filter button: a lamp that lights when this filter is on
@@ -222,49 +228,50 @@
     /* ---------- Header and footer ---------- */
 
     function renderHeader() {
+        var slot = document.getElementById('site-header');
+        if (slot && slot.querySelector('.header-inner')) { return; } // PHP header already rendered
         var menu = [
-            ['index.html', 'Home', 'home'],
-            ['about.html', 'About', 'about'],
-            ['projects.html', 'Research &amp; Projects', 'projects'],
-            ['publications.html', 'Publications', 'publications'],
-            ['gallery.html', 'Gallery', 'gallery'],
-            ['team.html', 'Team', 'team'],
+            ['index.php', 'Home', 'home'],
+            ['about.php', 'About', 'about'],
+            ['projects.php', 'Research &amp; Projects', 'projects'],
+            ['publications.php', 'Publications', 'publications'],
+            ['gallery.php', 'Gallery', 'gallery'],
+            ['team.php', 'Team', 'team'],
         ];
         var active = { project: 'projects' }[page] || page;
         var html = '';
         if (S.previewNotice) {
             html += '<div class="preview-bar" role="note"><div class="wrap">' + esc(S.previewNotice) + '</div></div>';
         }
-        html += '<header class="site-header"><div class="wrap header-inner">' +
-            '<a class="brand" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="50" height="48"><img src="assets/img/logo-mark.svg" alt="" width="46" height="46"></span>' +
-            '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
-            '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bars" aria-hidden="true"></span><span>Menu</span></button>' +
-            '<nav id="site-nav" class="site-nav" aria-label="Main"><ul>' +
+        html += '<header class="site-header" id="site-header"><div class="wrap header-inner">' +
+            '<a class="brand" href="index.php" aria-label="TEP Research &amp; Consultancy Cell, Department of Civil Engineering, SVNIT Surat"><span class="brand-logo-wrap"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="38" height="36"><img class="brand-logo-trc" src="assets/img/logo-mark.svg" alt="" width="34" height="34"></span>' +
+            '<span class="brand-text"><strong class="brand-title">' + esc(S.name) + '</strong><span class="brand-sub">' + esc(S.dept) + ' &bull; ' + esc(S.instituteShort) + '</span></span></a>' +
+            '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button>' +
+            '<nav id="site-nav" class="nav" aria-label="Main"><ul class="nav-list">' +
             menu.map(function (m) {
-                return '<li><a href="' + m[0] + '"' + (active === m[2] ? ' aria-current="page"' : '') + '>' + m[1] + '</a></li>';
+                return '<li class="nav-item"><a class="nav-link' + (active === m[2] ? ' is-active' : '') + '" href="' + m[0] + '">' + m[1] + '</a></li>';
             }).join('') +
-            '</ul><a class="btn btn-yellow nav-cta" href="contact.html"' + (active === 'contact' ? ' aria-current="page"' : '') + '>Send an enquiry</a></nav>' +
-            '</div><div class="header-road" aria-hidden="true"><span class="header-car"></span></div></header>';
-        var slot = document.getElementById('site-header');
+            '</ul><div class="nav-cta-wrap"><a class="btn btn-yellow btn-nav-cta" href="contact.php"><span>Contact Us</span> &rarr;</a></div></nav>' +
+            '</div></header>';
         if (slot) { slot.outerHTML = html; }
     }
 
     function renderFooter() {
-        var html = '<footer class="site-footer"><div class="wrap footer-grid">' +
-            '<div class="footer-about"><a class="brand brand-footer" href="index.html"><span class="brand-logos"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="46" height="44"><img src="assets/img/logo-mark.svg" alt="" width="40" height="40"></span>' +
-            '<span class="brand-text"><strong>' + esc(S.name) + '</strong><span>' + esc(S.dept) + '</span></span></a>' +
-            '<p>' + esc(S.institute) + '</p></div>' +
-            '<div><h2 class="footer-head">Pages</h2><ul class="footer-links">' +
-            '<li><a href="about.html">About TRC</a></li><li><a href="about.html#capabilities">Our capabilities</a></li>' +
-            '<li><a href="projects.html">Research &amp; Projects</a></li><li><a href="publications.html">Publications</a></li>' +
-            '<li><a href="gallery.html">Gallery</a></li><li><a href="team.html">Team</a></li></ul></div>' +
-            '<div><h2 class="footer-head">Contact</h2><address>' + S.address.map(esc).join('<br>') + '<br>' +
-            '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a><br>' +
-            '<a href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></address>' +
-            '<p><a class="btn btn-yellow" href="contact.html">Send an enquiry</a></p></div>' +
-            '</div><div class="wrap footer-bottom"><p>&copy; ' + new Date().getFullYear() + ' ' + esc(S.name) + ', ' +
-            esc(S.dept) + ', ' + esc(S.instituteShort) + '</p></div></footer>';
         var slot = document.getElementById('site-footer');
+        if (slot && slot.querySelector('.footer-card')) { return; } // PHP footer already rendered
+        var html = '<footer class="site-footer" id="site-footer"><div class="wrap"><div class="footer-card"><div class="footer-grid">' +
+            '<div class="footer-col footer-col-about"><a class="brand brand-footer" href="index.php"><span class="brand-logo-wrap"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="46" height="44"><img class="brand-logo-trc" src="assets/img/logo-mark.svg" alt="" width="42" height="42"></span>' +
+            '<span class="brand-text"><strong class="brand-title">' + esc(S.name) + '</strong><span class="brand-sub">' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
+            '<p class="footer-desc">' + esc(S.institute) + '</p></div>' +
+            '<div class="footer-col"><h3 class="footer-heading">Navigation</h3><ul class="footer-nav-links">' +
+            '<li><a href="about.php">About TRC</a></li><li><a href="about.php#capabilities">Our capabilities</a></li>' +
+            '<li><a href="projects.php">Research &amp; Projects</a></li><li><a href="publications.php">Publications</a></li>' +
+            '<li><a href="gallery.php">Gallery</a></li><li><a href="team.php">Team</a></li><li><a href="contact.php">Contact Us</a></li></ul></div>' +
+            '<div class="footer-col"><h3 class="footer-heading">Reach Us</h3><div class="footer-contact-item"><span>' + S.address.map(esc).join('<br>') + '</span></div>' +
+            '<div class="footer-contact-item"><a class="footer-link" href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a></div>' +
+            '<div class="footer-contact-item"><a class="footer-link" href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></div></div>' +
+            '</div><div class="footer-bottom"><p class="copyright">&copy; ' + new Date().getFullYear() + ' ' + esc(S.name) + ', ' +
+            esc(S.dept) + ', ' + esc(S.instituteShort) + '</p></div></div></div></footer>';
         if (slot) { slot.outerHTML = html; }
     }
 
@@ -289,13 +296,17 @@
         set('hero-sign',
             '<span class="sign-shield" aria-hidden="true">' + esc(S.short) + '</span><ul>' +
             sign.map(function (s) {
-                return '<li><a href="about.html#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
+                return '<li><a href="about.php#' + esc(s.id) + '"><span>' + esc(s.title) + '</span>' + arrowSvg('right', 'sign-arrow') + '</a></li>';
             }).join('') + '</ul>' +
-            '<a class="sign-more" href="about.html#capabilities">All ' + D.capabilities.length + ' capabilities</a>');
+            '<a class="sign-more" href="about.php#capabilities">All ' + D.capabilities.length + ' capabilities</a>');
 
-        set('home-capabilities', D.capabilities.map(function (s) {
-            return '<li><a class="board board-blue capability-card" href="about.html#' + esc(s.id) + '"><div class="board-face">' +
-                capabilityPict(s) + '<h3>' + esc(s.title) + '</h3><p>' + esc(s.short) + '</p>' + arrowSvg('right', 'go') + '</div></a></li>';
+        set('home-capabilities', D.capabilities.map(function (s, i) {
+            return '<li class="service-card" data-reveal="fade-in-up" style="--reveal-delay:' + (i * 0.08) + 's">' +
+                '<div class="service-card-icon">' + capabilityPict(s) + '</div>' +
+                '<h3 class="service-card-title">' + esc(s.title) + '</h3>' +
+                '<p class="service-card-body">' + esc(s.short) + '</p>' +
+                '<a href="about.php#' + esc(s.id) + '" class="service-card-link">Read More ' + arrowSvg('right', '') + '</a>' +
+                '</li>';
         }).join(''));
 
         // Moving associations strip. The list repeats until it can fill a very wide screen,
@@ -320,7 +331,40 @@
             featured = featured.concat(sortProjects(D.projects.filter(function (p) { return !p.featured; })).slice(0, 3 - featured.length));
         }
         if (featured.length) {
-            set('home-featured', featured.map(function (p, i) { return projectCard(p, i === 0); }).join(''));
+            var editHtml = '';
+            if (featured.length > 0) {
+                var p0 = featured[0];
+                var st0 = D.statuses[p0.status] || p0.status || 'Completed';
+                var cls0 = p0.status === 'ongoing' ? 'status-ongoing' : 'status-completed';
+                editHtml += '<div class="project-card project-card-large">' +
+                    (p0.image ? '<img src="' + esc(p0.image) + '" alt="" loading="lazy">' : '') +
+                    '<div class="project-card-overlay"></div>' +
+                    '<div class="project-card-content">' +
+                    '<span class="status-badge ' + cls0 + '">' + esc(st0) + '</span>' +
+                    '<h3 class="project-card-title">' + esc(p0.title) + '</h3>' +
+                    (p0.associatedWith ? '<p class="project-card-org">' + esc(p0.associatedWith) + (p0.location ? ' &bull; ' + esc(p0.location) : '') + '</p>' : '') +
+                    '</div>' +
+                    '<a href="project.php?id=' + encodeURIComponent(p0.id) + '" class="project-card-view">View &rarr;</a>' +
+                    '</div>';
+            }
+            if (featured.length > 1) {
+                editHtml += '<div class="projects-side">';
+                featured.slice(1).forEach(function (p) {
+                    var st = D.statuses[p.status] || p.status || 'Completed';
+                    var cls = p.status === 'ongoing' ? 'status-ongoing' : 'status-completed';
+                    editHtml += '<div class="project-card">' +
+                        (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy">' : '') +
+                        '<div class="project-card-overlay"></div>' +
+                        '<div class="project-card-content">' +
+                        '<span class="status-badge ' + cls + '">' + esc(st) + '</span>' +
+                        '<h3 class="project-card-title">' + esc(p.title) + '</h3>' +
+                        '</div>' +
+                        '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view">View &rarr;</a>' +
+                        '</div>';
+                });
+                editHtml += '</div>';
+            }
+            set('home-featured', editHtml);
         } else {
             hide('featured-section');
         }
@@ -337,14 +381,21 @@
         set('count-pubs', String(D.publications.length));
         set('count-professors', String(D.team.filter(function (m) { return m.group === 'professors'; }).length));
 
-        // Our capabilities: a blue sign for each, with a plate of details below
+        // Our capabilities modern cards
         set('capability-list', D.capabilities.map(function (s) {
-            return '<article class="capability" id="' + esc(s.id) + '">' +
-                '<div class="board board-blue capability-head"><div class="board-face">' + capabilityPict(s) + '<h3>' + esc(s.title) + '</h3></div></div>' +
-                '<div class="sign-plate capability-plate"><p>' + esc(s.text) + '</p>' +
-                '<h4>Typical outputs</h4><ul class="chevrons">' + s.outputs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' +
-                '<p class="capability-ask"><a class="text-link" href="contact.html?work=' + encodeURIComponent(s.id) + '">Ask about ' +
-                esc(s.title.charAt(0).toLowerCase() + s.title.slice(1)) + '</a></p></div></article>';
+            return '<article class="service-card" id="' + esc(s.id) + '" style="text-align:left;margin-bottom:2.5rem;padding:2.5rem;">' +
+                '<div style="display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem;">' +
+                '<div class="service-card-icon" style="margin:0;">' + capabilityPict(s) + '</div>' +
+                '<h3 style="font-size:1.5rem;color:var(--text);margin:0;">' + esc(s.title) + '</h3>' +
+                '</div>' +
+                '<p style="font-size:1.05rem;line-height:1.75;color:var(--text);margin-bottom:1.5rem;">' + esc(s.text) + '</p>' +
+                '<h4 style="font-size:1rem;color:var(--green);font-weight:700;margin-bottom:0.75rem;">Typical Outputs &amp; Scope</h4>' +
+                '<ul style="list-style:disc;margin-left:1.5rem;margin-bottom:1.5rem;color:var(--muted);">' +
+                s.outputs.map(function (o) { return '<li style="margin-bottom:0.35rem;">' + esc(o) + '</li>'; }).join('') +
+                '</ul>' +
+                '<a class="btn btn-secondary" href="contact.php?work=' + encodeURIComponent(s.id) + '">Discuss ' +
+                esc(s.title) + ' &rarr;</a>' +
+                '</article>';
         }).join(''));
         // Jump to the capability named in the link (content is added after the page loads)
         if (window.location.hash) {
@@ -363,7 +414,7 @@
             var q = [];
             if (st) { q.push('status=' + st); }
             if (se) { q.push('sector=' + se); }
-            return 'projects.html' + (q.length ? '?' + q.join('&') : '');
+            return 'projects.php' + (q.length ? '?' + q.join('&') : '');
         }
 
         var chips = chip(link('', sector), 'All', !status) +
@@ -391,14 +442,14 @@
         } else {
             set('result-count', '');
             set('project-grid', '');
-            set('projects-empty', '<p>Nothing matches these filters.</p><p><a class="text-link" href="projects.html">Show all research &amp; projects</a></p>');
+            set('projects-empty', '<p>Nothing matches these filters.</p><p><a class="text-link" href="projects.php">Show all research &amp; projects</a></p>');
         }
     };
 
     pages.project = function () {
         var id = params.get('id');
         var p = D.projects.filter(function (x) { return String(x.id) === id; })[0];
-        if (!p) { set('content', notFound('item', 'projects.html', 'Show all research & projects')); return; }
+        if (!p) { set('content', notFound('item', 'projects.php', 'Show all research & projects')); return; }
 
         document.title = p.title + ' | ' + S.short + ', ' + S.instituteShort;
         var years = projectYears(p);
@@ -410,26 +461,25 @@
         facts += '<div><dt>Status</dt><dd>' + statusTag(p) + '</dd></div>';
 
         var related = D.projects.filter(function (x) { return x.id !== p.id && x.sector === p.sector; }).slice(0, 3);
-        var boardClass = projectBoardClass(p);
 
         set('content',
-            pageHead(p.title, '', 'projects.html', 'All research & projects', 'road', boardClass) +
+            pageHead(p.title, '', 'projects.php', 'All research & projects', 'road', '') +
             '<section class="section section-tight"><div class="wrap detail-layout"><div class="detail-main">' +
             (p.image ? '<figure class="detail-image"><img src="' + esc(p.image) + '" alt=""></figure>' : '') +
             (p.summary ? '<p class="lead-text">' + esc(p.summary) + '</p>' : '') +
             '<div class="prose">' + renderText(p.description) + '</div></div>' +
-            '<aside class="detail-facts board ' + boardClass + '"><div class="board-face"><dl>' + facts + '</dl>' +
-            '<a class="btn ' + (boardClass ? 'btn-primary' : 'btn-yellow') + ' btn-block" href="contact.html">Discuss a similar project</a></div></aside></div></section>' +
-            (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related work</h2></div><div class="project-grid">' +
+            '<aside class="detail-facts"><dl>' + facts + '</dl>' +
+            '<a class="btn btn-yellow btn-block" href="contact.php">Discuss a similar project</a></aside></div></section>' +
+            (related.length ? '<section class="section section-concrete"><div class="wrap"><div class="section-head"><h2>Related work</h2></div><div class="project-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">' +
                 related.map(function (r) { return projectCard(r, false); }).join('') + '</div></div></section>' : ''));
     };
 
     pages.publications = function () {
         var type = params.get('type') || '';
         if (!D.pubTypes[type]) { type = ''; }
-        set('type-chips', chip('publications.html', 'All', !type) +
+        set('type-chips', chip('publications.php', 'All', !type) +
             Object.keys(D.pubTypes).map(function (k) {
-                return chip('publications.html?type=' + k, D.pubTypes[k] + 's', type === k);
+                return chip('publications.php?type=' + k, D.pubTypes[k] + 's', type === k);
             }).join(''));
 
         var list = sortPubs(D.publications.filter(function (p) { return !type || p.type === type; }));
@@ -462,10 +512,10 @@
     pages['news-item'] = function () {
         var id = params.get('id');
         var n = D.news.filter(function (x) { return String(x.id) === id; })[0];
-        if (!n) { set('content', notFound('news item', 'news.html', 'Show all news')); return; }
+        if (!n) { set('content', notFound('news item', 'news.php', 'Show all news')); return; }
         document.title = n.title + ' | ' + S.short + ', ' + S.instituteShort;
         set('content',
-            pageHead(n.title, '', 'news.html', 'All news', 'paper') +
+            pageHead(n.title, '', 'news.php', 'All news', 'paper') +
             '<section class="section section-tight"><div class="wrap narrow">' +
             '<p class="news-date">' + dateStone(n.date) + '</p>' +
             (n.image ? '<figure class="detail-image"><img src="' + esc(n.image) + '" alt=""></figure>' : '') +
@@ -550,8 +600,8 @@
         if (usedCats.indexOf(cat) === -1) { cat = ''; }
 
         if (usedCats.length > 1) {
-            set('gallery-chips', chip('gallery.html', 'All', !cat) + usedCats.map(function (k) {
-                return chip('gallery.html?category=' + k, cats[k], cat === k);
+            set('gallery-chips', chip('gallery.php', 'All', !cat) + usedCats.map(function (k) {
+                return chip('gallery.php?category=' + k, cats[k], cat === k);
             }).join(''));
         } else {
             hide('gallery-filters');
@@ -569,7 +619,7 @@
             return '<li><figure class="gallery-item">' +
                 '<a class="hoarding" href="' + esc(p.image) + '" data-photo="' + i + '" aria-label="Open larger photo: ' + esc(p.title) + '">' +
                 '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></a>' +
-                '<figcaption class="sign-plate gallery-caption"><strong>' + esc(p.title) + '</strong>' +
+                '<figcaption class="gallery-caption"><strong>' + esc(p.title) + '</strong>' +
                 (details ? '<span>' + esc(details) + '</span>' : '') + '</figcaption></figure></li>';
         }).join(''));
         startPhotoViewer(list);
@@ -581,15 +631,15 @@
         Object.keys(D.teamGroups).forEach(function (g) {
             var list = members.filter(function (m) { return m.group === g; });
             if (!list.length) { return; }
-            html += '<section class="team-group"><div class="section-head section-head-blue"><h2>' + esc(D.teamGroups[g]) + '</h2></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
+            html += '<section class="team-group"><div class="section-heading" style="text-align:left;margin-bottom:2rem;"><span class="section-label">Our People</span><h2>' + esc(D.teamGroups[g]) + '</h2><div class="section-accent-line" style="margin:0.5rem 0 0 0;"></div></div><ul class="team-grid' + (g === 'professors' ? ' is-professors' : '') + '">' +
                 list.map(function (m) {
                     var photo = m.photo
                         ? '<img class="person-photo" src="' + esc(m.photo) + '" alt="" loading="lazy">'
                         : '<span class="person-photo is-initials" aria-hidden="true">' + esc(initials(m.name)) + '</span>';
                     var links = '';
                     if (m.email) { links += '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a>'; }
-                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Website</a>'; }
-                    return '<li class="person board board-blue"><div class="board-face person-face">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
+                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Profile Website &rarr;</a>'; }
+                    return '<li class="person"><div class="person-face">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
                         (m.designation ? '<p class="person-role">' + esc(m.designation) + '</p>' : '') +
                         (m.expertise ? '<p class="person-areas">' + esc(m.expertise) + '</p>' : '') +
                         (links ? '<p class="person-links">' + links + '</p>' : '') + '</div></div></li>';

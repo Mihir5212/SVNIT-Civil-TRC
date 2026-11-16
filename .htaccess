@@ -1,0 +1,23 @@
+# TRC SVNIT - Apache Server Configuration
+Options -Indexes
+RewriteEngine On
+
+# Redirect legacy .html to .php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+)\.html$ /$1.php [R=301,L]
+
+# Clean URLs: /about -> about.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^.]+)$ $1.php [L]
+
+# Custom Error Pages
+ErrorDocument 404 /404.php
+
+# Security & Caching Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
