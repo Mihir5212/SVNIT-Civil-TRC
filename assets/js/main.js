@@ -232,11 +232,13 @@
         if (slot && slot.querySelector('.header-inner')) { return; } // PHP header already rendered
         var menu = [
             ['index.php', 'Home', 'home'],
-            ['about.php', 'About', 'about'],
+            ['about.php', 'About Us', 'about'],
             ['projects.php', 'Research &amp; Projects', 'projects'],
             ['publications.php', 'Publications', 'publications'],
-            ['gallery.php', 'Gallery', 'gallery'],
+            ['news.php', 'News', 'news'],
             ['team.php', 'Team', 'team'],
+            ['gallery.php', 'Gallery', 'gallery'],
+            ['contact.php', 'Contact Us', 'contact'],
         ];
         var active = { project: 'projects' }[page] || page;
         var html = '';
@@ -251,7 +253,7 @@
             menu.map(function (m) {
                 return '<li class="nav-item"><a class="nav-link' + (active === m[2] ? ' is-active' : '') + '" href="' + m[0] + '">' + m[1] + '</a></li>';
             }).join('') +
-            '</ul><div class="nav-cta-wrap"><a class="btn btn-yellow btn-nav-cta" href="contact.php"><span>Contact Us</span> &rarr;</a></div></nav>' +
+            '</ul></nav>' +
             '</div></header>';
         if (slot) { slot.outerHTML = html; }
     }

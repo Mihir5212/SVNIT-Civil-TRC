@@ -46,12 +46,6 @@ $navItems = [
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <div class="nav-cta-wrap">
-                <a href="contact.php" class="btn btn-yellow btn-nav-cta">
-                    <span>Contact Us</span>
-                    <svg class="btn-arrow" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2.44z"/></svg>
-                </a>
-            </div>
         </nav>
     </div>
 </header>

@@ -6,21 +6,57 @@
 (function () {
     'use strict';
 
-    // 1. Sticky Header scroll effect
+    // 1. Sticky Header scroll effect with auto-hide on scroll down and reveal on scroll up
     function initStickyNav() {
         var header = document.getElementById('site-header');
         if (!header) return;
 
-        var onScroll = function () {
-            if (window.scrollY > 25) {
+        var lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        var ticking = false;
+
+        function updateNav() {
+            var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+            var navMenu = header.querySelector('.nav');
+
+            // 1. Scrolled styling
+            if (currentScrollY > 20) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
-        };
 
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
+            // If mobile menu is open, never hide navbar
+            if (navMenu && navMenu.classList.contains('is-open')) {
+                header.classList.remove('nav-hidden');
+                lastScrollY = currentScrollY;
+                ticking = false;
+                return;
+            }
+
+            // 2. Auto-hide on scroll down, auto-reveal on scroll up
+            if (currentScrollY <= 40) {
+                // At or near top of page: always visible
+                header.classList.remove('nav-hidden');
+            } else if (currentScrollY > lastScrollY + 8) {
+                // Scrolling DOWN -> navbar goes up out of view
+                header.classList.add('nav-hidden');
+            } else if (currentScrollY < lastScrollY - 8) {
+                // Scrolling UP -> navbar comes back down smoothly
+                header.classList.remove('nav-hidden');
+            }
+
+            lastScrollY = Math.max(0, currentScrollY);
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(updateNav);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        updateNav();
     }
 
     // 2. Count-Up Animation for Stats Strip
@@ -199,6 +235,113 @@
         });
     }
 
+    // 8. MattestLab-Style Hero Automatic Image Slider with Transitions
+    function initHeroSlider() {
+        var heroCard = document.querySelector('.hero-card');
+        var slides = document.querySelectorAll('.hero-slide');
+        var prevBtn = document.getElementById('hero-prev');
+        var nextBtn = document.getElementById('hero-next');
+        var catBtns = document.querySelectorAll('.hero-category-btn');
+
+        if (!slides.length) return;
+
+        var current = 0;
+        var total = slides.length;
+        var intervalMs = 4500; // 4.5 seconds auto rotation
+        var timer = null;
+
+        function showSlide(index) {
+            slides[current].classList.remove('is-active');
+            if (catBtns[current]) catBtns[current].classList.remove('active');
+
+            current = (index + total) % total;
+
+            slides[current].classList.add('is-active');
+            if (catBtns[current]) catBtns[current].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(current + 1);
+        }
+
+        function prevSlide() {
+            showSlide(current - 1);
+        }
+
+        function startAutoPlay() {
+            stopAutoPlay();
+            timer = setInterval(nextSlide, intervalMs);
+        }
+
+        function stopAutoPlay() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        // Category button click handlers
+        catBtns.forEach(function (btn, i) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                catBtns.forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                if (i < total) {
+                    showSlide(i);
+                    startAutoPlay();
+                }
+            });
+        });
+
+        // Arrow button click handlers
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                nextSlide();
+                startAutoPlay();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                prevSlide();
+                startAutoPlay();
+            });
+        }
+
+        // Pause on mouse hover / resume on mouse leave
+        if (heroCard) {
+            heroCard.addEventListener('mouseenter', stopAutoPlay);
+            heroCard.addEventListener('mouseleave', startAutoPlay);
+
+            // Touch swipe support for mobile
+            var touchStartX = 0;
+            var touchEndX = 0;
+
+            heroCard.addEventListener('touchstart', function (e) {
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoPlay();
+            }, { passive: true });
+
+            heroCard.addEventListener('touchend', function (e) {
+                touchEndX = e.changedTouches[0].screenX;
+                var diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) {
+                        nextSlide(); // swipe left -> next
+                    } else {
+                        prevSlide(); // swipe right -> prev
+                    }
+                }
+                startAutoPlay();
+            }, { passive: true });
+        }
+
+        // Start auto-play initially
+        startAutoPlay();
+    }
+
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAll);
@@ -208,6 +351,7 @@
 
     function initAll() {
         initStickyNav();
+        initHeroSlider();
         initCountUp();
         initScrollReveals();
         initVisionMissionCards();
