@@ -237,7 +237,7 @@
 
     // 8. MattestLab-Style Hero Automatic Image Slider with Transitions
     function initHeroSlider() {
-        var heroCard = document.querySelector('.hero-card');
+        var heroCard = document.querySelector('.hero-vela-card') || document.querySelector('.hero-card');
         var slides = document.querySelectorAll('.hero-slide');
         var prevBtn = document.getElementById('hero-prev');
         var nextBtn = document.getElementById('hero-next');
@@ -342,6 +342,142 @@
         startAutoPlay();
     }
 
+    // 9. Vela-Style Dynamic Hero Clock Engine
+    function initVelaHero() {
+        var heroCard = document.querySelector('.hero-vela-card');
+        if (!heroCard) return;
+
+        var slotItems = heroCard.querySelectorAll('.vela-headline-slot .vela-slot-item');
+        var gradientLayers = heroCard.querySelectorAll('.vela-gradient-layer');
+        if (!slotItems.length || !gradientLayers.length) return;
+
+        // Check prefers-reduced-motion
+        var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) return;
+
+        var SLOT_DURATION = 1750; // 1.75s per verb
+        var TOTAL_WORDS = 4;
+        var CYCLE_DURATION = SLOT_DURATION * TOTAL_WORDS; // 7.0s cycle
+
+        var startTime = performance.now();
+        var pausedTime = 0;
+        var pauseStart = 0;
+        var isPaused = false;
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                isPaused = true;
+                pauseStart = performance.now();
+            } else {
+                if (pauseStart > 0) {
+                    pausedTime += performance.now() - pauseStart;
+                }
+                isPaused = false;
+            }
+        });
+
+        function easeOutCubic(x) {
+            return 1 - Math.pow(1 - x, 3);
+        }
+
+        function easeInCubic(x) {
+            return Math.pow(x, 3);
+        }
+
+        function tick(now) {
+            if (!isPaused) {
+                var elapsed = now - startTime - pausedTime;
+                if (elapsed < 0) elapsed = 0;
+
+                var cycleTime = elapsed % CYCLE_DURATION;
+                var activeIndex = Math.floor(cycleTime / SLOT_DURATION);
+                var slotTime = cycleTime % SLOT_DURATION;
+
+                // 1. Slot Word & Icon Animation
+                for (var i = 0; i < slotItems.length; i++) {
+                    var item = slotItems[i];
+                    var iconWrap = item.querySelector('.vela-icon-wrapper');
+
+                    if (i === activeIndex) {
+                        item.style.display = 'inline-flex';
+                        item.classList.add('active');
+
+                        var opacity = 1;
+                        var translateY = 0;
+                        var blur = 0;
+                        var scale = 1;
+                        var iconScale = 1;
+                        var iconRotate = 0;
+
+                        // Enter phase: first 500 ms (0.5 s)
+                        if (slotTime < 500) {
+                            var enterProgress = slotTime / 500;
+                            var easedEnter = easeOutCubic(enterProgress);
+
+                            opacity = easedEnter;
+                            translateY = (1 - easedEnter) * 0.32; // rises from +0.32em
+                            blur = (1 - easedEnter) * 10; // blur 10px -> 0
+                            scale = 0.96 + easedEnter * 0.04; // 0.96 -> 1
+
+                            // Icon follows 60ms later
+                            var iconTime = Math.max(0, slotTime - 60);
+                            var iconProgress = Math.min(1, iconTime / 440);
+                            var easedIcon = easeOutCubic(iconProgress);
+                            iconScale = 0.7 + easedIcon * 0.3; // 0.7 -> 1
+                            iconRotate = (1 - easedIcon) * -14; // -14deg -> 0deg
+                        }
+                        // Leave phase: last 420 ms
+                        else if (slotTime > (SLOT_DURATION - 420)) {
+                            var leaveProgress = (slotTime - (SLOT_DURATION - 420)) / 420;
+                            var easedLeave = easeInCubic(leaveProgress);
+
+                            opacity = 1 - easedLeave;
+                            translateY = -easedLeave * 0.16; // drifts up 0.16em
+                            blur = easedLeave * 8; // blurs to 8px
+                            scale = 1;
+                        }
+
+                        // Gentle idle float on icon: ±0.028em, ±3deg
+                        var idlePhase = elapsed * 0.0022;
+                        var idleY = Math.sin(idlePhase) * 0.028;
+                        var idleRot = Math.cos(idlePhase * 0.8) * 3;
+
+                        item.style.opacity = opacity;
+                        item.style.transform = 'translateY(' + translateY + 'em) scale(' + scale + ')';
+                        item.style.filter = blur > 0.1 ? 'blur(' + blur + 'px)' : 'none';
+
+                        if (iconWrap) {
+                            iconWrap.style.transform = 'translateY(' + idleY + 'em) scale(' + iconScale + ') rotate(' + (iconRotate + idleRot) + 'deg)';
+                        }
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                        item.style.opacity = 0;
+                    }
+                }
+
+                // 2. Crossfade Gradient Layers with Gentle Drift
+                for (var g = 0; g < gradientLayers.length; g++) {
+                    var layer = gradientLayers[g];
+                    if (g === activeIndex) {
+                        layer.classList.add('active');
+                    } else {
+                        layer.classList.remove('active');
+                    }
+
+                    var driftTime = elapsed * 0.0006 + g;
+                    var driftX = Math.sin(driftTime) * 2.2;
+                    var driftY = Math.cos(driftTime * 0.8) * 1.6;
+                    layer.style.transform = 'translate3d(' + driftX + '%, ' + driftY + '%, 0) scale(1.08)';
+                }
+            }
+
+            requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+    }
+
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAll);
@@ -352,6 +488,7 @@
     function initAll() {
         initStickyNav();
         initHeroSlider();
+        initVelaHero();
         initCountUp();
         initScrollReveals();
         initVisionMissionCards();

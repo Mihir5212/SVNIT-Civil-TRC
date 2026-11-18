@@ -7,53 +7,69 @@ include 'includes/header.php';
 ?>
 <main id="main">
 
-  <!-- ===== 1. HERO SECTION (MattestLab-Style Rounded Card with Auto Slider) ===== -->
-  <section class="hero-section" id="hero">
-    <div class="hero-container">
-      <div class="hero-card">
-        <!-- Background Slider Track with User's Uploaded Photos -->
-        <div class="hero-slides" id="hero-slides">
-          <div class="hero-slide is-active">
-            <img src="images/thisisengineering-xYCBw1uIP_M-unsplash.jpg" alt="Civil Engineering Blueprints and Infrastructure Planning" class="hero-slide-img">
-          </div>
-          <div class="hero-slide">
-            <img src="images/film-KRu8zd5RiN8-unsplash.jpg" alt="Highway Bridge Viaduct and Structural Transportation" class="hero-slide-img">
-          </div>
-          <div class="hero-slide">
-            <img src="images/qihao-wang-ZKPXubyW-7Q-unsplash.jpg" alt="National Expressway at Dusk with Traffic Trails" class="hero-slide-img">
-          </div>
-          <div class="hero-slide">
-            <img src="images/nopparuj-lamaikul-yvTmcnmArgY-unsplash.jpg" alt="Modern Highway Toll Plaza and Multi-lane Expressway" class="hero-slide-img">
-          </div>
-          <div class="hero-slide">
-            <img src="images/ricardo-gomez-angel-sYK-jN0sKBY-unsplash.jpg" alt="Civil Transport Transit Tunnel Engineering" class="hero-slide-img">
-          </div>
-          <div class="hero-slide">
-            <img src="images/daniel-mccullough-HtBlQdxfG9k-unsplash.jpg" alt="Civil Engineering Drafting and Geometric Site Design" class="hero-slide-img">
-          </div>
+  <!-- ===== 1. HERO SECTION (Image Slider with TRC Content) ===== -->
+  <section class="hero-vela-section" id="hero">
+    <div class="hero-vela-container">
+      <div class="hero-vela-card hero-card">
+
+        <!-- Image Slides -->
+        <div class="hero-slides" aria-hidden="true">
+          <div class="hero-slide is-active"><img class="hero-slide-img" src="images/Hero_1.jpg" alt="TEP Research Lab" /></div>
+          <div class="hero-slide"><img class="hero-slide-img" src="images/Hero_2.jpg" alt="Road Safety Audit" /></div>
+          <div class="hero-slide"><img class="hero-slide-img" src="images/Hero_3.jpg" alt="Traffic Engineering" /></div>
+          <div class="hero-slide"><img class="hero-slide-img" src="images/Hero_4.jpg" alt="Highway Research" /></div>
+          <div class="hero-slide"><img class="hero-slide-img" src="images/Hero_5.jpg" alt="Data Analytics" /></div>
         </div>
 
-        <!-- Dark Gradient Overlay for Maximum Legibility -->
-        <div class="hero-overlay"></div>
+        <!-- Dark overlay -->
+        <div class="hero-overlay" aria-hidden="true"></div>
 
-        <!-- Top Capability Pill Tabs (MattestLab style) -->
-        <ul class="hero-category-buttons">
-          <li class="hero-category-btn active" data-target="#capabilities-section">Road Safety Audit</li>
-          <li class="hero-category-btn" data-target="#capabilities-section">Traffic Engineering</li>
-          <li class="hero-category-btn" data-target="#capabilities-section">Highway Research</li>
-          <li class="hero-category-btn" data-target="#capabilities-section">Data Analytics &amp; ITS</li>
-        </ul>
+        <!-- Arrow controls -->
+        <button class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous slide" type="button">&#8249;</button>
+        <button class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next slide" type="button">&#8250;</button>
 
-        <!-- Hero Content (MattestLab Exact Typography & Layout) -->
+        <!-- Main hero content -->
         <div class="hero-content">
           <h2 class="hero-welcome">Welcome To</h2>
           <h1 class="hero-title">TEP Research &amp; Consultancy Cell.</h1>
           <h2 class="hero-tagline">Department Of Civil Engineering &bull; SVNIT Surat.</h2>
         </div>
 
-        <!-- Slider Arrow Controls (MattestLab style &#8249; and &#8250; buttons) -->
-        <button type="button" class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous slide">&#8249;</button>
-        <button type="button" class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next slide">&#8250;</button>
+        <!-- Bottom Stats Strip with S-Curve Notch -->
+        <div class="vela-stats-strip" aria-label="Key Cell Metrics">
+          <svg class="vela-strip-notch-svg" viewBox="0 0 1440 62" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 62 H1062 C1092 62 1098 54 1116 34 C1138 9 1146 1 1178 1 H1440 V62 Z" fill="#FBF6EF" />
+          </svg>
+          <a href="#about-section" class="vela-scroll-hint" aria-label="Scroll to learn more about the cell">
+            <span>&darr;</span> Scroll to explore
+          </a>
+          <div class="vela-stats-content">
+            <div class="vela-stats-lead">
+              Evidence-based<br>infrastructure
+            </div>
+            <div class="vela-stats-group">
+              <div class="vela-stat-item">
+                <span class="vela-stat-number">15+</span>
+                <span class="vela-stat-label">Years of Excellence</span>
+              </div>
+              <div class="vela-stat-item">
+                <span class="vela-stat-number">40+</span>
+                <span class="vela-stat-label">Highway &amp; Urban Projects</span>
+              </div>
+              <div class="vela-stat-item">
+                <span class="vela-stat-number">120+</span>
+                <span class="vela-stat-label">Publications &amp; Reports</span>
+              </div>
+            </div>
+            <svg class="vela-sprout-art" viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M12 56 Q32 54 52 56" />
+              <path d="M32 55 V26" />
+              <path d="M32 38 C22 36 16 26 20 18 C28 16 32 26 32 38 Z" />
+              <path d="M32 30 C42 28 48 18 44 10 C36 8 32 18 32 30 Z" />
+            </svg>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -62,14 +78,49 @@ include 'includes/header.php';
   <section class="section about-section-mattest" id="about-section">
     <div class="about-container">
       <div class="about-grid">
-        <!-- Left Column: Image / Facility Media Showcase -->
-        <div class="about-media-col" data-reveal="fade-in-up">
-          <div class="about-media-card">
-            <img src="images/thisisengineering-xYCBw1uIP_M-unsplash.jpg" alt="TRC Civil Transportation Lab & Research Facility" class="about-media-img">
-            <div class="about-media-badge">
-              <span class="badge-dot"></span>
-              <span>SVNIT Surat &bull; Civil Engineering Research Lab</span>
-            </div>
+        <!-- Left Column: Dynamic TEP Typographic Cutout with Vector Text Borders & Masked Photo -->
+        <!-- NOTE: The photo inside TEP is loaded dynamically from images/tep-about-photo.jpg -->
+        <!-- You can easily replace that photo by updating images/tep-about-photo.jpg or editing href below -->
+        <div class="about-media-col about-tep-cutout-col" data-reveal="fade-in-up">
+          <div class="tep-dynamic-cutout" id="tep-cutout-container" title="TEP - Transportation Engineering &amp; Planning Cell">
+            <svg class="tep-dynamic-svg" viewBox="0 0 640 520" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TEP Transportation Engineering &amp; Planning">
+              <defs>
+                <!-- Dynamic Photo Fill Pattern (Hot-swappable: replace images/tep-about-photo.jpg with your own photo) -->
+                <pattern id="tepAboutPhotoPattern" patternUnits="userSpaceOnUse" width="640" height="520">
+                  <image id="tep-about-dynamic-img" href="images/tep-about-photo.jpg" x="0" y="0" width="640" height="520" preserveAspectRatio="xMidYMid slice" />
+                </pattern>
+              </defs>
+
+              <!-- Letter T (Top Left) -->
+              <g class="tep-letter-node tep-letter-t">
+                <!-- White halo for overlap separation -->
+                <text x="40" y="230" class="tep-glyph-halo">T</text>
+                <!-- Photo fill -->
+                <text x="40" y="230" class="tep-glyph-fill">T</text>
+                <!-- Crisp vector text border -->
+                <text x="40" y="230" class="tep-glyph-stroke">T</text>
+              </g>
+
+              <!-- Letter E (Center) -->
+              <g class="tep-letter-node tep-letter-e">
+                <!-- White halo for clean knockout over Letter T -->
+                <text x="210" y="350" class="tep-glyph-halo">E</text>
+                <!-- Photo fill -->
+                <text x="210" y="350" class="tep-glyph-fill">E</text>
+                <!-- Crisp vector text border -->
+                <text x="210" y="350" class="tep-glyph-stroke">E</text>
+              </g>
+
+              <!-- Letter P (Bottom Right) -->
+              <g class="tep-letter-node tep-letter-p">
+                <!-- White halo for clean knockout over Letter E -->
+                <text x="375" y="470" class="tep-glyph-halo">P</text>
+                <!-- Photo fill -->
+                <text x="375" y="470" class="tep-glyph-fill">P</text>
+                <!-- Crisp vector text border -->
+                <text x="375" y="470" class="tep-glyph-stroke">P</text>
+              </g>
+            </svg>
           </div>
         </div>
 
@@ -97,34 +148,7 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 3. STATS STRIP (MattestLab-Style Rounded Floating Container) ===== -->
-  <section class="section-stats-wrap">
-    <div class="stats-outer-container">
-      <div class="stats-card-mattest" data-reveal="scale-in">
-        <div class="stat-col">
-          <span class="stat-big-val" data-count-target="15" data-count-suffix="+">15+</span>
-          <span class="stat-col-title">Years Of Excellence</span>
-          <div class="stat-col-divider"></div>
-        </div>
-        <div class="stat-col">
-          <span class="stat-big-val" data-count-target="40" data-count-suffix="+">40+</span>
-          <span class="stat-col-title">Projects Completed</span>
-          <div class="stat-col-divider"></div>
-        </div>
-        <div class="stat-col">
-          <span class="stat-big-val" data-count-target="120" data-count-suffix="+">120+</span>
-          <span class="stat-col-title">Publications &amp; Reports</span>
-          <div class="stat-col-divider"></div>
-        </div>
-        <div class="stat-col">
-          <span class="stat-big-val" data-count-target="8" data-count-suffix="+">8+</span>
-          <span class="stat-col-title">Govt. &amp; State Agencies</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 4. OUR SERVICES (MattestLab-Style Sticky Header & Scroll-Stacking Cards) ===== -->
+  <!-- ===== 3. OUR SERVICES (MattestLab-Style Sticky Header & Scroll-Stacking Cards) ===== -->
   <section class="services-section" id="capabilities-section">
     <div class="services-sticky-container">
       <!-- Sticky Section Header with Gradient Underline -->

@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vela &mdash; In Your Terms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --u: min(100vw / 1440, 100vh / 960);
+      --ink: #0D0D0C;
+      --ink-sec: rgba(13, 13, 12, 0.56);
+      --ink-hint: rgba(13, 13, 12, 0.42);
+      --cream: #FBF6EF;
+      --font-headline: "Inter Tight", "Inter", system-ui, -apple-system, sans-serif;
+      --font-ui: "Inter", system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Overall Hero Canvas (1440 x 960 viewport) */
+    .vela-hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--cream);
+      isolation: isolate;
+    }
+
+    /* Top Hero Panel (75% of screen) */
+    .vela-panel {
+      position: relative;
+      width: 100%;
+      height: 75vh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Stacked Gradient Layers for the 4 Words */
+    .gradient-layer {
+      position: absolute;
+      inset: -5%;
+      width: 110%;
+      height: 110%;
+      opacity: 0;
+      transition: opacity 0.77s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate3d(0, 0, 0) scale(1.08);
+      will-change: transform, opacity;
+    }
+
+    .gradient-layer.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    /* Layer 0: Message (Lemon cream) */
+    .gradient-layer--message {
+      background:
+        radial-gradient(circle at 86% 76%, rgb(246, 222, 104) 0%, rgba(246, 222, 104, 0) 55%),
+        radial-gradient(circle at 32% 105%, rgb(246, 222, 104) 0%, rgba(246, 222, 104, 0) 45%),
+        linear-gradient(180deg, #F2ECDF 0%, #F4EBC6 100%);
+    }
+
+    /* Layer 1: Browse (Peach & apricot) */
+    .gradient-layer--browse {
+      background:
+        radial-gradient(circle at 86% 76%, rgb(249, 150, 84) 0%, rgba(249, 150, 84, 0) 55%),
+        radial-gradient(circle at 32% 105%, rgb(249, 150, 84) 0%, rgba(249, 150, 84, 0) 45%),
+        linear-gradient(180deg, #F8DCC7 0%, #F9CBA9 100%);
+    }
+
+    /* Layer 2: Transact (Warm sage mint) */
+    .gradient-layer--transact {
+      background:
+        radial-gradient(circle at 86% 76%, rgb(150, 206, 150) 0%, rgba(150, 206, 150, 0) 55%),
+        radial-gradient(circle at 32% 105%, rgb(150, 206, 150) 0%, rgba(150, 206, 150, 0) 45%),
+        linear-gradient(180deg, #E9EBE0 0%, #DFE9D4 100%);
+    }
+
+    /* Layer 3: Build web (Rose lilac) */
+    .gradient-layer--build {
+      background:
+        radial-gradient(circle at 86% 76%, rgb(222, 150, 200) 0%, rgba(222, 150, 200, 0) 55%),
+        radial-gradient(circle at 32% 105%, rgb(222, 150, 200) 0%, rgba(222, 150, 200, 0) 45%),
+        linear-gradient(180deg, #F0E4E6 0%, #ECD6E2 100%);
+    }
+
+    /* Fine SVG fractal-noise grain overlay at 18% opacity with mix-blend-mode: multiply */
+    .grain-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+    }
+
+    /* Header Nav (80u tall, hairline underneath) */
+    .vela-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: calc(80 * var(--u));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 calc(64 * var(--u)) 0 calc(56 * var(--u));
+      border-bottom: 1px solid rgba(13, 13, 12, 0.08);
+      z-index: 10;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(10 * var(--u));
+    }
+
+    .brand-dot {
+      width: calc(13 * var(--u));
+      height: calc(13 * var(--u));
+      background: var(--ink);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .brand-text {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: calc(25 * var(--u));
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .nav-right {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(42 * var(--u));
+    }
+
+    .nav-links {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(42 * var(--u));
+      list-style: none;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(6 * var(--u));
+      font-size: calc(17 * var(--u));
+      font-weight: 500;
+      color: var(--ink);
+      opacity: 0.88;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+    }
+
+    .nav-chevron {
+      width: calc(12 * var(--u));
+      height: calc(12 * var(--u));
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-join {
+      height: calc(48 * var(--u));
+      padding: 0 calc(24 * var(--u));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.4px solid var(--ink);
+      border-radius: calc(7 * var(--u));
+      font-size: calc(16 * var(--u));
+      font-weight: 500;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-join:hover {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    /* Main Headline Block */
+    .headline-stage {
+      position: absolute;
+      left: calc(112 * var(--u));
+      top: calc(190 * var(--u));
+      z-index: 10;
+      user-select: none;
+    }
+
+    .headline-wrap {
+      font-family: var(--font-headline);
+      font-weight: 500;
+      font-size: calc(172 * var(--u));
+      line-height: 0.86;
+      letter-spacing: -0.032em;
+      color: var(--ink);
+    }
+
+    /* Line 1: Cycling Word Slot */
+    .headline-slot {
+      display: flex;
+      align-items: center;
+      height: calc(172 * var(--u) * 0.96);
+      position: relative;
+    }
+
+    .slot-item {
+      position: absolute;
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity, filter;
+    }
+
+    .slot-item.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Line 2: Fixed Anchor Phrase */
+    .headline-fixed {
+      display: block;
+      margin-top: calc(14 * var(--u));
+      white-space: nowrap;
+    }
+
+    /* 3D Glossy Candy Icon with Dynamic In-Code Tinting */
+    .icon-wrapper {
+      position: relative;
+      width: 1.02em;
+      height: 1.02em;
+      display: inline-block;
+      isolation: isolate;
+      vertical-align: -0.08em;
+      margin-right: 0.12em;
+      flex-shrink: 0;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .icon-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: grayscale(1) brightness(1.1) contrast(1.08);
+      pointer-events: none;
+    }
+
+    .icon-tint {
+      position: absolute;
+      inset: 0;
+      background: var(--tint);
+      mix-blend-mode: color;
+      pointer-events: none;
+      -webkit-mask-image: var(--mask-url);
+      mask-image: var(--mask-url);
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    /* Word text inside slot */
+    .slot-word {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Action Row (Buttons + Caption at top 578u) */
+    .action-row {
+      position: absolute;
+      left: calc(112 * var(--u));
+      top: calc(578 * var(--u));
+      display: flex;
+      align-items: center;
+      gap: calc(36 * var(--u));
+      z-index: 10;
+    }
+
+    .store-buttons {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(14 * var(--u));
+    }
+
+    .store-btn {
+      height: calc(58 * var(--u));
+      padding: 0 calc(24 * var(--u));
+      display: inline-flex;
+      align-items: center;
+      gap: calc(10 * var(--u));
+      border: 1.4px solid rgba(13, 13, 12, 0.4);
+      border-radius: calc(8 * var(--u));
+      font-size: calc(17 * var(--u));
+      font-weight: 500;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .store-btn svg {
+      width: calc(20 * var(--u));
+      height: calc(20 * var(--u));
+      fill: currentColor;
+    }
+
+    .store-btn:hover {
+      background: rgba(13, 13, 12, 0.05);
+      border-color: var(--ink);
+    }
+
+    /* App Store Flash State during "Build web" */
+    .store-btn--appstore.flash-black {
+      background: var(--ink) !important;
+      color: #fff !important;
+      border-color: var(--ink) !important;
+    }
+
+    .action-caption {
+      font-size: calc(18.5 * var(--u));
+      line-height: 1.42;
+      color: var(--ink-sec);
+      max-width: calc(480 * var(--u));
+      font-weight: 400;
+    }
+
+    /* Bottom Stats Strip (25% of screen, cream #FBF6EF) */
+    .stats-strip {
+      position: relative;
+      width: 100%;
+      height: 25vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 20;
+    }
+
+    /* Curved S-Notch SVG along the top edge */
+    .strip-notch-svg {
+      position: absolute;
+      top: calc(-61.5 * var(--u));
+      left: 0;
+      width: 100%;
+      height: calc(62 * var(--u));
+      display: block;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Scroll Hint resting on the raised notch */
+    .scroll-hint {
+      position: absolute;
+      top: calc(-42 * var(--u));
+      right: calc(140 * var(--u));
+      font-size: calc(15 * var(--u));
+      font-weight: 500;
+      color: var(--ink-hint);
+      display: inline-flex;
+      align-items: center;
+      gap: calc(6 * var(--u));
+      pointer-events: none;
+      z-index: 10;
+      letter-spacing: -0.01em;
+    }
+
+    /* Stats Content Inner */
+    .stats-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 calc(96 * var(--u)) calc(20 * var(--u)) calc(112 * var(--u));
+    }
+
+    .stats-lead {
+      font-family: var(--font-headline);
+      font-size: calc(29 * var(--u));
+      line-height: 1.24;
+      font-weight: 500;
+      color: var(--ink);
+      max-width: calc(220 * var(--u));
+    }
+
+    .stats-group {
+      display: flex;
+      align-items: flex-start;
+      gap: calc(64 * var(--u));
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: calc(4 * var(--u));
+    }
+
+    .stat-number {
+      font-family: var(--font-headline);
+      font-size: calc(54 * var(--u));
+      line-height: 1;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.025em;
+    }
+
+    .stat-label {
+      font-size: calc(16.5 * var(--u));
+      color: var(--ink-sec);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Minimal Line-Art Sprout on Far Right */
+    .sprout-art {
+      width: calc(62 * var(--u));
+      height: calc(62 * var(--u));
+      stroke: var(--ink);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* -------------------------------------------------------------
+       Mobile Responsive Styles (≤ 760px)
+       ------------------------------------------------------------- */
+    @media (max-width: 760px) {
+      :root {
+        --u: 1px;
+      }
+
+      html, body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+      }
+
+      .vela-hero {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .vela-panel {
+        height: auto;
+        min-height: 82vh;
+        padding-bottom: 50px;
+      }
+
+      .vela-nav {
+        position: relative;
+        height: 64px;
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .brand-text {
+        font-size: 21px;
+      }
+
+      .btn-join {
+        height: 38px;
+        padding: 0 16px;
+        font-size: 14px;
+      }
+
+      .headline-stage {
+        position: relative;
+        left: 0;
+        top: 0;
+        padding: 42px 20px 0;
+      }
+
+      .headline-wrap {
+        font-size: clamp(52px, 15.5vw, 88px);
+        line-height: 0.92;
+      }
+
+      .headline-slot {
+        height: auto;
+        min-height: clamp(52px, 15.5vw, 88px);
+      }
+
+      .slot-item {
+        position: relative;
+        display: none;
+      }
+
+      .slot-item.active {
+        display: inline-flex;
+      }
+
+      .action-row {
+        position: relative;
+        left: 0;
+        top: 0;
+        padding: 36px 20px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .store-buttons {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .store-btn {
+        height: 48px;
+        padding: 0 18px;
+        font-size: 15px;
+      }
+
+      .action-caption {
+        font-size: 15px;
+        max-width: 100%;
+      }
+
+      .stats-strip {
+        height: auto;
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+
+      .strip-notch-svg {
+        display: none;
+      }
+
+      .scroll-hint {
+        display: none;
+      }
+
+      .stats-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 20px;
+        gap: 32px;
+      }
+
+      .stats-lead {
+        font-size: 24px;
+        max-width: 100%;
+      }
+
+      .stats-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 20px;
+        width: 100%;
+      }
+
+      .stat-number {
+        font-size: 38px;
+      }
+
+      .stat-label {
+        font-size: 14px;
+      }
+
+      .sprout-art {
+        align-self: flex-end;
+        margin-top: -20px;
+      }
+    }
+
+    /* Prefers-reduced-motion: still "Browse" state */
+    @media (prefers-reduced-motion: reduce) {
+      .gradient-layer {
+        transition: none !important;
+        animation: none !important;
+      }
+      .slot-item {
+        transition: none !important;
+      }
+      .icon-wrapper {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="vela-hero" id="vela-hero">
+    <!-- Top Hero Panel (75%) -->
+    <section class="vela-panel" aria-label="Hero Introduction">
+      <!-- 4 Stacked Gradient Layers -->
+      <div class="gradient-layer gradient-layer--message" data-index="0" aria-hidden="true"></div>
+      <div class="gradient-layer gradient-layer--browse active" data-index="1" aria-hidden="true"></div>
+      <div class="gradient-layer gradient-layer--transact" data-index="2" aria-hidden="true"></div>
+      <div class="gradient-layer gradient-layer--build" data-index="3" aria-hidden="true"></div>
+
+      <!-- Fine SVG Fractal-Noise Grain Filter -->
+      <svg class="grain-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <filter id="velaNoise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#velaNoise)" />
+      </svg>
+
+      <!-- Nav Bar (80u tall) -->
+      <header class="vela-nav">
+        <a class="nav-brand" href="#" aria-label="Vela home">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span class="brand-text">vela</span>
+        </a>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li>
+              <a href="#" class="nav-link">
+                Products
+                <svg class="nav-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link">
+                Company
+                <svg class="nav-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link">
+                Docs
+                <svg class="nav-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </a>
+            </li>
+          </ul>
+          <button type="button" class="btn-join">Join Vela</button>
+        </div>
+      </header>
+
+      <!-- Headline Block (at left 112u, top 190u) -->
+      <div class="headline-stage">
+        <h1 class="headline-wrap">
+          <!-- Line 1: Cycling Slot -->
+          <div class="headline-slot" aria-live="polite">
+            <!-- Word 0: Message -->
+            <div class="slot-item" data-index="0" data-tint="#E9C22E"
+                 data-icon="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/83de7c35-dd91-4e56-bfb8-0ffafc83d0e0.webp">
+              <span class="icon-wrapper" style="--tint: #E9C22E; --mask-url: url('https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/83de7c35-dd91-4e56-bfb8-0ffafc83d0e0.webp');">
+                <img class="icon-img" src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/83de7c35-dd91-4e56-bfb8-0ffafc83d0e0.webp" alt="" width="320" height="320" />
+                <span class="icon-tint" aria-hidden="true"></span>
+              </span>
+              <span class="slot-word">Message</span>
+            </div>
+
+            <!-- Word 1: Browse -->
+            <div class="slot-item active" data-index="1" data-tint="#F2772F"
+                 data-icon="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d952211-0474-48cc-af48-58f68b3b7525.webp">
+              <span class="icon-wrapper" style="--tint: #F2772F; --mask-url: url('https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d952211-0474-48cc-af48-58f68b3b7525.webp');">
+                <img class="icon-img" src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d952211-0474-48cc-af48-58f68b3b7525.webp" alt="" width="320" height="320" />
+                <span class="icon-tint" aria-hidden="true"></span>
+              </span>
+              <span class="slot-word">Browse</span>
+            </div>
+
+            <!-- Word 2: Transact -->
+            <div class="slot-item" data-index="2" data-tint="#3FB874"
+                 data-icon="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e2e91fca-5b3f-4e0e-a437-8a581592e407.webp">
+              <span class="icon-wrapper" style="--tint: #3FB874; --mask-url: url('https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e2e91fca-5b3f-4e0e-a437-8a581592e407.webp');">
+                <img class="icon-img" src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e2e91fca-5b3f-4e0e-a437-8a581592e407.webp" alt="" width="320" height="320" />
+                <span class="icon-tint" aria-hidden="true"></span>
+              </span>
+              <span class="slot-word">Transact</span>
+            </div>
+
+            <!-- Word 3: Build web -->
+            <div class="slot-item" data-index="3" data-tint="#C564C4"
+                 data-icon="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/6b32bb47-4ad6-4938-a637-c997b373c68b.webp">
+              <span class="icon-wrapper" style="--tint: #C564C4; --mask-url: url('https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/6b32bb47-4ad6-4938-a637-c997b373c68b.webp');">
+                <img class="icon-img" src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/6b32bb47-4ad6-4938-a637-c997b373c68b.webp" alt="" width="320" height="320" />
+                <span class="icon-tint" aria-hidden="true"></span>
+              </span>
+              <span class="slot-word">Build web</span>
+            </div>
+          </div>
+
+          <!-- Line 2: Anchor Phrase -->
+          <span class="headline-fixed">in your terms</span>
+        </h1>
+      </div>
+
+      <!-- Action Row (Store Buttons + Caption at top 578u) -->
+      <div class="action-row">
+        <div class="store-buttons">
+          <!-- App Store with neutral fruit glyph -->
+          <a href="#" class="store-btn store-btn--appstore" id="btn-appstore" aria-label="Download on App Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.62-.76 1.05-1.81.93-2.84-.91.04-2 .6-2.65 1.36-.58.67-1.09 1.74-.95 2.76 1.01.08 2.05-.52 2.67-1.28Z"/>
+            </svg>
+            <span>App Store</span>
+          </a>
+
+          <!-- Google Play with neutral play-triangle glyph -->
+          <a href="#" class="store-btn store-btn--googleplay" aria-label="Get it on Google Play">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 20.5v-17c0-.86.96-1.38 1.68-.91l14.2 8.5c.7.42.7 1.44 0 1.86l-14.2 8.5A1.08 1.08 0 0 1 3 20.5Z"/>
+            </svg>
+            <span>Google Play</span>
+          </a>
+        </div>
+
+        <p class="action-caption">
+          Vela is a secure messaging app, crypto wallet, and<br>
+          Web3 browser built with state of the art technology.
+        </p>
+      </div>
+    </section>
+
+    <!-- Bottom Stats Strip (25%, cream #FBF6EF) -->
+    <section class="stats-strip" aria-label="Key Statistics">
+      <!-- S-Curve Notch SVG (1440 x 62 stretched to width) -->
+      <svg class="strip-notch-svg" viewBox="0 0 1440 62" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 62 H1062 C1092 62 1098 54 1116 34 C1138 9 1146 1 1178 1 H1440 V62 Z" fill="#FBF6EF" />
+      </svg>
+
+      <!-- Scroll Hint sitting on the raised notch -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>&darr;</span> Scroll to learn more
+      </div>
+
+      <!-- Stats Content -->
+      <div class="stats-content">
+        <div class="stats-lead">
+          Nothing great is<br>made alone
+        </div>
+
+        <div class="stats-group">
+          <div class="stat-item">
+            <span class="stat-number">11.5M+</span>
+            <span class="stat-label">Active accounts</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">$0.0002</span>
+            <span class="stat-label">Average cost per transaction</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">80+</span>
+            <span class="stat-label">Dapps integrations</span>
+          </div>
+        </div>
+
+        <!-- Line-art Sprout on Far Right -->
+        <svg class="sprout-art" viewBox="0 0 64 64" aria-hidden="true">
+          <!-- Ground line -->
+          <path d="M12 56 Q32 54 52 56" />
+          <!-- Central stem -->
+          <path d="M32 55 V26" />
+          <!-- Left leaf -->
+          <path d="M32 38 C22 36 16 26 20 18 C28 16 32 26 32 38 Z" />
+          <!-- Right leaf -->
+          <path d="M32 30 C42 28 48 18 44 10 C36 8 32 18 32 30 Z" />
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- Single Master Motion Engine (Vanilla JS) -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Check for prefers-reduced-motion
+      var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (motionQuery.matches) {
+        return; // Stays on default Browse state
+      }
+
+      var SLOT_DURATION = 1750; // 1.75s per word
+      var TOTAL_WORDS = 4;
+      var CYCLE_DURATION = SLOT_DURATION * TOTAL_WORDS; // 7.0s total cycle
+
+      var slotItems = document.querySelectorAll('.headline-slot .slot-item');
+      var gradientLayers = document.querySelectorAll('.gradient-layer');
+      var appStoreBtn = document.getElementById('btn-appstore');
+
+      if (!slotItems.length || !gradientLayers.length) return;
+
+      var startTime = performance.now();
+      var pausedTime = 0;
+      var pauseStart = 0;
+      var isPaused = false;
+
+      // Handle visibilitychange to pause clock on hidden tab
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          isPaused = true;
+          pauseStart = performance.now();
+        } else {
+          if (pauseStart > 0) {
+            pausedTime += performance.now() - pauseStart;
+          }
+          isPaused = false;
+        }
+      });
+
+      // Ease-out cubic: 1 - pow(1 - x, 3)
+      function easeOutCubic(x) {
+        return 1 - Math.pow(1 - x, 3);
+      }
+
+      // Ease-in cubic: x^3
+      function easeInCubic(x) {
+        return Math.pow(x, 3);
+      }
+
+      function tick(now) {
+        if (!isPaused) {
+          var elapsed = (now - startTime - pausedTime);
+          if (elapsed < 0) elapsed = 0;
+
+          var cycleTime = elapsed % CYCLE_DURATION;
+          var activeIndex = Math.floor(cycleTime / SLOT_DURATION);
+          var slotTime = cycleTime % SLOT_DURATION; // 0 to 1750 ms
+
+          // 1. Manage Active Word Animations
+          for (var i = 0; i < slotItems.length; i++) {
+            var item = slotItems[i];
+            var iconWrap = item.querySelector('.icon-wrapper');
+
+            if (i === activeIndex) {
+              item.style.display = 'inline-flex';
+              item.classList.add('active');
+
+              var opacity = 1;
+              var translateY = 0;
+              var blur = 0;
+              var scale = 1;
+
+              var iconScale = 1;
+              var iconRotate = 0;
+
+              // Enter phase: first 500 ms (0.5 s)
+              if (slotTime < 500) {
+                var enterProgress = slotTime / 500;
+                var easedEnter = easeOutCubic(enterProgress);
+
+                opacity = easedEnter;
+                translateY = (1 - easedEnter) * 0.32; // rises from +0.32em
+                blur = (1 - easedEnter) * 10; // blur 10px -> 0
+                scale = 0.96 + easedEnter * 0.04; // 0.96 -> 1
+
+                // Icon follows 60ms later
+                var iconTime = Math.max(0, slotTime - 60);
+                var iconProgress = Math.min(1, iconTime / 440);
+                var easedIcon = easeOutCubic(iconProgress);
+                iconScale = 0.7 + easedIcon * 0.3; // 0.7 -> 1
+                iconRotate = (1 - easedIcon) * -14; // -14deg -> 0deg
+              }
+              // Leave phase: last 420 ms (1330 ms to 1750 ms)
+              else if (slotTime > (SLOT_DURATION - 420)) {
+                var leaveProgress = (slotTime - (SLOT_DURATION - 420)) / 420;
+                var easedLeave = easeInCubic(leaveProgress);
+
+                opacity = 1 - easedLeave;
+                translateY = -easedLeave * 0.16; // drifts up 0.16em
+                blur = easedLeave * 8; // blurs to 8px
+                scale = 1;
+              }
+
+              // Idle subtle float for icon: ±0.028em, ±3deg
+              var idlePhase = elapsed * 0.0022;
+              var idleY = Math.sin(idlePhase) * 0.028;
+              var idleRot = Math.cos(idlePhase * 0.8) * 3;
+
+              item.style.opacity = opacity;
+              item.style.transform = 'translateY(' + translateY + 'em) scale(' + scale + ')';
+              item.style.filter = blur > 0.1 ? 'blur(' + blur + 'px)' : 'none';
+
+              if (iconWrap) {
+                iconWrap.style.transform = 'translateY(' + idleY + 'em) scale(' + iconScale + ') rotate(' + (iconRotate + idleRot) + 'deg)';
+              }
+
+            } else {
+              item.style.display = 'none';
+              item.classList.remove('active');
+              item.style.opacity = 0;
+            }
+          }
+
+          // 2. Crossfade Gradient Layers
+          for (var g = 0; g < gradientLayers.length; g++) {
+            var layer = gradientLayers[g];
+            if (g === activeIndex) {
+              layer.classList.add('active');
+            } else {
+              layer.classList.remove('active');
+            }
+
+            // Subtle gentle drift of the background layer: ±2.2% / ±1.6% at scale 1.08
+            var driftTime = elapsed * 0.0006 + g;
+            var driftX = Math.sin(driftTime) * 2.2;
+            var driftY = Math.cos(driftTime * 0.8) * 1.6;
+            layer.style.transform = 'translate3d(' + driftX + '%, ' + driftY + '%, 0) scale(1.08)';
+          }
+
+          // 3. App Store Button Flash during "Build web" (index 3)
+          if (appStoreBtn) {
+            if (activeIndex === 3 && slotTime > 250 && slotTime < (SLOT_DURATION - 250)) {
+              appStoreBtn.classList.add('flash-black');
+            } else {
+              appStoreBtn.classList.remove('flash-black');
+            }
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

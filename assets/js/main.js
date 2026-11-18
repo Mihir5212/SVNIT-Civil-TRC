@@ -260,20 +260,25 @@
 
     function renderFooter() {
         var slot = document.getElementById('site-footer');
-        if (slot && slot.querySelector('.footer-card')) { return; } // PHP footer already rendered
-        var html = '<footer class="site-footer" id="site-footer"><div class="wrap"><div class="footer-card"><div class="footer-grid">' +
-            '<div class="footer-col footer-col-about"><a class="brand brand-footer" href="index.php"><span class="brand-logo-wrap"><img class="brand-logo-svnit" src="assets/img/svnit-logo.png" alt="' + esc(S.instituteShort) + '" width="46" height="44"><img class="brand-logo-trc" src="assets/img/logo-mark.svg" alt="" width="42" height="42"></span>' +
-            '<span class="brand-text"><strong class="brand-title">' + esc(S.name) + '</strong><span class="brand-sub">' + esc(S.dept) + ', ' + esc(S.instituteShort) + '</span></span></a>' +
-            '<p class="footer-desc">' + esc(S.institute) + '</p></div>' +
-            '<div class="footer-col"><h3 class="footer-heading">Navigation</h3><ul class="footer-nav-links">' +
-            '<li><a href="about.php">About TRC</a></li><li><a href="about.php#capabilities">Our capabilities</a></li>' +
-            '<li><a href="projects.php">Research &amp; Projects</a></li><li><a href="publications.php">Publications</a></li>' +
-            '<li><a href="gallery.php">Gallery</a></li><li><a href="team.php">Team</a></li><li><a href="contact.php">Contact Us</a></li></ul></div>' +
-            '<div class="footer-col"><h3 class="footer-heading">Reach Us</h3><div class="footer-contact-item"><span>' + S.address.map(esc).join('<br>') + '</span></div>' +
-            '<div class="footer-contact-item"><a class="footer-link" href="mailto:' + esc(S.email) + '">' + esc(S.email) + '</a></div>' +
-            '<div class="footer-contact-item"><a class="footer-link" href="' + esc(telHref(S.phone)) + '">' + esc(S.phone) + '</a></div></div>' +
-            '</div><div class="footer-bottom"><p class="copyright">&copy; ' + new Date().getFullYear() + ' ' + esc(S.name) + ', ' +
-            esc(S.dept) + ', ' + esc(S.instituteShort) + '</p></div></div></div></footer>';
+        // If footer is already rendered by PHP on the server, never overwrite it!
+        if (slot && (slot.tagName.toLowerCase() === 'footer' || slot.querySelector('.footer-15-inner') || slot.querySelector('.footer-15-content-wrap') || slot.children.length > 0)) {
+            return;
+        }
+        var html = '<footer class="site-footer footer-15-container" id="site-footer">' +
+            '<div class="footer-15-inner"><div class="footer-15-content-wrap">' +
+            '<div class="footer-15-brand-col"><div class="footer-15-logo-row"><span class="footer-15-logo-icon"><img src="assets/img/logo-mark.svg" alt="TRC" width="32" height="32" class="footer-15-logo-img"></span>' +
+            '<span class="footer-15-brand-name">TEP CELL</span></div>' +
+            '<p class="footer-15-description">Department of Civil Engineering\nSVNIT Surat &ndash; Advancing evidence-based road safety, transport planning &amp; infrastructure consultancy since 2010.</p>' +
+            '<a href="contact.php" class="footer-15-cta-btn"><span class="footer-15-cta-label">Discuss a Project</span><span class="footer-15-cta-icon-circle"><svg class="footer-15-cta-arrow" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></a></div>' +
+            '<nav class="footer-15-nav-grid" aria-label="Footer navigation">' +
+            '<div class="footer-15-nav-col"><h3 class="footer-15-col-title">Services</h3><ul class="footer-15-links-list"><li><a href="about.php#road-safety" class="footer-15-nav-link">Road Safety Audit</a></li><li><a href="about.php#traffic-studies" class="footer-15-nav-link">Traffic Impact Studies</a></li><li><a href="about.php#highway-design" class="footer-15-nav-link">Highway &amp; Pavement</a></li><li><a href="about.php#its-analytics" class="footer-15-nav-link">AI &amp; ITS Analytics</a></li></ul></div>' +
+            '<div class="footer-15-nav-col"><h3 class="footer-15-col-title">Research</h3><ul class="footer-15-links-list"><li><a href="publications.php" class="footer-15-nav-link">IRC:SP:88 Manual</a></li><li><a href="publications.php" class="footer-15-nav-link">Indo-HCM Guidelines</a></li><li><a href="about.php#road-safety" class="footer-15-nav-link">Blackspot Diagnostics</a></li><li><a href="publications.php" class="footer-15-nav-link">Publications</a></li></ul></div>' +
+            '<div class="footer-15-nav-col"><h3 class="footer-15-col-title">About Cell</h3><ul class="footer-15-links-list"><li><a href="about.php" class="footer-15-nav-link">About TRC Cell</a></li><li><a href="about.php#svnit" class="footer-15-nav-link">SVNIT Civil Dept</a></li><li><a href="team.php" class="footer-15-nav-link">Faculty Advisors</a></li><li><a href="projects.php" class="footer-15-nav-link">Projects &amp; Audits</a></li></ul></div>' +
+            '<div class="footer-15-nav-col"><h3 class="footer-15-col-title">Connect</h3><ul class="footer-15-links-list"><li><a href="contact.php" class="footer-15-nav-link">Contact Us</a></li><li><a href="contact.php?action=inquiry" class="footer-15-nav-link">Discuss a Project</a></li><li><a href="https://www.svnit.ac.in" target="_blank" rel="noopener" class="footer-15-nav-link">SVNIT Portal</a></li><li><a href="about.php#privacy" class="footer-15-nav-link">Privacy Policy</a></li></ul></div>' +
+            '</nav></div>' +
+            '<div class="footer-15-sub-bar"><p class="footer-15-copyright">&copy; ' + new Date().getFullYear() + ' TEP Research &amp; Consultancy Cell, Department of Civil Engineering, SVNIT Surat. All rights reserved.</p><div class="footer-15-morth-tag">IRC:SP:88 &bull; Indo-HCM &bull; Academic Rigor</div></div></div>' +
+            '<div class="footer-15-hero-wrap"><svg class="footer-15-hero-svg" viewBox="0 0 400 110" preserveAspectRatio="xMidYMid meet" aria-label="TEP"><text x="50%" y="100%" dominant-baseline="alphabetic" text-anchor="middle" textLength="95%" lengthAdjust="spacing" class="footer-15-hero-text" font-size="160">TEP</text></svg></div>' +
+            '</footer>';
         if (slot) { slot.outerHTML = html; }
     }
 
