@@ -589,6 +589,32 @@
         }
     }
 
+    // 12. Dynamic Calculation for Service Button Arrow Glide
+    function initServiceButtons() {
+        var buttons = document.querySelectorAll('.srv-photo-btn');
+        if (!buttons.length) return;
+
+        function updateMetrics() {
+            buttons.forEach(function (btn) {
+                var textEl = btn.querySelector('.srv-btn-text');
+                var circleEl = btn.querySelector('.srv-btn-arrow-circle');
+                if (textEl && circleEl) {
+                    var textWidth = textEl.offsetWidth;
+                    var circleWidth = circleEl.offsetWidth;
+                    var gap = 10;
+                    btn.style.setProperty('--btn-text-shift', (circleWidth + gap) + 'px');
+                    btn.style.setProperty('--btn-circle-shift', '-' + (textWidth + gap) + 'px');
+                }
+            });
+        }
+
+        updateMetrics();
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(updateMetrics);
+        }
+        window.addEventListener('resize', updateMetrics);
+    }
+
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAll);
@@ -608,5 +634,6 @@
         initContactForm();
         initVideoAutoplay();
         initStatsBannerGSAP();
+        initServiceButtons();
     }
 })();

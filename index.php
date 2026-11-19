@@ -187,145 +187,262 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 3. OUR SERVICES (MattestLab-Style Sticky Header & Scroll-Stacking Cards) ===== -->
-  <section class="services-section" id="capabilities-section">
-    <div class="services-sticky-container">
-      <!-- Sticky Section Header with Gradient Underline -->
-      <div class="services-section-header">
-        <h1 class="services-title">OUR SERVICES</h1>
-        <div class="services-title-underline"></div>
-        <p class="services-lead">Our services encompass a comprehensive range of academic research and specialized
-          engineering consultancy aimed at providing tailored, evidence-based solutions for highway and urban mobility
-          challenges. From baseline surveys and safety audits to smart sensing and detailed engineering reviews, our
-          core services include:</p>
+  <!-- ===== 3. OUR SERVICES (Interactive Photo-Grid Cards with Bottom-Sliding Button & Arrow Glide) ===== -->
+  <section class="section services-grid-section" id="capabilities-section">
+    <div class="services-grid-container">
+
+      <!-- Section Heading -->
+      <div class="services-heading-wrap" data-reveal="fade-in-up">
+        <span class="services-badge">OUR SERVICES</span>
+        <h2 class="services-main-title">Transportation Research &amp; Engineering Consultancy</h2>
+        <div class="services-title-accent"></div>
+        <p class="services-lead-text">
+          Delivering field-measured safety audits, advanced sensor traffic studies, and comprehensive highway planning
+          for state agencies, infrastructure authorities, and municipal corporations across India.
+        </p>
       </div>
 
-      <!-- 6 Service Cards with Stacking Scroll Effect -->
-      <div class="services-card-stack">
-        <!-- 1. Road Safety Audit -->
-        <div class="service-card" data-service="rsa">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 4L10 14V28C10 44 19.5 54.5 32 60C44.5 54.5 54 44 54 28V14L32 4Z" fill="#084534"
-                fill-opacity="0.1" stroke="#084534" stroke-width="3" stroke-linejoin="round" />
-              <path d="M26 31L30 35L38 25" stroke="#f2be1a" stroke-width="3.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M20 44H44" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M32 38V44" stroke="#084534" stroke-width="2" stroke-linecap="round" />
-              <circle cx="32" cy="18" r="3" fill="#f2be1a" />
-            </svg>
+      <!-- 8-Card Photo Grid (Matching Reference Layout) -->
+      <div class="services-photo-grid">
+
+        <!-- Card 1: Road Safety Audit -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Road Safety Audit.jpg" alt="Road Safety Audit" loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- Certified Road Safety Shield with Traffic Cone & Radar -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 4L7 11V22C7 33.8 14.3 40.8 24 44C33.7 40.8 41 33.8 41 22V11L24 4Z" />
+                <path d="M17 24L22 29L32 18" stroke-width="2.8" />
+                <path d="M18 36H30" stroke-width="2" stroke-dasharray="2 3" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Road Safety Audit</h3>
           </div>
-          <h3 class="service-card-title">Road Safety Audit (RSA)</h3>
-          <p class="service-card-body">Independent and systematic safety evaluations conducted at feasibility,
-            preliminary design, construction zones, and operational stages for national expressways and state highways
-            per IRC:SP:88 standards to prevent severe crashes.</p>
-          <a href="about.php#road-safety" class="service-read-more">Read More &rarr;</a>
+          <a href="about.php#road-safety" class="srv-photo-btn" aria-label="See our Road Safety Audit service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
-        <!-- 2. Traffic Engineering & Impact Studies -->
-        <div class="service-card" data-service="traffic">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="22" y="8" width="20" height="48" rx="8" fill="#084534" fill-opacity="0.1" stroke="#084534"
-                stroke-width="3" />
-              <circle cx="32" cy="18" r="5" fill="#e53e3e" />
-              <circle cx="32" cy="32" r="5" fill="#f2be1a" />
-              <circle cx="32" cy="46" r="5" fill="#38a169" />
-              <path d="M12 28L6 32L12 36" stroke="#084534" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M52 28L58 32L52 36" stroke="#084534" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+        <!-- Card 2: Traffic Engineering & Studies -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Traffic Engineering.jpg" alt="Traffic Engineering &amp; Studies"
+            loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- 3-Lens Traffic Signal with Visors & Telemetry Directionals -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="15" y="5" width="18" height="38" rx="4" />
+                <path d="M15 12C12 12 12 16 15 16M33 12C36 12 36 16 33 16" />
+                <circle cx="24" cy="14" r="3" fill="#6ee7b7" />
+                <circle cx="24" cy="24" r="3" fill="#6ee7b7" />
+                <circle cx="24" cy="34" r="3" fill="#6ee7b7" />
+                <path d="M7 24H11M37 24H41" />
+                <path d="M9 20L5 24L9 28M39 20L43 24L39 28" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Traffic Engineering</h3>
           </div>
-          <h3 class="service-card-title">Traffic Engineering &amp; Studies</h3>
-          <p class="service-card-body">High-precision classified vehicular volume counts, turning movement surveys,
-            intersection signal design, travel time-delay analysis, and Traffic Impact Assessments (TIA) for mega urban
-            developments and corridors.</p>
-          <a href="about.php#traffic-studies" class="service-read-more">Read More &rarr;</a>
+          <a href="about.php#traffic-studies" class="srv-photo-btn" aria-label="See our Traffic Engineering service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
-        <!-- 3. Highway Geometric & Pavement Design -->
-        <div class="service-card" data-service="geometric">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 52L24 12H40L54 52H10Z" fill="#084534" fill-opacity="0.1" stroke="#084534" stroke-width="3"
-                stroke-linejoin="round" />
-              <path d="M32 18V24M32 30V36M32 42V48" stroke="#f2be1a" stroke-width="3" stroke-linecap="round" />
-              <path d="M6 56H58" stroke="#084534" stroke-width="3" stroke-linecap="round" />
-              <circle cx="48" cy="20" r="8" stroke="#f2be1a" stroke-width="2.5" stroke-dasharray="2 3" />
-            </svg>
+        <!-- Card 3: Transportation & Highway Design -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Transportation.jpg" alt="Transportation &amp; Highway Design"
+            loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- Multi-Lane Highway Expressway with Dash Dividers & Flyover Piers -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 39L17 9H31L42 39H6Z" />
+                <path d="M24 15V20M24 25V30M24 35V39" stroke-dasharray="2 2" stroke-width="2.6" />
+                <path d="M14 39V44M34 39V44" stroke-width="2.2" />
+                <path d="M4 42H44" stroke-width="2" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Transportation</h3>
           </div>
-          <h3 class="service-card-title">Highway Geometric &amp; Pavement Design</h3>
-          <p class="service-card-body">Horizontal and vertical alignment planning, superelevation, sight distance
-            verification, cross-sectional design, and non-destructive structural pavement evaluation (IRC:37 &amp;
-            IRC:58) for durable flexible and rigid pavements.</p>
-          <a href="about.php#highway-design" class="service-read-more">Read More &rarr;</a>
+          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Transportation service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
-        <!-- 4. Intelligent Transportation Systems & AI -->
-        <div class="service-card" data-service="its">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="12" y="14" width="40" height="28" rx="6" fill="#084534" fill-opacity="0.1" stroke="#084534"
-                stroke-width="3" />
-              <circle cx="32" cy="28" r="7" stroke="#f2be1a" stroke-width="3" />
-              <circle cx="32" cy="28" r="2.5" fill="#f2be1a" />
-              <path d="M22 42L14 54H50L42 42" stroke="#084534" stroke-width="2.5" stroke-linejoin="round" />
-              <path d="M6 18C4 22 4 28 6 32" stroke="#f2be1a" stroke-width="2" stroke-linecap="round" />
-              <path d="M58 18C60 22 60 28 58 32" stroke="#f2be1a" stroke-width="2" stroke-linecap="round" />
-            </svg>
+        <!-- Card 4: Rail & Transit Services -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Rail Services.jpg" alt="Rail Services &amp; Transit" loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- High-Speed Metro Locomotive on Dual Track Cross-Ties -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 7H37V31C37 36 32 39 24 39C16 39 11 36 11 31V7Z" />
+                <rect x="15" y="11" width="18" height="11" rx="2" />
+                <circle cx="18" cy="29" r="2.5" fill="#6ee7b7" />
+                <circle cx="30" cy="29" r="2.5" fill="#6ee7b7" />
+                <path d="M15 39L9 45M33 39L39 45" stroke-width="2.2" />
+                <path d="M6 43H42" stroke-width="2" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Rail Services</h3>
           </div>
-          <h3 class="service-card-title">Intelligent Transportation Systems (ITS)</h3>
-          <p class="service-card-body">Cutting-edge AI-based video analytics, automatic vehicle detection &amp;
-            classification (AVDC), ANPR cameras, speed radar sensors, and digital traffic monitoring algorithms for
-            modern smart cities and expressway management.</p>
-          <a href="about.php#its-analytics" class="service-read-more">Read More &rarr;</a>
+          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Rail Services">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
-        <!-- 5. Topographic Surveying & Drone Traffic Counting -->
-        <div class="service-card" data-service="survey">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M24 26H40V38H24V26Z" fill="#084534" fill-opacity="0.1" stroke="#084534" stroke-width="3" />
-              <line x1="24" y1="26" x2="12" y2="16" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="40" y1="26" x2="52" y2="16" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="24" y1="38" x2="12" y2="48" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="40" y1="38" x2="52" y2="48" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <circle cx="12" cy="16" r="5" stroke="#f2be1a" stroke-width="2.5" />
-              <circle cx="52" cy="16" r="5" stroke="#f2be1a" stroke-width="2.5" />
-              <circle cx="12" cy="48" r="5" stroke="#f2be1a" stroke-width="2.5" />
-              <circle cx="52" cy="48" r="5" stroke="#f2be1a" stroke-width="2.5" />
-              <circle cx="32" cy="32" r="3" fill="#f2be1a" />
-            </svg>
+        <!-- Card 5: AI & Smart Mobility (ITS) -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Smart Mobility.jpg" alt="Smart Mobility &amp; ITS" loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- AI Radar Optical Sensor with Connected Network Waves -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="10" y="12" width="28" height="20" rx="3" />
+                <circle cx="24" cy="22" r="5" stroke-width="2" />
+                <circle cx="24" cy="22" r="2" fill="#6ee7b7" />
+                <path d="M17 32L12 40H36L31 32" stroke-width="2.2" />
+                <path d="M4 17C2 20 2 24 4 27M44 17C46 20 46 24 44 27" stroke-width="2" />
+                <path d="M8 8L12 12M40 8L36 12" stroke-width="2" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Smart Mobility</h3>
           </div>
-          <h3 class="service-card-title">Surveying &amp; Drone Traffic Counting</h3>
-          <p class="service-card-body">UAV aerial videography and photogrammetry, digital terrain elevation modeling
-            (DTM), LiDAR surveys, and drone-based multi-directional intersection traffic flow tracking in dense urban
-            and rural environments.</p>
-          <a href="about.php#survey-drones" class="service-read-more">Read More &rarr;</a>
+          <a href="about.php#its-analytics" class="srv-photo-btn" aria-label="See our Smart Mobility service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
-        <!-- 6. DPR Review & Technical Feasibility -->
-        <div class="service-card" data-service="dpr">
-          <div class="service-card-icon">
-            <svg viewBox="0 0 64 64" width="70" height="70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="14" y="8" width="36" height="48" rx="4" fill="#084534" fill-opacity="0.1" stroke="#084534"
-                stroke-width="3" />
-              <line x1="22" y1="18" x2="42" y2="18" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="22" y1="26" x2="42" y2="26" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <line x1="22" y1="34" x2="34" y2="34" stroke="#084534" stroke-width="2.5" stroke-linecap="round" />
-              <circle cx="40" cy="44" r="8" fill="#f2be1a" stroke="#084534" stroke-width="2" />
-              <path d="M37 44L39 46L44 41" stroke="#084534" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
+        <!-- Card 6: Land Development & Pavements -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Land Development.jpg" alt="Land Development &amp; Pavement"
+            loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- Architectural Infrastructure Building with Interlocking Engineering Gear -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="8" y="10" width="18" height="30" rx="1" />
+                <path d="M12 16H16M20 16H22M12 22H16M20 22H22M12 28H16M20 28H22M12 34H16M20 34H22" stroke-width="1.8" />
+                <circle cx="33" cy="25" r="7" stroke-width="2.2" />
+                <circle cx="33" cy="25" r="2.8" fill="#6ee7b7" />
+                <path
+                  d="M33 15V17M33 33V35M23 25H25M41 25H43M26 18L27.5 19.5M38.5 30.5L40 32M26 32L27.5 30.5M38.5 19.5L40 18"
+                  stroke-width="2" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Land Development</h3>
+          </div>
+          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Land Development service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Card 7: Surveying & Drone Analytics -->
+        <div class="srv-photo-card" data-reveal="fade-in-up">
+          <img class="srv-photo-img" src="images/Surveying.jpg" alt="Surveying &amp; Drone Analytics" loading="lazy" />
+          <div class="srv-photo-overlay" aria-hidden="true"></div>
+          <div class="srv-photo-info">
+            <div class="srv-photo-icon">
+              <!-- Digital Total Station Theodolite on Tripod with Laser Crosshairs -->
+              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#6ee7b7" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="17" y="8" width="14" height="12" rx="2" />
+                <circle cx="24" cy="14" r="3" fill="#6ee7b7" />
+                <path d="M24 20V25" stroke-width="2.4" />
+                <path d="M14 25H34" stroke-width="2.4" />
+                <path d="M18 25L10 43M30 25L38 43M24 25V43" stroke-width="2.4" />
+                <circle cx="12" cy="14" r="1.5" fill="#6ee7b7" />
+                <path d="M9 14H15" stroke-width="1.8" />
+              </svg>
+            </div>
+            <h3 class="srv-photo-title">Surveying</h3>
+          </div>
+          <a href="about.php#survey-drones" class="srv-photo-btn" aria-label="See our Surveying service">
+            <span class="srv-btn-text">SEE OUR SERVICE</span>
+            <span class="srv-btn-arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Card 8: Featured CTA Card (Matching 4th & 5th Reference Images) -->
+        <a href="contact.php" class="srv-photo-card srv-photo-card--cta" data-reveal="fade-in-up"
+          aria-label="Let’s Create a Better Tomorrow Together - Contact SVNIT TRC">
+          <img class="srv-photo-img" src="images/Book Meeting.jpg" alt="Consult with SVNIT TRC" loading="lazy" />
+          <div class="srv-photo-overlay srv-cta-overlay" aria-hidden="true"></div>
+          <!-- Inset 1px architectural frame border -->
+          <div class="srv-cta-inner-frame" aria-hidden="true"></div>
+          <!-- Arrow track at top-right (white arrow slides out, dark arrow slides in from left on hover) -->
+          <div class="srv-cta-arrow-track" aria-hidden="true">
+            <svg class="srv-cta-arrow srv-cta-arrow--white" viewBox="0 0 36 24" fill="none" stroke="#ffffff"
+              stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12h28M21 4l8 8-8 8" />
+            </svg>
+            <svg class="srv-cta-arrow srv-cta-arrow--dark" viewBox="0 0 36 24" fill="none" stroke="#04261c"
+              stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12h28M21 4l8 8-8 8" />
             </svg>
           </div>
-          <h3 class="service-card-title">DPR Review &amp; Technical Feasibility</h3>
-          <p class="service-card-body">Comprehensive third-party appraisal of Detailed Project Reports (DPRs),
-            cost-benefit analyses, highway capacity compliance, alignment validation, and engineering audits prior to
-            government fund sanctions.</p>
-          <a href="about.php#dpr-review" class="service-read-more">Read More &rarr;</a>
-        </div>
+          <!-- Title block at bottom-left -->
+          <div class="srv-cta-text-wrap">
+            <h3 class="srv-cta-title">Let’s Create a<br>Better Tomorrow<br>Together</h3>
+          </div>
+        </a>
+
       </div>
+
+    </div>
     </div>
   </section>
 
