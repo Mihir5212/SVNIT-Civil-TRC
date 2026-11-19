@@ -235,29 +235,56 @@
         });
     }
 
-    // 8. MattestLab-Style Hero Automatic Image Slider with Transitions
+    // 8. Automatic Smooth Hero Image Slider with Seamless Crossfade & Ken Burns
     function initHeroSlider() {
         var heroCard = document.querySelector('.hero-vela-card') || document.querySelector('.hero-card');
         var slides = document.querySelectorAll('.hero-slide');
-        var prevBtn = document.getElementById('hero-prev');
-        var nextBtn = document.getElementById('hero-next');
-        var catBtns = document.querySelectorAll('.hero-category-btn');
 
         if (!slides.length) return;
 
         var current = 0;
         var total = slides.length;
-        var intervalMs = 4500; // 4.5 seconds auto rotation
+        var intervalMs = 4200; // 4.2 seconds auto rotation
         var timer = null;
 
-        function showSlide(index) {
-            slides[current].classList.remove('is-active');
-            if (catBtns[current]) catBtns[current].classList.remove('active');
+        // Initialize slide layering
+        slides.forEach(function (s, i) {
+            if (i === 0) {
+                s.classList.add('is-active');
+                s.style.zIndex = '3';
+                s.style.opacity = '1';
+            } else {
+                s.classList.remove('is-active');
+                s.style.zIndex = '1';
+                s.style.opacity = '0';
+            }
+        });
 
-            current = (index + total) % total;
+        function showSlide(nextIndex) {
+            var targetIndex = (nextIndex + total) % total;
+            if (targetIndex === current) return;
 
-            slides[current].classList.add('is-active');
-            if (catBtns[current]) catBtns[current].classList.add('active');
+            var prevIndex = current;
+            current = targetIndex;
+
+            // Incoming slide at z-index 3 (fades in)
+            // Outgoing slide at z-index 2 (fades out)
+            // Others at z-index 1 (hidden)
+            slides.forEach(function (s, idx) {
+                if (idx === current) {
+                    s.style.zIndex = '3';
+                    s.classList.add('is-active');
+                    s.style.opacity = '1';
+                } else if (idx === prevIndex) {
+                    s.style.zIndex = '2';
+                    s.classList.remove('is-active');
+                    s.style.opacity = '0';
+                } else {
+                    s.style.zIndex = '1';
+                    s.classList.remove('is-active');
+                    s.style.opacity = '0';
+                }
+            });
         }
 
         function nextSlide() {
@@ -280,48 +307,13 @@
             }
         }
 
-        // Category button click handlers
-        catBtns.forEach(function (btn, i) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                catBtns.forEach(function (b) { b.classList.remove('active'); });
-                btn.classList.add('active');
-                if (i < total) {
-                    showSlide(i);
-                    startAutoPlay();
-                }
-            });
-        });
-
-        // Arrow button click handlers
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                nextSlide();
-                startAutoPlay();
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                prevSlide();
-                startAutoPlay();
-            });
-        }
-
-        // Pause on mouse hover / resume on mouse leave
+        // Mobile touch swipe support
         if (heroCard) {
-            heroCard.addEventListener('mouseenter', stopAutoPlay);
-            heroCard.addEventListener('mouseleave', startAutoPlay);
-
-            // Touch swipe support for mobile
             var touchStartX = 0;
             var touchEndX = 0;
 
             heroCard.addEventListener('touchstart', function (e) {
                 touchStartX = e.changedTouches[0].screenX;
-                stopAutoPlay();
             }, { passive: true });
 
             heroCard.addEventListener('touchend', function (e) {
@@ -329,14 +321,23 @@
                 var diff = touchStartX - touchEndX;
                 if (Math.abs(diff) > 40) {
                     if (diff > 0) {
-                        nextSlide(); // swipe left -> next
+                        nextSlide();
                     } else {
-                        prevSlide(); // swipe right -> prev
+                        prevSlide();
                     }
+                    startAutoPlay();
                 }
-                startAutoPlay();
             }, { passive: true });
         }
+
+        // Auto-pause when tab is hidden, resume when visible
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        });
 
         // Start auto-play initially
         startAutoPlay();

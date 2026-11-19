@@ -1,3 +1,7 @@
+# Large media / video files (>100MB exceeds GitHub limits)
+*.mp4
+images/*.mp4
+
 # Reference folders and design screenshots
 images/Ref/
 Ref/

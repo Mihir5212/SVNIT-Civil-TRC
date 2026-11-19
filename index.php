@@ -24,10 +24,6 @@ include 'includes/header.php';
         <!-- Dark overlay -->
         <div class="hero-overlay" aria-hidden="true"></div>
 
-        <!-- Arrow controls -->
-        <button class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous slide" type="button">&#8249;</button>
-        <button class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next slide" type="button">&#8250;</button>
-
         <!-- Main hero content -->
         <div class="hero-content">
           <h2 class="hero-welcome">Welcome To</h2>
@@ -47,26 +43,39 @@ include 'includes/header.php';
             <div class="vela-stats-lead">
               Evidence-based<br>infrastructure
             </div>
-            <div class="vela-stats-group">
-              <div class="vela-stat-item">
-                <span class="vela-stat-number">15+</span>
-                <span class="vela-stat-label">Years of Excellence</span>
+
+            <!-- Descriptive Text Pillars instead of numbers -->
+            <div class="vela-stats-pillars">
+              <div class="vela-pillar-item">
+                <span class="vela-pillar-badge">Safety Audits</span>
+                <span class="vela-pillar-desc">IRC:SP:88 certified road safety reviews for state &amp; national corridors.</span>
               </div>
-              <div class="vela-stat-item">
-                <span class="vela-stat-number">40+</span>
-                <span class="vela-stat-label">Highway &amp; Urban Projects</span>
+              <div class="vela-pillar-item">
+                <span class="vela-pillar-badge">Smart Mobility</span>
+                <span class="vela-pillar-desc">AI traffic surveillance, speed radar studies &amp; Indo-HCM capacity models.</span>
               </div>
-              <div class="vela-stat-item">
-                <span class="vela-stat-number">120+</span>
-                <span class="vela-stat-label">Publications &amp; Reports</span>
+              <div class="vela-pillar-item">
+                <span class="vela-pillar-badge">National Advisory</span>
+                <span class="vela-pillar-desc">Trusted partner to MoRTH, NHAI, GSRDC, and state municipal corporations.</span>
               </div>
             </div>
-            <svg class="vela-sprout-art" viewBox="0 0 64 64" aria-hidden="true">
-              <path d="M12 56 Q32 54 52 56" />
-              <path d="M32 55 V26" />
-              <path d="M32 38 C22 36 16 26 20 18 C28 16 32 26 32 38 Z" />
-              <path d="M32 30 C42 28 48 18 44 10 C36 8 32 18 32 30 Z" />
-            </svg>
+
+            <!-- Originkit Circular Text Ring replacing sprout tree -->
+            <div class="text-ring-wrap" title="TEP Research &amp; Consultancy Cell • SVNIT Surat" aria-label="TEP Research Cell Rotating Ring">
+              <svg class="text-ring-svg" viewBox="0 0 140 140" aria-hidden="true">
+                <defs>
+                  <path id="textRingCircle" d="M 70, 70 m -52, 0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0" />
+                </defs>
+                <text class="text-ring-content">
+                  <textPath href="#textRingCircle" startOffset="0%">
+                    TEP RESEARCH ✦ SVNIT SURAT ✦ ROAD SAFETY ✦
+                  </textPath>
+                </text>
+                <!-- Center Star Emblem -->
+                <circle cx="70" cy="70" r="18" fill="rgba(8, 69, 52, 0.08)" stroke="#084534" stroke-width="1.2" />
+                <path d="M 70, 62 L 72, 68 L 78, 70 L 72, 72 L 70, 78 L 68, 72 L 62, 70 L 68, 68 Z" fill="#084534" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -74,75 +83,91 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 2. ABOUT SECTION (MattestLab-Style 2-Column Experience Showcase) ===== -->
+  <!-- ===== 2. ABOUT SECTION (MattestLab-Style Experience Showcase with SVNIT Video) ===== -->
   <section class="section about-section-mattest" id="about-section">
     <div class="about-container">
-      <div class="about-grid">
-        <!-- Left Column: Dynamic TEP Typographic Cutout with Vector Text Borders & Masked Photo -->
-        <!-- NOTE: The photo inside TEP is loaded dynamically from images/tep-about-photo.jpg -->
-        <!-- You can easily replace that photo by updating images/tep-about-photo.jpg or editing href below -->
-        <div class="about-media-col about-tep-cutout-col" data-reveal="fade-in-up">
-          <div class="tep-dynamic-cutout" id="tep-cutout-container" title="TEP - Transportation Engineering &amp; Planning Cell">
-            <svg class="tep-dynamic-svg" viewBox="0 0 640 520" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TEP Transportation Engineering &amp; Planning">
-              <defs>
-                <!-- Dynamic Photo Fill Pattern (Hot-swappable: replace images/tep-about-photo.jpg with your own photo) -->
-                <pattern id="tepAboutPhotoPattern" patternUnits="userSpaceOnUse" width="640" height="520">
-                  <image id="tep-about-dynamic-img" href="images/tep-about-photo.jpg" x="0" y="0" width="640" height="520" preserveAspectRatio="xMidYMid slice" />
-                </pattern>
-              </defs>
-
-              <!-- Letter T (Top Left) -->
-              <g class="tep-letter-node tep-letter-t">
-                <!-- White halo for overlap separation -->
-                <text x="40" y="230" class="tep-glyph-halo">T</text>
-                <!-- Photo fill -->
-                <text x="40" y="230" class="tep-glyph-fill">T</text>
-                <!-- Crisp vector text border -->
-                <text x="40" y="230" class="tep-glyph-stroke">T</text>
-              </g>
-
-              <!-- Letter E (Center) -->
-              <g class="tep-letter-node tep-letter-e">
-                <!-- White halo for clean knockout over Letter T -->
-                <text x="210" y="350" class="tep-glyph-halo">E</text>
-                <!-- Photo fill -->
-                <text x="210" y="350" class="tep-glyph-fill">E</text>
-                <!-- Crisp vector text border -->
-                <text x="210" y="350" class="tep-glyph-stroke">E</text>
-              </g>
-
-              <!-- Letter P (Bottom Right) -->
-              <g class="tep-letter-node tep-letter-p">
-                <!-- White halo for clean knockout over Letter E -->
-                <text x="375" y="470" class="tep-glyph-halo">P</text>
-                <!-- Photo fill -->
-                <text x="375" y="470" class="tep-glyph-fill">P</text>
-                <!-- Crisp vector text border -->
-                <text x="375" y="470" class="tep-glyph-stroke">P</text>
-              </g>
-            </svg>
+      
+      <!-- Top Row: Video Player (Left) + Headings & Intro (Right) -->
+      <div class="about-top-row">
+        <!-- Left: Rounded Rectangle Media Player embedding images/SVNIT Intro.mp4 -->
+        <div class="about-video-col" data-reveal="fade-in-up">
+          <div class="about-video-card">
+            <video class="about-intro-video" controls playsinline preload="metadata" poster="images/Hero_1.jpg">
+              <source src="images/SVNIT%20Intro.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="about-video-overlay-badge">
+              <span class="video-badge-pulse"></span>
+              <span>SVNIT Campus &bull; TEP Cell Overview</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right Column: Cell Information & Experience Details -->
-        <div class="about-content-col" data-reveal="fade-in-up">
-          <div class="about-headings">
-            <h3 class="about-subheading">TEP RESEARCH &amp; CONSULTANCY CELL</h3>
-            <h2 class="about-experience-title">15+ YEARS OF EXCELLENCE IN ROAD SAFETY, TRAFFIC ENGINEERING &amp; INFRASTRUCTURE CONSULTANCY</h2>
+        <!-- Right: Cell Headings & Department Title -->
+        <div class="about-headings-col" data-reveal="fade-in-up">
+          <div class="about-brand-tag">
+            <span class="about-tep-monogram">TEP</span>
+            <span class="about-brand-label">TEP RESEARCH &amp; CONSULTANCY CELL</span>
           </div>
-          <div class="about-detailed-content">
-            <ul class="about-feature-list">
-              <li><strong>Established at SVNIT Surat:</strong> Founded within the premier Department of Civil Engineering at Sardar Vallabhbhai National Institute of Technology, TRC is an apex academic and consultancy body in western India.</li>
-              <li><strong>Full-Lifecycle Highway Engineering:</strong> Delivering comprehensive transportation engineering services from pre-feasibility, corridor planning, and DPR reviews, to construction-stage road safety audits and post-construction operational assessments.</li>
-              <li><strong>Trusted by Key Public Authorities:</strong> Proven advisory track record with central, state, and municipal agencies including NHAI, MoRTH, GSRDC, Surat Municipal Corporation, GIDC, and leading infrastructure concessionaires.</li>
-              <li><strong>Advanced Sensor &amp; AI Technology:</strong> Pioneering data-driven field methodologies integrating UAV drone videography, AI-based traffic counting, speed radar enforcement, and blackspot collision diagnostic models.</li>
-              <li><strong>National Guidelines &amp; Policy Leadership:</strong> Active contributions to Indian Roads Congress (IRC) committee standards, IRC:SP:88 road safety audit revisions, state blackspot remediation guidelines, and capacity-building workshops.</li>
-              <li><strong>Renowned Faculty &amp; Technical Experts:</strong> Supported by distinguished civil engineering faculty, doctorate research scholars, and experienced highway professionals across all transport domains.</li>
-            </ul>
-            <p class="about-tagline">
-              <strong>AT TRC SVNIT, WE BLEND ACADEMIC RIGOR, ADVANCED SENSING TECHNOLOGY, AND PRACTICAL ENGINEERING TO DELIVER ROBUST SOLUTIONS THAT SAFEGUARD LIVES AND ACCELERATE DURABLE INFRASTRUCTURE.</strong>
-            </p>
+          <h2 class="about-mattest-title">
+            15+ YEARS OF EXCELLENCE IN ROAD SAFETY, TRAFFIC ENGINEERING &amp; INFRASTRUCTURE CONSULTANCY
+          </h2>
+          <p class="about-intro-lead">
+            Established within the premier Department of Civil Engineering at Sardar Vallabhbhai National Institute of Technology, TRC is an apex academic and technical advisory body delivering evidence-based research, corridor audits, and smart transportation planning across western India and beyond.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Area: Detailed Bullet Points Spanning Full Width & Concluding Tagline -->
+      <div class="about-bottom-block" data-reveal="fade-in-up">
+        <ul class="about-feature-list">
+          <li><strong>Established at SVNIT Surat:</strong> Founded within the premier Department of Civil Engineering at Sardar Vallabhbhai National Institute of Technology, TRC is an apex academic and consultancy body in western India.</li>
+          <li><strong>Full-Lifecycle Highway Engineering:</strong> Delivering comprehensive transportation engineering services from pre-feasibility, corridor planning, and DPR reviews, to construction-stage road safety audits and post-construction operational assessments.</li>
+          <li><strong>Trusted by Key Public Authorities:</strong> Proven advisory track record with central, state, and municipal agencies including NHAI, MoRTH, GSRDC, Surat Municipal Corporation, GIDC, and leading infrastructure concessionaires.</li>
+          <li><strong>Advanced Sensor &amp; AI Technology:</strong> Pioneering data-driven field methodologies integrating UAV drone videography, AI-based traffic counting, speed radar enforcement, and blackspot collision diagnostic models.</li>
+          <li><strong>National Guidelines &amp; Policy Leadership:</strong> Active contributions to Indian Roads Congress (IRC) committee standards, IRC:SP:88 road safety audit revisions, state blackspot remediation guidelines, and capacity-building workshops.</li>
+          <li><strong>Renowned Faculty &amp; Technical Experts:</strong> Supported by distinguished civil engineering faculty, doctorate research scholars, and experienced highway professionals across all transport domains.</li>
+        </ul>
+        <p class="about-tagline">
+          <strong>AT TRC SVNIT, WE BLEND ACADEMIC RIGOR, ADVANCED SENSING TECHNOLOGY, AND PRACTICAL ENGINEERING TO DELIVER ROBUST SOLUTIONS THAT SAFEGUARD LIVES AND ACCELERATE DURABLE INFRASTRUCTURE.</strong>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 2B. EXPERIENCE METRICS BANNER (MattestLab-Style 4-Item Rounded Orange Card) ===== -->
+  <section class="section stats-banner-section" id="stats-banner" aria-label="Key Cell Metrics">
+    <div class="stats-banner-container">
+      <div class="stats-banner-card" data-reveal="fade-in-up">
+        <div class="stats-banner-grid">
+          
+          <div class="stats-banner-item">
+            <div class="stats-banner-number">15+</div>
+            <div class="stats-banner-label">Years Of Experience</div>
           </div>
+
+          <div class="stats-banner-divider" aria-hidden="true"></div>
+
+          <div class="stats-banner-item">
+            <div class="stats-banner-number">40+</div>
+            <div class="stats-banner-label">Projects Completed</div>
+          </div>
+
+          <div class="stats-banner-divider" aria-hidden="true"></div>
+
+          <div class="stats-banner-item">
+            <div class="stats-banner-number">120+</div>
+            <div class="stats-banner-label">Publications &amp; Reports</div>
+          </div>
+
+          <div class="stats-banner-divider" aria-hidden="true"></div>
+
+          <div class="stats-banner-item">
+            <div class="stats-banner-number">100+</div>
+            <div class="stats-banner-label">Road Safety Audits</div>
+          </div>
+
         </div>
       </div>
     </div>
