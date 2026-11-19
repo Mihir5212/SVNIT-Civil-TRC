@@ -479,6 +479,116 @@
         requestAnimationFrame(tick);
     }
 
+    // 10. Auto-play video on scroll view and auto-pause on scroll down / out of view
+    function initVideoAutoplay() {
+        var video = document.querySelector('.about-intro-video');
+        if (!video) return;
+
+        // Browsers strictly require muted for programmatic autoplay
+        video.muted = true;
+
+        if ('IntersectionObserver' in window) {
+            var videoObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+                        video.muted = true;
+                        var promise = video.play();
+                        if (promise !== undefined) {
+                            promise.catch(function () {
+                                video.muted = true;
+                                video.play().catch(function () {});
+                            });
+                        }
+                    } else {
+                        // Auto close / pause when scrolled down past or away
+                        video.pause();
+                    }
+                });
+            }, {
+                threshold: [0, 0.25, 0.5]
+            });
+
+            videoObserver.observe(video);
+        }
+    }
+
+    // 11. GSAP Animated Counter Effects on Stats Banner (15+, 40+, 120+, 100+)
+    function initStatsBannerGSAP() {
+        var card = document.querySelector('.stats-banner-card');
+        var numberEls = document.querySelectorAll('.stats-banner-number');
+        if (!card || !numberEls.length) return;
+
+        function runCounters() {
+            numberEls.forEach(function (el) {
+                var target = parseInt(el.getAttribute('data-target') || el.textContent, 10);
+                var suffix = el.getAttribute('data-suffix') || '+';
+                if (isNaN(target)) return;
+
+                if (typeof gsap !== 'undefined') {
+                    var counterObj = { val: 0 };
+                    gsap.to(counterObj, {
+                        val: target,
+                        duration: 2.0,
+                        ease: "power2.out",
+                        onUpdate: function () {
+                            el.textContent = Math.floor(counterObj.val) + suffix;
+                        },
+                        onComplete: function () {
+                            el.textContent = target + suffix;
+                        }
+                    });
+                } else {
+                    var start = null;
+                    var dur = 1800;
+                    function step(ts) {
+                        if (!start) start = ts;
+                        var p = Math.min((ts - start) / dur, 1);
+                        var ease = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.floor(ease * target) + suffix;
+                        if (p < 1) requestAnimationFrame(step);
+                        else el.textContent = target + suffix;
+                    }
+                    requestAnimationFrame(step);
+                }
+            });
+        }
+
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.fromTo(card,
+                { opacity: 0.7, y: 36, scale: 0.98 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1.1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                        toggleActions: "play none none none",
+                        onEnter: function () {
+                            runCounters();
+                        }
+                    }
+                }
+            );
+        } else if ('IntersectionObserver' in window) {
+            var statsObserver = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        obs.unobserve(entry.target);
+                        runCounters();
+                    }
+                });
+            }, { threshold: 0.25 });
+            statsObserver.observe(card);
+        } else {
+            runCounters();
+        }
+    }
+
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAll);
@@ -496,5 +606,7 @@
         initHeroTabs();
         initBackToTop();
         initContactForm();
+        initVideoAutoplay();
+        initStatsBannerGSAP();
     }
 })();

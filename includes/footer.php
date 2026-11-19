@@ -79,11 +79,16 @@
         <li><a href="projects.php">Selected Projects</a></li>
         <li><a href="gallery.php">Photo Gallery</a></li>
         <li><a href="contact.php">Contact &amp; Enquiry</a></li>
+        <li><a href="privacy.php">Privacy Policy</a></li>
+        <li><a href="terms.php">Terms of Condition</a></li>
       </ul>
     </nav>
   </div>
 </footer>
 
+<!-- GSAP & ScrollTrigger for High-End Interactive Animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/animations.js"></script>
