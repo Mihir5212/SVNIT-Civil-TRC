@@ -1951,6 +1951,298 @@ body[data-page="home"] .site-header.scrolled {
     }
 }
 
+/* ---------- 11B. Company Profile & 3D Interactive Flipbook Brochure (MattestLab Inspired) ---------- */
+.profile-showcase-section {
+    padding: 85px 24px 95px;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(8, 69, 52, 0.08);
+}
+
+.profile-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.profile-header-wrap {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.profile-main-title {
+    font-size: clamp(2.0rem, 3.4vw, 2.7rem);
+    font-weight: 800;
+    color: #04261c;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    font-family: var(--font-tight, 'Oswald', sans-serif);
+}
+
+/* 4-Color Theme Gradient Line matching reference */
+.profile-gradient-line {
+    width: 120px;
+    height: 3.5px;
+    background: linear-gradient(90deg, #0b5d45 0%, #10b981 35%, #04261c 70%, #059669 100%);
+    border-radius: 2px;
+    margin: 0 auto;
+}
+
+.profile-content-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 48px;
+    width: 100%;
+}
+
+/* Left Column: Flipbook container (StPageFlip Engine) */
+.profile-flipbook-col {
+    flex: 0 0 42%;
+    max-width: 42%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brochure-flipbook-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.brochure-flipbook-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    min-height: 480px;
+    padding: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.st-flipbook {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38), 0 0 100px rgba(11, 93, 69, 0.18);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.brochure-page {
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.brochure-page-content {
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.brochure-page-image {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+/* Flipbook Controls matching MattestLab (< 1 / 19 >) */
+.flipbook-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 3;
+}
+
+.flipbook-nav-btn {
+    color: #084534;
+    cursor: pointer;
+    background: rgba(8, 69, 52, 0.08);
+    border: 2px solid rgba(8, 69, 52, 0.35);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1;
+    transition: all 0.25s ease;
+    display: flex;
+    user-select: none;
+}
+
+.flipbook-nav-btn:hover:not(:disabled) {
+    background: rgba(8, 69, 52, 0.18);
+    border-color: #10b981;
+    transform: scale(1.12);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+    color: #0b5d45;
+}
+
+.flipbook-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.flipbook-page-info {
+    color: #04261c;
+    text-align: center;
+    min-width: 90px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.flipbook-hint {
+    color: #64748b;
+    font-size: 12.5px;
+    font-style: italic;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/* Right Column: Institutional Description & Action Buttons */
+.profile-text-col {
+    flex: 0 0 58%;
+    max-width: 58%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 0;
+}
+
+.profile-p-highlight {
+    font-family: var(--font-tight, 'Oswald', sans-serif);
+    font-weight: 700;
+    color: #04261c !important;
+    font-size: 17px !important;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.profile-p-highlight strong {
+    color: #084534;
+}
+
+.profile-p {
+    font-size: 15px;
+    color: #444444;
+    line-height: 1.72;
+    text-align: justify;
+    margin: 0;
+}
+
+/* Action Buttons (SVNIT Green Theme Pill Buttons matching reference) */
+.profile-actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.profile-btn {
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #0b5d45 0%, #084534 100%);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 34px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    box-shadow: 0 4px 15px rgba(11, 93, 69, 0.35);
+    cursor: pointer;
+}
+
+.profile-btn:hover {
+    border-color: #084534;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(11, 93, 69, 0.45);
+    color: #084534 !important;
+    background: transparent !important;
+}
+
+.profile-btn-icon {
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.profile-btn--know-more span.profile-btn-arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    font-size: 18px;
+}
+
+.profile-btn--know-more:hover span.profile-btn-arrow {
+    transform: translateX(6px);
+}
+
+/* Responsive Profile Grid */
+@media (max-width: 991px) {
+    .profile-content-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .profile-flipbook-col {
+        flex: none;
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .profile-text-col {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        text-align: justify;
+    }
+
+    .profile-showcase-section {
+        padding: 65px 20px 75px;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile-actions-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .profile-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 /* ---------- 12. Featured Projects (.projects-editorial) ---------- */
 .projects-editorial {
     display: grid;
@@ -2427,35 +2719,31 @@ body[data-page="home"] .site-header.scrolled {
     pointer-events: none;
 }
 
-/* Wordmark – Big Bold Dark Theme Green (Fits Cleanly in One Line) */
+/* Wordmark – Big Bold Dark Theme Green (Proper Solid Fill, Fits Cleanly in One Line & Touches the Bottom End Line) */
 .footer__wordmark {
     position: absolute;
     left: 50%;
-    bottom: 8px;
+    bottom: -2px;
     transform: translateX(-50%);
     z-index: 3;
     margin: 0;
-    font-size: clamp(2.4rem, 5.8vw, 5.2rem);
+    padding: 0;
+    font-size: clamp(2.0rem, 4.6vw, 4.2rem);
     font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+    line-height: 0.82;
+    letter-spacing: -0.025em;
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
     text-align: center;
-    max-width: 96vw;
+    max-width: 94vw;
+    width: auto;
     overflow: visible;
-    color: #032118;
-    background: linear-gradient(to bottom,
-            #0c5641 0%,
-            #084534 32%,
-            #04261c 72%,
-            #02150f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.65);
-    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(8, 69, 52, 0.45));
+    color: #04261c;
+    -webkit-text-fill-color: #04261c;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6), 0 0 20px rgba(4, 38, 28, 0.4);
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
 }
 
 /* Fog */
@@ -2663,9 +2951,10 @@ body[data-page="home"] .site-header.scrolled {
     }
 
     .footer__wordmark {
-        font-size: clamp(1.8rem, 5.2vw, 3.4rem);
+        font-size: clamp(1.6rem, 4.4vw, 3.2rem);
         max-width: 96vw;
-        bottom: 10px;
+        bottom: -2px;
+        line-height: 0.82;
     }
 }
 
@@ -2726,8 +3015,9 @@ body[data-page="home"] .site-header.scrolled {
     }
 
     .footer__wordmark {
-        bottom: 16px;
-        font-size: clamp(1.2rem, 5.2vw, 2.2rem);
+        bottom: 0px;
+        line-height: 0.82;
+        font-size: clamp(1.0rem, 4.4vw, 2.0rem);
         white-space: nowrap;
         text-align: center;
         left: 50%;

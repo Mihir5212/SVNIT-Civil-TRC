@@ -443,6 +443,93 @@ include 'includes/header.php';
       </div>
 
     </div>
+  </section>
+
+  <!-- ===== 4. COMPANY PROFILE (Cell Profile & Interactive 3D Page-Flip Brochure) ===== -->
+  <section class="section profile-showcase-section" id="company-profile-section">
+    <div class="profile-container">
+
+      <!-- Section Title & 4-Color Gradient Bar -->
+      <div class="profile-header-wrap" data-reveal="fade-in-up">
+        <h2 class="profile-main-title">COMPANY PROFILE</h2>
+        <div class="profile-gradient-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="profile-content-grid">
+
+        <!-- Left Column: Realistic 3D Interactive Flipbook Brochure (StPageFlip Engine) -->
+        <div class="profile-flipbook-col" data-reveal="fade-in-up">
+          <div class="brochure-flipbook-container">
+
+            <div class="brochure-flipbook-wrapper">
+              <div id="brochureFlipbook" class="st-flipbook">
+                <!-- Page 1: Hard Cover -->
+                <div class="brochure-page" data-density="hard">
+                  <div class="brochure-page-content">
+                    <img src="images/brochure/page_1.jpg" alt="Brochure Cover - Page 1" class="brochure-page-image" />
+                  </div>
+                </div>
+                <!-- Pages 2 to 18: Soft Inner Pages -->
+                <?php for ($i = 2; $i <= 18; $i++): ?>
+                <div class="brochure-page" data-density="soft">
+                  <div class="brochure-page-content">
+                    <img src="images/brochure/page_<?php echo $i; ?>.jpg" alt="Brochure - Page <?php echo $i; ?>" class="brochure-page-image" loading="lazy" />
+                  </div>
+                </div>
+                <?php endfor; ?>
+                <!-- Page 19: Hard Back Cover -->
+                <div class="brochure-page" data-density="hard">
+                  <div class="brochure-page-content">
+                    <img src="images/brochure/page_19.jpg" alt="Brochure Back Cover - Page 19" class="brochure-page-image" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flipbook Pagination Controls (< 1 / 19 >) matching MattestLab inspiration -->
+            <div class="flipbook-controls">
+              <button type="button" class="flipbook-nav-btn btn-prev" id="flipPrev" aria-label="Previous Page" disabled>‹</button>
+              <span class="flipbook-page-info" id="flipPageNum">1 / 19</span>
+              <button type="button" class="flipbook-nav-btn btn-next" id="flipNext" aria-label="Next Page">›</button>
+            </div>
+            <p class="flipbook-hint">Tip: Drag corner or click buttons to flip pages</p>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Institutional Description & Action Buttons -->
+        <div class="profile-text-col" data-reveal="fade-in-up">
+          <p class="profile-p-highlight">
+            &ldquo;<strong>TEP Research &amp; Consultancy Cell</strong>&rdquo; (TRC) Founded by the Department of Civil Engineering at <strong>Sardar Vallabhbhai National Institute of Technology (SVNIT), Surat</strong>, was established as a premier Civil &amp; Transportation Engineering testing, consultancy, and research center with state-of-the-art laboratory facilities and advanced field instrumentation in Surat, Gujarat, India.
+          </p>
+          <p class="profile-p">
+            TRC is actively involved in comprehensive transportation studies and infrastructure advisory across India. Our scope encompasses IRC:SP:88 certified road safety audits, detailed highway reviews, AI-based video surveillance, radar speed telemetry, Indo-HCM mixed-traffic capacity models, and axle load evaluation for government agencies, urban local bodies, and expressway authorities.
+          </p>
+          <p class="profile-p">
+            We have been successful in our endeavor to achieve the highest stature in consulting services in the State of Gujarat and across Western India. The Cell has been associated with landmark infrastructure corridors across the Nation. As an autonomous Institute of National Importance, TRC maintains strict independence from construction contractors. Every audit recommendation and mitigation design rests strictly upon empirical field data and standard IRC/MoRTH guidelines.
+          </p>
+          <p class="profile-p">
+            In our aspiration to excel, we continue to gather rich field experience with every delivery and improvise keeping abreast with global technical advancements. We continue to deliver evidence-based, scientifically validated consultancy to government bodies and industry partners.
+          </p>
+          <p class="profile-p">
+            Its key faculty and certified road safety auditors possess decades of specialized experience in highway design, pavement evaluation, traffic simulation, and materials characterization.
+          </p>
+
+          <!-- Action Buttons (SVNIT Green Theme, Pill Shape matching reference) -->
+          <div class="profile-actions-row">
+            <a href="assets/downloads/TRC-Profile-Brochure.pdf" download="TRC-SVNIT-Profile-Brochure.pdf" class="profile-btn profile-btn--download">
+              <span class="profile-btn-icon">📥</span>
+              <span>DOWNLOAD BROCHURE</span>
+            </a>
+            <a href="about.php" class="profile-btn profile-btn--know-more">
+              <span>KNOW MORE</span>
+              <span class="profile-btn-arrow">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </section>
 

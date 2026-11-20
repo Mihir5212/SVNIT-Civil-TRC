@@ -615,6 +615,95 @@
         window.addEventListener('resize', updateMetrics);
     }
 
+    // 13. Company Profile 3D Flipbook Brochure (StPageFlip Engine - MattestLab Inspired)
+    function initProfileFlipbook() {
+        var el = document.getElementById('brochureFlipbook');
+        var prevBtn = document.getElementById('flipPrev');
+        var nextBtn = document.getElementById('flipNext');
+        var pageNum = document.getElementById('flipPageNum');
+
+        if (!el) return;
+
+        var FlipClass = window.PageFlip;
+        if (!FlipClass && window.StPageFlip && window.StPageFlip.PageFlip) {
+            FlipClass = window.StPageFlip.PageFlip;
+        }
+
+        if (!FlipClass) {
+            console.warn('StPageFlip library is not loaded');
+            return;
+        }
+
+        try {
+            var pageFlip = new FlipClass(el, {
+                width: 400,
+                height: 566,
+                size: 'stretch',
+                minWidth: 280,
+                maxWidth: 480,
+                minHeight: 396,
+                maxHeight: 680,
+                showCover: true,
+                mobileScrollSupport: true,
+                drawShadow: true,
+                flippingTime: 900,
+                usePortrait: true,
+                startZIndex: 0,
+                autoSize: true,
+                maxShadowOpacity: 0.5,
+                showPageCorners: true,
+                disableFlipByClick: false,
+                swipeDistance: 30,
+                clickEventForward: true,
+                useMouseEvents: true
+            });
+
+            var pages = document.querySelectorAll('.brochure-page');
+            pageFlip.loadFromHTML(pages);
+
+            function updateUI(pageIdx) {
+                var total = pageFlip.getPageCount();
+                var current = pageIdx + 1;
+                if (pageNum) {
+                    pageNum.textContent = current + ' / ' + total;
+                }
+                if (prevBtn) {
+                    prevBtn.disabled = (pageIdx === 0);
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = (current >= total);
+                }
+            }
+
+            pageFlip.on('flip', function (e) {
+                updateUI(e.data);
+            });
+
+            pageFlip.on('init', function (e) {
+                var total = pageFlip.getPageCount() || 19;
+                if (pageNum) pageNum.textContent = '1 / ' + total;
+                if (prevBtn) prevBtn.disabled = true;
+                if (nextBtn) nextBtn.disabled = false;
+            });
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    pageFlip.flipPrev();
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    pageFlip.flipNext();
+                });
+            }
+        } catch (err) {
+            console.error('Error initializing StPageFlip:', err);
+        }
+    }
+
     // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initAll);
@@ -635,5 +724,6 @@
         initVideoAutoplay();
         initStatsBannerGSAP();
         initServiceButtons();
+        initProfileFlipbook();
     }
 })();
