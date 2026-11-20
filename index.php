@@ -206,7 +206,7 @@ include 'includes/header.php';
       <div class="services-photo-grid">
 
         <!-- Card 1: Road Safety Audit -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-road-safety.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Road Safety Audit Service">
           <img class="srv-photo-img" src="images/Road Safety Audit.jpg" alt="Road Safety Audit" loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
           <div class="srv-photo-info">
@@ -221,19 +221,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Road Safety Audit</h3>
           </div>
-          <a href="about.php#road-safety" class="srv-photo-btn" aria-label="See our Road Safety Audit service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 2: Traffic Engineering & Studies -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-traffic-engineering.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Traffic Engineering and Studies Service">
           <img class="srv-photo-img" src="images/Traffic Engineering.jpg" alt="Traffic Engineering &amp; Studies"
             loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
@@ -253,19 +253,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Traffic Engineering</h3>
           </div>
-          <a href="about.php#traffic-studies" class="srv-photo-btn" aria-label="See our Traffic Engineering service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 3: Transportation & Highway Design -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-transportation.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Transportation and Highway Design Service">
           <img class="srv-photo-img" src="images/Transportation.jpg" alt="Transportation &amp; Highway Design"
             loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
@@ -282,19 +282,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Transportation</h3>
           </div>
-          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Transportation service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 4: Rail & Transit Services -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-rail-services.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Rail Services and Transit Engineering">
           <img class="srv-photo-img" src="images/Rail Services.jpg" alt="Rail Services &amp; Transit" loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
           <div class="srv-photo-info">
@@ -312,19 +312,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Rail Services</h3>
           </div>
-          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Rail Services">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 5: AI & Smart Mobility (ITS) -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-smart-mobility.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Smart Mobility and ITS Service">
           <img class="srv-photo-img" src="images/Smart Mobility.jpg" alt="Smart Mobility &amp; ITS" loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
           <div class="srv-photo-info">
@@ -342,19 +342,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Smart Mobility</h3>
           </div>
-          <a href="about.php#its-analytics" class="srv-photo-btn" aria-label="See our Smart Mobility service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 6: Land Development & Pavements -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-land-development.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Land Development and Pavement Engineering Service">
           <img class="srv-photo-img" src="images/Land Development.jpg" alt="Land Development &amp; Pavement"
             loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
@@ -374,19 +374,19 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Land Development</h3>
           </div>
-          <a href="about.php#highway-design" class="srv-photo-btn" aria-label="See our Land Development service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 7: Surveying & Drone Analytics -->
-        <div class="srv-photo-card" data-reveal="fade-in-up">
+        <a href="service-surveying.php" class="srv-photo-card" data-reveal="fade-in-up" aria-label="Surveying and Drone Analytics Service">
           <img class="srv-photo-img" src="images/Surveying.jpg" alt="Surveying &amp; Drone Analytics" loading="lazy" />
           <div class="srv-photo-overlay" aria-hidden="true"></div>
           <div class="srv-photo-info">
@@ -405,16 +405,16 @@ include 'includes/header.php';
             </div>
             <h3 class="srv-photo-title">Surveying</h3>
           </div>
-          <a href="about.php#survey-drones" class="srv-photo-btn" aria-label="See our Surveying service">
+          <div class="srv-photo-btn" aria-hidden="true">
             <span class="srv-btn-text">SEE OUR SERVICE</span>
-            <span class="srv-btn-arrow-circle" aria-hidden="true">
+            <span class="srv-btn-arrow-circle">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </span>
-          </a>
-        </div>
+          </div>
+        </a>
 
         <!-- Card 8: Featured CTA Card (Matching 4th & 5th Reference Images) -->
         <a href="contact.php" class="srv-photo-card srv-photo-card--cta" data-reveal="fade-in-up"

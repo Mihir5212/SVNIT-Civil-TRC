@@ -618,89 +618,110 @@
     // 13. Company Profile 3D Flipbook Brochure (StPageFlip Engine - MattestLab Inspired)
     function initProfileFlipbook() {
         var el = document.getElementById('brochureFlipbook');
+        var section = document.getElementById('company-profile-section');
         var prevBtn = document.getElementById('flipPrev');
         var nextBtn = document.getElementById('flipNext');
         var pageNum = document.getElementById('flipPageNum');
 
         if (!el) return;
 
-        var FlipClass = window.PageFlip;
-        if (!FlipClass && window.StPageFlip && window.StPageFlip.PageFlip) {
-            FlipClass = window.StPageFlip.PageFlip;
-        }
+        var initialized = false;
 
-        if (!FlipClass) {
-            console.warn('StPageFlip library is not loaded');
-            return;
-        }
+        function runInit() {
+            if (initialized) return;
+            initialized = true;
 
-        try {
-            var pageFlip = new FlipClass(el, {
-                width: 400,
-                height: 566,
-                size: 'stretch',
-                minWidth: 280,
-                maxWidth: 480,
-                minHeight: 396,
-                maxHeight: 680,
-                showCover: true,
-                mobileScrollSupport: true,
-                drawShadow: true,
-                flippingTime: 900,
-                usePortrait: true,
-                startZIndex: 0,
-                autoSize: true,
-                maxShadowOpacity: 0.5,
-                showPageCorners: true,
-                disableFlipByClick: false,
-                swipeDistance: 30,
-                clickEventForward: true,
-                useMouseEvents: true
-            });
+            var FlipClass = window.PageFlip;
+            if (!FlipClass && window.StPageFlip && window.StPageFlip.PageFlip) {
+                FlipClass = window.StPageFlip.PageFlip;
+            }
 
-            var pages = document.querySelectorAll('.brochure-page');
-            pageFlip.loadFromHTML(pages);
+            if (!FlipClass) {
+                console.warn('StPageFlip library is not loaded');
+                return;
+            }
 
-            function updateUI(pageIdx) {
-                var total = pageFlip.getPageCount();
-                var current = pageIdx + 1;
-                if (pageNum) {
-                    pageNum.textContent = current + ' / ' + total;
+            try {
+                var pageFlip = new FlipClass(el, {
+                    width: 400,
+                    height: 566,
+                    size: 'stretch',
+                    minWidth: 280,
+                    maxWidth: 480,
+                    minHeight: 396,
+                    maxHeight: 680,
+                    showCover: true,
+                    mobileScrollSupport: true,
+                    drawShadow: true,
+                    flippingTime: 900,
+                    usePortrait: true,
+                    startZIndex: 0,
+                    autoSize: true,
+                    maxShadowOpacity: 0.5,
+                    showPageCorners: true,
+                    disableFlipByClick: false,
+                    swipeDistance: 30,
+                    clickEventForward: true,
+                    useMouseEvents: true
+                });
+
+                var pages = document.querySelectorAll('.brochure-page');
+                pageFlip.loadFromHTML(pages);
+
+                function updateUI(pageIdx) {
+                    var total = pageFlip.getPageCount();
+                    var current = pageIdx + 1;
+                    if (pageNum) {
+                        pageNum.textContent = current + ' / ' + total;
+                    }
+                    if (prevBtn) {
+                        prevBtn.disabled = (pageIdx === 0);
+                    }
+                    if (nextBtn) {
+                        nextBtn.disabled = (current >= total);
+                    }
                 }
+
+                pageFlip.on('flip', function (e) {
+                    updateUI(e.data);
+                });
+
+                pageFlip.on('init', function (e) {
+                    var total = pageFlip.getPageCount() || 19;
+                    if (pageNum) pageNum.textContent = '1 / ' + total;
+                    if (prevBtn) prevBtn.disabled = true;
+                    if (nextBtn) nextBtn.disabled = false;
+                });
+
                 if (prevBtn) {
-                    prevBtn.disabled = (pageIdx === 0);
+                    prevBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        pageFlip.flipPrev();
+                    });
                 }
+
                 if (nextBtn) {
-                    nextBtn.disabled = (current >= total);
+                    nextBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        pageFlip.flipNext();
+                    });
                 }
+            } catch (err) {
+                console.error('Error initializing StPageFlip:', err);
             }
+        }
 
-            pageFlip.on('flip', function (e) {
-                updateUI(e.data);
-            });
-
-            pageFlip.on('init', function (e) {
-                var total = pageFlip.getPageCount() || 19;
-                if (pageNum) pageNum.textContent = '1 / ' + total;
-                if (prevBtn) prevBtn.disabled = true;
-                if (nextBtn) nextBtn.disabled = false;
-            });
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    pageFlip.flipPrev();
-                });
-            }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    pageFlip.flipNext();
-                });
-            }
-        } catch (err) {
-            console.error('Error initializing StPageFlip:', err);
+        // Lazy initialize PageFlip when company-profile-section is near the viewport
+        if ('IntersectionObserver' in window && section) {
+            var observer = new IntersectionObserver(function (entries) {
+                if (entries[0] && entries[0].isIntersecting) {
+                    runInit();
+                    observer.disconnect();
+                }
+            }, { rootMargin: '300px 0px' });
+            observer.observe(section);
+        } else {
+            runInit();
         }
     }
 
