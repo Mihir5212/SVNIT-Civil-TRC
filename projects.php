@@ -1,42 +1,192 @@
 <?php
 $activePage = 'projects';
-$pageTitle = 'Research & Projects | TRC SVNIT Surat';
-$pageDesc = 'Explore TRC\'s comprehensive portfolio of completed and ongoing highway research, road safety audits, and traffic planning consultancy projects.';
+$pageTitle = 'Our Projects | TRC SVNIT Surat';
+$pageDesc = 'Explore notable completed civil and transportation engineering projects, road safety audits, and traffic planning consultancy by TEP Research & Consultancy Cell, SVNIT Surat.';
+require_once 'includes/projects-data.php';
+
+$projects = getTRCProjects();
+$sectors = getTRCSectors();
+
+// Check for sector filter in query parameter
+$selectedSector = isset($_GET['sector']) ? trim(strtolower($_GET['sector'])) : 'all';
+if (!array_key_exists($selectedSector, $sectors)) {
+    $selectedSector = 'all';
+}
+
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main">
+<main id="main" class="projects-archive-page">
+  <div class="projects-archive-container">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">Research &amp; Projects</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Projects</p>
+    <!-- 1. Breadcrumb Bar (Matching Image 1) -->
+    <nav class="projects-breadcrumb-bar" aria-label="Breadcrumb">
+      <ul class="projects-breadcrumb-list">
+        <li class="projects-breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="projects-breadcrumb-sep">/</li>
+        <li class="projects-breadcrumb-item projects-breadcrumb-cur" aria-current="page">Projects</li>
+      </ul>
+    </nav>
+
+    <!-- 2. Hero Header: Title & Purpose Statement (Matching Image 1) -->
+    <header class="projects-hero-header">
+      <div class="projects-hero-left">
+        <h1 class="projects-hero-title">Our Projects</h1>
+      </div>
+      <div class="projects-hero-right">
+        <p class="projects-hero-intro">
+          We believe in full ownership across all the work that we do. Here are some notable completed projects that our growth-driven research &amp; consultancy team has done.
+        </p>
+      </div>
+    </header>
+
+    <!-- 3. Category Filter Navigation Bar with Downward Arrow Indicator (Matching Image 1) -->
+    <div class="projects-filter-wrapper">
+      <nav class="projects-filter-nav" id="projectsFilterNav" aria-label="Filter Projects by Sector">
+        <?php foreach ($sectors as $key => $label): 
+          $isActive = ($key === $selectedSector);
+        ?>
+          <button type="button" 
+                  class="projects-filter-tab<?php echo $isActive ? ' is-active' : ''; ?>" 
+                  data-filter="<?php echo htmlspecialchars($key); ?>"
+                  aria-pressed="<?php echo $isActive ? 'true' : 'false'; ?>">
+            <?php echo htmlspecialchars($label); ?>
+          </button>
+        <?php endforeach; ?>
+      </nav>
     </div>
+
+    <!-- 4. 2-Column Projects Archive Grid (Matching Images 1, 2, 5) -->
+    <div class="projects-archive-grid" id="projectsArchiveGrid">
+
+      <?php foreach ($projects as $p): 
+        $sectorKey = htmlspecialchars($p['sector']);
+        $projectUrl = 'project.php?id=' . urlencode($p['id']);
+        $isVisible = ($selectedSector === 'all' || $selectedSector === $p['sector']);
+      ?>
+      <article class="project-card-item<?php echo $isVisible ? '' : ' is-hidden'; ?>" 
+               data-sector="<?php echo $sectorKey; ?>" 
+               id="project-<?php echo $p['id']; ?>">
+
+        <!-- Top: Photo Frame with Center Rotating Action Button (Images 3 & 4) -->
+        <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
+          <img src="<?php echo htmlspecialchars($p['image']); ?>" 
+               alt="<?php echo htmlspecialchars($p['title']); ?>" 
+               class="project-card-img" 
+               loading="lazy" />
+          
+          <div class="project-card-overlay" aria-hidden="true"></div>
+
+          <!-- Rotating Center Circular Button (Image 3 & Image 4) -->
+          <div class="project-center-btn" aria-hidden="true">
+            <span class="project-center-icon">
+              <!-- Thin cross icon rotating from + to × on hover -->
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="16" y1="6" x2="16" y2="26"></line>
+                <line x1="6" y1="16" x2="26" y2="16"></line>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Bottom: Card Information in 2 Columns (Image 2 & 5) -->
+        <div class="project-card-info">
+          <!-- Left Column: Title & Category -->
+          <div class="project-card-left">
+            <h2 class="project-card-title">
+              <a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a>
+            </h2>
+            <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
+          </div>
+
+          <!-- Right Column: Scope Summary & Explore Link -->
+          <div class="project-card-right">
+            <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
+            <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
+              <span>EXPLORE PROJECT</span>
+              <span class="project-explore-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </article>
+      <?php endforeach; ?>
+
+      <!-- Empty State (if filter has no items) -->
+      <div class="projects-empty-state" id="projectsEmptyState">
+        <h3>No projects found in this category</h3>
+        <p>Please select another category or view all completed projects.</p>
+      </div>
+
+    </div>
+
   </div>
-
-  <section class="section">
-    <div class="wrap">
-      <!-- Filter Toolbar -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.5rem;background:var(--concrete);padding:1.25rem 1.75rem;border-radius:14px;">
-        <div class="chips-row" id="status-chips" style="margin-bottom:0;">
-          <!-- Rendered dynamically by main.js -->
-        </div>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <select id="sector-select" style="border:1.5px solid #d1d5db;border-radius:8px;padding:0.5rem 1rem;font-size:0.9rem;font-weight:500;color:var(--text);background:var(--white);cursor:pointer;outline:none;">
-            <option value="">All areas</option>
-          </select>
-          <span id="result-count" style="color:var(--muted);font-size:0.875rem;font-weight:600;white-space:nowrap;"></span>
-        </div>
-      </div>
-
-      <!-- Project Grid -->
-      <div class="project-grid" id="project-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;">
-        <!-- Rendered dynamically by main.js -->
-      </div>
-      <div id="projects-empty" style="text-align:center;padding:3rem 0;"></div>
-    </div>
-  </section>
-
 </main>
+
+<!-- Interactive Client-side Tab Filtering Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterTabs = document.querySelectorAll('.projects-filter-tab');
+    const projectCards = document.querySelectorAll('.project-card-item');
+    const emptyState = document.getElementById('projectsEmptyState');
+
+    function applyFilter(targetSector) {
+        let visibleCount = 0;
+
+        projectCards.forEach(card => {
+            const cardSector = card.getAttribute('data-sector');
+            if (targetSector === 'all' || cardSector === targetSector) {
+                card.classList.remove('is-hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('is-hidden');
+            }
+        });
+
+        if (emptyState) {
+            if (visibleCount === 0) {
+                emptyState.classList.add('is-visible');
+            } else {
+                emptyState.classList.remove('is-visible');
+            }
+        }
+
+        // Update active tab styling
+        filterTabs.forEach(tab => {
+            const isMatch = tab.getAttribute('data-filter') === targetSector;
+            tab.classList.toggle('is-active', isMatch);
+            tab.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+
+        // Update URL query parameter without full reload
+        const url = new URL(window.location);
+        if (targetSector === 'all') {
+            url.searchParams.delete('sector');
+        } else {
+            url.searchParams.set('sector', targetSector);
+        }
+        window.history.replaceState({}, '', url);
+    }
+
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sector = this.getAttribute('data-filter');
+            applyFilter(sector);
+        });
+    });
+
+    // Check URL parameters on back/forward
+    window.addEventListener('popstate', function() {
+        const params = new URLSearchParams(window.location.search);
+        const sector = params.get('sector') || 'all';
+        applyFilter(sector);
+    });
+});
+</script>
+
 <?php include 'includes/footer.php'; ?>

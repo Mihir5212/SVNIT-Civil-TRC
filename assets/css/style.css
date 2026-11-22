@@ -4877,3 +4877,663 @@ body[data-page="home"] .site-header.scrolled {
         transform: none;
     }
 }
+
+
+/* ==========================================================================
+   LJA-INSPIRED PROJECTS ARCHIVE & DETAIL SYSTEM (SVNIT GREEN THEME)
+   ========================================================================== */
+
+/* ---------- Page Container & Wrapper ---------- */
+.projects-archive-page {
+    background-color: #f7fbff;
+    min-height: 100vh;
+    padding-bottom: 96px;
+}
+
+.projects-archive-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+}
+
+/* ---------- Breadcrumb ---------- */
+.projects-breadcrumb-bar {
+    margin-bottom: 24px;
+}
+
+.projects-breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.projects-breadcrumb-item a {
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.projects-breadcrumb-item a:hover {
+    color: #084534;
+}
+
+.projects-breadcrumb-sep {
+    color: #9ca3af;
+}
+
+.projects-breadcrumb-cur {
+    color: #084534;
+    font-weight: 600;
+}
+
+/* ---------- Header: Title & Intro (Image 1) ---------- */
+.projects-hero-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 48px;
+}
+
+.projects-hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+    color: #062b20;
+    margin: 0;
+}
+
+.projects-hero-intro {
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #374151;
+    margin: 0;
+    max-width: 580px;
+}
+
+@media (max-width: 900px) {
+    .projects-hero-header {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 36px;
+    }
+    .projects-hero-title {
+        font-size: 38px;
+        letter-spacing: -1px;
+    }
+    .projects-hero-intro {
+        font-size: 17px;
+    }
+}
+
+/* ---------- Filter Navigation Bar with Downward Arrow (Image 1) ---------- */
+.projects-filter-wrapper {
+    position: relative;
+    border-bottom: 1px solid rgba(8, 69, 52, 0.12);
+    margin-bottom: 44px;
+    padding-bottom: 2px;
+}
+
+.projects-filter-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.projects-filter-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.projects-filter-tab {
+    position: relative;
+    padding: 10px 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #4b5563;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+}
+
+.projects-filter-tab:hover {
+    color: #084534;
+    background: rgba(8, 69, 52, 0.05);
+}
+
+/* Active tab style matching Image 1: White box + downward indicator triangle */
+.projects-filter-tab.is-active {
+    color: #084534;
+    background: #ffffff;
+    border-color: #084534;
+    box-shadow: 0 4px 16px rgba(8, 69, 52, 0.12);
+}
+
+.projects-filter-tab.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 8px solid #084534;
+    z-index: 2;
+}
+
+/* ---------- 2-Column Projects Archive Grid (Images 1, 2, 5) ---------- */
+.projects-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 52px 40px;
+}
+
+@media (max-width: 960px) {
+    .projects-archive-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* ---------- Project Card Item ---------- */
+.project-card-item {
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.project-card-item.is-hidden {
+    display: none;
+}
+
+/* ---------- Project Image Container & Rotating Center Button (Images 3 & 4) ---------- */
+.project-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #062b20;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.project-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.project-card-media:hover .project-card-img {
+    transform: scale(1.05);
+    filter: brightness(0.92);
+}
+
+/* Vignette overlay on hover */
+.project-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 69, 52, 0.22);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.project-card-media:hover .project-card-overlay {
+    opacity: 1;
+}
+
+/* Center Circular Button */
+.project-center-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #084534;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.72);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Center Icon: Plus sign rotating to Cross (Images 4 to 3) */
+.project-center-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.project-center-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: #084534;
+    stroke-width: 2px;
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s ease;
+}
+
+/* On Media Hover: Center circle pops in and icon rotates 45deg */
+.project-card-media:hover .project-center-btn {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.project-card-media:hover .project-center-icon svg {
+    /* Rotates from + into × matching Image 4 to Image 3! */
+    transform: rotate(45deg);
+    stroke: #0d5c46;
+}
+
+/* If user hovers directly on the center button */
+.project-center-btn:hover {
+    transform: translate(-50%, -50%) scale(1.08) !important;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+}
+
+.project-center-btn:hover .project-center-icon svg {
+    transform: rotate(135deg) !important;
+    stroke: #0b6b50;
+}
+
+/* ---------- Card Info Section (Image 2 & 5) ---------- */
+.project-card-info {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    padding-top: 22px;
+    align-items: start;
+}
+
+@media (max-width: 680px) {
+    .project-card-info {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+.project-card-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.28;
+    color: #062b20;
+    margin: 0 0 8px 0;
+}
+
+.project-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.project-card-title a:hover {
+    color: #0d5c46;
+}
+
+.project-card-category {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0b6b50;
+    margin-top: 4px;
+}
+
+.project-card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.project-card-summary {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #4b5563;
+    margin: 0 0 16px 0;
+}
+
+.project-explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #084534;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    align-self: flex-start;
+}
+
+.project-explore-arrow {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #084534;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.project-explore-arrow svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    stroke-width: 2.6px;
+}
+
+.project-explore-link:hover {
+    color: #0d5c46;
+}
+
+.project-explore-link:hover .project-explore-arrow {
+    transform: translateX(4px);
+    background: #0d5c46;
+}
+
+/* Empty State */
+.projects-empty-state {
+    text-align: center;
+    padding: 64px 20px;
+    grid-column: 1 / -1;
+    display: none;
+}
+
+.projects-empty-state.is-visible {
+    display: block;
+}
+
+.projects-empty-state h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    color: #062b20;
+    margin-bottom: 8px;
+}
+
+.projects-empty-state p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #6b7280;
+}
+
+/* ==========================================================================
+   PROJECT DETAIL PAGE (project.php) STYLES
+   ========================================================================== */
+.project-detail-page {
+    background-color: #f7fbff;
+    min-height: 100vh;
+    padding-bottom: 96px;
+}
+
+.project-detail-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 36px 24px 0;
+}
+
+.project-detail-hero {
+    margin-bottom: 40px;
+}
+
+.project-detail-badge {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #084534;
+    background: #eaf4f0;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+}
+
+.project-detail-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -1.2px;
+    color: #062b20;
+    margin: 0 0 24px 0;
+    max-width: 980px;
+}
+
+@media (max-width: 768px) {
+    .project-detail-title {
+        font-size: 30px;
+        letter-spacing: -0.6px;
+    }
+}
+
+.project-detail-banner {
+    position: relative;
+    width: 100%;
+    max-height: 520px;
+    aspect-ratio: 21 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+    margin-bottom: 48px;
+    background: #062b20;
+}
+
+.project-detail-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Detail Grid: Main Body + Sticky Sidebar */
+.project-detail-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .project-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+.project-detail-lead {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #1e293b;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(8, 69, 52, 0.12);
+}
+
+.project-detail-section {
+    margin-bottom: 36px;
+}
+
+.project-detail-h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #062b20;
+    margin-bottom: 16px;
+}
+
+.project-scope-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.project-scope-list li {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #374151;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.project-scope-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #eaf4f0;
+    color: #084534;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.project-outcome-box {
+    background: #ffffff;
+    border-left: 4px solid #084534;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 20px rgba(8, 69, 52, 0.06);
+    margin-top: 16px;
+}
+
+.project-outcome-box p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #062b20;
+    margin: 0;
+}
+
+/* Sidebar Facts Card */
+.project-sidebar-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(8, 69, 52, 0.08);
+    position: sticky;
+    top: 96px;
+}
+
+.project-sidebar-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #062b20;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(8, 69, 52, 0.1);
+}
+
+.project-fact-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.project-fact-item dt {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.project-fact-item dd {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #062b20;
+    margin: 0;
+}
+
+.project-sidebar-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 48px;
+    background: #084534;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 4px 14px rgba(8, 69, 52, 0.2);
+}
+
+.project-sidebar-cta:hover {
+    background: #0d5c46;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(8, 69, 52, 0.28);
+}

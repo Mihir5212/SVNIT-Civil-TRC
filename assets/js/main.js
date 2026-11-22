@@ -412,6 +412,7 @@
     };
 
     pages.projects = function () {
+        if (!document.getElementById('project-grid')) { return; }
         var status = params.get('status') || '';
         var sector = params.get('sector') || '';
         if (!D.statuses[status]) { status = ''; }
@@ -454,6 +455,7 @@
     };
 
     pages.project = function () {
+        if (!document.getElementById('content')) { return; }
         var id = params.get('id');
         var p = D.projects.filter(function (x) { return String(x.id) === id; })[0];
         if (!p) { set('content', notFound('item', 'projects.php', 'Show all research & projects')); return; }
