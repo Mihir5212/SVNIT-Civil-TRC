@@ -1,304 +1,355 @@
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+const PROJECTS_DATA = [
+  {
+    id: 2,
+    category: 'safety',
+    badge: 'SAFETY AUDITS',
+    title: 'NH-48 CORRIDOR SAFETY AUDIT',
+    image: '/images/Road Safety Audit.jpg',
+    alt: 'NH-48 Road Safety Audit and blackspot engineering inspection',
+    client: 'CLIENT: NHAI · IRC:SP:88',
+    stage: 'STAGE: OPERATION & BLACKSPOT',
+    summary:
+      'Comprehensive crash record analysis, high-risk blackspot site investigations, and ranked engineering countermeasures across 140 km of six-lane highway.',
+  },
+  {
+    id: 1,
+    category: 'traffic',
+    badge: 'TRAFFIC & TIA',
+    title: 'SURAT OUTER RING ROAD TIA',
+    image: '/images/Traffic Engineering.jpg',
+    alt: 'Surat Ring Road classified traffic volume and junction study',
+    client: 'CLIENT: SMC · INDO-HCM',
+    stage: 'SCOPE: CORRIDOR & JUNCTION LOS',
+    summary:
+      'Classified turning-movement counts, origin–destination surveys, and 20-year horizon level-of-service forecasting for 12 major arterial intersections.',
+  },
+  {
+    id: 5,
+    category: 'planning',
+    badge: 'PLANNING',
+    title: 'MULTIMODAL BRTS & TRANSIT PLAN',
+    image: '/images/Rail Services.jpg',
+    alt: 'BRTS and multimodal transit interchange optimization',
+    client: 'CLIENT: URBAN TRANSIT AUTHORITY',
+    stage: 'SCOPE: ROUTE & DEMAND MODEL',
+    summary:
+      'Area-level traffic management, feeder route rationalization, and passenger transfer station capacity modeling across urban transit corridors.',
+  },
+  {
+    id: 10,
+    category: 'research',
+    badge: 'RESEARCH & ITS',
+    title: 'VISION-BASED TRAJECTORY ANALYTICS',
+    image: '/images/Smart Mobility.jpg',
+    alt: 'Computer vision traffic data analytics and ITS dashboard',
+    client: 'FUNDING: MoRTH · SVNIT LAB',
+    stage: 'SCOPE: COMPUTER VISION & TTC',
+    summary:
+      'Automated multi-class vehicle detection, trajectory extraction, and surrogate safety conflict (TTC/PET) dashboards from drone and CCTV feeds.',
+  },
+  {
+    id: 3,
+    category: 'traffic',
+    badge: 'TRAFFIC & TIA',
+    title: 'EXPRESSWAY INTERCHANGE SIGNALING',
+    image: '/images/Transportation.jpg',
+    alt: 'Signalized junction channelisation and flyover interchange design',
+    client: 'CLIENT: STATE PWD · VISSIM',
+    stage: 'SCOPE: GEOMETRY & PHASING',
+    summary:
+      'Microsimulation-validated channelisation layouts, slip-road geometry, and actuated signal timing plans reducing peak-hour intersection delay by 34%.',
+  },
+  {
+    id: 6,
+    category: 'safety',
+    badge: 'SAFETY AUDITS',
+    title: 'STATE HIGHWAY DPR PROOF-CHECKING',
+    image: '/images/Land Development.jpg',
+    alt: 'Independent third-party DPR proof-checking and IRC validation',
+    client: 'CLIENT: GSRDC · IRC CODES',
+    stage: 'SCOPE: THIRD-PARTY VALIDATION',
+    summary:
+      'Impartial academic review of traffic demand forecasts, pavement design assumptions, and geometric alignment drawings prior to statutory tender approval.',
+  },
+];
+
+const FILTERS = [
+  { key: 'all', label: 'ALL' },
+  { key: 'safety', label: 'SAFETY AUDITS' },
+  { key: 'traffic', label: 'TRAFFIC & TIA' },
+  { key: 'planning', label: 'PLANNING' },
+  { key: 'research', label: 'RESEARCH & ITS' },
+];
+
+const RESEARCH_PROGRAMS = [
+  {
+    num: '01',
+    title: 'HETEROGENEOUS TRAFFIC MICROSIMULATION',
+    desc: 'Calibrating mixed-traffic car-following and lateral-gap behavior for Indian urban arterials and expressway weaving sections.',
+    tag: 'INDO-HCM',
+  },
+  {
+    num: '02',
+    title: 'SURROGATE SAFETY & CONFLICT MODELING',
+    desc: 'Proactive crash-risk estimation using post-encroachment time (PET) and time-to-collision (TTC) extracted from video analytics.',
+    tag: 'ROAD SAFETY',
+  },
+  {
+    num: '03',
+    title: 'URBAN FREIGHT & LOGISTICS CORRIDORS',
+    desc: 'Freight trip generation, port-hinterland connectivity, and heavy-vehicle time-of-day management around industrial clusters.',
+    tag: 'LOGISTICS',
+  },
+  {
+    num: '04',
+    title: 'PUBLIC TRANSIT ACCESSIBILITY & NMT',
+    desc: 'First- and last-mile pedestrian audit frameworks, BRTS station catchment modeling, and non-motorized transport integration.',
+    tag: 'MOBILITY',
+  },
+];
 
 const Projects = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [activeFilter, setActiveFilter] = useState(searchParams.get('sector') || 'all');
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [expandedIds, setExpandedIds] = useState({});
 
-  const sectors = [
-    { key: 'all', label: 'ALL' },
-    { key: 'land-development', label: 'LAND DEVELOPMENT' },
-    { key: 'highways', label: 'HIGHWAYS & PAVEMENTS' },
-    { key: 'safety', label: 'ROAD SAFETY' },
-    { key: 'traffic', label: 'TRAFFIC ENGINEERING' },
-    { key: 'rail', label: 'RAIL SERVICES' },
-    { key: 'smart-mobility', label: 'SMART MOBILITY' },
-    { key: 'surveying', label: 'SURVEYING' },
-  ];
+  const visibleProjects =
+    activeFilter === 'all'
+      ? PROJECTS_DATA
+      : PROJECTS_DATA.filter((p) => p.category === activeFilter);
 
-  const projects = [
-    {
-      id: 1,
-      title: 'Surat Outer Ring Road Corridor & High-Speed Expressway Review',
-      sector: 'highways',
-      sectorLabel: 'HIGHWAYS & PAVEMENTS',
-      location: 'Surat Outer Ring Road, Gujarat',
-      client: 'Surat Urban Development Authority (SUDA)',
-      year: '2025',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop',
-      summary: 'Comprehensive alignment safety audit, pavement structural evaluation, and grade-separated interchange feasibility for the 66-km multi-lane ring expressway.',
-    },
-    {
-      id: 2,
-      title: 'National Highway 48 Blackspot Rectification & Road Safety Audit',
-      sector: 'safety',
-      sectorLabel: 'ROAD SAFETY',
-      location: 'NH-48 (Surat – Navsari Section), Gujarat',
-      client: 'National Highways Authority of India (NHAI)',
-      year: '2025',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop',
-      summary: 'IRC:SP:88 compliant operation-stage safety audit, accident blackspot engineering rectification, and collision reduction strategy for high-risk highway sections.',
-    },
-    {
-      id: 3,
-      title: 'Urban Arterial Junction Signal Phasing & Intelligent Telemetry',
-      sector: 'traffic',
-      sectorLabel: 'TRAFFIC ENGINEERING',
-      location: 'Ring Road Arterial Corridors, Surat',
-      client: 'Surat Municipal Corporation (SMC)',
-      year: '2024',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=600&h=400&fit=crop',
-      summary: 'Comprehensive classified volume counts, radar speed surveys, Indo-HCM saturation flow analysis, and adaptive signal synchronisation across 8 high-density junctions.',
-    },
-    {
-      id: 4,
-      title: 'Western Dedicated Freight Corridor (DFC) Multimodal Rail Link',
-      sector: 'rail',
-      sectorLabel: 'RAIL SERVICES',
-      location: 'DFC Western Corridor (Gothangam – Sachin Stretch)',
-      client: 'Dedicated Freight Corridor Corporation of India (DFCCIL)',
-      year: '2025',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&h=400&fit=crop',
-      summary: 'Track geometry clearance, road-over-bridge (ROB) structural approaches, and grade-separated intermodal freight connectivity evaluation.',
-    },
-    {
-      id: 5,
-      title: 'Smart City BRTS Transit Corridor Feasibility & Urban Mobility Plan',
-      sector: 'smart-mobility',
-      sectorLabel: 'SMART MOBILITY',
-      location: 'Surat Smart City Infrastructure, Gujarat',
-      client: 'Surat Smart City Development Ltd. (SSCDL)',
-      year: '2024',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop',
-      summary: 'Origin-destination travel demand modeling, bus rapid transit corridor optimization, and multi-modal integration with Surat Metro Phase-1.',
-    },
-    {
-      id: 6,
-      title: 'Hazira Industrial Mega Logistics Park Access & Drainage Infrastructure',
-      sector: 'land-development',
-      sectorLabel: 'LAND DEVELOPMENT',
-      location: 'Hazira Industrial Zone, Surat',
-      client: 'Gujarat Industrial Development Corporation (GIDC)',
-      year: '2024',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop',
-      summary: 'Traffic impact assessment (TIA), internal heavy-vehicle circulation design, stormwater master drainage network, and pavement life-cycle planning.',
-    },
-    {
-      id: 7,
-      title: 'Surat Metro Rail Corridor Geodetic Alignment & High-Precision LIDAR Survey',
-      sector: 'surveying',
-      sectorLabel: 'SURVEYING',
-      location: 'Surat Metro Corridor (Dream City to Sarthana)',
-      client: 'Gujarat Metro Rail Corporation (GMRC)',
-      year: '2024',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop',
-      summary: 'High-density 3D mobile LIDAR corridor scanning, geodetic benchmark network establishment, and sub-centimeter right-of-way GIS mapping.',
-    },
-    {
-      id: 8,
-      title: 'Heavy Axle Commercial Vehicle Weigh-In-Motion & FWD Pavement Testing',
-      sector: 'highways',
-      sectorLabel: 'HIGHWAYS & PAVEMENTS',
-      location: 'Golden Corridor Industrial Arterial, Gujarat',
-      client: 'Roads & Buildings Department (R&B), Govt. of Gujarat',
-      year: '2024',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop',
-      summary: 'Falling Weight Deflectometer (FWD) structural capacity assessment, backcalculation of resilient moduli, and mechanistic-empirical overlay design.',
-    },
-    {
-      id: 9,
-      title: 'Pedestrian Vulnerability & Multimodal Junction Geometry Redesign',
-      sector: 'safety',
-      sectorLabel: 'ROAD SAFETY',
-      location: 'Ichchhanath & Athwa Junctions, Surat',
-      client: 'Surat Traffic Police & Municipal Corporation',
-      year: '2023',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?w=600&h=400&fit=crop',
-      summary: 'Vulnerable road user (VRU) conflict analysis, raised pedestrian crossings, pedestrian refuge islands, and sight-distance improvements.',
-    },
-    {
-      id: 10,
-      title: 'AI-Driven Sensor Video Telemetry & Live Traffic Conflict Dashboard',
-      sector: 'smart-mobility',
-      sectorLabel: 'SMART MOBILITY',
-      location: 'Surat City Command & Control Centre (ICCC)',
-      client: 'Smart City Mission, Govt. of India',
-      year: '2025',
-      status: 'completed',
-      statusLabel: 'Completed',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop',
-      summary: 'Computer-vision edge computing pipelines extracting real-time vehicle trajectories, near-miss conflict indicators, and automated congestion alerts.',
-    },
-  ];
-
-  // Filter projects based on active filter
-  const visibleProjects = activeFilter === 'all'
-    ? projects
-    : projects.filter(p => p.sector === activeFilter);
-
-  // Handle filter change
-  const handleFilterChange = (sector) => {
-    setActiveFilter(sector);
-    if (sector === 'all') {
-      setSearchParams({});
-    } else {
-      setSearchParams({ sector });
-    }
+  const toggleDetails = (id) => {
+    setExpandedIds((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   return (
-    <main id="main" className="projects-archive-page">
-      <div className="projects-archive-container max-w-7xl mx-auto px-gutter-lg py-gutter-xl lg:py-gutter-2xl">
-
-        {/* Breadcrumb Bar */}
-        <nav className="projects-breadcrumb-bar mb-gutter-xl" aria-label="Breadcrumb" data-reveal="fade-in-up">
-          <ul className="projects-breadcrumb-list flex items-center gap-gutter-sm font-body text-body-sm text-on-surface/60">
-            <li className="projects-breadcrumb-item">
-              <Link to="/" className="hover:underline">Home</Link>
-            </li>
-            <li className="projects-breadcrumb-sep" aria-hidden="true">/</li>
-            <li className="projects-breadcrumb-item projects-breadcrumb-cur font-semibold text-on-surface" aria-current="page">
-              Projects
-            </li>
-          </ul>
-        </nav>
-
-        {/* Hero Header */}
-        <header className="projects-hero-header flex flex-col lg:flex-row lg:items-end lg:justify-between gap-gutter-lg mb-gutter-xl" data-reveal="fade-in-up">
-          <div className="projects-hero-left">
-            <h1 className="projects-hero-title font-display text-display-lg lg:text-display-xl text-on-surface">Our Projects</h1>
-          </div>
-          <div className="projects-hero-right max-w-2xl">
-            <p className="projects-hero-intro font-body text-body-lg text-on-surface/70 leading-relaxed">
-              We believe in full ownership across all the work that we do. Here are some notable completed projects that our growth-driven research & consultancy team has delivered.
+    <div id="top" className="w-full flex flex-col bg-surface text-on-surface">
+      {/* ========================================================= */}
+      {/* PAGE HERO SPLIT                                           */}
+      {/* ========================================================= */}
+      <section className="relative w-full bg-surface border-b border-outline">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12">
+          <div className="lg:col-span-8 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-lg border-b lg:border-b-0 lg:border-r border-outline">
+            <div className="flex items-center gap-gutter-sm">
+              <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+              <span className="font-label text-label-md uppercase text-on-surface-variant" data-design-text-token="label-md">
+                RESEARCH &amp; PROJECTS &mdash; TEP &middot; SVNIT, SURAT
+              </span>
+            </div>
+            <h1 className="font-display text-display-lg-mobile lg:text-display-lg uppercase text-balance" data-design-text-token="display-lg">
+              FIELD STUDIES, SAFETY AUDITS &amp; APPLIED RESEARCH.
+            </h1>
+            <p className="font-body text-body-md text-on-surface-variant max-w-2xl text-pretty" data-design-text-token="body-md">
+              Selected transportation consultancy assignments, road safety audits, urban mobility plans, and computer-vision traffic research delivered across national highways and city corridors.
             </p>
           </div>
-        </header>
 
-        {/* Category Filter Navigation */}
-        <div className="projects-filter-wrapper mb-gutter-xl" data-reveal="fade-in-up" style={{ transitionDelay: '100ms' }}>
-          <nav className="projects-filter-nav flex flex-wrap gap-gutter-sm" aria-label="Filter Projects by Sector" role="tablist">
-            {sectors.map((sector) => (
-              <button
-                key={sector.key}
-                type="button"
-                role="tab"
-                aria-selected={activeFilter === sector.key}
-                aria-controls={`filterpanel-${sector.key}`}
-                id={`filtertab-${sector.key}`}
-                className={`projects-filter-tab px-gutter-md py-gutter-sm font-label text-label-md uppercase rounded-lg transition-all duration-state-change ${
-                  activeFilter === sector.key
-                    ? 'bg-brand-green text-on-brand-green shadow-lg'
-                    : 'bg-surface border border-outline text-on-surface hover:border-brand-green/50'
-                }`}
-                onClick={() => handleFilterChange(sector.key)}
-              >
-                {sector.label}
-              </button>
-            ))}
-          </nav>
+          <div className="lg:col-span-4 bg-surface-dark text-on-surface-dark blueprint-grid-dark p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-lg">
+            <div className="flex items-center justify-between border-b border-outline-dark pb-gutter-sm">
+              <span className="font-label text-label-sm uppercase text-on-surface-dark-muted" data-design-text-token="label-sm">
+                PROJECT ARCHIVE
+              </span>
+              <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+            </div>
+            <div className="flex flex-col gap-gutter-sm">
+              <h2 className="font-headline text-headline-md uppercase text-on-surface-dark" data-design-text-token="headline-md">
+                PUBLIC &amp; INFRASTRUCTURE MANDATES
+              </h2>
+              <p className="font-body text-body-sm text-on-surface-dark-muted text-pretty" data-design-text-token="body-sm">
+                Executed for MoRTH, NHAI, State PWD, Smart City SPVs, and urban transit authorities under IRC &amp; Indo-HCM standards.
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Projects Archive Grid */}
-        <div
-          className="projects-archive-grid grid grid-cols-1 md:grid-cols-2 gap-gutter-lg"
-          id="projectsArchiveGrid"
-          role="tabpanel"
-          aria-labelledby={`filtertab-${activeFilter}`}
-        >
-          {visibleProjects.map((project, i) => (
-            <article
-              key={project.id}
-              className={`project-card-item rv group bg-surface border border-outline rounded-2xl overflow-hidden transition-all duration-state-change hover:border-brand-green/50 hover:shadow-lg`}
-              data-sector={project.sector}
-              data-reveal="fade-in-up"
-              style={{ transitionDelay: `${i * 50}ms` }}
-            >
-              {/* Top: Photo Frame with Center Rotating Action Button */}
-              <Link
-                to={`/projects/${project.id}`}
-                className="project-card-media block relative aspect-[16/9] overflow-hidden"
-                aria-label={`Explore ${project.title}`}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="project-card-img w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="project-card-overlay absolute inset-0 bg-gradient-to-t from-brand-green/80 via-brand-green/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-state-change" aria-hidden="true" />
+      <main id="main" className="flex-1">
+        {/* ========================================================= */}
+        {/* SECTION 1: PORTFOLIO / PROJECTS GRID                      */}
+        {/* ========================================================= */}
+        <section id="portfolio-grid" className="bg-surface text-on-surface border-b border-outline p-gutter-lg lg:p-gutter-xl">
+          <div className="max-w-[1440px] mx-auto">
+            {/* Filter Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-gutter-md mb-gutter-xl">
+              <div className="inline-flex items-center gap-gutter-sm bg-primary text-on-primary px-gutter-md py-gutter-xs self-start">
+                <span className="font-label text-label-sm uppercase tracking-wider" data-design-text-token="label-sm">
+                  SORT BY :
+                </span>
+              </div>
 
-                {/* Rotating Center Circular Button */}
-                <div className="project-center-btn absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-                  <span className="project-center-icon w-14 h-14 rounded-full bg-on-brand-green/90 text-brand-green flex items-center justify-center transform transition-transform duration-500 group-hover:rotate-90 group-hover:scale-110">
-                    <svg viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="16" y1="6" x2="16" y2="26" />
-                      <line x1="6" y1="16" x2="26" y2="16" />
-                    </svg>
+              <div className="flex flex-wrap items-center gap-gutter-xs" role="group" aria-label="Filter projects by category">
+                {FILTERS.map((f) => {
+                  const isActive = activeFilter === f.key;
+                  return (
+                    <button
+                      key={f.key}
+                      type="button"
+                      onClick={() => setActiveFilter(f.key)}
+                      className={`px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change cursor-pointer ${
+                        isActive
+                          ? 'bg-brand-green text-on-brand-green'
+                          : 'bg-primary text-on-primary hover:bg-brand-green hover:text-on-brand-green'
+                      }`}
+                    >
+                      <span data-design-text-token="label-sm">{f.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2-Column Project Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg">
+              {visibleProjects.map((project) => {
+                const isOpen = !!expandedIds[project.id];
+                return (
+                  <article key={project.id} className="portfolio-item flex flex-col border border-outline bg-surface group hover:border-brand-green transition-colors">
+                    <div className="relative h-72 bg-surface-dark overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.alt}
+                        className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-300"
+                      />
+                      <span className="absolute top-gutter-md left-gutter-md bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline" data-design-text-token="label-sm">
+                        {project.badge}
+                      </span>
+                      <div className="absolute -bottom-[2px] left-0 right-0 flex items-end justify-between">
+                        <div className="notch-title-tab bg-surface text-on-surface pl-gutter-md pr-12 pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] min-w-[65%]">
+                          <h2 className="font-headline text-headline-md uppercase" data-design-text-token="headline-md">
+                            {project.title}
+                          </h2>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => toggleDetails(project.id)}
+                          aria-expanded={isOpen}
+                          aria-label={`Toggle details for ${project.title}`}
+                          className="mb-[calc(theme(spacing.gutter-sm)+2px)] mr-gutter-sm w-7 h-7 bg-brand-green text-on-brand-green flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors cursor-pointer shrink-0"
+                        >
+                          <span className="material-symbols-outlined text-body-md" aria-hidden="true">
+                            {isOpen ? 'remove' : 'add'}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {isOpen && (
+                      <div className="project-detail p-gutter-lg bg-surface-container border-t border-outline flex flex-col gap-gutter-sm animate-fade-in">
+                        <div className="flex flex-wrap items-center justify-between gap-2 font-label text-label-sm uppercase text-on-surface-variant">
+                          <span data-design-text-token="label-sm">{project.client}</span>
+                          <span data-design-text-token="label-sm">{project.stage}</span>
+                        </div>
+                        <p className="font-body text-body-sm text-on-surface text-pretty" data-design-text-token="body-sm">
+                          {project.summary}
+                        </p>
+                        <div className="pt-1">
+                          <Link
+                            to={`/projects/${project.id}`}
+                            className="inline-flex items-center gap-1.5 font-label text-label-sm uppercase text-brand-green hover:underline"
+                          >
+                            <span>VIEW PROJECT BRIEF</span>
+                            <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* SECTION 2: APPLIED RESEARCH TRACKS (DARK INDEX)           */}
+        {/* ========================================================= */}
+        <section id="research-tracks" className="bg-surface-dark text-on-surface-dark blueprint-grid-dark border-b border-outline-dark p-gutter-lg lg:p-gutter-xl">
+          <div className="max-w-[1440px] mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-gutter-md pb-gutter-lg mb-gutter-xl border-b border-outline-dark">
+              <div className="flex flex-col gap-gutter-xs">
+                <div className="flex items-center gap-gutter-sm">
+                  <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+                  <span className="font-label text-label-md uppercase text-on-surface-dark-muted" data-design-text-token="label-md">
+                    RESEARCH ARCHIVE
                   </span>
                 </div>
-              </Link>
-
-              {/* Bottom: Card Information in 2 Columns */}
-              <div className="project-card-info p-gutter-lg">
-                {/* Left Column: Title & Category */}
-                <div className="project-card-left mb-gutter-md">
-                  <h2 className="project-card-title font-headline text-headline-sm text-on-surface mb-gutter-xs">
-                    <Link to={`/projects/${project.id}`} className="hover:text-brand-green transition-colors duration-state-change">
-                      {project.title}
-                    </Link>
-                  </h2>
-                  <span className="project-card-category font-label text-label-sm uppercase text-brand-green">{project.sectorLabel}</span>
-                </div>
-
-                {/* Right Column: Scope Summary & Explore Link */}
-                <div className="project-card-right">
-                  <p className="project-card-summary font-body text-body-sm text-on-surface/70 mb-gutter-md">{project.summary}</p>
-                  <Link
-                    to={`/projects/${project.id}`}
-                    className="project-explore-link inline-flex items-center gap-gutter-sm font-label text-label-sm uppercase text-brand-green hover:gap-2 transition-all duration-state-change"
-                  >
-                    <span>EXPLORE PROJECT</span>
-                    <span className="project-explore-arrow" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="9 18 15 12 9 6" />
-                      </svg>
-                    </span>
-                  </Link>
-                </div>
+                <h2 className="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-on-surface-dark" data-design-text-token="headline-lg">
+                  ACTIVE RESEARCH PROGRAMS
+                </h2>
               </div>
-            </article>
-          ))}
-
-          {/* Empty State */}
-          {visibleProjects.length === 0 && (
-            <div className="projects-empty-state col-span-full text-center py-gutter-2xl" data-reveal="fade-in-up">
-              <h3 className="font-display text-headline-md text-on-surface mb-gutter-sm">No projects found in this category</h3>
-              <p className="font-body text-body-md text-on-surface/60">Please select another category or view all completed projects.</p>
+              <span className="font-label text-label-sm uppercase bg-brand-green text-on-brand-green px-gutter-sm py-gutter-xs" data-design-text-token="label-sm">
+                SVNIT TRANSPORTATION LAB
+              </span>
             </div>
-          )}
-        </div>
 
-      </div>
-    </main>
+            <div className="divide-y divide-outline-dark border-y border-outline-dark">
+              {RESEARCH_PROGRAMS.map((prog) => (
+                <div key={prog.num} className="py-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-md items-center">
+                  <span className="lg:col-span-1 font-label text-label-md text-brand-green tabular-nums" data-design-text-token="label-md">
+                    {prog.num}
+                  </span>
+                  <h3 className="lg:col-span-4 font-headline text-headline-md uppercase text-on-surface-dark" data-design-text-token="headline-md">
+                    {prog.title}
+                  </h3>
+                  <p className="lg:col-span-5 font-body text-body-sm text-on-surface-dark-muted text-pretty" data-design-text-token="body-sm">
+                    {prog.desc}
+                  </p>
+                  <div className="lg:col-span-2 flex lg:justify-end">
+                    <span className="font-label text-label-sm uppercase border border-outline-dark px-gutter-sm py-gutter-xs text-on-surface-dark" data-design-text-token="label-sm">
+                      {prog.tag}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* DARK CTA BANNER                                           */}
+        {/* ========================================================= */}
+        <section id="consultation-cta" className="relative bg-surface-dark text-on-surface-dark overflow-hidden border-t border-outline-dark">
+          <img
+            src="/images/Hero_3.jpg"
+            alt="Architectural skyscraper facade grid"
+            className="absolute inset-0 w-full h-full object-cover grayscale contrast-125 brightness-50 opacity-45 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-dark/80 via-surface-dark/50 to-surface-dark/80 pointer-events-none" />
+          <div className="relative z-10 max-w-[1440px] mx-auto border-x border-outline-dark">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              <div className="lg:col-span-4 p-gutter-xl border-b lg:border-r border-outline-dark">
+                <p className="font-body text-body-sm uppercase leading-relaxed text-on-surface-dark max-w-xs text-pretty" data-design-text-token="body-sm">
+                  PARTNER WITH A TEAM COMMITTED TO DELIVERING QUALITY, SAFETY, AND LONG-TERM VALUE &mdash; FROM GROUNDBREAKING TO COMPLETION.
+                </p>
+              </div>
+              <div className="hidden lg:block lg:col-span-8 border-b border-outline-dark" />
+
+              <div className="hidden lg:block lg:col-span-4 lg:border-r border-outline-dark min-h-[260px]" />
+              <div className="lg:col-span-8 p-gutter-xl pb-20 flex flex-col justify-center items-start gap-gutter-lg min-h-[260px]">
+                <h2 className="font-display text-display-md-mobile lg:text-display-lg uppercase leading-tight text-on-surface-dark max-w-2xl text-balance" data-design-text-token="display-lg">
+                  BUILD WITH AN INDUSTRIALIZED AND DIGITAL SYSTEM
+                </h2>
+                <Link
+                  to="/contact"
+                  data-component-id="button-primary"
+                  data-component-type="button"
+                  data-component-variant="primary"
+                  className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                >
+                  <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
+                  <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 };
 
