@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GravixPoint — Building With Precision</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+        globalThis.tailwind = globalThis.tailwind || {};
+        globalThis.tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-orange': '#E84B32',
+                        'on-brand-orange': '#1B1B1A',
+                        'primary': '#1C1C1B',
+                        'on-primary': '#F3F3F1',
+                        'surface': '#F3F3F1',
+                        'on-surface': '#1C1C1B',
+                        'on-surface-variant': '#555552',
+                        'surface-container': '#E4E4E1',
+                        'on-surface-container': '#1C1C1B',
+                        'surface-muted': '#D2D2CF',
+                        'on-surface-muted': '#1C1C1B',
+                        'surface-dark': '#1C1C1B',
+                        'on-surface-dark': '#F3F3F1',
+                        'surface-dark-elevated': '#262624',
+                        'on-surface-dark-elevated': '#F3F3F1',
+                        'on-surface-dark-muted': '#A8A8A4',
+                        'outline': '#D4D4D2',
+                        'outline-dark': '#363633',
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '2px',
+                        'DEFAULT': '0px',
+                        'full': '9999px',
+                    },
+                    spacing: {
+                        'gutter-xs': '4px',
+                        'gutter-sm': '8px',
+                        'gutter-md': '16px',
+                        'gutter-lg': '24px',
+                        'gutter-xl': '32px',
+                        'section': '48px',
+                        'page-margin': '24px',
+                    },
+                    fontFamily: {
+                        'display': ['"Chakra Petch"', 'sans-serif'],
+                        'headline': ['"Chakra Petch"', 'sans-serif'],
+                        'body': ['"IBM Plex Mono"', 'sans-serif'],
+                        'label': ['"IBM Plex Mono"', 'sans-serif'],
+                    },
+                    fontSize: {
+                        'display-lg': ['56px', { lineHeight: '60px', letterSpacing: '-0.5px', fontWeight: '600' }],
+                        'display-lg-mobile': ['32px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '600' }],
+                        'display-md': ['44px', { lineHeight: '48px', letterSpacing: '-0.5px', fontWeight: '600' }],
+                        'display-md-mobile': ['28px', { lineHeight: '32px', letterSpacing: '-0.25px', fontWeight: '600' }],
+                        'headline-lg': ['36px', { lineHeight: '40px', letterSpacing: '-0.25px', fontWeight: '500' }],
+                        'headline-lg-mobile': ['24px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '500' }],
+                        'headline-md': ['22px', { lineHeight: '26px', letterSpacing: '0.25px', fontWeight: '500' }],
+                        'headline-sm': ['18px', { lineHeight: '22px', letterSpacing: '0.5px', fontWeight: '600' }],
+                        'body-md': ['13px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '400' }],
+                        'body-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.1px', fontWeight: '400' }],
+                        'label-md': ['11px', { lineHeight: '14px', letterSpacing: '0.6px', fontWeight: '500' }],
+                        'label-sm': ['10px', { lineHeight: '12px', letterSpacing: '0.8px', fontWeight: '500' }],
+                    },
+                    transitionDuration: {
+                        'state-change': '120ms',
+                        'surface-enter': '220ms',
+                    },
+                    transitionDelay: {
+                        'state-change': '0ms',
+                        'surface-enter': '0ms',
+                    },
+                    transitionTimingFunction: {
+                        'state-change': 'ease-out',
+                        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+                    },
+                },
+            },
+        };
+        if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block"
+        rel="stylesheet">
+    <style>
+        .material-symbols-outlined,
+        .material-symbols-rounded,
+        .material-symbols-sharp,
+        .material-icons {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            line-height: 1 !important;
+            box-sizing: content-box;
+            overflow: hidden;
+            white-space: nowrap;
+            direction: ltr;
+            vertical-align: middle;
+        }
+
+        .chamfer-card {
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+        }
+
+        .chamfer-br {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+        }
+
+        .chamfer-hero-orange {
+            clip-path: polygon(88px 0, 100% 0, 100% 100%, 0 100%, 0 88px);
+        }
+
+        .chamfer-tl-dark {
+            clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+        }
+
+        .blueprint-grid-dark {
+            background-image:
+                linear-gradient(to right, rgba(243, 243, 241, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(243, 243, 241, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .notch-title-tab {
+            clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 100%, 0 100%);
+        }
+
+        .chamfer-split-right {
+            clip-path: polygon(0 0, 100% 24px, 100% calc(100% - 24px), 0 100%);
+        }
+
+        .chamfer-split-left {
+            clip-path: polygon(0 24px, 100% 0, 100% 100%, 0 calc(100% - 24px));
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface antialiased selection:bg-brand-orange selection:text-on-brand-orange">
+
+    <div class="min-h-[1024px] w-full flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+        <!-- ========================================================= -->
+        <!-- NAVIGATION OVERLAY DRAWER                                 -->
+        <!-- ========================================================= -->
+        <div id="menu-drawer"
+            class="fixed inset-0 z-50 hidden bg-surface-dark text-on-surface-dark flex-col justify-between p-gutter-xl">
+            <div class="flex items-center justify-between border-b border-outline-dark pb-gutter-lg">
+                <a href="#top" aria-label="GravixPoint Home" class="inline-flex items-center">
+                    <svg class="w-10 h-10 text-brand-orange" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+                        <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z"></path>
+                    </svg>
+                </a>
+                <button id="close-menu-btn" type="button"
+                    class="inline-flex items-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider">
+                    <span data-design-text-token="label-md">CLOSE</span>
+                    <span class="material-symbols-outlined text-body-md" aria-hidden="true">close</span>
+                </button>
+            </div>
+            <nav aria-label="Primary drawer navigation"
+                class="flex flex-col divide-y divide-outline-dark my-auto max-w-2xl">
+                <a href="#services"
+                    class="drawer-link py-gutter-md font-display text-display-md-mobile lg:text-display-md uppercase hover:text-brand-orange transition-colors duration-state-change"><span
+                        data-design-text-token="display-md">SERVICES</span></a>
+                <a href="#projects"
+                    class="drawer-link py-gutter-md font-display text-display-md-mobile lg:text-display-md uppercase hover:text-brand-orange transition-colors duration-state-change"><span
+                        data-design-text-token="display-md">PROJECTS</span></a>
+                <a href="#principles"
+                    class="drawer-link py-gutter-md font-display text-display-md-mobile lg:text-display-md uppercase hover:text-brand-orange transition-colors duration-state-change"><span
+                        data-design-text-token="display-md">PRINCIPLES</span></a>
+                <a href="#contact"
+                    class="drawer-link py-gutter-md font-display text-display-md-mobile lg:text-display-md uppercase hover:text-brand-orange transition-colors duration-state-change"><span
+                        data-design-text-token="display-md">CONTACT</span></a>
+            </nav>
+            <div
+                class="flex items-center justify-between border-t border-outline-dark pt-gutter-md font-label text-label-sm text-on-surface-dark-muted uppercase">
+                <span data-design-text-token="label-sm">ZURICH, CH — EST. 2009</span>
+                <span data-design-text-token="label-sm">GRAVIXPOINT INDUSTRIAL SYSTEMS</span>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- HERO SECTION                                              -->
+        <!-- ========================================================= -->
+        <header id="top" class="relative w-full bg-surface border-b border-outline overflow-hidden">
+
+            <!-- Top Floating Header Bar -->
+            <div class="relative z-20 flex items-center justify-between px-gutter-lg py-gutter-md">
+                <a href="#top" aria-label="GravixPoint Home" class="inline-flex items-center">
+                    <svg class="w-11 h-11 text-brand-orange" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+                        <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z"></path>
+                    </svg>
+                </a>
+                <div class="flex items-center gap-gutter-sm">
+                    <!-- COMPONENT: button-with-icon -->
+                    <button id="open-menu-btn" data-component-id="button-with-icon" data-component-type="button"
+                        data-component-variant="with-icon" type="button"
+                        class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
+                        <span data-design-text-token="label-md">MENU</span>
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">menu</span>
+                    </button>
+
+                    <!-- COMPONENT: button-tertiary -->
+                    <a href="#contact" data-component-id="button-tertiary" data-component-type="button"
+                        data-component-variant="tertiary"
+                        class="inline-flex items-center justify-center gap-gutter-sm bg-surface text-on-surface border border-outline px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider hover:bg-surface-container transition-colors duration-state-change ease-state-change">
+                        <span data-design-text-token="label-md">CONTACT</span>
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Visual Grid -->
+            <div class="relative grid grid-cols-1 lg:grid-cols-12">
+
+                <!-- Left / Architectural Photography & Headline -->
+                <div class="lg:col-span-7 flex flex-col justify-between bg-surface border-r border-outline">
+                    <div class="relative h-64 sm:h-80 lg:h-96 w-full overflow-hidden border-b border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCjgoy-iq3XgOgcs_kL0g38OOo9_4iFfNbrVXkTcpjnC5Z5s4t46UEtwKkvQSDXVz6tI9MwvYI2MSpz2ooIIUfsJzpbA_Gwk2zQz9JMOQE8Panc7q6GrgeRzwxjLic67EpOIsYAbr-8ylobUNaRAZneGLurPOP8lSRqtVelcom74Sbnp7u4spTTgyr3epFx_PdhvPnhx7Ryrrq0pTC_SmskTlkWIaDECNKnIiYxuxEYPW4S4FyRPf1D"
+                            alt="Monolithic brutalist concrete architectural complex"
+                            class="w-full h-full object-cover grayscale contrast-125">
+                        <div class="absolute inset-0 blueprint-grid-dark pointer-events-none"></div>
+                    </div>
+
+                    <div class="p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+                        <h1 class="font-display text-display-lg-mobile lg:text-display-lg uppercase text-on-surface text-balance"
+                            data-design-text-token="display-lg">
+                            BUILDING WITH PRECISION. DELIVERING WITH CONFIDENCE.
+                        </h1>
+
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-end justify-between gap-gutter-md pt-gutter-lg border-t border-outline">
+                            <p class="font-body text-body-sm text-on-surface-variant max-w-md text-pretty"
+                                data-design-text-token="body-sm">
+                                From commercial developments to large-scale infrastructure, GravixPoint brings
+                                expertise, accountability, and execution to every project.
+                            </p>
+                            <div
+                                class="flex items-center gap-gutter-md font-label text-label-sm text-on-surface-variant uppercase tabular-nums">
+                                <span data-design-text-token="label-sm">VOL</span>
+                                <span data-design-text-token="label-sm">01-8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Chamfered Signal Orange Block -->
+                <div class="lg:col-span-5 relative flex flex-col justify-between bg-surface">
+                    <div class="relative h-48 lg:h-56 w-full overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCjgoy-iq3XgOgcs_kL0g38OOo9_4iFfNbrVXkTcpjnC5Z5s4t46UEtwKkvQSDXVz6tI9MwvYI2MSpz2ooIIUfsJzpbA_Gwk2zQz9JMOQE8Panc7q6GrgeRzwxjLic67EpOIsYAbr-8ylobUNaRAZneGLurPOP8lSRqtVelcom74Sbnp7u4spTTgyr3epFx_PdhvPnhx7Ryrrq0pTC_SmskTlkWIaDECNKnIiYxuxEYPW4S4FyRPf1D"
+                            alt aria-hidden="true"
+                            class="w-full h-full object-cover object-right grayscale contrast-125">
+                    </div>
+
+                    <div
+                        class="relative -mt-20 lg:-mt-28 flex-1 bg-brand-orange text-on-brand-orange chamfer-hero-orange p-gutter-lg lg:p-gutter-xl flex flex-col justify-between min-h-[280px]">
+                        <div
+                            class="flex items-center justify-between pt-gutter-sm pl-24 font-label text-label-sm uppercase tabular-nums">
+                            <span data-design-text-token="label-sm">ZURICH, CH</span>
+                            <span data-design-text-token="label-sm">EST. 2009</span>
+                        </div>
+
+                        <div class="my-auto py-gutter-lg">
+                            <p class="font-body text-body-sm text-on-brand-orange max-w-sm text-pretty"
+                                data-design-text-token="body-sm">
+                                Every project runs on one operating system — shared schedules, shared accountability,
+                                shared standards — so commercial, industrial, and infrastructure work all ship at the
+                                same level of precision.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Dark Transition Strip -->
+                    <div class="h-8 bg-surface-dark w-full chamfer-tl-dark"></div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- ========================================================= -->
+        <!-- MAIN CONTENT                                              -->
+        <!-- ========================================================= -->
+        <main class="flex-1">
+
+            <!-- SECTION 2: STATS & EXPERTISE (DARK) -->
+            <section class="bg-surface-dark text-on-surface-dark p-gutter-lg lg:p-gutter-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-stretch">
+
+                    <!-- Left: 2x2 Chamfered KPI Cards -->
+                    <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-gutter-md">
+                        <!-- COMPONENT: card-elevated -->
+                        <article data-component-id="card-elevated" data-component-type="card"
+                            data-component-variant="elevated"
+                            class="chamfer-card bg-brand-orange text-on-brand-orange p-gutter-lg flex flex-col justify-between min-h-[168px]">
+                            <header>
+                                <h2 class="font-display text-display-md-mobile lg:text-display-md tabular-nums text-on-primary"
+                                    data-design-text-token="display-md">250+</h2>
+                            </header>
+                            <div>
+                                <p class="font-body text-body-sm text-on-brand-orange" data-design-text-token="body-sm">
+                                    Projects Delivered</p>
+                            </div>
+                        </article>
+
+                        <!-- COMPONENT: card-elevated -->
+                        <article data-component-id="card-elevated" data-component-type="card"
+                            data-component-variant="elevated"
+                            class="chamfer-card bg-brand-orange text-on-brand-orange p-gutter-lg flex flex-col justify-between min-h-[168px]">
+                            <header>
+                                <h2 class="font-display text-display-md-mobile lg:text-display-md tabular-nums text-on-primary"
+                                    data-design-text-token="display-md">15+</h2>
+                            </header>
+                            <div>
+                                <p class="font-body text-body-sm text-on-brand-orange" data-design-text-token="body-sm">
+                                    Years Experience</p>
+                            </div>
+                        </article>
+
+                        <!-- COMPONENT: card-elevated -->
+                        <article data-component-id="card-elevated" data-component-type="card"
+                            data-component-variant="elevated"
+                            class="chamfer-card bg-brand-orange text-on-brand-orange p-gutter-lg flex flex-col justify-between min-h-[168px]">
+                            <header>
+                                <h2 class="font-display text-display-md-mobile lg:text-display-md tabular-nums text-on-primary"
+                                    data-design-text-token="display-md">98%</h2>
+                            </header>
+                            <div>
+                                <p class="font-body text-body-sm text-on-brand-orange" data-design-text-token="body-sm">
+                                    Client Satisfaction</p>
+                            </div>
+                        </article>
+
+                        <!-- COMPONENT: card-elevated -->
+                        <article data-component-id="card-elevated" data-component-type="card"
+                            data-component-variant="elevated"
+                            class="chamfer-card bg-brand-orange text-on-brand-orange p-gutter-lg flex flex-col justify-between min-h-[168px]">
+                            <header>
+                                <h2 class="font-display text-display-md-mobile lg:text-display-md tabular-nums text-on-primary"
+                                    data-design-text-token="display-md">500+</h2>
+                            </header>
+                            <div>
+                                <p class="font-body text-body-sm text-on-brand-orange" data-design-text-token="body-sm">
+                                    Skilled Professionals</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Right: Concrete Expertise Block -->
+                    <div
+                        class="lg:col-span-6 chamfer-br bg-surface-muted text-on-surface-muted p-gutter-lg lg:p-gutter-xl flex flex-col justify-between min-h-[340px]">
+                        <h2 class="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance"
+                            data-design-text-token="headline-lg">
+                            CONSTRUCTION EXPERTISE BACKED BY EXPERIENCE.
+                        </h2>
+                        <p class="font-body text-body-sm text-on-surface-muted max-w-md text-pretty"
+                            data-design-text-token="body-sm">
+                            GravixPoint partners with developers, businesses, and public organizations to deliver
+                            projects that meet the highest standards of quality, safety, and performance.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 3: SERVICES / CAPABILITIES (LIGHT) -->
+            <section id="services" class="bg-surface text-on-surface border-b border-outline">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+
+                    <!-- Left Column -->
+                    <div
+                        class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-outline p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+                        <h2 class="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance"
+                            data-design-text-token="headline-lg">
+                            BUILT TO SUPPORT EVERY STAGE OF DEVELOPMENT.
+                        </h2>
+                        <p class="font-body text-body-sm text-on-surface-variant max-w-xs text-pretty"
+                            data-design-text-token="body-sm">
+                            End-to-end construction solutions from ground-breaking to long-term support.
+                        </p>
+                    </div>
+
+                    <!-- Right 2x2 Service Cards -->
+                    <div
+                        class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:gap-px bg-outline">
+
+                        <!-- Card 01: Commercial Construction (Signal Orange Featured) -->
+                        <div class="bg-surface p-gutter-lg">
+                            <!-- COMPONENT: card-action-featured -->
+                            <article data-component-id="card-action-featured" data-component-type="card"
+                                data-component-variant="filled"
+                                class="chamfer-card bg-brand-orange text-on-brand-orange p-gutter-lg flex flex-col justify-between min-h-[320px] h-full">
+                                <header class="flex items-start justify-between gap-gutter-sm">
+                                    <h3 class="font-headline text-headline-sm uppercase text-on-brand-orange"
+                                        data-design-text-token="headline-sm">COMMERCIAL CONSTRUCTION</h3>
+                                    <span class="font-label text-label-sm tabular-nums text-on-brand-orange"
+                                        data-design-text-token="label-sm">01</span>
+                                </header>
+                                <div class="my-gutter-lg flex items-center justify-center">
+                                    <svg class="w-20 h-20 text-on-primary" viewBox="0 0 80 80" fill="none"
+                                        stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+                                        <circle cx="30" cy="30" r="14"></circle>
+                                        <circle cx="50" cy="30" r="14"></circle>
+                                        <circle cx="30" cy="50" r="14"></circle>
+                                        <circle cx="50" cy="50" r="14"></circle>
+                                    </svg>
+                                </div>
+                                <footer class="pt-gutter-md border-t border-on-brand-orange/20">
+                                    <p class="font-body text-body-sm text-on-brand-orange"
+                                        data-design-text-token="body-sm">
+                                        Office buildings, mixed-use developments, retail spaces, and corporate
+                                        facilities.
+                                    </p>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <!-- Card 02: Industrial Projects (Dark Charcoal) -->
+                        <div class="bg-surface p-gutter-lg">
+                            <!-- COMPONENT: card-action -->
+                            <article data-component-id="card-action" data-component-type="card"
+                                data-component-variant="action"
+                                class="chamfer-card blueprint-grid-dark bg-surface-dark text-on-surface-dark p-gutter-lg flex flex-col justify-between min-h-[320px] h-full">
+                                <header class="flex items-start justify-between gap-gutter-sm">
+                                    <h3 class="font-headline text-headline-sm uppercase"
+                                        data-design-text-token="headline-sm">INDUSTRIAL PROJECTS</h3>
+                                    <span class="font-label text-label-sm text-on-surface-dark-muted tabular-nums"
+                                        data-design-text-token="label-sm">02</span>
+                                </header>
+                                <div class="my-gutter-lg flex items-center justify-center">
+                                    <svg class="w-20 h-20 text-on-surface-dark" viewBox="0 0 80 80" fill="none"
+                                        stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+                                        <path d="M24 20H14V60H24"></path>
+                                        <path d="M56 20H66V60H56"></path>
+                                        <path d="M30 26H22V54H30"></path>
+                                        <path d="M50 26H58V54H50"></path>
+                                        <rect x="33" y="33" width="14" height="14"></rect>
+                                    </svg>
+                                </div>
+                                <footer class="pt-gutter-md border-t border-outline-dark">
+                                    <p class="font-body text-body-sm text-on-surface-dark-muted"
+                                        data-design-text-token="body-sm">
+                                        Warehouses, manufacturing facilities, logistics hubs, and operational
+                                        infrastructure.
+                                    </p>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <!-- Card 03: Infrastructure Development (Dark Charcoal) -->
+                        <div class="bg-surface p-gutter-lg">
+                            <!-- COMPONENT: card-action -->
+                            <article data-component-id="card-action" data-component-type="card"
+                                data-component-variant="action"
+                                class="chamfer-card blueprint-grid-dark bg-surface-dark text-on-surface-dark p-gutter-lg flex flex-col justify-between min-h-[320px] h-full">
+                                <header class="flex items-start justify-between gap-gutter-sm">
+                                    <h3 class="font-headline text-headline-sm uppercase"
+                                        data-design-text-token="headline-sm">INFRASTRUCTURE DEVELOPMENT</h3>
+                                    <span class="font-label text-label-sm text-on-surface-dark-muted tabular-nums"
+                                        data-design-text-token="label-sm">03</span>
+                                </header>
+                                <div class="my-gutter-lg flex items-center justify-center">
+                                    <svg class="w-20 h-20 text-on-surface-dark" viewBox="0 0 80 80" fill="none"
+                                        stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+                                        <rect x="16" y="42" width="10" height="22"></rect>
+                                        <rect x="26" y="30" width="10" height="34"></rect>
+                                        <rect x="36" y="18" width="10" height="46"></rect>
+                                        <rect x="46" y="28" width="10" height="36"></rect>
+                                        <rect x="56" y="38" width="8" height="26"></rect>
+                                    </svg>
+                                </div>
+                                <footer class="pt-gutter-md border-t border-outline-dark">
+                                    <p class="font-body text-body-sm text-on-surface-dark-muted"
+                                        data-design-text-token="body-sm">
+                                        Public works, transportation, utilities, and large-scale civil projects.
+                                    </p>
+                                </footer>
+                            </article>
+                        </div>
+
+                        <!-- Card 04: Project Management (Dark Charcoal) -->
+                        <div class="bg-surface p-gutter-lg">
+                            <!-- COMPONENT: card-action -->
+                            <article data-component-id="card-action" data-component-type="card"
+                                data-component-variant="action"
+                                class="chamfer-card blueprint-grid-dark bg-surface-dark text-on-surface-dark p-gutter-lg flex flex-col justify-between min-h-[320px] h-full">
+                                <header class="flex items-start justify-between gap-gutter-sm">
+                                    <h3 class="font-headline text-headline-sm uppercase"
+                                        data-design-text-token="headline-sm">PROJECT MANAGEMENT</h3>
+                                    <span class="font-label text-label-sm text-on-surface-dark-muted tabular-nums"
+                                        data-design-text-token="label-sm">04</span>
+                                </header>
+                                <div class="my-gutter-lg flex items-center justify-center">
+                                    <svg class="w-20 h-20 text-on-surface-dark" viewBox="0 0 80 80" fill="none"
+                                        stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+                                        <line x1="40" y1="14" x2="40" y2="66"></line>
+                                        <line x1="14" y1="40" x2="66" y2="40"></line>
+                                        <line x1="22" y1="36" x2="22" y2="44"></line>
+                                        <line x1="31" y1="36" x2="31" y2="44"></line>
+                                        <line x1="49" y1="36" x2="49" y2="44"></line>
+                                        <line x1="58" y1="36" x2="58" y2="44"></line>
+                                        <circle cx="26" cy="24" r="3"></circle>
+                                        <circle cx="56" cy="26" r="3"></circle>
+                                        <circle cx="54" cy="54" r="3"></circle>
+                                        <circle cx="24" cy="56" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <footer class="pt-gutter-md border-t border-outline-dark">
+                                    <p class="font-body text-body-sm text-on-surface-dark-muted"
+                                        data-design-text-token="body-sm">
+                                        Planning, coordination, budgeting, scheduling, and delivery oversight.
+                                    </p>
+                                </footer>
+                            </article>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3B: SPLIT SERVICE SHOWCASE PANELS -->
+            <section class="bg-surface text-on-surface border-b border-outline">
+                <!-- Panel 1: Commercial Construction (Photo Left / Content Right) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 border-b border-outline">
+                    <div class="lg:col-span-6 relative min-h-[420px] bg-surface-dark overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrBJh8jGWSaXjpF26Zm-u40bNPao74TTJ_Tuuac4dcYpLApgtU51AJlIiU_pzAIVU-43PHtU1_tgRUCU4YUOgVpD7YBeWYmyh-U5HojsW6AY2EOFsWOqUpzCB_EyEJr-P4gMa7fS5YPuVZtuc1ZVpIMTBZvlLoyRWunYo_6dmUzwI2DVg2vctzjm_Zz0ahfnHxNsFwshsv3NwlyusjbbZW_a9ZiPIwrVYCVMTAUlfAyjotOwl0ceg9VPgO9PRqo3"
+                            alt="Cylindrical commercial corporate headquarters"
+                            class="absolute inset-0 w-full h-full object-cover grayscale contrast-125 opacity-60">
+                        <div class="absolute inset-0 blueprint-grid-dark pointer-events-none"></div>
+                        <!-- White Radial Target SVG Overlay -->
+                        <div class="relative z-10 h-full flex items-center justify-center p-gutter-xl">
+                            <svg class="w-48 h-48 text-on-surface-dark" viewBox="0 0 160 160" fill="none"
+                                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <circle cx="80" cy="80" r="64"></circle>
+                                <circle cx="80" cy="80" r="24"></circle>
+                                <line x1="80" y1="16" x2="80" y2="144"></line>
+                                <line x1="16" y1="80" x2="144" y2="80"></line>
+                                <line x1="34.7" y1="34.7" x2="63" y2="63"></line>
+                                <line x1="125.3" y1="34.7" x2="97" y2="63"></line>
+                                <line x1="34.7" y1="125.3" x2="63" y2="97"></line>
+                                <line x1="125.3" y1="125.3" x2="97" y2="97"></line>
+                            </svg>
+                        </div>
+                        <!-- Chamfered Right Edge Tab -->
+                        <div
+                            class="hidden lg:block absolute top-1/2 -translate-y-1/2 right-0 w-6 h-44 bg-surface chamfer-split-left">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+                        <div class="flex flex-col gap-gutter-md">
+                            <h2 class="font-display text-display-md-mobile lg:text-display-md uppercase text-balance"
+                                data-design-text-token="display-md">
+                                COMMERCIAL CONSTRUCTION
+                            </h2>
+                            <p class="font-body text-body-sm text-on-surface-variant max-w-md text-pretty"
+                                data-design-text-token="body-sm">
+                                Spaces designed for business growth. We deliver commercial environments that combine
+                                functionality, efficiency, and long-term value.
+                            </p>
+                        </div>
+
+                        <ul class="divide-y divide-outline border-y border-outline">
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">QUALITY EXECUTION</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">OFFICE BUILDINGS</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">MIXED-USE DEVELOPMENTS</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">RETAIL CENTERS</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">HOSPITALITY PROJECTS</span>
+                            </li>
+                        </ul>
+
+                        <div>
+                            <!-- COMPONENT: button-primary -->
+                            <a href="#process-blueprint" data-component-id="button-primary" data-component-type="button"
+                                data-component-variant="primary"
+                                class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
+                                <span data-design-text-token="label-md">EXPLORE SERVICES</span>
+                                <span class="material-symbols-outlined text-body-md"
+                                    aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Industrial Development (Content Left / Photo Right) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div
+                        class="lg:col-span-6 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl order-2 lg:order-1">
+                        <div class="flex flex-col gap-gutter-md">
+                            <h2 class="font-display text-display-md-mobile lg:text-display-md uppercase text-balance"
+                                data-design-text-token="display-md">
+                                INDUSTRIAL DEVELOPMENT
+                            </h2>
+                            <p class="font-body text-body-sm text-on-surface-variant max-w-md text-pretty"
+                                data-design-text-token="body-sm">
+                                Infrastructure that powers operations. From logistics facilities to manufacturing
+                                plants, built for performance and scalability.
+                            </p>
+                        </div>
+
+                        <ul class="divide-y divide-outline border-y border-outline">
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">WAREHOUSES</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">DISTRIBUTION CENTERS</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">MANUFACTURING FACILITIES</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">LOGISTICS HUBS</span>
+                            </li>
+                            <li class="py-gutter-sm flex items-center gap-gutter-md">
+                                <span class="w-2 h-2 bg-brand-orange rotate-45 shrink-0" aria-hidden="true"></span>
+                                <span class="font-label text-label-md uppercase"
+                                    data-design-text-token="label-md">PROCESSING PLANTS</span>
+                            </li>
+                        </ul>
+
+                        <div>
+                            <!-- COMPONENT: button-primary -->
+                            <a href="#process-blueprint" data-component-id="button-primary" data-component-type="button"
+                                data-component-variant="primary"
+                                class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
+                                <span data-design-text-token="label-md">EXPLORE SERVICES</span>
+                                <span class="material-symbols-outlined text-body-md"
+                                    aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="lg:col-span-6 relative min-h-[420px] bg-surface-dark overflow-hidden order-1 lg:order-2">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCjr3PST1cli7UXzcCIRgc9RlUsihOBhB_2LdMJ3y2a6EIHNcy15C3mmItGymDez46qtiJjjfrS0fZDcAu7Hmp_z5Qs4B4duc9Zv3WeexZgsXP0snEjxr2Xh9V32KK0r5BQnDvhIdxskZmGiy992FSSuhRE8xf87dw9DQd4Nr_5tMeNcKNHUWtv1z1_3Cdjfiwl22ovRlfwznSiXFWefAwYuOG6HqikYCTc19FzEGgb7Ko87xtsBQQ4mTgrJBMs"
+                            alt="Industrial automated manufacturing facility"
+                            class="absolute inset-0 w-full h-full object-cover grayscale contrast-125 opacity-55">
+                        <div class="absolute inset-0 blueprint-grid-dark pointer-events-none"></div>
+                        <!-- White Concentric Brackets SVG Overlay -->
+                        <div class="relative z-10 h-full flex items-center justify-center p-gutter-xl">
+                            <svg class="w-48 h-48 text-on-surface-dark" viewBox="0 0 160 160" fill="none"
+                                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M52 24H24V136H52"></path>
+                                <path d="M108 24H136V136H108"></path>
+                                <path d="M64 42H40V118H64"></path>
+                                <path d="M96 42H120V118H96"></path>
+                                <path d="M74 58H56V102H74"></path>
+                                <path d="M86 58H104V102H86"></path>
+                                <rect x="68" y="68" width="24" height="24"></rect>
+                            </svg>
+                        </div>
+                        <!-- Chamfered Left Edge Tab -->
+                        <div
+                            class="hidden lg:block absolute top-1/2 -translate-y-1/2 left-0 w-6 h-44 bg-surface chamfer-split-right">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3C: INTERACTIVE 4-STAGE ISOMETRIC PROCESS BLUEPRINT -->
+            <section id="process-blueprint"
+                class="relative bg-surface-dark text-on-surface-dark p-gutter-lg lg:p-gutter-xl overflow-hidden border-b border-outline-dark">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-end min-h-[460px]">
+
+                    <!-- Left Info -->
+                    <div class="lg:col-span-4 flex flex-col gap-gutter-md z-10">
+                        <span id="process-counter"
+                            class="font-label text-label-sm text-on-surface-dark-muted tabular-nums"
+                            data-design-text-token="label-sm">03 / 04</span>
+                        <h2 id="process-title"
+                            class="font-display text-display-lg-mobile lg:text-display-lg text-on-surface-dark"
+                            data-design-text-token="display-lg">Raise</h2>
+                        <p id="process-desc"
+                            class="font-body text-body-sm uppercase text-on-surface-dark-muted max-w-xs text-pretty"
+                            data-design-text-token="body-sm">
+                            COLUMNS CLIMB AND SLABS ARE CAST FLOOR BY FLOOR WHILE THE CRANE KEEPS PACE, THEN THE GLAZED
+                            FACADE IS HUNG BEHIND THEM.
+                        </p>
+                    </div>
+
+                    <!-- Center Isometric Blueprint SVG -->
+                    <div class="lg:col-span-6 flex items-center justify-center">
+                        <!-- Stage 01: Survey -->
+                        <svg id="iso-stage-1" class="iso-diagram hidden w-full max-w-xl h-80" viewBox="0 0 560 320"
+                            fill="none" aria-hidden="true">
+                            <g stroke="#363633" stroke-width="1">
+                                <path d="M80 180L280 80L480 180L280 280Z"></path>
+                                <path d="M130 155L330 255"></path>
+                                <path d="M180 130L380 230"></path>
+                                <path d="M230 105L430 205"></path>
+                                <path d="M130 205L330 105"></path>
+                                <path d="M180 230L380 130"></path>
+                                <path d="M230 255L430 155"></path>
+                            </g>
+                            <path d="M160 180L280 120L400 180L280 240Z" stroke="#E84B32" stroke-width="1.5"
+                                stroke-dasharray="4 4"></path>
+                            <circle cx="280" cy="180" r="6" stroke="#E84B32" stroke-width="1.5"></circle>
+                            <line x1="280" y1="120" x2="280" y2="240" stroke="#F3F3F1" stroke-width="1"></line>
+                            <line x1="160" y1="180" x2="400" y2="180" stroke="#F3F3F1" stroke-width="1"></line>
+                            <rect x="156" y="176" width="8" height="8" fill="#E84B32"></rect>
+                            <rect x="396" y="176" width="8" height="8" fill="#E84B32"></rect>
+                        </svg>
+
+                        <!-- Stage 02: Plan -->
+                        <svg id="iso-stage-2" class="iso-diagram hidden w-full max-w-xl h-80" viewBox="0 0 560 320"
+                            fill="none" aria-hidden="true">
+                            <g stroke="#363633" stroke-width="1">
+                                <path d="M80 180L280 80L480 180L280 280Z"></path>
+                                <path d="M130 155L330 255"></path>
+                                <path d="M180 130L380 230"></path>
+                                <path d="M130 205L330 105"></path>
+                                <path d="M180 230L380 130"></path>
+                            </g>
+                            <path d="M180 185L280 135L380 185L280 235Z" stroke="#F3F3F1" stroke-width="1.5"></path>
+                            <path d="M210 170L280 135L350 170L280 205Z" stroke="#E84B32" stroke-width="1.5"></path>
+                            <path d="M240 165V125L280 105L320 125V165" stroke="#F3F3F1" stroke-width="1.25"></path>
+                            <line x1="280" y1="105" x2="280" y2="145" stroke="#E84B32" stroke-width="1.25"></line>
+                        </svg>
+
+                        <!-- Stage 03: Raise (Default Active) -->
+                        <svg id="iso-stage-3" class="iso-diagram w-full max-w-xl h-80" viewBox="0 0 560 320" fill="none"
+                            aria-hidden="true">
+                            <g stroke="#363633" stroke-width="1">
+                                <path d="M80 200L280 100L480 200L280 300Z"></path>
+                                <path d="M130 175L330 275"></path>
+                                <path d="M180 150L380 250"></path>
+                                <path d="M130 225L330 125"></path>
+                                <path d="M180 250L380 150"></path>
+                            </g>
+                            <!-- Podium Base -->
+                            <path d="M180 215L280 165L380 215L280 265Z" fill="#262624" stroke="#F3F3F1"
+                                stroke-width="1.25"></path>
+                            <path d="M180 215V245L280 295V265" stroke="#F3F3F1" stroke-width="1.25"></path>
+                            <path d="M380 215V245L280 295" stroke="#F3F3F1" stroke-width="1.25"></path>
+                            <!-- Rising Columns & Upper Slab -->
+                            <path d="M215 190L280 157L345 190L280 223Z" stroke="#F3F3F1" stroke-width="1.25"></path>
+                            <line x1="215" y1="190" x2="215" y2="215" stroke="#F3F3F1" stroke-width="1.25"></line>
+                            <line x1="280" y1="157" x2="280" y2="182" stroke="#F3F3F1" stroke-width="1.25"></line>
+                            <line x1="345" y1="190" x2="345" y2="215" stroke="#F3F3F1" stroke-width="1.25"></line>
+                            <line x1="280" y1="223" x2="280" y2="248" stroke="#F3F3F1" stroke-width="1.25"></line>
+                            <!-- Tower Crane in Signal Orange -->
+                            <line x1="370" y1="210" x2="370" y2="42" stroke="#E84B32" stroke-width="2"></line>
+                            <line x1="378" y1="210" x2="378" y2="42" stroke="#E84B32" stroke-width="1.25"></line>
+                            <line x1="230" y1="78" x2="410" y2="36" stroke="#E84B32" stroke-width="2"></line>
+                            <line x1="230" y1="88" x2="370" y2="54" stroke="#E84B32" stroke-width="1.25"></line>
+                            <line x1="290" y1="64" x2="290" y2="148" stroke="#E84B32" stroke-width="1.25"></line>
+                            <rect x="280" y="148" width="20" height="8" stroke="#E84B32" stroke-width="1.25"></rect>
+                            <rect x="392" y="34" width="16" height="12" fill="#E84B32"></rect>
+                        </svg>
+
+                        <!-- Stage 04: Handover -->
+                        <svg id="iso-stage-4" class="iso-diagram hidden w-full max-w-xl h-80" viewBox="0 0 560 320"
+                            fill="none" aria-hidden="true">
+                            <g stroke="#363633" stroke-width="1">
+                                <path d="M80 210L280 110L480 210L280 310Z"></path>
+                                <path d="M130 185L330 285"></path>
+                                <path d="M180 160L380 260"></path>
+                                <path d="M130 235L330 135"></path>
+                            </g>
+                            <!-- Completed Tower -->
+                            <path d="M180 215L280 165L380 215L280 265Z" fill="#262624" stroke="#F3F3F1"
+                                stroke-width="1.25"></path>
+                            <path d="M210 185V85L280 50L350 85V185L280 220Z" fill="#262624" stroke="#F3F3F1"
+                                stroke-width="1.5"></path>
+                            <line x1="280" y1="50" x2="280" y2="220" stroke="#F3F3F1" stroke-width="1"></line>
+                            <path d="M210 110L280 145L350 110" stroke="#F3F3F1" stroke-width="1"></path>
+                            <path d="M210 135L280 170L350 135" stroke="#F3F3F1" stroke-width="1"></path>
+                            <path d="M210 160L280 195L350 160" stroke="#F3F3F1" stroke-width="1"></path>
+                            <path d="M210 92L280 127L350 92" stroke="#E84B32" stroke-width="1.5"></path>
+                            <!-- Elevation Scale -->
+                            <line x1="420" y1="80" x2="420" y2="240" stroke="#A8A8A4" stroke-width="1"></line>
+                            <line x1="414" y1="80" x2="426" y2="80" stroke="#E84B32" stroke-width="1.5"></line>
+                            <line x1="414" y1="160" x2="426" y2="160" stroke="#A8A8A4" stroke-width="1"></line>
+                            <line x1="414" y1="240" x2="426" y2="240" stroke="#A8A8A4" stroke-width="1"></line>
+                        </svg>
+                    </div>
+
+                    <!-- Right Stage Selector -->
+                    <div class="lg:col-span-2 flex flex-col items-end gap-gutter-xs z-10">
+                        <button type="button" data-stage="1"
+                            class="process-stage-btn px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tabular-nums text-on-surface-dark-muted hover:text-on-surface-dark transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">01 SURVEY</span>
+                        </button>
+                        <button type="button" data-stage="2"
+                            class="process-stage-btn px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tabular-nums text-on-surface-dark-muted hover:text-on-surface-dark transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">02 PLAN</span>
+                        </button>
+                        <button type="button" data-stage="3"
+                            class="process-stage-btn px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tabular-nums bg-brand-orange text-on-brand-orange transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">03 RAISE</span>
+                        </button>
+                        <button type="button" data-stage="4"
+                            class="process-stage-btn px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tabular-nums text-on-surface-dark-muted hover:text-on-surface-dark transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">04 HANDOVER</span>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 4: PRINCIPLES ACCORDION (LIGHT) -->
+            <section id="principles" class="bg-surface text-on-surface border-b border-outline">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+
+                    <!-- Left Column -->
+                    <div
+                        class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-outline p-gutter-lg lg:p-gutter-xl">
+                        <h2 class="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance max-w-sm"
+                            data-design-text-token="headline-lg">
+                            EVERY PROJECT GUIDED BY PROVEN PRINCIPLES.
+                        </h2>
+                    </div>
+
+                    <!-- Right Column: Exclusive Accordion Group -->
+                    <div class="lg:col-span-7">
+                        <!-- COMPONENT: accordion-group -->
+                        <div data-component-id="accordion-group" data-component-type="accordion"
+                            data-component-variant="group" class="divide-y divide-outline">
+                            <details name="principles-group" open class="group p-gutter-lg">
+                                <summary
+                                    class="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
+                                    <span data-design-text-token="headline-md">SAFETY FIRST</span>
+                                    <span
+                                        class="material-symbols-outlined text-body-md text-on-surface-variant accordion-icon"
+                                        aria-hidden="true">remove</span>
+                                </summary>
+                                <div class="pt-gutter-md grid grid-cols-1 sm:grid-cols-12 gap-gutter-md items-start">
+                                    <p class="sm:col-span-7 font-body text-body-sm text-on-surface-variant text-pretty"
+                                        data-design-text-token="body-sm">
+                                        Unwavering commitment to workplace safety and regulatory compliance on every
+                                        site, every day.
+                                    </p>
+                                    <div class="sm:col-span-5">
+                                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrDArQxDt1gpfA8cQBR0DaDdxRyvxDxgA8ImCX5aymqCSf6ILk-pkkQqA-na8IiJyPVj3n7PjDackSLdJGcvXvi0HtLhcx7e1fc5nmBp5ZauP7H_lrf4MMUME5kkCFw79sOtkRRa0gyUdqwROj3tBG-w5oKGIKAVQ3G-rtL7luu6SM_mGHTQpM9mRuseamv63BwhvQopaGawuR3K7kS20ScTuyzlRE9fHyWFPgEDJc8pE_eIzivyEA"
+                                            alt="Construction engineer wearing hard hat and safety vest on site"
+                                            class="w-full h-36 object-cover grayscale contrast-125">
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details name="principles-group" class="group p-gutter-lg">
+                                <summary
+                                    class="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
+                                    <span data-design-text-token="headline-md">QUALITY EXECUTION</span>
+                                    <span
+                                        class="material-symbols-outlined text-body-md text-on-surface-variant accordion-icon"
+                                        aria-hidden="true">add</span>
+                                </summary>
+                                <div class="pt-gutter-md">
+                                    <p class="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty"
+                                        data-design-text-token="body-sm">
+                                        Rigorous structural verification, material traceability, and tolerance audits at
+                                        every construction milestone.
+                                    </p>
+                                </div>
+                            </details>
+
+                            <details name="principles-group" class="group p-gutter-lg">
+                                <summary
+                                    class="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
+                                    <span data-design-text-token="headline-md">RELIABLE DELIVERY</span>
+                                    <span
+                                        class="material-symbols-outlined text-body-md text-on-surface-variant accordion-icon"
+                                        aria-hidden="true">add</span>
+                                </summary>
+                                <div class="pt-gutter-md">
+                                    <p class="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty"
+                                        data-design-text-token="body-sm">
+                                        Integrated scheduling and transparent milestone reporting ensure handover on
+                                        time and within budget.
+                                    </p>
+                                </div>
+                            </details>
+
+                            <details name="principles-group" class="group p-gutter-lg">
+                                <summary
+                                    class="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
+                                    <span data-design-text-token="headline-md">LONG-TERM PARTNERSHIPS</span>
+                                    <span
+                                        class="material-symbols-outlined text-body-md text-on-surface-variant accordion-icon"
+                                        aria-hidden="true">add</span>
+                                </summary>
+                                <div class="pt-gutter-md">
+                                    <p class="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty"
+                                        data-design-text-token="body-sm">
+                                        Dedicated lifecycle support, facility commissioning, and multi-phase
+                                        collaboration with institutional clients.
+                                    </p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 5: FEATURED PROJECTS CAROUSEL (LIGHT) -->
+            <section id="projects"
+                class="bg-surface text-on-surface p-gutter-lg lg:p-gutter-xl border-b border-outline">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-gutter-md mb-gutter-xl">
+                    <h2 class="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance max-w-md"
+                        data-design-text-token="headline-lg">
+                        PROJECT BUILT TO PERFORM FOR DECADES.
+                    </h2>
+                    <!-- COMPONENT: button-primary -->
+                    <a href="#portfolio-grid" data-component-id="button-primary" data-component-type="button"
+                        data-component-variant="primary"
+                        class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change self-start sm:self-auto">
+                        <span data-design-text-token="label-md">ALL PROJECTS</span>
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                    </a>
+                </div>
+
+                <!-- 3-Column Project Grid with Diagonal-Notched Title Tabs -->
+                <div id="projects-track" class="grid grid-cols-1 md:grid-cols-3 gap-gutter-md items-stretch">
+
+                    <!-- Project Card 1 -->
+                    <!-- COMPONENT: card-interactive -->
+                    <a href="#portfolio-grid" data-component-id="card-interactive" data-component-type="card"
+                        data-component-variant="interactive"
+                        class="project-card group relative block h-72 bg-surface-container overflow-hidden border border-outline hover:border-primary transition-colors duration-state-change ease-state-change">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrBJh8jGWSaXjpF26Zm-u40bNPao74TTJ_Tuuac4dcYpLApgtU51AJlIiU_pzAIVU-43PHtU1_tgRUCU4YUOgVpD7YBeWYmyh-U5HojsW6AY2EOFsWOqUpzCB_EyEJr-P4gMa7fS5YPuVZtuc1ZVpIMTBZvlLoyRWunYo_6dmUzwI2DVg2vctzjm_Zz0ahfnHxNsFwshsv3NwlyusjbbZW_a9ZiPIwrVYCVMTAUlfAyjotOwl0ceg9VPgO9PRqo3"
+                            alt="Cylindrical corporate headquarters architectural tower"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <!-- COMPONENT: badge-numeric -->
+                        <span data-component-id="badge-numeric" data-component-type="badge"
+                            data-component-variant="status" role="status"
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tracking-wider border border-outline">
+                            <span data-design-text-token="label-sm">COMMERCIAL</span>
+                        </span>
+                        <div
+                            class="absolute bottom-0 left-0 right-12 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">CORPORATE HEADQUARTERS</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange group-hover:bg-primary group-hover:text-on-primary transition-colors duration-state-change">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </a>
+
+                    <!-- Project Card 2 -->
+                    <!-- COMPONENT: card-interactive -->
+                    <a href="#portfolio-grid" data-component-id="card-interactive" data-component-type="card"
+                        data-component-variant="interactive"
+                        class="project-card group relative block h-72 bg-surface-container overflow-hidden border border-outline hover:border-primary transition-colors duration-state-change ease-state-change">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrAwQmLKfDt65f6QnVgsv1mp7od5jDu6yCkE6ddVZ09E5fyXXLU6E4JokhtmxhqKZ8tLYajGRu7lGGLsbejZ2hO1ecbesyw5GIf_zEFB8h-hMsLdQIGR3HJS7oH4dEg_x_Suz5a17u7f-gdxVf2T_vghgu0-i1HC5M7Cjt7B0BAOVRf_SFyHm-wAvsCdD4e338FmuNzYfTa6JfhrZuCIjl6Hwq2grmU1fdUtZFdrJSqTB1GCzu_o"
+                            alt="Industrial shipping port cranes and container terminal"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <!-- COMPONENT: badge-numeric -->
+                        <span data-component-id="badge-numeric" data-component-type="badge"
+                            data-component-variant="status" role="status"
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tracking-wider border border-outline">
+                            <span data-design-text-token="label-sm">INDUSTRIAL</span>
+                        </span>
+                        <div
+                            class="absolute bottom-0 left-0 right-12 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">LOGISTICS PORT TERMINAL</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange group-hover:bg-primary group-hover:text-on-primary transition-colors duration-state-change">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </a>
+
+                    <!-- Project Card 3 -->
+                    <!-- COMPONENT: card-interactive -->
+                    <a href="#portfolio-grid" data-component-id="card-interactive" data-component-type="card"
+                        data-component-variant="interactive"
+                        class="project-card group relative block h-72 bg-surface-container overflow-hidden border border-outline hover:border-primary transition-colors duration-state-change ease-state-change">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCjr3PST1cli7UXzcCIRgc9RlUsihOBhB_2LdMJ3y2a6EIHNcy15C3mmItGymDez46qtiJjjfrS0fZDcAu7Hmp_z5Qs4B4duc9Zv3WeexZgsXP0snEjxr2Xh9V32KK0r5BQnDvhIdxskZmGiy992FSSuhRE8xf87dw9DQd4Nr_5tMeNcKNHUWtv1z1_3Cdjfiwl22ovRlfwznSiXFWefAwYuOG6HqikYCTc19FzEGgb7Ko87xtsBQQ4mTgrJBMs"
+                            alt="Automated industrial manufacturing facility interior"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <!-- COMPONENT: badge-numeric -->
+                        <span data-component-id="badge-numeric" data-component-type="badge"
+                            data-component-variant="status" role="status"
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tracking-wider border border-outline">
+                            <span data-design-text-token="label-sm">INDUSTRIAL</span>
+                        </span>
+                        <div
+                            class="absolute bottom-0 left-0 right-12 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">MANUFACTURING FACILITY</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange group-hover:bg-primary group-hover:text-on-primary transition-colors duration-state-change">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </a>
+
+                </div>
+
+                <!-- Carousel Arrow Controls -->
+                <div class="flex items-center gap-gutter-xs mt-gutter-lg">
+                    <!-- COMPONENT: button-icon -->
+                    <button id="prev-project-btn" data-component-id="button-icon" data-component-type="button"
+                        data-component-variant="icon" type="button" aria-label="Previous project"
+                        class="inline-flex items-center justify-center w-8 h-8 bg-primary text-on-primary hover:bg-brand-orange hover:text-on-brand-orange transition-colors duration-state-change ease-state-change">
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_back</span>
+                    </button>
+                    <!-- COMPONENT: button-icon -->
+                    <button id="next-project-btn" data-component-id="button-icon" data-component-type="button"
+                        data-component-variant="icon" type="button" aria-label="Next project"
+                        class="inline-flex items-center justify-center w-8 h-8 bg-primary text-on-primary hover:bg-brand-orange hover:text-on-brand-orange transition-colors duration-state-change ease-state-change">
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION 5B: FILTERABLE 2-COLUMN PORTFOLIO GRID -->
+            <section id="portfolio-grid" class="bg-surface text-on-surface p-gutter-lg lg:p-gutter-xl">
+                <!-- Filter Toolbar -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-gutter-md mb-gutter-lg">
+                    <div
+                        class="bg-primary text-on-primary px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider self-start">
+                        <span data-design-text-token="label-sm">SORT BY :</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-gutter-xs" role="group"
+                        aria-label="Filter projects by sector">
+                        <button type="button" data-filter="all"
+                            class="portfolio-filter-btn bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">ALL</span>
+                        </button>
+                        <button type="button" data-filter="infrastructure"
+                            class="portfolio-filter-btn bg-primary text-on-primary px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider hover:bg-brand-orange hover:text-on-brand-orange transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">INFRASTRUCTURE</span>
+                        </button>
+                        <button type="button" data-filter="industrial"
+                            class="portfolio-filter-btn bg-primary text-on-primary px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider hover:bg-brand-orange hover:text-on-brand-orange transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">INDUSTRIAL</span>
+                        </button>
+                        <button type="button" data-filter="commercial"
+                            class="portfolio-filter-btn bg-primary text-on-primary px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider hover:bg-brand-orange hover:text-on-brand-orange transition-colors duration-state-change">
+                            <span data-design-text-token="label-sm">COMMERCIAL</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2-Column 6-Project Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter-md">
+                    <article data-category="industrial"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrBJd2MPQcBjIpbkxPPuAL_VD6lG-v29c5-dXtbYnpZ0zZhneedypmUKfSAB-TeOR3SO5uqCRGyaaY-MtddVJ1Way7UZs_fEmWgxIkkLW28a3rGMNwDOKG-klFv116aemk_lRQQB73NVVqt2UY7UZJiMcYE_RDa3z465CvIJ6jV3TEUI9Cga7lfyu4Bd1qLU3b3iWfR14toS3hcvISng0uU51GRf2kBroJX1o3o-D7l9YTuuQq2fE1Ie"
+                            alt="Harbor District curved glass and basalt courtyard"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">INDUSTRIAL</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">HARBOR DISTRICT</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+
+                    <article data-category="infrastructure"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrDXcj2MPn2npv0MgMO1n2-YdBImK_fXrojLe2-h51MTjJlF8oxvNIIwS46cS1yxY7GX8Z3fnt2uCFuC-itSncdhlleqRwu5TSeZ6Ze6by6mwTAv_hEFR3hCX3wBOWgvx_z1OcJQFj_SPojAdb1udUzmtGlhRaYgZgvU6zTIUu76nODcjAHgP3R-gmH4EkXVW8rFGcwlF_0nnMzqevKWJp-tRUoQyQU1TYZ0vb7DWcmw_SzzPgtVyKEu"
+                            alt="Eastline Transit monolithic concrete hall"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">INFRASTRUCTURE</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">EASTLINE TRANSIT</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+
+                    <article data-category="commercial"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCjgoy-iq3XgOgcs_kL0g38OOo9_4iFfNbrVXkTcpjnC5Z5s4t46UEtwKkvQSDXVz6tI9MwvYI2MSpz2ooIIUfsJzpbA_Gwk2zQz9JMOQE8Panc7q6GrgeRzwxjLic67EpOIsYAbr-8ylobUNaRAZneGLurPOP8lSRqtVelcom74Sbnp7u4spTTgyr3epFx_PdhvPnhx7Ryrrq0pTC_SmskTlkWIaDECNKnIiYxuxEYPW4S4FyRPf1D"
+                            alt="Apex Manufacturing concrete facade"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">COMMERCIAL</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">APEX MANUFACTURING</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+
+                    <article data-category="infrastructure"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrCeoPUFh6JdMLyyRnSF_bAim53xKTNrXjgnYfhG9tGU5kMFffXVP6p_RXpiXa6ihfV2YDwe5SmTLrdS_WqAlXOHEGFL5PCZqjTOzeiBL3Xgrm9i-WZjxXSQOFxTIaSVroy6syqvdxlRNe-eqVOnMfy6Eih66n0qxqcLOOUbnh0XuqNa5nBiIJOrGM-Tr9LRqefO6bO0uVk-AEXLpipwnXDJqROJ0MEvsDW4ff7PFi-KhWLNJNTm3w5VvKU"
+                            alt="North Corridor curved concrete colonnade"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">INFRASTRUCTURE</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">NORTH CORRIDOR</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+
+                    <article data-category="industrial"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrAwQmLKfDt65f6QnVgsv1mp7od5jDu6yCkE6ddVZ09E5fyXXLU6E4JokhtmxhqKZ8tLYajGRu7lGGLsbejZ2hO1ecbesyw5GIf_zEFB8h-hMsLdQIGR3HJS7oH4dEg_x_Suz5a17u7f-gdxVf2T_vghgu0-i1HC5M7Cjt7B0BAOVRf_SFyHm-wAvsCdD4e338FmuNzYfTa6JfhrZuCIjl6Hwq2grmU1fdUtZFdrJSqTB1GCzu_o"
+                            alt="Nexus Logistics port cranes and freight hub"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">INDUSTRIAL</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">NEXUS LOGISTICS</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+
+                    <article data-category="commercial"
+                        class="portfolio-item group relative h-72 bg-surface-container overflow-hidden border border-outline">
+                        <img src="https://lh3.googleusercontent.com/aida/ALJJyrBJh8jGWSaXjpF26Zm-u40bNPao74TTJ_Tuuac4dcYpLApgtU51AJlIiU_pzAIVU-43PHtU1_tgRUCU4YUOgVpD7YBeWYmyh-U5HojsW6AY2EOFsWOqUpzCB_EyEJr-P4gMa7fS5YPuVZtuc1ZVpIMTBZvlLoyRWunYo_6dmUzwI2DVg2vctzjm_Zz0ahfnHxNsFwshsv3NwlyusjbbZW_a9ZiPIwrVYCVMTAUlfAyjotOwl0ceg9VPgO9PRqo3"
+                            alt="Meridian Tower commercial headquarters"
+                            class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-surface-enter">
+                        <span
+                            class="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase border border-outline"
+                            data-design-text-token="label-sm">COMMERCIAL</span>
+                        <div
+                            class="absolute bottom-0 left-0 right-16 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                            <h3 class="font-headline text-headline-sm uppercase text-on-surface"
+                                data-design-text-token="headline-sm">MERIDIAN TOWER</h3>
+                        </div>
+                        <span
+                            class="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-orange text-on-brand-orange">
+                            <span class="material-symbols-outlined text-body-sm" aria-hidden="true">add</span>
+                        </span>
+                    </article>
+                </div>
+
+                <div class="flex justify-center mt-gutter-xl">
+                    <!-- COMPONENT: button-primary -->
+                    <a href="#contact" data-component-id="button-primary" data-component-type="button"
+                        data-component-variant="primary"
+                        class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
+                        <span data-design-text-token="label-md">ALL PROJECTS</span>
+                        <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- SECTION 6: DARK FULL-WIDTH CTA BANNER -->
+            <section
+                class="relative bg-surface-dark text-on-surface-dark overflow-hidden min-h-[420px] grid grid-cols-1 lg:grid-cols-12">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBkwE27z9CYInLqynvjs5hQ_mMiz4eJ_vPU4E2OcIfIDtfgOwnfP9x4bBDWgrFjJ_94vRjH8g3fj_PT7pYRyYLvSR9WjZtez01Y6T2d5VqANAYB19CkgyG_lbsrFesIshxqKEPSmQ6wltK45KLTG1qX0nnRcSWDshkV71424k7U92M2mRlxZvBAIQwN1-PEO9ihBVlo9Z70rzTsn187yYet2yk5yHRZ37nc9Id8g1kGLelITVvMC48"
+                    alt="High-rise commercial facade architectural grid"
+                    class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale contrast-125 pointer-events-none">
+                <div class="absolute inset-0 blueprint-grid-dark pointer-events-none"></div>
+
+                <!-- Left Cell -->
+                <div
+                    class="relative z-10 lg:col-span-5 lg:border-r border-outline-dark p-gutter-lg lg:p-gutter-xl flex flex-col justify-between">
+                    <p class="font-body text-body-sm uppercase text-on-surface-dark max-w-xs text-pretty"
+                        data-design-text-token="body-sm">
+                        PARTNER WITH A TEAM COMMITTED TO DELIVERING QUALITY, SAFETY, AND LONG-TERM VALUE — FROM
+                        GROUNDBREAKING TO COMPLETION.
+                    </p>
+                </div>
+
+                <!-- Right Cell -->
+                <div class="relative z-10 lg:col-span-7 flex flex-col justify-end">
+                    <div
+                        class="border-t border-outline-dark p-gutter-lg lg:p-gutter-xl flex flex-col items-start gap-gutter-lg">
+                        <h2 class="font-display text-display-md-mobile lg:text-display-md uppercase text-on-surface-dark text-balance"
+                            data-design-text-token="display-md">
+                            BUILD WITH AN INDUSTRIALIZED AND DIGITAL SYSTEM
+                        </h2>
+                        <!-- COMPONENT: button-primary -->
+                        <a href="#contact" data-component-id="button-primary" data-component-type="button"
+                            data-component-variant="primary"
+                            class="inline-flex items-center justify-center gap-gutter-sm bg-brand-orange text-on-brand-orange px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change">
+                            <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
+                            <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ========================================================= -->
+        <!-- FOOTER (SIGNAL ORANGE)                                    -->
+        <!-- ========================================================= -->
+        <footer id="contact" class="bg-brand-orange text-on-brand-orange">
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+
+                <!-- Left Column: Statement, CTA & Large Mark -->
+                <div
+                    class="lg:col-span-5 lg:border-r border-on-brand-orange/25 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+                    <div class="flex flex-col items-start gap-gutter-lg">
+                        <p class="font-body text-body-md uppercase text-on-brand-orange max-w-xs text-pretty"
+                            data-design-text-token="body-md">
+                            BUILDING STRONGER FOUNDATIONS FOR BUSINESSES, COMMUNITIES, AND FUTURE GROWTH.
+                        </p>
+                        <!-- COMPONENT: button-secondary -->
+                        <a href="mailto:contact@gravixpoint.ch" data-component-id="button-secondary"
+                            data-component-type="button" data-component-variant="secondary"
+                            class="inline-flex items-center justify-center gap-gutter-sm bg-primary text-on-primary px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface-dark-elevated transition-colors duration-state-change ease-state-change">
+                            <span data-design-text-token="label-md">GET IN TOUCH</span>
+                            <span class="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <div class="pt-gutter-lg">
+                        <svg class="w-28 h-28 text-on-brand-orange" viewBox="0 0 64 64" fill="currentColor"
+                            aria-label="GravixPoint Emblem">
+                            <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Right Column: Stacked Links & Socials + Copyright -->
+                <div class="lg:col-span-7 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+                    <div>
+                        <nav aria-label="Footer navigation"
+                            class="flex flex-col divide-y divide-on-brand-orange/25 border-b border-on-brand-orange/25">
+                            <a href="#services"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">SERVICES</span></a>
+                            <a href="#projects"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">PROJECTS</span></a>
+                            <a href="#process-blueprint"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">PROCESS</span></a>
+                            <a href="#top"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">TEAM</span></a>
+                            <a href="#portfolio-grid"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">NEWS</span></a>
+                            <a href="#contact"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">CAREERS</span></a>
+                            <a href="#contact"
+                                class="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change"><span
+                                    data-design-text-token="headline-sm">CONTACT</span></a>
+                        </nav>
+
+                        <div class="flex items-center gap-gutter-sm pt-gutter-lg">
+                            <a href="#linkedin" aria-label="LinkedIn"
+                                class="inline-flex items-center justify-center w-7 h-7 bg-primary text-on-primary font-label text-label-sm hover:bg-surface hover:text-on-surface transition-colors duration-state-change">
+                                <span data-design-text-token="label-sm">in</span>
+                            </a>
+                            <a href="#x" aria-label="X"
+                                class="inline-flex items-center justify-center w-7 h-7 bg-primary text-on-primary font-label text-label-sm hover:bg-surface hover:text-on-surface transition-colors duration-state-change">
+                                <span data-design-text-token="label-sm">X</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="border-t border-on-brand-orange/25 pt-gutter-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-gutter-sm font-label text-label-sm uppercase">
+                        <span data-design-text-token="label-sm">© 2026 GRAVIXPOINT. ALL RIGHTS RESERVED.</span>
+                        <div class="flex items-center gap-gutter-lg">
+                            <a href="#privacy" class="hover:underline" data-design-text-token="label-sm">PRIVACY
+                                POLICY</a>
+                            <a href="#terms" class="hover:underline" data-design-text-token="label-sm">TERMS &amp;
+                                CONDITIONS</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        (function () {
+            // Menu drawer toggle
+            const openBtn = document.getElementById('open-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const drawer = document.getElementById('menu-drawer');
+            const drawerLinks = document.querySelectorAll('.drawer-link');
+
+            if (openBtn && closeBtn && drawer) {
+                openBtn.addEventListener('click', () => {
+                    drawer.classList.remove('hidden');
+                    drawer.classList.add('flex');
+                });
+                closeBtn.addEventListener('click', () => {
+                    drawer.classList.add('hidden');
+                    drawer.classList.remove('flex');
+                });
+                drawerLinks.forEach((link) => {
+                    link.addEventListener('click', () => {
+                        drawer.classList.add('hidden');
+                        drawer.classList.remove('flex');
+                    });
+                });
+            }
+
+            // Accordion +/- icon sync
+            const detailsList = document.querySelectorAll('details[name="principles-group"]');
+            detailsList.forEach((det) => {
+                det.addEventListener('toggle', () => {
+                    detailsList.forEach((item) => {
+                        const icon = item.querySelector('.accordion-icon');
+                        if (icon) {
+                            icon.textContent = item.open ? 'remove' : 'add';
+                        }
+                    });
+                });
+            });
+
+            // Simple project carousel reorder
+            const track = document.getElementById('projects-track');
+            const prevBtn = document.getElementById('prev-project-btn');
+            const nextBtn = document.getElementById('next-project-btn');
+            if (track && prevBtn && nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    const first = track.firstElementChild;
+                    if (first) track.appendChild(first);
+                });
+                prevBtn.addEventListener('click', () => {
+                    const last = track.lastElementChild;
+                    if (last) track.prepend(last);
+                });
+            }
+
+            // 4-Stage Isometric Process Blueprint Switcher
+            const stages = {
+                '1': {
+                    counter: '01 / 04',
+                    title: 'Survey',
+                    desc: 'GEOTECHNICAL CORING, LASER SCANNING, AND BOUNDARY VERIFICATION ESTABLISH THE EXACT DATUM BEFORE EXCAVATION BEGINS.'
+                },
+                '2': {
+                    counter: '02 / 04',
+                    title: 'Plan',
+                    desc: 'STRUCTURAL MODELS, MEP CLASH DETECTION, AND LOGISTICS SEQUENCING ALIGN EVERY TRADE ON ONE UNIFIED SCHEDULE.'
+                },
+                '3': {
+                    counter: '03 / 04',
+                    title: 'Raise',
+                    desc: 'COLUMNS CLIMB AND SLABS ARE CAST FLOOR BY FLOOR WHILE THE CRANE KEEPS PACE, THEN THE GLAZED FACADE IS HUNG BEHIND THEM.'
+                },
+                '4': {
+                    counter: '04 / 04',
+                    title: 'Handover',
+                    desc: 'SYSTEMS COMMISSIONING, DIGITAL TWIN DOCUMENTATION, AND FINAL TOLERANCE SIGN-OFF DELIVER A BUILDING READY FOR DECADES.'
+                }
+            };
+
+            const stageBtns = document.querySelectorAll('.process-stage-btn');
+            const counterEl = document.getElementById('process-counter');
+            const titleEl = document.getElementById('process-title');
+            const descEl = document.getElementById('process-desc');
+            const diagrams = document.querySelectorAll('.iso-diagram');
+
+            stageBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-stage');
+                    const data = stages[id];
+                    if (!data) return;
+                    if (counterEl) counterEl.textContent = data.counter;
+                    if (titleEl) titleEl.textContent = data.title;
+                    if (descEl) descEl.textContent = data.desc;
+
+                    diagrams.forEach((d) => d.classList.add('hidden'));
+                    const activeDiagram = document.getElementById('iso-stage-' + id);
+                    if (activeDiagram) activeDiagram.classList.remove('hidden');
+
+                    stageBtns.forEach((b) => {
+                        b.classList.remove('bg-brand-orange', 'text-on-brand-orange');
+                        b.classList.add('text-on-surface-dark-muted');
+                    });
+                    btn.classList.remove('text-on-surface-dark-muted');
+                    btn.classList.add('bg-brand-orange', 'text-on-brand-orange');
+                });
+            });
+
+            // Portfolio Grid Sector Filter
+            const filterBtns = document.querySelectorAll('.portfolio-filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+                    filterBtns.forEach((b) => {
+                        b.classList.remove('bg-brand-orange', 'text-on-brand-orange');
+                        b.classList.add('bg-primary', 'text-on-primary');
+                    });
+                    btn.classList.remove('bg-primary', 'text-on-primary');
+                    btn.classList.add('bg-brand-orange', 'text-on-brand-orange');
+
+                    portfolioItems.forEach((item) => {
+                        const cat = item.getAttribute('data-category');
+                        if (filter === 'all' || cat === filter) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        })();
+    </script>
+
+
+</body>
+
+</html>

@@ -5537,3 +5537,28 @@ body[data-page="home"] .site-header.scrolled {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(8, 69, 52, 0.28);
 }
+
+
+/* ---------- Chamfer Octagon & Dot-Matrix Wireframe Stage ---------- */
+.chamfer-octagon {
+  clip-path: polygon(
+    20px 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100% - 20px),
+    0 20px
+  );
+}
+
+.dot-matrix-dark {
+  background-image: radial-gradient(rgba(243, 243, 241, 0.16) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.dot-matrix-light {
+  background-image: radial-gradient(rgba(243, 243, 241, 0.2) 1px, transparent 1px);
+  background-size: 8px 8px;
+}

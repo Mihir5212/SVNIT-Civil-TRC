@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block');
+
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-symbols-sharp,
+.material-icons {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1 !important;
+  box-sizing: content-box;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+}
+
+.chamfer-octagon {
+  clip-path: polygon(
+    20px 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100% - 20px),
+    0 20px
+  );
+}
+
+.dot-matrix-dark {
+  background-image: radial-gradient(rgba(243, 243, 241, 0.16) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.dot-matrix-light {
+  background-image: radial-gradient(rgba(243, 243, 241, 0.2) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.chamfer-card {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.chamfer-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+}
+
+.chamfer-hero-orange {
+  clip-path: polygon(88px 0, 100% 0, 100% 100%, 0 100%, 0 88px);
+}
+
+.chamfer-tl-dark {
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+}
+
+.blueprint-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(243, 243, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 243, 241, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.notch-title-tab {
+  clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 100%, 0 100%);
+}
+
+.chamfer-split-right {
+  clip-path: polygon(0 0, 100% 24px, 100% calc(100% - 24px), 0 100%);
+}
+
+.chamfer-split-left {
+  clip-path: polygon(0 24px, 100% 0, 100% 100%, 0 calc(100% - 24px));
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #0b5d45;
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f3f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0b5d45;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #084734;
+}
+
+/* Selection colors */
+::selection {
+  background-color: #0b5d45;
+  color: #f0fdf4;
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+/* Reveal animation for scroll */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
