@@ -1,0 +1,20 @@
+{
+	admin off
+}
+
+:{$PORT:80} {
+	root * /app
+	encode zstd gzip
+
+	route {
+		@static {
+			path /assets/* /images/*
+			not path */
+			file
+		}
+		file_server @static
+
+		rewrite * /api/index.php
+		php_server
+	}
+}

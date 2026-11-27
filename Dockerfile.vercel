@@ -1,0 +1,17 @@
+FROM dunglas/frankenphp:1-php8.4-alpine
+
+WORKDIR /app
+
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY api ./api
+COPY assets ./assets
+COPY images ./images
+COPY includes ./includes
+COPY *.php ./
+
+ENV PORT=80
+EXPOSE 80
+
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]

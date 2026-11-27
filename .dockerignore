@@ -1,0 +1,10 @@
+.git/
+.vercel/
+node_modules/
+frontend/
+frontend-react/
+scratch/
+Mattestlab*/
+/*.html
+*.mp4
+images/Ref/
