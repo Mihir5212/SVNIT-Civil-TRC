@@ -197,12 +197,12 @@ const Home = () => {
         {/* Bottom Asymmetric Split (White Left 64% / Slanted Green Right 36%) */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[64%_36%] items-stretch bg-surface">
           {/* Left 64%: Display Headline + Description */}
-          <div className="flex flex-col justify-between bg-surface lg:border-r border-outline p-gutter-lg lg:p-gutter-xl pb-8 gap-8">
-            <h1 className="font-display text-display-lg-mobile lg:text-[44px] xl:text-[52px] lg:leading-[1.05] font-semibold tracking-tight uppercase text-on-surface" data-design-text-token="display-lg">
+          <div className="flex flex-col justify-between bg-surface lg:border-r border-outline p-gutter-lg lg:p-gutter-xl pb-6 sm:pb-8 gap-6 sm:gap-8">
+            <h1 className="font-display text-[26px] leading-[1.1] sm:text-display-lg-mobile lg:text-[44px] xl:text-[52px] lg:leading-[1.05] font-semibold tracking-tight uppercase text-on-surface" data-design-text-token="display-lg">
               ENGINEERING TOMORROW'S<br />INFRASTRUCTURE TODAY.
             </h1>
 
-            <div className="pt-gutter-sm">
+            <div className="pt-gutter-xs sm:pt-gutter-sm">
               <p className="font-body text-body-sm text-on-surface-variant max-w-md text-pretty" data-design-text-token="body-sm">
                 Transportation Research Cell at SVNIT Surat delivers precision-driven civil and transportation engineering consultancy — from traffic planning to road safety audits.
               </p>
@@ -212,17 +212,16 @@ const Home = () => {
           {/* Right 36%: Compact Slanted Green Architectural Block */}
           <div className="relative flex flex-col justify-between bg-surface">
             <div
-              className="relative lg:-mt-[120px] flex-1 bg-brand-green text-on-brand-green flex flex-col justify-between min-h-[260px] lg:min-h-[340px]"
-              style={{ clipPath: 'polygon(108px 0, 100% 0, 100% 100%, 0 100%, 0 108px)' }}
+              className="chamfer-hero-green relative lg:-mt-[120px] flex-1 bg-brand-green text-on-brand-green flex flex-col justify-between min-h-[200px] sm:min-h-[240px] lg:min-h-[340px]"
             >
               {/* Top Chamfered Location/Year Row with Divider Hairline */}
-              <div className="flex items-center justify-between pt-4 pb-3.5 pl-[116px] pr-gutter-lg lg:pl-[124px] lg:pr-gutter-xl border-b border-on-brand-green/25 font-label text-label-sm uppercase tabular-nums">
+              <div className="flex items-center justify-between pt-3.5 pb-3 pl-[64px] pr-gutter-lg lg:pt-4 lg:pb-3.5 lg:pl-[124px] lg:pr-gutter-xl border-b border-on-brand-green/25 font-label text-label-sm uppercase tabular-nums">
                 <span data-design-text-token="label-sm">SURAT, INDIA</span>
                 <span data-design-text-token="label-sm">EST. 2010</span>
               </div>
 
               {/* Center Operating System Copy */}
-              <div className="my-auto px-gutter-lg lg:px-gutter-xl py-8">
+              <div className="my-auto px-gutter-lg lg:px-gutter-xl py-6 lg:py-8">
                 <p className="font-body text-body-sm text-on-brand-green max-w-sm text-pretty leading-relaxed" data-design-text-token="body-sm">
                   Every project runs on one operating system — shared schedules, shared accountability, shared standards — so transportation, infrastructure, and civil work all ship at the same level of precision.
                 </p>
@@ -287,55 +286,55 @@ const Home = () => {
         {/* SECTION 2: STATS & EXPERTISE (DARK) */}
         <section className="relative bg-surface-dark text-on-surface-dark p-gutter-lg lg:p-gutter-xl border-b border-outline" data-reveal>
           <div className="w-full max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-stretch">
-            {/* Left: 2x2 Chamfered KPI Cards (Brand Orange with Counter Effect) */}
-            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-gutter-md">
-              <article className="chamfer-octagon bg-brand-green text-white p-6 sm:p-7 flex flex-col justify-between min-h-[160px] sm:min-h-[175px]">
+            {/* Left: 2x2 Chamfered KPI Cards (Brand Green with Counter Effect) */}
+            <div className="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-gutter-md">
+              <article className="chamfer-octagon bg-brand-green text-white p-4 sm:p-6 lg:p-7 flex flex-col justify-between min-h-[120px] sm:min-h-[160px] lg:min-h-[175px]">
                 <header>
-                  <h2 className="font-display text-4xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
+                  <h2 className="font-display text-3xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
                     <StatCounter target={250} suffix="+" />
                   </h2>
                 </header>
                 <div>
-                  <p className="font-body text-xs sm:text-sm text-white/90" data-design-text-token="body-sm">Projects Delivered</p>
+                  <p className="font-body text-[11px] sm:text-sm text-white/90" data-design-text-token="body-sm">Projects Delivered</p>
                 </div>
               </article>
 
-              <article className="chamfer-octagon bg-brand-green text-white p-6 sm:p-7 flex flex-col justify-between min-h-[160px] sm:min-h-[175px]">
+              <article className="chamfer-octagon bg-brand-green text-white p-4 sm:p-6 lg:p-7 flex flex-col justify-between min-h-[120px] sm:min-h-[160px] lg:min-h-[175px]">
                 <header>
-                  <h2 className="font-display text-4xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
+                  <h2 className="font-display text-3xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
                     <StatCounter target={15} suffix="+" />
                   </h2>
                 </header>
                 <div>
-                  <p className="font-body text-xs sm:text-sm text-white/90" data-design-text-token="body-sm">Years Experience</p>
+                  <p className="font-body text-[11px] sm:text-sm text-white/90" data-design-text-token="body-sm">Years Experience</p>
                 </div>
               </article>
 
-              <article className="chamfer-octagon bg-brand-green text-white p-6 sm:p-7 flex flex-col justify-between min-h-[160px] sm:min-h-[175px]">
+              <article className="chamfer-octagon bg-brand-green text-white p-4 sm:p-6 lg:p-7 flex flex-col justify-between min-h-[120px] sm:min-h-[160px] lg:min-h-[175px]">
                 <header>
-                  <h2 className="font-display text-4xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
+                  <h2 className="font-display text-3xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
                     <StatCounter target={98} suffix="%" />
                   </h2>
                 </header>
                 <div>
-                  <p className="font-body text-xs sm:text-sm text-white/90" data-design-text-token="body-sm">Client Satisfaction</p>
+                  <p className="font-body text-[11px] sm:text-sm text-white/90" data-design-text-token="body-sm">Client Satisfaction</p>
                 </div>
               </article>
 
-              <article className="chamfer-octagon bg-brand-green text-white p-6 sm:p-7 flex flex-col justify-between min-h-[160px] sm:min-h-[175px]">
+              <article className="chamfer-octagon bg-brand-green text-white p-4 sm:p-6 lg:p-7 flex flex-col justify-between min-h-[120px] sm:min-h-[160px] lg:min-h-[175px]">
                 <header>
-                  <h2 className="font-display text-4xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
+                  <h2 className="font-display text-3xl sm:text-5xl lg:text-[46px] font-semibold text-white tracking-tight" data-design-text-token="display-md">
                     <StatCounter target={500} suffix="+" />
                   </h2>
                 </header>
                 <div>
-                  <p className="font-body text-xs sm:text-sm text-white/90" data-design-text-token="body-sm">Skilled Professionals</p>
+                  <p className="font-body text-[11px] sm:text-sm text-white/90" data-design-text-token="body-sm">Skilled Professionals</p>
                 </div>
               </article>
             </div>
 
             {/* Right: Concrete Expertise Block */}
-            <div className="lg:col-span-6 chamfer-br bg-surface-muted text-on-surface-muted p-gutter-lg lg:p-gutter-xl flex flex-col justify-between min-h-[340px]">
+            <div className="lg:col-span-6 chamfer-br bg-surface-muted text-on-surface-muted p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-6 min-h-[220px] sm:min-h-[280px] lg:min-h-[340px]">
               <h2 className="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance" data-design-text-token="headline-lg">
                 CONSTRUCTION EXPERTISE BACKED BY EXPERIENCE.
               </h2>
@@ -590,7 +589,7 @@ const Home = () => {
 
             {/* PANEL 1: COMMERCIAL CONSTRUCTION (Photo Left / Content Right) */}
             <div id="commercial-construction" className="grid grid-cols-1 lg:grid-cols-12 border-b border-outline">
-              <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark">
+              <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[380px] lg:min-h-[540px] bg-surface-dark">
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src="/images/Hero_1.jpg"
@@ -600,8 +599,8 @@ const Home = () => {
                   <div className="absolute inset-0 dot-matrix-overlay pointer-events-none"></div>
 
                   {/* White Radial Target SVG Overlay */}
-                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-xl">
-                    <svg className="w-56 h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-lg lg:p-gutter-xl">
+                    <svg className="w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                       <circle cx="80" cy="80" r="64"></circle>
                       <circle cx="80" cy="80" r="24"></circle>
                       <line x1="80" y1="16" x2="80" y2="144"></line>
@@ -689,7 +688,7 @@ const Home = () => {
                 </ul>
               </div>
 
-              <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark order-1 lg:order-2">
+              <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[380px] lg:min-h-[540px] bg-surface-dark order-1 lg:order-2">
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src="/images/Land Development.jpg"
@@ -699,8 +698,8 @@ const Home = () => {
                   <div className="absolute inset-0 dot-matrix-overlay pointer-events-none"></div>
 
                   {/* White Stepped Brackets SVG Overlay */}
-                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-xl">
-                    <svg className="w-56 h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-lg lg:p-gutter-xl">
+                    <svg className="w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
                       <path d="M52 40V24H24V136H52V120"></path>
                       <path d="M108 40V24H136V136H108V120"></path>
                       <path d="M64 54V40H38V120H64V106"></path>
@@ -719,7 +718,7 @@ const Home = () => {
 
             {/* PANEL 3: INFRASTRUCTURE DEVELOPMENT (Photo Left / Content Right) */}
             <div id="infrastructure-development" className="grid grid-cols-1 lg:grid-cols-12 border-b border-outline">
-              <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark">
+              <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[380px] lg:min-h-[540px] bg-surface-dark">
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src="/images/Transportation.jpg"
@@ -729,8 +728,8 @@ const Home = () => {
                   <div className="absolute inset-0 dot-matrix-overlay pointer-events-none"></div>
 
                   {/* White Stepped Architectural Tower SVG Overlay */}
-                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-xl">
-                    <svg className="w-56 h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-lg lg:p-gutter-xl">
+                    <svg className="w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
                       <line x1="20" y1="130" x2="140" y2="130"></line>
                       <rect x="58" y="28" width="44" height="102" fill="#1C1C1B" fillOpacity="0.75"></rect>
                       <line x1="80" y1="28" x2="80" y2="130"></line>
@@ -823,7 +822,7 @@ const Home = () => {
                 </ul>
               </div>
 
-              <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark order-1 lg:order-2">
+              <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[380px] lg:min-h-[540px] bg-surface-dark order-1 lg:order-2">
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src="/images/Rail Services.jpg"
@@ -833,8 +832,8 @@ const Home = () => {
                   <div className="absolute inset-0 dot-matrix-overlay pointer-events-none"></div>
 
                   {/* White Graduated Crosshair & Quadrant Nodes SVG Overlay */}
-                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-xl">
-                    <svg className="w-56 h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                  <div className="relative z-10 h-full flex items-center justify-center p-gutter-lg lg:p-gutter-xl">
+                    <svg className="w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
                       <line x1="80" y1="28" x2="80" y2="132"></line>
                       <line x1="74" y1="28" x2="86" y2="28"></line>
                       <line x1="74" y1="132" x2="86" y2="132"></line>
@@ -884,7 +883,7 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12">
 
               {/* Left 6 Columns: Headline */}
-              <div className="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-outline p-gutter-xl flex flex-col justify-between min-h-[540px]">
+              <div className="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-outline p-gutter-lg lg:p-gutter-xl flex flex-col justify-between min-h-0 lg:min-h-[540px]">
                 <h2 className="font-display text-display-md-mobile lg:text-display-lg uppercase text-on-surface text-balance max-w-lg" data-design-text-token="display-lg">
                   EVERY PROJECT GUIDED BY PROVEN PRINCIPLES.
                 </h2>
@@ -901,7 +900,7 @@ const Home = () => {
                           type="button"
                           onClick={() => setActivePrinciple(isOpen ? -1 : idx)}
                           aria-expanded={isOpen}
-                          className="w-full px-gutter-xl py-gutter-lg flex items-center justify-between text-left font-headline text-headline-md uppercase hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
+                          className="w-full px-gutter-lg lg:px-gutter-xl py-gutter-md lg:py-gutter-lg flex items-center justify-between gap-gutter-md text-left font-headline text-base sm:text-headline-md uppercase hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
                         >
                           <span data-design-text-token="headline-md">{item.title}</span>
                           <span className="material-symbols-outlined text-headline-md text-on-surface-variant shrink-0" aria-hidden="true">
@@ -910,7 +909,7 @@ const Home = () => {
                         </button>
 
                         {isOpen && (
-                          <div className="px-gutter-xl pb-gutter-xl pt-1 grid grid-cols-1 sm:grid-cols-12 gap-gutter-lg items-start animate-fade-in">
+                          <div className="px-gutter-lg lg:px-gutter-xl pb-gutter-lg lg:pb-gutter-xl pt-1 grid grid-cols-1 sm:grid-cols-12 gap-gutter-md lg:gap-gutter-lg items-start animate-fade-in">
                             <p className="sm:col-span-6 font-body text-body-sm text-on-surface-variant text-pretty leading-relaxed" data-design-text-token="body-sm">
                               {item.description}
                             </p>

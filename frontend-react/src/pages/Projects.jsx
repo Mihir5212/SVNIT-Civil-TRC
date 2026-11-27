@@ -190,7 +190,7 @@ const Projects = () => {
                 const isOpen = !!expandedIds[project.id];
                 return (
                   <article key={project.id} className="portfolio-item flex flex-col border border-outline bg-surface group hover:border-brand-green transition-colors">
-                    <div className="relative h-72 bg-surface-dark overflow-hidden">
+                    <div className="relative h-60 sm:h-72 bg-surface-dark overflow-hidden">
                       <img
                         src={project.image}
                         alt={project.alt}
@@ -204,9 +204,9 @@ const Projects = () => {
                           type="button"
                           onClick={() => toggleDetails(project.id)}
                           aria-expanded={isOpen}
-                          className="cursor-pointer text-left notch-title-tab bg-surface text-on-surface hover:text-brand-green transition-colors pl-gutter-md pr-12 pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] min-w-[65%]"
+                          className="cursor-pointer text-left notch-title-tab bg-surface text-on-surface hover:text-brand-green transition-colors pl-gutter-md pr-8 sm:pr-12 pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] min-w-[65%] max-w-[calc(100%-44px)]"
                         >
-                          <h2 className="font-headline text-headline-md uppercase" data-design-text-token="headline-md">
+                          <h2 className="font-headline text-base sm:text-headline-md uppercase" data-design-text-token="headline-md">
                             {project.title}
                           </h2>
                         </button>

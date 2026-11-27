@@ -220,7 +220,7 @@ export default function Publications() {
                   key={item.id}
                   className="bg-surface-container border border-outline flex flex-col justify-between"
                 >
-                  <div className="relative h-[300px] sm:h-[340px] overflow-hidden border-b border-outline bg-surface-dark">
+                  <div className="relative h-[240px] sm:h-[320px] overflow-hidden border-b border-outline bg-surface-dark">
                     <img
                       alt={item.imageAlt}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.03]"
@@ -238,9 +238,9 @@ export default function Publications() {
                         type="button"
                         onClick={() => toggleDetails(item.id)}
                         aria-expanded={isExpanded}
-                        className="cursor-pointer text-left bg-brand-green text-on-brand-green hover:opacity-95 transition-opacity notch-title-tab pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] pl-gutter-md pr-gutter-xl max-w-[85%]"
+                        className="cursor-pointer text-left bg-brand-green text-on-brand-green hover:opacity-95 transition-opacity notch-title-tab pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] pl-gutter-md pr-8 sm:pr-gutter-xl max-w-[calc(100%-48px)]"
                       >
-                        <h3 className="font-headline text-headline-sm uppercase leading-tight">
+                        <h3 className="font-headline text-sm sm:text-headline-sm uppercase leading-tight">
                           {item.title}
                         </h3>
                       </button>
@@ -344,7 +344,7 @@ export default function Publications() {
       </section>
 
       {/* SECTION 3: CONSULTATION CTA BANNER */}
-      <section className="w-full py-section bg-surface-dark border-t border-outline-dark text-on-surface-dark relative overflow-hidden" id="consultation-cta">
+      <section className="w-full pt-section pb-12 lg:pb-20 bg-surface-dark border-t border-outline-dark text-on-surface-dark relative overflow-hidden" id="consultation-cta">
         <div className="max-w-[1440px] mx-auto px-page-margin grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
           <div className="lg:col-span-8">
             <h2 className="font-display text-display-md-mobile lg:text-display-md uppercase mb-gutter-md">

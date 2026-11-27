@@ -201,7 +201,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative min-h-[380px] bg-surface-dark text-on-surface-dark overflow-hidden flex flex-col justify-between p-gutter-lg">
+          <div className="lg:col-span-5 relative min-h-[280px] sm:min-h-[380px] bg-surface-dark text-on-surface-dark overflow-hidden flex flex-col justify-between p-gutter-lg">
             <img
               src="/SVNIT Building.jpg"
               alt="Department of Civil Engineering Building, SVNIT Surat"
@@ -218,7 +218,7 @@ const About = () => {
 
             {/* Center Target Reticle SVG */}
             <div className="relative z-10 flex items-center justify-center py-gutter-md">
-              <svg className="w-40 h-40 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+              <svg className="w-28 h-28 sm:w-40 sm:h-40 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
                 <circle cx="80" cy="80" r="62" />
                 <circle cx="80" cy="80" r="24" />
                 <line x1="80" y1="8" x2="80" y2="152" />
@@ -579,7 +579,7 @@ const About = () => {
       {/* ========================================================= */}
       {selectedCert && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-8"
           onClick={() => setSelectedCertIdx(null)}
           role="dialog"
           aria-modal="true"
@@ -590,7 +590,7 @@ const About = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Top Header */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-outline-dark bg-surface-dark-elevated">
+            <div className="flex items-center justify-between gap-2 px-3.5 sm:px-5 py-3 sm:py-3.5 border-b border-outline-dark bg-surface-dark-elevated">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="px-2.5 py-1 bg-brand-green text-on-brand-green font-label text-label-sm uppercase tabular-nums shrink-0">
                   {selectedCert.id} / {String(CERTIFICATES.length).padStart(2, '0')}

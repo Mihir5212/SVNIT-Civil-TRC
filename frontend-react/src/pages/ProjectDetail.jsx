@@ -545,11 +545,11 @@ export default function ProjectDetail() {
                     <p className="font-body text-body-sm text-on-surface-variant">
                       {rp.summary}
                     </p>
-                    <div className="border-t border-outline pt-gutter-sm flex items-center justify-between font-label text-label-sm uppercase">
+                    <div className="border-t border-outline pt-gutter-sm flex flex-wrap items-center justify-between gap-2 font-label text-label-sm uppercase">
                       <span className="text-on-surface-variant">{rp.location}</span>
                       <Link
                         to={`/projects/${rp.id}`}
-                        className="text-brand-green hover:opacity-80 transition-opacity font-medium"
+                        className="text-brand-green hover:opacity-80 transition-opacity font-medium shrink-0"
                       >
                         VIEW PROJECT BRIEF →
                       </Link>

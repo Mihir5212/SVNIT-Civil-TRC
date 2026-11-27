@@ -85,7 +85,13 @@ body {
 }
 
 .chamfer-hero-green {
-  clip-path: polygon(88px 0, 100% 0, 100% 100%, 0 100%, 0 88px);
+  clip-path: polygon(48px 0, 100% 0, 100% 100%, 0 100%, 0 48px);
+}
+
+@media (min-width: 1024px) {
+  .chamfer-hero-green {
+    clip-path: polygon(108px 0, 100% 0, 100% 100%, 0 100%, 0 108px);
+  }
 }
 
 .chamfer-tl-dark {

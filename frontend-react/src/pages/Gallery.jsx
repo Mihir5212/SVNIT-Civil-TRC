@@ -385,7 +385,7 @@ export default function Gallery() {
       {/* BIG-VIEW LIGHTBOX MODAL */}
       {activePlate && (
         <div
-          className="fixed inset-0 z-50 bg-surface-dark/95 text-on-surface-dark flex flex-col p-gutter-md lg:p-gutter-xl"
+          className="fixed inset-0 z-50 bg-surface-dark/95 text-on-surface-dark flex flex-col p-3 sm:p-gutter-md lg:p-gutter-xl overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="lightbox-title"
@@ -395,7 +395,7 @@ export default function Gallery() {
         >
           <div className="max-w-6xl w-full mx-auto flex flex-col border border-outline-dark bg-surface-dark my-auto">
             {/* Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-gutter-md px-gutter-lg py-gutter-md border-b border-outline-dark bg-surface-dark-elevated">
+            <div className="flex flex-wrap items-center justify-between gap-gutter-sm px-gutter-md sm:px-gutter-lg py-gutter-sm sm:py-gutter-md border-b border-outline-dark bg-surface-dark-elevated">
               <div className="flex items-center gap-gutter-sm">
                 <span className="bg-brand-green text-on-brand-green px-gutter-sm py-gutter-xs font-label text-label-sm uppercase">
                   {activePlate.catLabel}
@@ -434,14 +434,14 @@ export default function Gallery() {
 
             {/* Big Image + Caption */}
             <div className="grid grid-cols-1 lg:grid-cols-12">
-              <div className="lg:col-span-8 bg-surface-dark-elevated flex items-center justify-center p-gutter-md border-b lg:border-b-0 lg:border-r border-outline-dark">
+              <div className="lg:col-span-8 bg-surface-dark-elevated flex items-center justify-center p-gutter-sm sm:p-gutter-md border-b lg:border-b-0 lg:border-r border-outline-dark">
                 <img
                   src={activePlate.src}
                   alt={activePlate.title}
-                  className="w-full max-h-[68vh] object-contain"
+                  className="w-full max-h-[45vh] sm:max-h-[55vh] lg:max-h-[68vh] object-contain"
                 />
               </div>
-              <div className="lg:col-span-4 p-gutter-xl flex flex-col justify-between gap-gutter-lg">
+              <div className="lg:col-span-4 p-gutter-lg sm:p-gutter-xl flex flex-col justify-between gap-gutter-md sm:gap-gutter-lg">
                 <div className="flex flex-col gap-gutter-sm">
                   <span className="font-label text-label-sm uppercase text-brand-green">
                     {activePlate.meta}

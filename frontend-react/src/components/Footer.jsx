@@ -27,7 +27,7 @@ const Footer = () => {
     <footer id="site-footer" className="relative bg-brand-green text-on-brand-green">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Left Column with Top-Right Chamfered Step */}
-        <div className="lg:col-span-4 relative bg-brand-green p-gutter-xl pt-gutter-xl pb-gutter-xl flex flex-col justify-between gap-12 lg:border-r border-on-brand-green/25">
+        <div className="lg:col-span-4 relative bg-brand-green p-gutter-lg sm:p-gutter-xl flex flex-col justify-between gap-10 lg:gap-12 lg:border-r border-on-brand-green/25">
           {/* Chamfered Step Overlapping Dark CTA Banner */}
           <div
             className="hidden lg:block absolute -top-10 left-0 right-0 h-10 bg-brand-green"
@@ -49,18 +49,18 @@ const Footer = () => {
           </div>
 
           {/* Dual Institutional Brand Logos Side by Side (SVNIT Surat + TEP Cell) */}
-          <div className="pt-gutter-lg flex flex-col items-start gap-4">
-            <div className="inline-flex items-center gap-4 bg-white px-4 py-3 border border-outline chamfer-card shadow-sm">
+          <div className="pt-gutter-md sm:pt-gutter-lg flex flex-col items-start gap-4">
+            <div className="inline-flex items-center gap-3 sm:gap-4 bg-white px-3 sm:px-4 py-2.5 sm:py-3 border border-outline chamfer-card shadow-sm">
               <img
                 src="/svnit-logo.png"
                 alt="SVNIT Surat Crest"
-                className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
               />
-              <div className="w-px h-14 bg-outline/60" aria-hidden="true" />
+              <div className="w-px h-10 sm:h-14 bg-outline/60" aria-hidden="true" />
               <img
                 src="/TEP Logo.jpeg"
                 alt="TEP Research & Consultancy Cell Logo"
-                className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
               />
             </div>
             <div className="flex flex-col">
@@ -75,7 +75,7 @@ const Footer = () => {
         </div>
 
         {/* Right Column: Two-Column Directory (Navigation + Quick Links) & Legal/Credit Row */}
-        <div className="lg:col-span-8 p-gutter-xl lg:pl-20 lg:pr-gutter-xl lg:pt-12 flex flex-col justify-between gap-12">
+        <div className="lg:col-span-8 p-gutter-lg sm:p-gutter-xl lg:pl-20 lg:pr-gutter-xl lg:pt-12 flex flex-col justify-between gap-10 lg:gap-12 border-t lg:border-t-0 border-on-brand-green/25">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-gutter-xl">
             {/* Column 1: Pages */}
             <div>

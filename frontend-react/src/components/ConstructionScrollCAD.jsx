@@ -41,7 +41,11 @@ const ConstructionScrollCAD = () => {
 
     const W = canvas.clientWidth  || window.innerWidth;
     const H = canvas.clientHeight || window.innerHeight;
-    const d = 26;
+    const getZoomD = (w, h) => {
+      const aspect = Math.max(0.42, w / Math.max(h, 1));
+      return aspect < 1 ? Math.min(54, 24 / aspect) : 26;
+    };
+    let d = getZoomD(W, H);
     const camera = new THREE.OrthographicCamera(-d * (W / H), d * (W / H), d, -d, 1, 2000);
     camera.position.set(0, 50, 0.001);
     camera.lookAt(0, 0, 0);
@@ -756,7 +760,8 @@ const ConstructionScrollCAD = () => {
     const onResize = () => {
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
-      const a = w / h;
+      const a = w / Math.max(h, 1);
+      d = getZoomD(w, h);
       camera.left   = -d * a;
       camera.right  =  d * a;
       camera.top    =  d;
@@ -783,23 +788,23 @@ const ConstructionScrollCAD = () => {
   const rulerActive = Math.min(10, Math.floor(((smoothProgress - 0.74) / 0.22) * 11));
 
   return (
-    <div ref={containerRef} className="relative w-full h-[460vh] bg-[#1a1a18]">
+    <div ref={containerRef} className="relative w-full h-[360vh] lg:h-[460vh] bg-[#1a1a18]">
       <div className="sticky top-0 w-full h-screen overflow-hidden bg-[#1a1a18]">
 
         {/* Corner info */}
-        <div className="absolute top-5 left-6 z-20 font-label text-[11px] tracking-widest text-[#555552] uppercase select-none">
+        <div className="absolute top-4 left-4 sm:top-5 sm:left-6 z-20 font-label text-[10px] sm:text-[11px] tracking-widest text-[#555552] uppercase select-none">
           SHEET 02 / 09
         </div>
-        <div className="absolute top-5 right-6 z-20 font-label text-[11px] tracking-widest text-[#555552] uppercase select-none">
-          {smoothProgress >= 0.30 ? 'MOVE CURSOR TO ORBIT ANGLE · SCALE 1:200' : 'SCALE 1:200'}
+        <div className="absolute top-4 right-4 sm:top-5 sm:right-6 z-20 font-label text-[10px] sm:text-[11px] tracking-widest text-[#555552] uppercase select-none">
+          <span className="hidden sm:inline">{smoothProgress >= 0.30 ? 'MOVE CURSOR TO ORBIT ANGLE · ' : ''}</span>SCALE 1:200
         </div>
 
         {/* Phase nav — bottom right */}
-        <div className="absolute bottom-14 right-6 z-20 flex flex-col items-end gap-1.5 select-none">
+        <div className="absolute bottom-12 right-4 sm:bottom-14 sm:right-6 z-20 flex flex-col items-end gap-1 sm:gap-1.5 select-none">
           {PHASES.map((ph, i) => (
             <div
               key={ph.id}
-              className={`font-label text-[11px] uppercase tracking-wider transition-colors duration-300 ${
+              className={`font-label text-[10px] sm:text-[11px] uppercase tracking-wider transition-colors duration-300 ${
                 i === phaseIdx ? 'text-[#22c55e] font-bold' : 'text-[#484844]'
               }`}
             >
@@ -809,20 +814,20 @@ const ConstructionScrollCAD = () => {
         </div>
 
         {/* Phase label — bottom left with Chakra Petch display font */}
-        <div className="absolute bottom-14 left-6 z-20 select-none">
-          <div className="font-label text-[11px] uppercase tracking-widest text-[#767672] mb-1">
+        <div className="absolute bottom-12 left-4 sm:bottom-14 sm:left-6 z-20 select-none">
+          <div className="font-label text-[10px] sm:text-[11px] uppercase tracking-widest text-[#767672] mb-1">
             {phase.id}
           </div>
-          <div className="font-display text-[clamp(2.5rem,6vw,4.75rem)] font-semibold uppercase tracking-wide leading-none text-white">
+          <div className="font-display text-[clamp(2rem,6vw,4.75rem)] font-semibold uppercase tracking-wide leading-none text-white">
             {phase.label}
           </div>
-          <div className="mt-2.5 max-w-[230px] font-body text-[11px] leading-relaxed uppercase tracking-wide text-[#8c8c88]">
+          <div className="mt-2 max-w-[185px] sm:max-w-[230px] font-body text-[10px] sm:text-[11px] leading-relaxed uppercase tracking-wide text-[#8c8c88]">
             {phase.sub}
           </div>
         </div>
 
         {/* Step counter — bottom centre */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 font-label text-[11px] text-[#767672] uppercase tracking-widest select-none">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 font-label text-[10px] sm:text-[11px] text-[#767672] uppercase tracking-widest whitespace-nowrap select-none">
           SVNIT TRC &nbsp;·&nbsp; {isSurvey ? '01 / 11 — SET OUT' : isHandover ? '11 / 11 — HANDOVER' : `${Math.min(11, Math.ceil(smoothProgress * 11))} / 11 — CONSTRUCT`}
         </div>
 
@@ -850,7 +855,7 @@ const ConstructionScrollCAD = () => {
         </div>
 
         {/* Green status dot — top centre */}
-        <div className="absolute top-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 select-none">
+        <div className="hidden sm:flex absolute top-5 left-1/2 -translate-x-1/2 z-20 items-center gap-2 select-none">
           <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
           <span className="font-label text-[10px] uppercase tracking-widest text-[#767672]">
             {isSurvey ? 'SURVEYING' : isHandover ? 'TOPPED OUT' : 'CONSTRUCTING'}

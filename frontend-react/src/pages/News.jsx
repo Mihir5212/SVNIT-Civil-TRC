@@ -473,7 +473,7 @@ export default function News() {
       {/* ARTICLE READER MODAL */}
       {activeStory && (
         <div
-          className="fixed inset-0 z-50 bg-surface-dark/95 text-on-surface-dark flex flex-col p-gutter-md lg:p-gutter-xl"
+          className="fixed inset-0 z-50 bg-surface-dark/95 text-on-surface-dark flex flex-col p-3 sm:p-gutter-md lg:p-gutter-xl overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="reader-title"
@@ -481,8 +481,8 @@ export default function News() {
             if (e.target === e.currentTarget) setActiveStoryId(null);
           }}
         >
-          <div className="max-w-3xl w-full mx-auto bg-surface text-on-surface border border-outline my-auto flex flex-col">
-            <div className="flex items-center justify-between px-gutter-lg py-gutter-md bg-surface-dark text-on-surface-dark border-b border-outline-dark">
+          <div className="max-w-3xl w-full mx-auto bg-surface text-on-surface border border-outline my-auto flex flex-col max-h-[92vh] overflow-y-auto">
+            <div className="flex flex-wrap items-center justify-between gap-gutter-sm px-gutter-md sm:px-gutter-lg py-gutter-sm sm:py-gutter-md bg-surface-dark text-on-surface-dark border-b border-outline-dark">
               <div className="flex items-center gap-gutter-sm">
                 <span className="bg-brand-green text-on-brand-green px-gutter-sm py-gutter-xs font-label text-label-sm uppercase">
                   {activeStory.catLabel}
@@ -502,7 +502,7 @@ export default function News() {
                 </svg>
               </button>
             </div>
-            <div className="p-gutter-xl flex flex-col gap-gutter-md">
+            <div className="p-gutter-lg sm:p-gutter-xl flex flex-col gap-gutter-md">
               <h3 id="reader-title" className="font-headline text-headline-lg-mobile lg:text-headline-md uppercase text-on-surface">
                 {activeStory.title}
               </h3>

@@ -252,7 +252,7 @@ const Team = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter-lg items-stretch">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-gutter-lg items-stretch">
               {visibleStaff.map((staff) => (
                 <article
                   key={staff.num}
@@ -265,17 +265,17 @@ const Team = () => {
                         alt={`${staff.name}, ${staff.designation}`}
                         className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
                       />
-                      <span className="absolute top-gutter-sm right-gutter-sm bg-surface-dark text-on-surface-dark px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tabular-nums" data-design-text-token="label-sm">
+                      <span className="absolute top-2 right-2 sm:top-gutter-sm sm:right-gutter-sm bg-surface-dark text-on-surface-dark px-1.5 py-0.5 sm:px-gutter-sm sm:py-gutter-xs font-label text-[9px] sm:text-label-sm uppercase tabular-nums" data-design-text-token="label-sm">
                         {staff.num}
                       </span>
                     </div>
-                    <div className="p-gutter-lg flex flex-col justify-between gap-gutter-sm flex-1">
-                      <h3 className="font-headline text-headline-md uppercase text-on-surface" data-design-text-token="headline-md">
+                    <div className="p-3 sm:p-gutter-lg flex flex-col justify-between gap-1.5 sm:gap-gutter-sm flex-1">
+                      <h3 className="font-headline text-sm sm:text-headline-md uppercase text-on-surface leading-snug" data-design-text-token="headline-md">
                         {staff.name}
                       </h3>
-                      <div className="flex items-center gap-gutter-sm">
-                        <span className="w-2 h-2 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
-                        <span className="font-label text-label-md uppercase text-on-surface-variant" data-design-text-token="label-md">
+                      <div className="flex items-start sm:items-center gap-1.5 sm:gap-gutter-sm">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 mt-1 sm:mt-0 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+                        <span className="font-label text-[10px] sm:text-label-md uppercase text-on-surface-variant leading-tight" data-design-text-token="label-md">
                           {staff.designation}
                         </span>
                       </div>
@@ -286,18 +286,18 @@ const Team = () => {
 
               {/* Collaborative Unit Callout (fills 8th slot cleanly in 4-col grid when ALL active) */}
               {activeRole === 'all' && (
-                <div id="staff-callout" className="h-full chamfer-card bg-surface-dark text-on-surface-dark blueprint-grid-dark p-gutter-lg flex flex-col justify-between gap-gutter-lg">
-                  <div className="flex flex-col gap-gutter-sm">
-                    <div className="flex items-center gap-gutter-sm">
-                      <span className="w-2 h-2 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
-                      <span className="font-label text-label-sm uppercase text-on-surface-dark-muted" data-design-text-token="label-sm">
+                <div id="staff-callout" className="h-full chamfer-card bg-surface-dark text-on-surface-dark blueprint-grid-dark p-3.5 sm:p-gutter-lg flex flex-col justify-between gap-3 sm:gap-gutter-lg">
+                  <div className="flex flex-col gap-1.5 sm:gap-gutter-sm">
+                    <div className="flex items-center gap-1.5 sm:gap-gutter-sm">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+                      <span className="font-label text-[9px] sm:text-label-sm uppercase text-on-surface-dark-muted" data-design-text-token="label-sm">
                         TEP &mdash; SVNIT, SURAT
                       </span>
                     </div>
-                    <h3 className="font-headline text-headline-md uppercase text-on-surface-dark" data-design-text-token="headline-md">
+                    <h3 className="font-headline text-sm sm:text-headline-md uppercase text-on-surface-dark leading-snug" data-design-text-token="headline-md">
                       RESEARCH &amp; CONSULTANCY UNIT
                     </h3>
-                    <p className="font-body text-body-sm text-on-surface-dark-muted text-pretty" data-design-text-token="body-sm">
+                    <p className="font-body text-[10px] sm:text-body-sm text-on-surface-dark-muted text-pretty leading-relaxed" data-design-text-token="body-sm">
                       Combining academic rigor with field-tested civil engineering, traffic modeling, and structural drafting.
                     </p>
                   </div>
@@ -306,10 +306,10 @@ const Team = () => {
                     data-component-id="button-primary"
                     data-component-type="button"
                     data-component-variant="primary"
-                    className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change self-start"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-gutter-sm bg-brand-green text-on-brand-green px-2.5 py-2 sm:px-gutter-md sm:py-gutter-sm font-label text-[10px] sm:text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change self-start"
                   >
                     <span data-design-text-token="label-md">CONNECT WITH US</span>
-                    <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
+                    <span className="material-symbols-outlined text-xs sm:text-body-md" aria-hidden="true">arrow_forward</span>
                   </Link>
                 </div>
               )}
