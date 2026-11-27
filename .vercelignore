@@ -1,0 +1,9 @@
+# Exclude non-PHP project folders and unrelated root HTML files from Vercel root deployment
+frontend-react/
+frontend/
+node_modules/
+scratch/
+Mattestlab*/
+/*.html
+*.mp4
+images/Ref/
