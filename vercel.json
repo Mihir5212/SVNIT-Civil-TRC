@@ -2,15 +2,21 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.9.0",
-      "includeFiles": "{*.php,includes/**}",
-      "excludeFiles": "{frontend-react/**,node_modules/**,scratch/**}"
+      "runtime": "vercel-php@0.9.0"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/((?!assets/|images/|favicon\\.ico).*)",
-      "destination": "/api/index.php"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
     }
   ]
 }

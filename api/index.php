@@ -25,11 +25,17 @@ $targetFile = $candidate !== '' ? $rootDir . DIRECTORY_SEPARATOR . $candidate : 
 if ($targetFile !== '' && is_file($targetFile)) {
     $_SERVER['SCRIPT_NAME'] = '/' . $candidate;
     $_SERVER['PHP_SELF'] = '/' . $candidate;
+    if ($candidate !== 'contact-handler.php' && !headers_sent()) {
+        header('Content-Type: text/html; charset=utf-8');
+    }
     require $targetFile;
     exit;
 }
 
 http_response_code(404);
+if (!headers_sent()) {
+    header('Content-Type: text/html; charset=utf-8');
+}
 $notFoundFile = $rootDir . DIRECTORY_SEPARATOR . '404.php';
 if (is_file($notFoundFile)) {
     require $notFoundFile;
