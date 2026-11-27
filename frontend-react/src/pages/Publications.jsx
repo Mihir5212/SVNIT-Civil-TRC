@@ -155,47 +155,21 @@ export default function Publications() {
 
   return (
     <>
-      {/* PAGE HERO: 8/4 Split */}
+      {/* PAGE HERO HEADER */}
       <section className="w-full border-b border-outline bg-surface">
-        <div className="max-w-[1440px] mx-auto px-page-margin grid grid-cols-1 lg:grid-cols-12">
-          {/* Left Hero */}
-          <div className="lg:col-span-8 py-section lg:pr-gutter-xl lg:border-r border-outline flex flex-col justify-between">
-            <div>
-              <div className="inline-block border border-outline bg-surface-container px-gutter-sm py-gutter-xs mb-gutter-lg">
-                <span className="font-label text-label-sm tracking-[0.8px] uppercase text-on-surface-variant">
-                  PUBLICATIONS — TEP · SVNIT, SURAT
-                </span>
-              </div>
-              <h1 className="font-display text-display-md-mobile lg:text-display-lg uppercase tracking-[-0.5px] text-on-surface max-w-[16ch]">
-                PEER-REVIEWED PAPERS, IRC CODES &amp; MONOGRAPHS.
-              </h1>
-            </div>
-            <p className="font-body text-body-md text-on-surface-variant mt-gutter-xl max-w-[60ch]">
-              Indexed journal articles, international conference proceedings, and statutory technical reports authored by the Transportation Engineering &amp; Planning Research &amp; Consultancy Cell at SVNIT Surat.
-            </p>
+        <div className="max-w-[1440px] mx-auto p-gutter-lg lg:p-gutter-xl flex flex-col gap-gutter-md">
+          <div className="flex items-center gap-gutter-sm">
+            <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+            <span className="font-label text-label-md uppercase text-on-surface-variant">
+              PUBLICATIONS — TEP · SVNIT, SURAT
+            </span>
           </div>
-
-          {/* Right Dark Context Panel */}
-          <div className="lg:col-span-4 bg-surface-dark blueprint-grid-dark text-on-surface-dark p-gutter-lg flex flex-col justify-between border-t lg:border-t-0 border-outline">
-            <div>
-              <div className="flex items-center justify-between border-b border-outline-dark pb-gutter-sm mb-gutter-md">
-                <span className="font-label text-label-sm uppercase text-brand-green">
-                  PUBLICATION INDEX
-                </span>
-                <span className="w-2 h-2 bg-brand-green inline-block" />
-              </div>
-              <div className="font-headline text-headline-md uppercase mb-gutter-sm">
-                ACADEMIC &amp; STATUTORY OUTPUT
-              </div>
-              <p className="font-body text-body-sm text-on-surface-dark-muted leading-relaxed">
-                Every publication stems from empirical field campaigns across Indian highways, urban arterials, and multimodal transit nodes—bridging SCI-indexed science with IRC &amp; MoRTH practice.
-              </p>
-            </div>
-            <div className="mt-gutter-xl pt-gutter-md border-t border-outline-dark flex justify-between items-center font-label text-label-sm text-on-surface-dark-muted">
-              <span>ASCE · TRB · ELSEVIER · IRC</span>
-              <span>ARCHIVE v2.4</span>
-            </div>
-          </div>
+          <h1 className="font-display text-display-md-mobile lg:text-[40px] xl:text-[48px] lg:leading-[1.1] font-semibold tracking-tight uppercase text-on-surface">
+            PEER-REVIEWED PAPERS, IRC CODES &amp; MONOGRAPHS.
+          </h1>
+          <p className="font-body text-body-md text-on-surface-variant max-w-3xl text-pretty pt-gutter-xs">
+            Indexed journal articles, international conference proceedings, and statutory technical reports authored by the Transportation Engineering &amp; Planning Research &amp; Consultancy Cell at SVNIT Surat.
+          </p>
         </div>
       </section>
 
@@ -238,7 +212,7 @@ export default function Publications() {
           </div>
 
           {/* 2-Column Publication Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg" id="publications-cards">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg items-start" id="publications-cards">
             {visiblePublications.map((item) => {
               const isExpanded = !!expandedCards[item.id];
               return (
@@ -260,11 +234,16 @@ export default function Publications() {
 
                     {/* Title Tab + Toggle Control aligned cleanly on bottom edge */}
                     <div className="absolute -bottom-[2px] left-0 right-0 flex items-end justify-between">
-                      <div className="bg-brand-green text-on-brand-green notch-title-tab pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] pl-gutter-md pr-gutter-xl max-w-[85%]">
+                      <button
+                        type="button"
+                        onClick={() => toggleDetails(item.id)}
+                        aria-expanded={isExpanded}
+                        className="cursor-pointer text-left bg-brand-green text-on-brand-green hover:opacity-95 transition-opacity notch-title-tab pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] pl-gutter-md pr-gutter-xl max-w-[85%]"
+                      >
                         <h3 className="font-headline text-headline-sm uppercase leading-tight">
                           {item.title}
                         </h3>
-                      </div>
+                      </button>
                       <button
                         type="button"
                         onClick={() => toggleDetails(item.id)}
@@ -300,7 +279,7 @@ export default function Publications() {
                         <span className="text-on-surface">{item.identifier}</span>
                         <Link
                           to="/contact"
-                          className="text-brand-green hover:underline uppercase font-medium"
+                          className="text-brand-green hover:opacity-80 transition-opacity uppercase font-medium"
                         >
                           REQUEST REPRINT →
                         </Link>

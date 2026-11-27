@@ -47,7 +47,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation (8 Items) */}
-        <nav className="hidden xl:flex items-center gap-5" aria-label="Primary navigation">
+        <nav className="hidden xl:flex items-center gap-4 2xl:gap-6" aria-label="Primary navigation">
           {navItems.map((item) => {
             const isActive =
               item.href === '/'
@@ -58,9 +58,9 @@ const Header = () => {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`whitespace-nowrap font-label text-[11px] uppercase tracking-wider transition-colors duration-state-change hover:text-brand-green ${
+                className={`whitespace-nowrap font-label text-[13px] 2xl:text-[14px] font-medium uppercase tracking-wider transition-colors duration-state-change hover:text-brand-green ${
                   item.href === '/contact'
-                    ? 'inline-flex items-center justify-center gap-1.5 bg-brand-green text-on-brand-green px-3.5 py-2 hover:bg-brand-green-dark hover:text-on-brand-green'
+                    ? 'inline-flex items-center justify-center gap-1.5 bg-brand-green text-on-brand-green px-4 py-2 hover:bg-brand-green-dark hover:text-on-brand-green'
                     : isActive
                     ? 'text-brand-green font-semibold'
                     : 'text-on-surface'

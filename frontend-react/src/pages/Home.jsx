@@ -650,13 +650,6 @@ const Home = () => {
                     <span className="font-label text-label-md uppercase" data-design-text-token="label-md">HOSPITALITY PROJECTS</span>
                   </li>
                 </ul>
-
-                <div>
-                  <a href="#industrial-development" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
-                    <span data-design-text-token="label-md">EXPLORE SERVICES</span>
-                    <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-                  </a>
-                </div>
               </div>
             </div>
 
@@ -694,13 +687,6 @@ const Home = () => {
                     <span className="font-label text-label-md uppercase" data-design-text-token="label-md">PROCESSING PLANTS</span>
                   </li>
                 </ul>
-
-                <div>
-                  <a href="#infrastructure-development" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
-                    <span data-design-text-token="label-md">EXPLORE SERVICES</span>
-                    <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-                  </a>
-                </div>
               </div>
 
               <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark order-1 lg:order-2">
@@ -798,13 +784,6 @@ const Home = () => {
                     <span className="font-label text-label-md uppercase" data-design-text-token="label-md">BRIDGE &amp; TRANSIT HUBS</span>
                   </li>
                 </ul>
-
-                <div>
-                  <a href="#project-management" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
-                    <span data-design-text-token="label-md">EXPLORE SERVICES</span>
-                    <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-                  </a>
-                </div>
               </div>
             </div>
 
@@ -842,13 +821,6 @@ const Home = () => {
                     <span className="font-label text-label-md uppercase" data-design-text-token="label-md">COMMISSIONING &amp; HANDOVER</span>
                   </li>
                 </ul>
-
-                <div>
-                  <a href="#consultation-cta" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change">
-                    <span data-design-text-token="label-md">EXPLORE SERVICES</span>
-                    <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-                  </a>
-                </div>
               </div>
 
               <div className="lg:col-span-6 relative min-h-[540px] bg-surface-dark order-1 lg:order-2">

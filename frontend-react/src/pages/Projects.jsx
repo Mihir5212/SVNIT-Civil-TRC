@@ -130,41 +130,22 @@ const Projects = () => {
   return (
     <div id="top" className="w-full flex flex-col bg-surface text-on-surface">
       {/* ========================================================= */}
-      {/* PAGE HERO SPLIT                                           */}
+      {/* PAGE HERO HEADER                                          */}
       {/* ========================================================= */}
       <section className="relative w-full bg-surface border-b border-outline">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12">
-          <div className="lg:col-span-8 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-lg border-b lg:border-b-0 lg:border-r border-outline">
-            <div className="flex items-center gap-gutter-sm">
-              <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
-              <span className="font-label text-label-md uppercase text-on-surface-variant" data-design-text-token="label-md">
-                RESEARCH &amp; PROJECTS &mdash; TEP &middot; SVNIT, SURAT
-              </span>
-            </div>
-            <h1 className="font-display text-display-lg-mobile lg:text-display-lg uppercase text-balance" data-design-text-token="display-lg">
-              FIELD STUDIES, SAFETY AUDITS &amp; APPLIED RESEARCH.
-            </h1>
-            <p className="font-body text-body-md text-on-surface-variant max-w-2xl text-pretty" data-design-text-token="body-md">
-              Selected transportation consultancy assignments, road safety audits, urban mobility plans, and computer-vision traffic research delivered across national highways and city corridors.
-            </p>
+        <div className="max-w-[1440px] mx-auto p-gutter-lg lg:p-gutter-xl flex flex-col gap-gutter-md">
+          <div className="flex items-center gap-gutter-sm">
+            <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
+            <span className="font-label text-label-md uppercase text-on-surface-variant" data-design-text-token="label-md">
+              RESEARCH &amp; PROJECTS &mdash; TEP &middot; SVNIT, SURAT
+            </span>
           </div>
-
-          <div className="lg:col-span-4 bg-surface-dark text-on-surface-dark blueprint-grid-dark p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-lg">
-            <div className="flex items-center justify-between border-b border-outline-dark pb-gutter-sm">
-              <span className="font-label text-label-sm uppercase text-on-surface-dark-muted" data-design-text-token="label-sm">
-                PROJECT ARCHIVE
-              </span>
-              <span className="w-2.5 h-2.5 bg-brand-green rotate-45 shrink-0" aria-hidden="true" />
-            </div>
-            <div className="flex flex-col gap-gutter-sm">
-              <h2 className="font-headline text-headline-md uppercase text-on-surface-dark" data-design-text-token="headline-md">
-                PUBLIC &amp; INFRASTRUCTURE MANDATES
-              </h2>
-              <p className="font-body text-body-sm text-on-surface-dark-muted text-pretty" data-design-text-token="body-sm">
-                Executed for MoRTH, NHAI, State PWD, Smart City SPVs, and urban transit authorities under IRC &amp; Indo-HCM standards.
-              </p>
-            </div>
-          </div>
+          <h1 className="font-display text-display-lg-mobile lg:text-[40px] xl:text-[48px] lg:leading-[1.1] font-semibold tracking-tight uppercase text-balance" data-design-text-token="display-lg">
+            FIELD STUDIES, SAFETY AUDITS &amp; APPLIED RESEARCH.
+          </h1>
+          <p className="font-body text-body-md text-on-surface-variant max-w-3xl text-pretty pt-gutter-xs" data-design-text-token="body-md">
+            Selected transportation consultancy assignments, road safety audits, urban mobility plans, and computer-vision traffic research delivered across national highways and city corridors.
+          </p>
         </div>
       </section>
 
@@ -204,7 +185,7 @@ const Projects = () => {
             </div>
 
             {/* 2-Column Project Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter-lg items-start">
               {visibleProjects.map((project) => {
                 const isOpen = !!expandedIds[project.id];
                 return (
@@ -219,11 +200,16 @@ const Projects = () => {
                         {project.badge}
                       </span>
                       <div className="absolute -bottom-[2px] left-0 right-0 flex items-end justify-between">
-                        <div className="notch-title-tab bg-surface text-on-surface pl-gutter-md pr-12 pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] min-w-[65%]">
+                        <button
+                          type="button"
+                          onClick={() => toggleDetails(project.id)}
+                          aria-expanded={isOpen}
+                          className="cursor-pointer text-left notch-title-tab bg-surface text-on-surface hover:text-brand-green transition-colors pl-gutter-md pr-12 pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)] min-w-[65%]"
+                        >
                           <h2 className="font-headline text-headline-md uppercase" data-design-text-token="headline-md">
                             {project.title}
                           </h2>
-                        </div>
+                        </button>
                         <button
                           type="button"
                           onClick={() => toggleDetails(project.id)}
@@ -250,7 +236,7 @@ const Projects = () => {
                         <div className="pt-1">
                           <Link
                             to={`/projects/${project.id}`}
-                            className="inline-flex items-center gap-1.5 font-label text-label-sm uppercase text-brand-green hover:underline"
+                            className="inline-flex items-center gap-1.5 font-label text-label-sm uppercase text-brand-green hover:opacity-80 transition-opacity"
                           >
                             <span>VIEW PROJECT BRIEF</span>
                             <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>

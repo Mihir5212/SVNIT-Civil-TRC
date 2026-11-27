@@ -10,6 +10,17 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+section[id],
+div[id],
+footer[id] {
+  scroll-margin-top: 84px;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {

@@ -7,7 +7,6 @@ import Layout from './components/Layout';
 // Page components
 import Home from './pages/Home';
 import About from './pages/About';
-import Services from './pages/Services';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import Publications from './pages/Publications';
@@ -15,12 +14,23 @@ import News from './pages/News';
 import Team from './pages/Team';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 const RouteEffects = () => {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
 
   useEffect(() => {
-    if (!hash) {
+    let scrollTimer;
+    if (hash) {
+      const targetId = hash.slice(1);
+      scrollTimer = setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 60);
+    } else {
       window.scrollTo(0, 0);
     }
 
@@ -51,10 +61,11 @@ const RouteEffects = () => {
     });
 
     return () => {
+      if (scrollTimer) clearTimeout(scrollTimer);
       cancelAnimationFrame(rafId);
       observer.disconnect();
     };
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
 
   return null;
 };
@@ -68,7 +79,6 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
-            <Route path="services" element={<Services />} />
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:id" element={<ProjectDetail />} />
             <Route path="publications" element={<Publications />} />
@@ -76,6 +86,8 @@ function App() {
             <Route path="team" element={<Team />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="terms-and-conditions" element={<TermsAndConditions />} />
           </Route>
         </Routes>
       </div>
