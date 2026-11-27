@@ -1,10 +1,10 @@
-# Exclude non-PHP project folders and unrelated root HTML files from Vercel root deployment
-frontend-react/
-frontend/
-node_modules/
-scratch/
+# Exclude unused folders and heavy media files from Vercel uploads
+# Keep frontend-react/ tracked because the React Vercel project reads root .vercelignore
+/frontend/
+/node_modules/
+/scratch/
 Mattestlab*/
 /*.html
 *.mp4
-images/Ref/
-images/brochure/
+/images/Ref/
+/images/brochure/
