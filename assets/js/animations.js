@@ -687,7 +687,7 @@
                 });
 
                 pageFlip.on('init', function (e) {
-                    var total = pageFlip.getPageCount() || 19;
+                    var total = pageFlip.getPageCount() || pages.length || 1;
                     if (pageNum) pageNum.textContent = '1 / ' + total;
                     if (prevBtn) prevBtn.disabled = true;
                     if (nextBtn) nextBtn.disabled = false;

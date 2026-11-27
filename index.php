@@ -89,73 +89,6 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 5. FEATURED PROJECTS (LJA-Inspired Projects Showcase) ===== -->
-  <section class="section home-projects-section" id="projects-section" style="background:#f7fbff;padding:96px 0;">
-    <div class="wrap" style="max-width:1320px;margin:0 auto;padding:0 24px;">
-      
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;" data-reveal="fade-in-up">
-        <div>
-          <span style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0b6b50;display:block;margin-bottom:8px;">NOTABLE WORK</span>
-          <h2 style="font-family:'Poppins',sans-serif;font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#062b20;margin:0;">Featured Projects</h2>
-        </div>
-        <div>
-          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
-            <span>VIEW ALL PROJECTS</span>
-            <span style="margin-left:8px;">&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- 2-Column Grid with Rotating Center Button Cards (Images 1, 2, 3, 4, 5) -->
-      <?php
-        require_once 'includes/projects-data.php';
-        $allProjects = getTRCProjects();
-        $homeFeatured = array_slice($allProjects, 0, 2, true);
-      ?>
-      <div class="projects-archive-grid">
-        <?php foreach ($homeFeatured as $p): 
-          $projectUrl = 'project.php?id=' . urlencode($p['id']);
-        ?>
-        <article class="project-card-item" data-reveal="fade-in-up">
-          <!-- Top: Photo Frame with Rotating Center Action Button -->
-          <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
-            <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" class="project-card-img" loading="lazy" />
-            <div class="project-card-overlay" aria-hidden="true"></div>
-            <div class="project-center-btn" aria-hidden="true">
-              <span class="project-center-icon">
-                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="16" y1="6" x2="16" y2="26"></line>
-                  <line x1="6" y1="16" x2="26" y2="16"></line>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <!-- Bottom: Card Information in 2 Columns -->
-          <div class="project-card-info">
-            <div class="project-card-left">
-              <h3 class="project-card-title"><a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a></h3>
-              <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
-            </div>
-            <div class="project-card-right">
-              <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
-              <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
-                <span>EXPLORE PROJECT</span>
-                <span class="project-explore-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </article>
-        <?php endforeach; ?>
-      </div>
-
-    </div>
-  </section>
-
   <!-- ===== 2. ABOUT SECTION (MattestLab-Style Experience Showcase with SVNIT Video) ===== -->
   <section class="section about-section-mattest" id="about-section">
     <div class="about-container">
@@ -217,73 +150,6 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 5. FEATURED PROJECTS (LJA-Inspired Projects Showcase) ===== -->
-  <section class="section home-projects-section" id="projects-section" style="background:#f7fbff;padding:96px 0;">
-    <div class="wrap" style="max-width:1320px;margin:0 auto;padding:0 24px;">
-      
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;" data-reveal="fade-in-up">
-        <div>
-          <span style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0b6b50;display:block;margin-bottom:8px;">NOTABLE WORK</span>
-          <h2 style="font-family:'Poppins',sans-serif;font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#062b20;margin:0;">Featured Projects</h2>
-        </div>
-        <div>
-          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
-            <span>VIEW ALL PROJECTS</span>
-            <span style="margin-left:8px;">&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- 2-Column Grid with Rotating Center Button Cards (Images 1, 2, 3, 4, 5) -->
-      <?php
-        require_once 'includes/projects-data.php';
-        $allProjects = getTRCProjects();
-        $homeFeatured = array_slice($allProjects, 0, 2, true);
-      ?>
-      <div class="projects-archive-grid">
-        <?php foreach ($homeFeatured as $p): 
-          $projectUrl = 'project.php?id=' . urlencode($p['id']);
-        ?>
-        <article class="project-card-item" data-reveal="fade-in-up">
-          <!-- Top: Photo Frame with Rotating Center Action Button -->
-          <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
-            <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" class="project-card-img" loading="lazy" />
-            <div class="project-card-overlay" aria-hidden="true"></div>
-            <div class="project-center-btn" aria-hidden="true">
-              <span class="project-center-icon">
-                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="16" y1="6" x2="16" y2="26"></line>
-                  <line x1="6" y1="16" x2="26" y2="16"></line>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <!-- Bottom: Card Information in 2 Columns -->
-          <div class="project-card-info">
-            <div class="project-card-left">
-              <h3 class="project-card-title"><a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a></h3>
-              <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
-            </div>
-            <div class="project-card-right">
-              <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
-              <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
-                <span>EXPLORE PROJECT</span>
-                <span class="project-explore-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </article>
-        <?php endforeach; ?>
-      </div>
-
-    </div>
-  </section>
-
   <!-- ===== 2B. EXPERIENCE METRICS BANNER (MattestLab-Style 4-Item Rounded Orange Card) ===== -->
   <section class="section stats-banner-section" id="stats-banner" aria-label="Key Cell Metrics">
     <div class="stats-banner-container">
@@ -318,73 +184,6 @@ include 'includes/header.php';
 
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== 5. FEATURED PROJECTS (LJA-Inspired Projects Showcase) ===== -->
-  <section class="section home-projects-section" id="projects-section" style="background:#f7fbff;padding:96px 0;">
-    <div class="wrap" style="max-width:1320px;margin:0 auto;padding:0 24px;">
-      
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;" data-reveal="fade-in-up">
-        <div>
-          <span style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0b6b50;display:block;margin-bottom:8px;">NOTABLE WORK</span>
-          <h2 style="font-family:'Poppins',sans-serif;font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#062b20;margin:0;">Featured Projects</h2>
-        </div>
-        <div>
-          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
-            <span>VIEW ALL PROJECTS</span>
-            <span style="margin-left:8px;">&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- 2-Column Grid with Rotating Center Button Cards (Images 1, 2, 3, 4, 5) -->
-      <?php
-        require_once 'includes/projects-data.php';
-        $allProjects = getTRCProjects();
-        $homeFeatured = array_slice($allProjects, 0, 2, true);
-      ?>
-      <div class="projects-archive-grid">
-        <?php foreach ($homeFeatured as $p): 
-          $projectUrl = 'project.php?id=' . urlencode($p['id']);
-        ?>
-        <article class="project-card-item" data-reveal="fade-in-up">
-          <!-- Top: Photo Frame with Rotating Center Action Button -->
-          <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
-            <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" class="project-card-img" loading="lazy" />
-            <div class="project-card-overlay" aria-hidden="true"></div>
-            <div class="project-center-btn" aria-hidden="true">
-              <span class="project-center-icon">
-                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="16" y1="6" x2="16" y2="26"></line>
-                  <line x1="6" y1="16" x2="26" y2="16"></line>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <!-- Bottom: Card Information in 2 Columns -->
-          <div class="project-card-info">
-            <div class="project-card-left">
-              <h3 class="project-card-title"><a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a></h3>
-              <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
-            </div>
-            <div class="project-card-right">
-              <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
-              <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
-                <span>EXPLORE PROJECT</span>
-                <span class="project-explore-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </article>
-        <?php endforeach; ?>
-      </div>
-
     </div>
   </section>
 
@@ -646,74 +445,7 @@ include 'includes/header.php';
     </div>
   </section>
 
-  <!-- ===== 5. FEATURED PROJECTS (LJA-Inspired Projects Showcase) ===== -->
-  <section class="section home-projects-section" id="projects-section" style="background:#f7fbff;padding:96px 0;">
-    <div class="wrap" style="max-width:1320px;margin:0 auto;padding:0 24px;">
-      
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;" data-reveal="fade-in-up">
-        <div>
-          <span style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0b6b50;display:block;margin-bottom:8px;">NOTABLE WORK</span>
-          <h2 style="font-family:'Poppins',sans-serif;font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#062b20;margin:0;">Featured Projects</h2>
-        </div>
-        <div>
-          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
-            <span>VIEW ALL PROJECTS</span>
-            <span style="margin-left:8px;">&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- 2-Column Grid with Rotating Center Button Cards (Images 1, 2, 3, 4, 5) -->
-      <?php
-        require_once 'includes/projects-data.php';
-        $allProjects = getTRCProjects();
-        $homeFeatured = array_slice($allProjects, 0, 2, true);
-      ?>
-      <div class="projects-archive-grid">
-        <?php foreach ($homeFeatured as $p): 
-          $projectUrl = 'project.php?id=' . urlencode($p['id']);
-        ?>
-        <article class="project-card-item" data-reveal="fade-in-up">
-          <!-- Top: Photo Frame with Rotating Center Action Button -->
-          <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
-            <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" class="project-card-img" loading="lazy" />
-            <div class="project-card-overlay" aria-hidden="true"></div>
-            <div class="project-center-btn" aria-hidden="true">
-              <span class="project-center-icon">
-                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="16" y1="6" x2="16" y2="26"></line>
-                  <line x1="6" y1="16" x2="26" y2="16"></line>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <!-- Bottom: Card Information in 2 Columns -->
-          <div class="project-card-info">
-            <div class="project-card-left">
-              <h3 class="project-card-title"><a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a></h3>
-              <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
-            </div>
-            <div class="project-card-right">
-              <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
-              <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
-                <span>EXPLORE PROJECT</span>
-                <span class="project-explore-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </article>
-        <?php endforeach; ?>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== 4. COMPANY PROFILE (Cell Profile & Interactive 3D Page-Flip Brochure) ===== -->
+  <!-- ===== 4. COMPANY PROFILE (Cell Profile & Interactive 3D Page-Flip Showcase) ===== -->
   <section class="section profile-showcase-section" id="company-profile-section">
     <div class="profile-container">
 
@@ -725,39 +457,47 @@ include 'includes/header.php';
 
       <div class="profile-content-grid">
 
-        <!-- Left Column: Realistic 3D Interactive Flipbook Brochure (StPageFlip Engine) -->
+        <!-- Left Column: Realistic 3D Interactive Flipbook Showcase (Using SVNIT TRC Site Images for Testing) -->
+        <?php
+          $profileShowcaseImages = [
+            ['src' => 'images/Hero_1.jpg', 'alt' => 'TEP Research Lab - SVNIT Surat'],
+            ['src' => 'images/Road Safety Audit.jpg', 'alt' => 'Road Safety Audit'],
+            ['src' => 'images/Traffic Engineering.jpg', 'alt' => 'Traffic Engineering and Studies'],
+            ['src' => 'images/Transportation.jpg', 'alt' => 'Transportation and Highway Design'],
+            ['src' => 'images/Rail Services.jpg', 'alt' => 'Rail Services and Transit'],
+            ['src' => 'images/Smart Mobility.jpg', 'alt' => 'Smart Mobility and ITS'],
+            ['src' => 'images/Land Development.jpg', 'alt' => 'Land Development and Pavements'],
+            ['src' => 'images/Surveying.jpg', 'alt' => 'Surveying and Drone Analytics'],
+            ['src' => 'images/Hero_2.jpg', 'alt' => 'Highway Corridor Safety Inspection'],
+            ['src' => 'images/Hero_3.jpg', 'alt' => 'Traffic Flow Engineering Study'],
+            ['src' => 'images/Hero_4.jpg', 'alt' => 'Expressway Research Infrastructure'],
+            ['src' => 'images/Hero_5.jpg', 'alt' => 'Transportation Data Analytics'],
+            ['src' => 'images/Book Meeting.jpg', 'alt' => 'Consult with SVNIT TRC'],
+            ['src' => 'images/footer image.jpg', 'alt' => 'SVNIT Campus and Highway Infrastructure'],
+          ];
+          $profilePageCount = count($profileShowcaseImages);
+        ?>
         <div class="profile-flipbook-col" data-reveal="fade-in-up">
           <div class="brochure-flipbook-container">
 
             <div class="brochure-flipbook-wrapper">
               <div id="brochureFlipbook" class="st-flipbook">
-                <!-- Page 1: Hard Cover -->
-                <div class="brochure-page" data-density="hard">
+                <?php foreach ($profileShowcaseImages as $idx => $img):
+                  $density = ($idx === 0 || $idx === $profilePageCount - 1) ? 'hard' : 'soft';
+                ?>
+                <div class="brochure-page" data-density="<?php echo $density; ?>">
                   <div class="brochure-page-content">
-                    <img src="images/brochure/page_1.jpg" alt="Brochure Cover - Page 1" class="brochure-page-image" />
+                    <img src="<?php echo htmlspecialchars($img['src']); ?>" alt="<?php echo htmlspecialchars($img['alt']); ?>" class="brochure-page-image"<?php echo $idx > 0 ? ' loading="lazy"' : ''; ?> />
                   </div>
                 </div>
-                <!-- Pages 2 to 18: Soft Inner Pages -->
-                <?php for ($i = 2; $i <= 18; $i++): ?>
-                <div class="brochure-page" data-density="soft">
-                  <div class="brochure-page-content">
-                    <img src="images/brochure/page_<?php echo $i; ?>.jpg" alt="Brochure - Page <?php echo $i; ?>" class="brochure-page-image" loading="lazy" />
-                  </div>
-                </div>
-                <?php endfor; ?>
-                <!-- Page 19: Hard Back Cover -->
-                <div class="brochure-page" data-density="hard">
-                  <div class="brochure-page-content">
-                    <img src="images/brochure/page_19.jpg" alt="Brochure Back Cover - Page 19" class="brochure-page-image" loading="lazy" />
-                  </div>
-                </div>
+                <?php endforeach; ?>
               </div>
             </div>
 
-            <!-- Flipbook Pagination Controls (< 1 / 19 >) matching MattestLab inspiration -->
+            <!-- Flipbook Pagination Controls (< 1 / <?php echo $profilePageCount; ?> >) -->
             <div class="flipbook-controls">
               <button type="button" class="flipbook-nav-btn btn-prev" id="flipPrev" aria-label="Previous Page" disabled>‹</button>
-              <span class="flipbook-page-info" id="flipPageNum">1 / 19</span>
+              <span class="flipbook-page-info" id="flipPageNum">1 / <?php echo $profilePageCount; ?></span>
               <button type="button" class="flipbook-nav-btn btn-next" id="flipNext" aria-label="Next Page">›</button>
             </div>
             <p class="flipbook-hint">Tip: Drag corner or click buttons to flip pages</p>
