@@ -6,58 +6,77 @@ const Header = () => {
   const location = useLocation();
 
   const navItems = [
-    { href: '/', label: 'HOME' },
-    { href: '/about', label: 'ABOUT' },
-    { href: '/services', label: 'SERVICES' },
-    { href: '/projects', label: 'PROJECTS' },
-    { href: '/contact', label: 'CONTACT' },
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About Us' },
+    { href: '/projects', label: 'Research & Projects' },
+    { href: '/publications', label: 'Publications' },
+    { href: '/news', label: 'News' },
+    { href: '/team', label: 'Team' },
+    { href: '/gallery', label: 'Gallery' },
+    { href: '/contact', label: 'Contact Us' },
   ];
 
   const isHomePage = location.pathname === '/';
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-      isHomePage ? 'absolute' : 'sticky'
-    }`}>
+    <header className="sticky top-0 left-0 right-0 z-40 transition-all duration-300">
       {/* Top Header Bar */}
-      <div className="flex items-center justify-between px-gutter-lg py-gutter-md bg-white/80 backdrop-blur-[20px] backdrop-saturate-[180%] border-b border-outline">
-        {/* Logo */}
-        <Link to="/" aria-label="TRC SVNIT Home" className="inline-flex items-center">
-          <svg className="w-10 h-10 text-brand-green" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-            <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z" />
-          </svg>
-          <span className="ml-2 font-display text-headline-md text-brand-green hidden sm:block">TRC SVNIT</span>
+      <div className="flex items-center justify-between px-gutter-md lg:px-gutter-lg py-2.5 bg-white/95 backdrop-blur-[20px] backdrop-saturate-[180%] border-b border-outline">
+        {/* Dual Logos (SVNIT + TEP) & Official Cell Title */}
+        <Link to="/" aria-label="TEP Research & Consultancy Cell, Department of Civil Engineering, SVNIT Surat" className="inline-flex items-center shrink-0">
+          <div className="inline-flex items-center gap-2 shrink-0">
+            <img
+              src="/svnit-logo.png"
+              alt="SVNIT Surat"
+              className="w-9 h-9 object-contain shrink-0"
+            />
+            <img
+              src="/TEP Logo.jpeg"
+              alt="TEP Research & Consultancy Cell"
+              className="w-9 h-9 object-contain mix-blend-multiply shrink-0"
+            />
+          </div>
+          <div className="ml-2.5 flex flex-col leading-tight">
+            <span className="font-display text-sm sm:text-[15px] font-bold text-brand-green tracking-tight">
+              TEP Research &amp; Consultancy Cell
+            </span>
+            <span className="font-label text-[10px] sm:text-[11px] text-on-surface font-medium tracking-normal">
+              Department of Civil Engineering &bull; SVNIT Surat
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-gutter-lg" aria-label="Primary navigation">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={`font-label text-label-md uppercase tracking-wider transition-colors duration-state-change hover:text-brand-green ${
-                location.pathname === item.href || (item.href === '/' && isHomePage)
-                  ? 'text-brand-green'
-                  : 'text-on-surface'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            to="/contact"
-            className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider hover:bg-brand-green-dark transition-colors duration-state-change"
-          >
-            <span>GET IN TOUCH</span>
-            <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-          </Link>
+        {/* Desktop Navigation (8 Items) */}
+        <nav className="hidden xl:flex items-center gap-5" aria-label="Primary navigation">
+          {navItems.map((item) => {
+            const isActive =
+              item.href === '/'
+                ? isHomePage
+                : location.pathname.startsWith(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`whitespace-nowrap font-label text-[11px] uppercase tracking-wider transition-colors duration-state-change hover:text-brand-green ${
+                  item.href === '/contact'
+                    ? 'inline-flex items-center justify-center gap-1.5 bg-brand-green text-on-brand-green px-3.5 py-2 hover:bg-brand-green-dark hover:text-on-brand-green'
+                    : isActive
+                    ? 'text-brand-green font-semibold'
+                    : 'text-on-surface'
+                }`}
+              >
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile / Tablet Menu Button */}
         <button
           id="open-menu-btn"
           type="button"
-          className="lg:hidden inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider"
+          className="xl:hidden inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider shrink-0 cursor-pointer"
           onClick={() => setIsMenuOpen(true)}
           aria-label="Open menu"
         >
@@ -66,10 +85,10 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile / Tablet Menu Drawer */}
       <div
         id="menu-drawer"
-        className={`fixed inset-0 z-50 flex-col justify-between p-gutter-xl bg-surface-dark text-on-surface-dark transition-all duration-300 ${
+        className={`fixed inset-0 z-50 flex-col justify-between p-gutter-xl bg-surface-dark text-on-surface-dark transition-all duration-300 overflow-y-auto ${
           isMenuOpen ? 'flex' : 'hidden'
         }`}
         role="dialog"
@@ -77,15 +96,20 @@ const Header = () => {
         aria-label="Navigation menu"
       >
         <div className="flex items-center justify-between border-b border-outline-dark pb-gutter-lg">
-          <Link to="/" aria-label="TRC SVNIT Home" className="inline-flex items-center" onClick={() => setIsMenuOpen(false)}>
-            <svg className="w-10 h-10 text-brand-green" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-              <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z" />
-            </svg>
+          <Link to="/" aria-label="TEP Research & Consultancy Cell Home" className="inline-flex items-center" onClick={() => setIsMenuOpen(false)}>
+            <div className="inline-flex items-center gap-2 bg-white px-2 py-1 rounded-sm shrink-0">
+              <img src="/svnit-logo.png" alt="SVNIT Surat" className="w-8 h-8 object-contain" />
+              <img src="/TEP Logo.jpeg" alt="TEP Cell" className="w-8 h-8 object-contain" />
+            </div>
+            <div className="ml-3 flex flex-col leading-tight">
+              <span className="font-display text-base font-bold text-on-surface-dark">TEP Research &amp; Consultancy Cell</span>
+              <span className="font-label text-[11px] text-on-surface-dark/90">Department of Civil Engineering &bull; SVNIT Surat</span>
+            </div>
           </Link>
           <button
             id="close-menu-btn"
             type="button"
-            className="inline-flex items-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider"
+            className="inline-flex items-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider shrink-0 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close menu"
           >
@@ -98,7 +122,7 @@ const Header = () => {
             <Link
               key={item.href}
               to={item.href}
-              className="drawer-link py-gutter-md font-display text-display-md-mobile uppercase hover:text-brand-green transition-colors duration-state-change"
+              className="drawer-link py-3.5 font-display text-2xl uppercase hover:text-brand-green transition-colors duration-state-change"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
@@ -107,7 +131,7 @@ const Header = () => {
         </nav>
         <div className="flex items-center justify-between border-t border-outline-dark pt-gutter-md font-label text-label-sm text-on-surface-dark-muted uppercase">
           <span>SURAT, IN — EST. 2010</span>
-          <span>TRC SVNIT</span>
+          <span>TEP CELL &bull; SVNIT SURAT</span>
         </div>
       </div>
     </header>

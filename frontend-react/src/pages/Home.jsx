@@ -48,8 +48,88 @@ const StatCounter = ({ target, suffix = '', duration = 1600 }) => {
   );
 };
 
+const PRINCIPLES_DATA = [
+  {
+    id: 'safety',
+    title: 'SAFETY FIRST',
+    description: 'Unwavering commitment to workplace safety and regulatory compliance on every site, every day.',
+    image: '/images/tep-about-photo.jpg',
+    alt: 'Construction engineer wearing hard hat and safety vest on site',
+  },
+  {
+    id: 'quality',
+    title: 'QUALITY EXECUTION',
+    description: 'Rigorous structural verification, material traceability, and tolerance audits at every construction milestone.',
+    image: '/images/Road Safety Audit.jpg',
+    alt: 'Highway structural inspection and road safety quality audit',
+  },
+  {
+    id: 'delivery',
+    title: 'RELIABLE DELIVERY',
+    description: 'Integrated scheduling and transparent milestone reporting ensure handover on time and within budget.',
+    image: '/images/Surveying.jpg',
+    alt: 'Civil engineering field surveying and precise site layout',
+  },
+  {
+    id: 'partnerships',
+    title: 'LONG-TERM PARTNERSHIPS',
+    description: 'Dedicated lifecycle support, facility commissioning, and multi-phase collaboration with institutional clients.',
+    image: '/images/Smart Mobility.jpg',
+    alt: 'Modern smart infrastructure and transportation network partnership',
+  },
+];
+
 const Home = () => {
   const projectsTrackRef = useRef(null);
+  const introVideoRef = useRef(null);
+  const [activePrinciple, setActivePrinciple] = useState(0);
+
+  // Auto-play intro video when scrolled into view, pause when scrolled away
+  useEffect(() => {
+    const videoEl = introVideoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoEl.play().catch(() => {});
+        } else {
+          videoEl.pause();
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(videoEl);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-construct the 4 service blueprint SVG wireframes when visibly scrolled into view
+  useEffect(() => {
+    const svgs = document.querySelectorAll('[data-blueprint-draw]');
+    if (!svgs.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target;
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                el.classList.add('is-drawn');
+              });
+            });
+          } else {
+            el.classList.remove('is-drawn');
+          }
+        });
+      },
+      { threshold: 0.35, rootMargin: '0px 0px -30px 0px' }
+    );
+
+    svgs.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
 
   const featuredProjects = [
@@ -73,23 +153,6 @@ const Home = () => {
     },
   ];
 
-    // Exclusive Accordion icon toggler for principles group
-  useEffect(() => {
-    const detailsList = document.querySelectorAll('details[name="principles-group"]');
-    const handleToggle = () => {
-      detailsList.forEach((item) => {
-        const icon = item.querySelector('.accordion-icon');
-        if (icon) {
-          icon.textContent = item.open ? 'remove' : 'add';
-        }
-      });
-    };
-    detailsList.forEach((det) => det.addEventListener('toggle', handleToggle));
-    return () => {
-      detailsList.forEach((det) => det.removeEventListener('toggle', handleToggle));
-    };
-  }, []);
-
   const handleNextProject = () => {
     if (projectsTrackRef.current) {
       const first = projectsTrackRef.current.firstElementChild;
@@ -111,78 +174,60 @@ const Home = () => {
       {/* HERO SECTION                                              */}
       {/* ========================================================= */}
       <header className="relative w-full bg-surface border-b border-outline overflow-hidden">
-        {/* Top Floating Header Bar - Additional branding for home */}
-        <div className="relative z-20 flex items-center justify-between px-gutter-lg py-gutter-md">
-          <div className="flex items-center gap-gutter-sm">
-            <span className="font-label text-label-sm text-on-surface-variant uppercase tracking-wider">
-              TRC SVNIT — TRANSPORTATION ENGINEERING & PLANNING
-            </span>
-          </div>
-          <Link
-            to="/contact"
-            className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-md uppercase tracking-wider hover:bg-brand-green-dark transition-colors duration-state-change"
-          >
-            <span>CONTACT</span>
-            <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
-          </Link>
+        {/* Full-Width Continuous Architectural Hero Image Band */}
+        <div className="relative w-full h-[270px] sm:h-[340px] lg:h-[420px] bg-surface-muted overflow-hidden">
+          <img
+            src="/images/Transportation.jpg"
+            alt="Transportation infrastructure and civil engineering complex"
+            fetchPriority="high"
+            className="w-full h-full object-cover object-center grayscale contrast-125"
+          />
+          <div className="absolute inset-0 blueprint-grid-dark pointer-events-none" />
+          {/* Architectural Grid Hairlines matching 64%/36% split & chamfer top */}
+          <div
+            className="hidden lg:block absolute inset-y-0 left-[64%] w-px bg-white/30 pointer-events-none z-10"
+            aria-hidden="true"
+          />
+          <div
+            className="hidden lg:block absolute inset-x-0 bottom-[120px] h-px bg-white/30 pointer-events-none z-10"
+            aria-hidden="true"
+          />
         </div>
 
-        {/* Hero Visual Grid */}
-        <div className="relative grid grid-cols-1 lg:grid-cols-12">
-          {/* Left / Architectural Photography & Headline */}
-          <div className="lg:col-span-7 flex flex-col justify-between bg-surface border-r border-outline">
-            <div className="relative h-64 sm:h-80 lg:h-96 w-full overflow-hidden border-b border-outline">
-              <img
-                src="/images/Transportation.jpg"
-                alt="Transportation infrastructure and civil engineering complex"
-                className="w-full h-full object-cover grayscale contrast-125"
-              />
-              <div className="absolute inset-0 blueprint-grid-dark pointer-events-none" />
-            </div>
+        {/* Bottom Asymmetric Split (White Left 64% / Slanted Green Right 36%) */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[64%_36%] items-stretch bg-surface">
+          {/* Left 64%: Display Headline + Description */}
+          <div className="flex flex-col justify-between bg-surface lg:border-r border-outline p-gutter-lg lg:p-gutter-xl pb-8 gap-8">
+            <h1 className="font-display text-display-lg-mobile lg:text-[44px] xl:text-[52px] lg:leading-[1.05] font-semibold tracking-tight uppercase text-on-surface" data-design-text-token="display-lg">
+              ENGINEERING TOMORROW'S<br />INFRASTRUCTURE TODAY.
+            </h1>
 
-            <div className="p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
-              <h1 className="font-display text-display-lg-mobile lg:text-display-lg uppercase text-on-surface text-balance" data-design-text-token="display-lg">
-                ENGINEERING TOMORROW'S INFRASTRUCTURE TODAY
-              </h1>
-
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-gutter-md pt-gutter-lg border-t border-outline">
-                <p className="font-body text-body-sm text-on-surface-variant max-w-md text-pretty" data-design-text-token="body-sm">
-                  Transportation Research Cell at SVNIT Surat delivers precision-driven civil and transportation engineering consultancy — from traffic planning to road safety audits.
-                </p>
-                <div className="flex items-center gap-gutter-md font-label text-label-sm text-on-surface-variant uppercase tabular-nums">
-                  <span data-design-text-token="label-sm">VOL</span>
-                  <span data-design-text-token="label-sm">01-8</span>
-                </div>
-              </div>
+            <div className="pt-gutter-sm">
+              <p className="font-body text-body-sm text-on-surface-variant max-w-md text-pretty" data-design-text-token="body-sm">
+                Transportation Research Cell at SVNIT Surat delivers precision-driven civil and transportation engineering consultancy — from traffic planning to road safety audits.
+              </p>
             </div>
           </div>
 
-          {/* Right Chamfered Signal Green Block */}
-          <div className="lg:col-span-5 relative flex flex-col justify-between bg-surface">
-            <div className="relative h-48 lg:h-56 w-full overflow-hidden">
-              <img
-                src="/images/Traffic Engineering.jpg"
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-cover object-right grayscale contrast-125"
-              />
-            </div>
-
-            <div className="relative -mt-20 lg:-mt-28 flex-1 bg-brand-green text-on-brand-green chamfer-hero-green p-gutter-lg lg:p-gutter-xl flex flex-col justify-between min-h-[280px]">
-              <div className="flex items-center justify-between pt-gutter-sm pl-24 font-label text-label-sm uppercase tabular-nums">
-                <span data-design-text-token="label-sm">SURAT, IN</span>
+          {/* Right 36%: Compact Slanted Green Architectural Block */}
+          <div className="relative flex flex-col justify-between bg-surface">
+            <div
+              className="relative lg:-mt-[120px] flex-1 bg-brand-green text-on-brand-green flex flex-col justify-between min-h-[260px] lg:min-h-[340px]"
+              style={{ clipPath: 'polygon(108px 0, 100% 0, 100% 100%, 0 100%, 0 108px)' }}
+            >
+              {/* Top Chamfered Location/Year Row with Divider Hairline */}
+              <div className="flex items-center justify-between pt-4 pb-3.5 pl-[116px] pr-gutter-lg lg:pl-[124px] lg:pr-gutter-xl border-b border-on-brand-green/25 font-label text-label-sm uppercase tabular-nums">
+                <span data-design-text-token="label-sm">SURAT, INDIA</span>
                 <span data-design-text-token="label-sm">EST. 2010</span>
               </div>
 
-              <div className="my-auto py-gutter-lg">
-                <p className="font-body text-body-sm text-on-brand-green max-w-sm text-pretty" data-design-text-token="body-sm">
+              {/* Center Operating System Copy */}
+              <div className="my-auto px-gutter-lg lg:px-gutter-xl py-8">
+                <p className="font-body text-body-sm text-on-brand-green max-w-sm text-pretty leading-relaxed" data-design-text-token="body-sm">
                   Every project runs on one operating system — shared schedules, shared accountability, shared standards — so transportation, infrastructure, and civil work all ship at the same level of precision.
                 </p>
               </div>
             </div>
-
-            {/* Bottom Dark Transition Strip */}
-            <div className="h-8 bg-surface-dark w-full chamfer-tl-dark" />
           </div>
         </div>
       </header>
@@ -191,6 +236,53 @@ const Home = () => {
       {/* MAIN CONTENT                                              */}
       {/* ========================================================= */}
       <main className="flex-1">
+
+        {/* SECTION 1B: DEPARTMENT VIDEO SHOWCASE */}
+        <section id="campus-video" className="w-full bg-surface text-on-surface border-b border-outline">
+          <div className="w-full max-w-[1280px] mx-auto border-x border-outline grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            {/* Left 4 Columns: Architectural Introduction & Description */}
+            <div className="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-outline p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-8">
+              <div className="flex flex-col gap-gutter-md">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" aria-hidden="true" />
+                  <span className="font-label text-label-sm uppercase tracking-widest text-brand-green">
+                    SVNIT SURAT &bull; CIVIL DEPT
+                  </span>
+                </div>
+                <h2 className="font-display text-display-md-mobile lg:text-[34px] lg:leading-[38px] font-semibold uppercase text-on-surface tracking-tight">
+                  INSIDE OUR RESEARCH &amp; FIELD LAB.
+                </h2>
+                <p className="font-body text-body-sm text-on-surface-variant leading-relaxed text-pretty">
+                  Explore the TEP Research &amp; Consultancy Cell at SVNIT Surat — bridging advanced traffic engineering laboratories, IRC road safety audits, and high-impact infrastructure consultancy across India.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-gutter-md border-t border-outline font-label text-label-sm uppercase tracking-wider text-on-surface-variant tabular-nums">
+                <span>CAMPUS &amp; CELL INTRO</span>
+                <span className="text-brand-green font-semibold">01:48</span>
+              </div>
+            </div>
+
+            {/* Right 8 Columns: Framed Intro Video Player */}
+            <div className="lg:col-span-8 p-gutter-md sm:p-gutter-lg lg:p-gutter-xl bg-surface-container/35 flex items-center justify-center">
+              <div className="w-full rounded-xl overflow-hidden border-2 border-brand-green bg-surface-dark shadow-lg aspect-video">
+                <video
+                  ref={introVideoRef}
+                  src="/SVNIT Intro.mp4"
+                  controls
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover block"
+                  aria-label="TEP Research and Consultancy Cell SVNIT Surat Introduction Video"
+                >
+                  Your browser does not support embedded video playback.
+                </video>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* SECTION 2: STATS & EXPERTISE (DARK) */}
         <section className="relative bg-surface-dark text-on-surface-dark p-gutter-lg lg:p-gutter-xl border-b border-outline" data-reveal>
@@ -255,7 +347,7 @@ const Home = () => {
         </section>
 
         {/* SECTION 3: SERVICES / CAPABILITIES (LIGHT) */}
-        <section id="services" className="w-full bg-surface text-on-surface border-b border-outline" data-reveal>
+        <section id="services" className="w-full bg-surface text-on-surface border-b border-outline">
           <div className="w-full max-w-[1280px] mx-auto border-x border-outline">
             <div className="grid grid-cols-1 lg:grid-cols-12">
               {/* === ROW 1 (Desktop) / Items 1, 3, 4 (Mobile) === */}
@@ -295,14 +387,14 @@ const Home = () => {
 
                     {/* Center Dot-Matrix Wireframe Stage */}
                     <div className="relative mx-gutter-md h-64 sm:h-72 dot-matrix-light flex items-center justify-center">
-                      <svg className="w-36 h-36 text-on-primary" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                        <circle cx="80" cy="80" r="42"></circle>
-                        <circle cx="48" cy="48" r="20"></circle>
-                        <circle cx="112" cy="48" r="20"></circle>
-                        <circle cx="48" cy="112" r="20"></circle>
-                        <circle cx="112" cy="112" r="20"></circle>
-                        <line x1="51" y1="51" x2="109" y2="109"></line>
-                        <line x1="109" y1="51" x2="51" y2="109"></line>
+                      <svg data-blueprint-draw data-draw-delay="0" className="blueprint-draw w-36 h-36 text-on-primary" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <circle pathLength="100" cx="80" cy="80" r="42"></circle>
+                        <circle pathLength="100" cx="48" cy="48" r="20"></circle>
+                        <circle pathLength="100" cx="112" cy="48" r="20"></circle>
+                        <circle pathLength="100" cx="48" cy="112" r="20"></circle>
+                        <circle pathLength="100" cx="112" cy="112" r="20"></circle>
+                        <line pathLength="100" x1="51" y1="51" x2="109" y2="109"></line>
+                        <line pathLength="100" x1="109" y1="51" x2="51" y2="109"></line>
                       </svg>
                     </div>
 
@@ -340,14 +432,14 @@ const Home = () => {
 
                     {/* Center Dot-Matrix Wireframe Stage */}
                     <div className="relative mx-gutter-md h-64 sm:h-72 dot-matrix-dark flex items-center justify-center">
-                      <svg className="w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
-                        <path d="M52 40V24H24V136H52V120"></path>
-                        <path d="M108 40V24H136V136H108V120"></path>
-                        <path d="M64 54V40H38V120H64V106"></path>
-                        <path d="M96 54V40H122V120H96V106"></path>
-                        <path d="M76 66V54H52V106H76V94"></path>
-                        <path d="M84 66V54H108V106H84V94"></path>
-                        <rect x="66" y="66" width="28" height="28"></rect>
+                      <svg data-blueprint-draw data-draw-delay="80" className="blueprint-draw w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                        <path pathLength="100" d="M52 40V24H24V136H52V120"></path>
+                        <path pathLength="100" d="M108 40V24H136V136H108V120"></path>
+                        <path pathLength="100" d="M64 54V40H38V120H64V106"></path>
+                        <path pathLength="100" d="M96 54V40H122V120H96V106"></path>
+                        <path pathLength="100" d="M76 66V54H52V106H76V94"></path>
+                        <path pathLength="100" d="M84 66V54H108V106H84V94"></path>
+                        <rect pathLength="100" x="66" y="66" width="28" height="28"></rect>
                       </svg>
                     </div>
 
@@ -394,20 +486,20 @@ const Home = () => {
 
                     {/* Center Dot-Matrix Wireframe Stage */}
                     <div className="relative mx-gutter-md h-64 sm:h-72 dot-matrix-dark flex items-center justify-center">
-                      <svg className="w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
-                        <line x1="20" y1="130" x2="140" y2="130"></line>
-                        <rect x="58" y="28" width="44" height="102" fill="#1C1C1B"></rect>
-                        <line x1="80" y1="28" x2="80" y2="130"></line>
-                        <rect x="38" y="64" width="32" height="66" fill="#1C1C1B"></rect>
-                        <line x1="50" y1="64" x2="50" y2="130"></line>
-                        <line x1="56" y1="64" x2="56" y2="130"></line>
-                        <line x1="62" y1="64" x2="62" y2="130"></line>
-                        <rect x="90" y="64" width="32" height="66" fill="#1C1C1B"></rect>
-                        <line x1="98" y1="64" x2="98" y2="130"></line>
-                        <line x1="104" y1="64" x2="104" y2="130"></line>
-                        <line x1="110" y1="64" x2="110" y2="130"></line>
-                        <rect x="26" y="84" width="20" height="46" fill="#1C1C1B"></rect>
-                        <rect x="114" y="84" width="20" height="46" fill="#1C1C1B"></rect>
+                      <svg data-blueprint-draw data-draw-delay="0" className="blueprint-draw w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                        <line pathLength="100" x1="20" y1="130" x2="140" y2="130"></line>
+                        <rect pathLength="100" x="58" y="28" width="44" height="102" fill="#1C1C1B"></rect>
+                        <line pathLength="100" x1="80" y1="28" x2="80" y2="130"></line>
+                        <rect pathLength="100" x="38" y="64" width="32" height="66" fill="#1C1C1B"></rect>
+                        <line pathLength="100" x1="50" y1="64" x2="50" y2="130"></line>
+                        <line pathLength="100" x1="56" y1="64" x2="56" y2="130"></line>
+                        <line pathLength="100" x1="62" y1="64" x2="62" y2="130"></line>
+                        <rect pathLength="100" x="90" y="64" width="32" height="66" fill="#1C1C1B"></rect>
+                        <line pathLength="100" x1="98" y1="64" x2="98" y2="130"></line>
+                        <line pathLength="100" x1="104" y1="64" x2="104" y2="130"></line>
+                        <line pathLength="100" x1="110" y1="64" x2="110" y2="130"></line>
+                        <rect pathLength="100" x="26" y="84" width="20" height="46" fill="#1C1C1B"></rect>
+                        <rect pathLength="100" x="114" y="84" width="20" height="46" fill="#1C1C1B"></rect>
                       </svg>
                     </div>
 
@@ -445,33 +537,33 @@ const Home = () => {
 
                     {/* Center Dot-Matrix Wireframe Stage */}
                     <div className="relative mx-gutter-md h-64 sm:h-72 dot-matrix-dark flex items-center justify-center">
-                      <svg className="w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
-                        <line x1="80" y1="28" x2="80" y2="132"></line>
-                        <line x1="74" y1="28" x2="86" y2="28"></line>
-                        <line x1="74" y1="132" x2="86" y2="132"></line>
-                        <line x1="76" y1="39" x2="84" y2="39"></line>
-                        <line x1="76" y1="49" x2="84" y2="49"></line>
-                        <line x1="76" y1="59" x2="84" y2="59"></line>
-                        <line x1="76" y1="69" x2="84" y2="69"></line>
-                        <line x1="76" y1="91" x2="84" y2="91"></line>
-                        <line x1="76" y1="101" x2="84" y2="101"></line>
-                        <line x1="76" y1="111" x2="84" y2="111"></line>
-                        <line x1="76" y1="121" x2="84" y2="121"></line>
-                        <line x1="28" y1="80" x2="132" y2="80"></line>
-                        <line x1="28" y1="74" x2="28" y2="86"></line>
-                        <line x1="132" y1="74" x2="132" y2="86"></line>
-                        <line x1="39" y1="76" x2="39" y2="84"></line>
-                        <line x1="49" y1="76" x2="49" y2="84"></line>
-                        <line x1="59" y1="76" x2="59" y2="84"></line>
-                        <line x1="69" y1="76" x2="69" y2="84"></line>
-                        <line x1="91" y1="76" x2="91" y2="84"></line>
-                        <line x1="101" y1="76" x2="101" y2="84"></line>
-                        <line x1="111" y1="76" x2="111" y2="84"></line>
-                        <line x1="121" y1="76" x2="121" y2="84"></line>
-                        <circle cx="42" cy="44" r="6"></circle>
-                        <circle cx="106" cy="54" r="6"></circle>
-                        <circle cx="54" cy="106" r="6"></circle>
-                        <circle cx="128" cy="116" r="6"></circle>
+                      <svg data-blueprint-draw data-draw-delay="80" className="blueprint-draw w-36 h-36 text-on-surface-dark" viewBox="0 0 160 160" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="square" aria-hidden="true">
+                        <line pathLength="100" x1="80" y1="28" x2="80" y2="132"></line>
+                        <line pathLength="100" x1="74" y1="28" x2="86" y2="28"></line>
+                        <line pathLength="100" x1="74" y1="132" x2="86" y2="132"></line>
+                        <line pathLength="100" x1="76" y1="39" x2="84" y2="39"></line>
+                        <line pathLength="100" x1="76" y1="49" x2="84" y2="49"></line>
+                        <line pathLength="100" x1="76" y1="59" x2="84" y2="59"></line>
+                        <line pathLength="100" x1="76" y1="69" x2="84" y2="69"></line>
+                        <line pathLength="100" x1="76" y1="91" x2="84" y2="91"></line>
+                        <line pathLength="100" x1="76" y1="101" x2="84" y2="101"></line>
+                        <line pathLength="100" x1="76" y1="111" x2="84" y2="111"></line>
+                        <line pathLength="100" x1="76" y1="121" x2="84" y2="121"></line>
+                        <line pathLength="100" x1="28" y1="80" x2="132" y2="80"></line>
+                        <line pathLength="100" x1="28" y1="74" x2="28" y2="86"></line>
+                        <line pathLength="100" x1="132" y1="74" x2="132" y2="86"></line>
+                        <line pathLength="100" x1="39" y1="76" x2="39" y2="84"></line>
+                        <line pathLength="100" x1="49" y1="76" x2="49" y2="84"></line>
+                        <line pathLength="100" x1="59" y1="76" x2="59" y2="84"></line>
+                        <line pathLength="100" x1="69" y1="76" x2="69" y2="84"></line>
+                        <line pathLength="100" x1="91" y1="76" x2="91" y2="84"></line>
+                        <line pathLength="100" x1="101" y1="76" x2="101" y2="84"></line>
+                        <line pathLength="100" x1="111" y1="76" x2="111" y2="84"></line>
+                        <line pathLength="100" x1="121" y1="76" x2="121" y2="84"></line>
+                        <circle pathLength="100" cx="42" cy="44" r="6"></circle>
+                        <circle pathLength="100" cx="106" cy="54" r="6"></circle>
+                        <circle pathLength="100" cx="54" cy="106" r="6"></circle>
+                        <circle pathLength="100" cx="128" cy="116" r="6"></circle>
                       </svg>
                     </div>
 
@@ -826,64 +918,42 @@ const Home = () => {
                 </h2>
               </div>
 
-              {/* Right 6 Columns: Exclusive Accordion Group */}
-              <div className="lg:col-span-6 flex flex-col justify-between">
-                {/* COMPONENT: accordion-group */}
-                <div data-component-id="accordion-group" data-component-type="accordion" data-component-variant="group" className="divide-y divide-outline h-full flex flex-col justify-between">
-                  <details name="principles-group" open className="group p-gutter-xl flex-1">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
-                      <span data-design-text-token="headline-md">SAFETY FIRST</span>
-                      <span className="material-symbols-outlined text-headline-md text-on-surface-variant accordion-icon" aria-hidden="true">remove</span>
-                    </summary>
-                    <div className="pt-gutter-md grid grid-cols-1 sm:grid-cols-12 gap-gutter-lg items-start">
-                      <p className="sm:col-span-6 font-body text-body-sm text-on-surface-variant text-pretty" data-design-text-token="body-sm">
-                        Unwavering commitment to workplace safety and regulatory compliance on every site, every day.
-                      </p>
-                      <div className="sm:col-span-6">
-                        <img
-                          src="/images/tep-about-photo.jpg"
-                          alt="Construction engineer wearing hard hat and safety vest on site"
-                          className="w-full h-56 object-cover grayscale contrast-125 chamfer-photo-bl"
-                        />
+              {/* Right 6 Columns: Exclusive React-Controlled Accordion Group */}
+              <div className="lg:col-span-6 flex flex-col">
+                <div data-component-id="accordion-group" data-component-type="accordion" data-component-variant="group" className="divide-y divide-outline h-full flex flex-col">
+                  {PRINCIPLES_DATA.map((item, idx) => {
+                    const isOpen = activePrinciple === idx;
+                    return (
+                      <div key={item.id} className="transition-colors duration-200">
+                        <button
+                          type="button"
+                          onClick={() => setActivePrinciple(isOpen ? -1 : idx)}
+                          aria-expanded={isOpen}
+                          className="w-full px-gutter-xl py-gutter-lg flex items-center justify-between text-left font-headline text-headline-md uppercase hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
+                        >
+                          <span data-design-text-token="headline-md">{item.title}</span>
+                          <span className="material-symbols-outlined text-headline-md text-on-surface-variant shrink-0" aria-hidden="true">
+                            {isOpen ? 'remove' : 'add'}
+                          </span>
+                        </button>
+
+                        {isOpen && (
+                          <div className="px-gutter-xl pb-gutter-xl pt-1 grid grid-cols-1 sm:grid-cols-12 gap-gutter-lg items-start animate-fade-in">
+                            <p className="sm:col-span-6 font-body text-body-sm text-on-surface-variant text-pretty leading-relaxed" data-design-text-token="body-sm">
+                              {item.description}
+                            </p>
+                            <div className="sm:col-span-6">
+                              <img
+                                src={item.image}
+                                alt={item.alt}
+                                className="w-full h-56 object-cover grayscale contrast-125 chamfer-photo-bl"
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </details>
-
-                  <details name="principles-group" className="group px-gutter-xl py-gutter-lg">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
-                      <span data-design-text-token="headline-md">QUALITY EXECUTION</span>
-                      <span className="material-symbols-outlined text-headline-md text-on-surface-variant accordion-icon" aria-hidden="true">add</span>
-                    </summary>
-                    <div className="pt-gutter-md">
-                      <p className="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty" data-design-text-token="body-sm">
-                        Rigorous structural verification, material traceability, and tolerance audits at every construction milestone.
-                      </p>
-                    </div>
-                  </details>
-
-                  <details name="principles-group" className="group px-gutter-xl py-gutter-lg">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
-                      <span data-design-text-token="headline-md">RELIABLE DELIVERY</span>
-                      <span className="material-symbols-outlined text-headline-md text-on-surface-variant accordion-icon" aria-hidden="true">add</span>
-                    </summary>
-                    <div className="pt-gutter-md">
-                      <p className="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty" data-design-text-token="body-sm">
-                        Integrated scheduling and transparent milestone reporting ensure handover on time and within budget.
-                      </p>
-                    </div>
-                  </details>
-
-                  <details name="principles-group" className="group px-gutter-xl py-gutter-lg">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-headline text-headline-md uppercase">
-                      <span data-design-text-token="headline-md">LONG-TERM PARTNERSHIPS</span>
-                      <span className="material-symbols-outlined text-headline-md text-on-surface-variant accordion-icon" aria-hidden="true">add</span>
-                    </summary>
-                    <div className="pt-gutter-md">
-                      <p className="font-body text-body-sm text-on-surface-variant max-w-lg text-pretty" data-design-text-token="body-sm">
-                        Dedicated lifecycle support, facility commissioning, and multi-phase collaboration with institutional clients.
-                      </p>
-                    </div>
-                  </details>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -919,7 +989,7 @@ const Home = () => {
                 <span className="absolute top-gutter-sm left-gutter-sm bg-surface text-on-surface px-gutter-sm py-gutter-xs font-label text-label-sm uppercase tracking-wider border border-outline">
                   {project.category}
                 </span>
-                <div className="absolute bottom-0 left-0 right-12 bg-surface notch-title-tab px-gutter-md py-gutter-sm">
+                <div className="absolute -bottom-[2px] left-0 right-12 bg-surface notch-title-tab px-gutter-md pt-gutter-sm pb-[calc(theme(spacing.gutter-sm)+2px)]">
                   <h3 className="font-headline text-headline-sm uppercase text-on-surface" data-design-text-token="headline-sm">{project.title}</h3>
                 </div>
                 <span className="absolute bottom-gutter-sm right-gutter-sm inline-flex items-center justify-center w-6 h-6 bg-brand-green text-on-brand-green group-hover:bg-surface group-hover:text-on-surface transition-colors duration-state-change">
@@ -935,7 +1005,7 @@ const Home = () => {
               id="prev-project-btn"
               type="button"
               aria-label="Previous project"
-              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change"
+              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
               onClick={handlePrevProject}
             >
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_back</span>
@@ -944,7 +1014,7 @@ const Home = () => {
               id="next-project-btn"
               type="button"
               aria-label="Next project"
-              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change"
+              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
               onClick={handleNextProject}
             >
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>

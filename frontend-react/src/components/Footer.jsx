@@ -31,11 +31,29 @@ const Footer = () => {
             </Link>
           </div>
 
-          {/* Large Geometric Octagonal G Emblem */}
-          <div className="pt-gutter-xl">
-            <svg className="w-56 h-56 lg:w-64 lg:h-64 text-on-brand-green" viewBox="0 0 160 160" fill="currentColor" aria-hidden="true">
-              <path d="M48 16H112L144 48V64H116V52L102 38H58L38 58V102L58 122H102L116 108V94H78V72H144V112L112 144H48L16 112V48L48 16Z" />
-            </svg>
+          {/* Dual Institutional Brand Logos Side by Side (SVNIT Surat + TEP Cell) */}
+          <div className="pt-gutter-lg flex flex-col items-start gap-4">
+            <div className="inline-flex items-center gap-4 bg-white px-4 py-3 border border-outline chamfer-card shadow-sm">
+              <img
+                src="/svnit-logo.png"
+                alt="SVNIT Surat Crest"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+              />
+              <div className="w-px h-14 bg-outline/60" aria-hidden="true" />
+              <img
+                src="/TEP Logo.jpeg"
+                alt="TEP Research & Consultancy Cell Logo"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display text-base font-bold uppercase tracking-wide text-on-brand-green">
+                TEP Research &amp; Consultancy Cell
+              </span>
+              <span className="font-label text-label-sm text-on-brand-green/85 mt-0.5">
+                Department of Civil Engineering &bull; SVNIT Surat
+              </span>
+            </div>
           </div>
         </div>
 
@@ -51,32 +69,32 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="/projects" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
-                    PROJECTS
+                    RESEARCH &amp; PROJECTS
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
-                    PROCESS
+                  <Link to="/publications" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    PUBLICATIONS
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
-                    TEAM
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                  <Link to="/news" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
                     NEWS
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
-                    CAREERS
+                  <Link to="/team" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    TEAM
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/gallery" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    GALLERY
                   </Link>
                 </li>
                 <li>
                   <Link to="/contact" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
-                    CONTACT
+                    CONTACT US
                   </Link>
                 </li>
               </ul>
@@ -96,7 +114,7 @@ const Footer = () => {
           {/* Bottom Legal Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-gutter-md pt-gutter-xl">
             <span className="font-label text-label-sm uppercase text-on-brand-green" data-design-text-token="label-sm">
-              © {CURRENT_YEAR} TRC SVNIT. ALL RIGHTS RESERVED.
+              © {CURRENT_YEAR} TEP RESEARCH &amp; CONSULTANCY CELL &bull; SVNIT SURAT. ALL RIGHTS RESERVED.
             </span>
             <div className="flex items-center gap-gutter-lg">
               <a href="#site-footer" className="font-label text-label-sm uppercase text-on-brand-green hover:underline" data-design-text-token="label-sm">PRIVACY POLICY</a>

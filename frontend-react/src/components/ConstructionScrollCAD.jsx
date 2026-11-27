@@ -13,7 +13,7 @@ const PHASES = [
   { id: '04 / 04', label: 'Handover', sub: 'Crane dismantled, curtain wall complete, roof plant commissioned — handed over at +36.00 m.' },
 ];
 
-const PHASE_THRESHOLDS = [0, 0.28, 0.50, 0.90];
+const PHASE_THRESHOLDS = [0, 0.14, 0.32, 0.76];
 const ELEVATION_LEVELS = ['+0.00','+3.60','+7.20','+10.80','+14.40','+18.00','+21.60','+25.20','+28.80','+32.40','+36.00'];
 
 // ─── CAD Palette (Unified Green + Architectural White) ────────────────────────
@@ -602,26 +602,26 @@ const ConstructionScrollCAD = () => {
 
     const tl = gsap.timeline({ paused: true });
 
-    revealAll([craneGroup],        tl, 0.50);
-    revealAll([podBase, podSlab1], tl, 0.54, 0.05);
-    revealAll([...podCols, podSlab2], tl, 0.59, 0.015);
-    revealAll([podiumMullions, entranceCanopy, logoGroup], tl, 0.62, 0.04);
+    revealAll([craneGroup],        tl, 0.32);
+    revealAll([podBase, podSlab1], tl, 0.35, 0.04);
+    revealAll([...podCols, podSlab2], tl, 0.39, 0.012);
+    revealAll([podiumMullions, entranceCanopy, logoGroup], tl, 0.42, 0.03);
 
     const tColN = towerCols.length;
-    revealAll([core1, towerSlabs[0], towerSlabs[1], ...towerCols.slice(0, Math.floor(tColN * 0.33))], tl, 0.65, 0.012);
-    revealAll([core2, towerSlabs[2], towerSlabs[3], ...towerCols.slice(Math.floor(tColN * 0.33), Math.floor(tColN * 0.66))], tl, 0.71, 0.01);
-    revealAll([core3, towerSlabs[4], towerSlabs[5], towerSlabs[6], ...towerCols.slice(Math.floor(tColN * 0.66)), towerMullions], tl, 0.77, 0.008);
-    revealAll([roofSlab, parapet], tl, 0.83, 0.04);
-    revealAll([plantRoom, hvac1, hvac2, riser, antennaGroup], tl, 0.86, 0.03);
+    revealAll([core1, towerSlabs[0], towerSlabs[1], ...towerCols.slice(0, Math.floor(tColN * 0.33))], tl, 0.46, 0.01);
+    revealAll([core2, towerSlabs[2], towerSlabs[3], ...towerCols.slice(Math.floor(tColN * 0.33), Math.floor(tColN * 0.66))], tl, 0.52, 0.008);
+    revealAll([core3, towerSlabs[4], towerSlabs[5], towerSlabs[6], ...towerCols.slice(Math.floor(tColN * 0.66)), towerMullions], tl, 0.58, 0.006);
+    revealAll([roofSlab, parapet], tl, 0.65, 0.03);
+    revealAll([plantRoom, hvac1, hvac2, riser, antennaGroup], tl, 0.69, 0.025);
 
-    // Crane dismantled cleanly at Handover
+    // Crane dismantled gently at start of Handover
     tl.to(craneGroup.scale, {
       x: 0.0001, y: 0.0001, z: 0.0001,
-      duration: 0.2,
-      ease: 'power3.inOut',
+      duration: 0.08,
+      ease: 'power2.inOut',
       onComplete:        () => { craneGroup.visible = false; },
       onReverseComplete: () => { craneGroup.visible = true; craneGroup.scale.setScalar(1); },
-    }, 0.90);
+    }, 0.75);
 
     // ==========================================================================
     // G. SCROLL TRIGGER & CURSOR TRACKING (Slight Side-Angle Inspection)
@@ -631,9 +631,9 @@ const ConstructionScrollCAD = () => {
 
     ScrollTrigger.create({
       trigger: container,
-      start: 'top top',
+      start: 'top 65%',
       end: 'bottom bottom',
-      scrub: 0.8,
+      scrub: 0.75,
       onUpdate: (self) => { targetProgress = self.progress; },
     });
 
@@ -672,8 +672,9 @@ const ConstructionScrollCAD = () => {
       raf = requestAnimationFrame(animate);
       const tNow = performance.now() * 0.001;
 
-      // Smooth scroll & pointer lerping
-      currentProgress += (targetProgress - currentProgress) * 0.07;
+      // Smooth scroll & pointer lerping (slightly gentler lerp at final stage)
+      const lerpRate = targetProgress > 0.72 ? 0.055 : 0.09;
+      currentProgress += (targetProgress - currentProgress) * lerpRate;
       curMouse.x      += (targetMouse.x - curMouse.x) * 0.06;
       curMouse.y      += (targetMouse.y - curMouse.y) * 0.06;
 
@@ -689,18 +690,20 @@ const ConstructionScrollCAD = () => {
 
       const p = currentProgress;
 
-      // 1. Expanding full-viewport background grid
-      bgGeo.setDrawRange(0, Math.floor(Math.min(1, p / 0.18) * bgTotal));
+      // 1. Fast full-viewport grid expansion (visible immediately, completes by p=0.08)
+      const gridEase = 1 - Math.pow(1 - Math.min(1, p / 0.08), 2);
+      const gridFrac = Math.min(1, 0.06 + gridEase * 0.94);
+      bgGeo.setDrawRange(0, Math.floor(gridFrac * bgTotal));
 
-      // 2. Survey pegs & Plan traced footprint
-      surveyGroup.visible = p > 0.18;
-      podRect.line.geometry.setDrawRange(0, Math.floor(Math.min(1, Math.max(0, (p - 0.28) / 0.10)) * podRect.total));
-      twrRect.line.geometry.setDrawRange(0, Math.floor(Math.min(1, Math.max(0, (p - 0.33) / 0.09)) * twrRect.total));
-      planGroup.visible = p > 0.37;
+      // 2. Survey pegs & Plan traced footprint (fast & responsive)
+      surveyGroup.visible = p > 0.06;
+      podRect.line.geometry.setDrawRange(0, Math.floor(Math.min(1, Math.max(0, (p - 0.14) / 0.07)) * podRect.total));
+      twrRect.line.geometry.setDrawRange(0, Math.floor(Math.min(1, Math.max(0, (p - 0.17) / 0.07)) * twrRect.total));
+      planGroup.visible = p > 0.21;
 
       // 3. Working Crane Kinematics (slew, trolley along jib, dynamic hoist cable)
       if (craneGroup.visible) {
-        const floorFrac = Math.max(0, Math.min(1, (p - 0.52) / 0.36));
+        const floorFrac = Math.max(0, Math.min(1, (p - 0.34) / 0.38));
         craneSlewGroup.rotation.y = baseSlewAngle + Math.sin(tNow * 0.55 + p * Math.PI * 5) * 0.35;
         craneTrolleyGroup.position.x = -9.5 + Math.cos(tNow * 0.70 + p * Math.PI * 4) * 3.4;
 
@@ -709,14 +712,14 @@ const ConstructionScrollCAD = () => {
         craneHookGroup.position.y = -hoistLen;
       }
 
-      // 4. Camera Waypoint Interpolation
-      if (p < 0.54) {
-        const t = Math.min(1, Math.max(0, (p - 0.44) / 0.10));
+      // 4. Camera Waypoint Interpolation (fast 2D->3D tilt, slow stately Handover close-up)
+      if (p < 0.35) {
+        const t = Math.min(1, Math.max(0, (p - 0.25) / 0.10));
         const e = 0.5 - 0.5 * Math.cos(Math.PI * t);
         curPos.lerpVectors(camPlan, camIso, e);
         curTgt.lerpVectors(tgtPlan, tgtIso, e);
-      } else if (p >= 0.90) {
-        const t = Math.min(1, (p - 0.90) / 0.10);
+      } else if (p >= 0.75) {
+        const t = Math.min(1, (p - 0.75) / 0.16);
         const e = 0.5 - 0.5 * Math.cos(Math.PI * t);
         curPos.lerpVectors(camIso, camFinal, e);
         curTgt.lerpVectors(tgtIso, tgtFinal, e);
@@ -726,7 +729,7 @@ const ConstructionScrollCAD = () => {
       }
 
       // 5. Cursor-Driven Slight Side-Angle Orbit (bounded ~±24 deg, not full 360)
-      const tiltWeight = Math.min(1, Math.max(0, (p - 0.44) / 0.10));
+      const tiltWeight = Math.min(1, Math.max(0, (p - 0.25) / 0.10));
       camOffset.copy(curPos).sub(curTgt);
 
       if (tiltWeight > 0.01) {
@@ -774,13 +777,13 @@ const ConstructionScrollCAD = () => {
   }, []);
 
   const phase       = PHASES[phaseIdx];
-  const isHandover  = smoothProgress >= 0.90;
-  const isSurvey    = smoothProgress < 0.28;
-  const showRuler   = smoothProgress >= 0.84;
-  const rulerActive = Math.min(10, Math.floor(((smoothProgress - 0.84) / 0.16) * 11));
+  const isHandover  = smoothProgress >= 0.76;
+  const isSurvey    = smoothProgress < 0.14;
+  const showRuler   = smoothProgress >= 0.74;
+  const rulerActive = Math.min(10, Math.floor(((smoothProgress - 0.74) / 0.22) * 11));
 
   return (
-    <div ref={containerRef} className="relative w-full h-[450vh] bg-[#1a1a18]">
+    <div ref={containerRef} className="relative w-full h-[460vh] bg-[#1a1a18]">
       <div className="sticky top-0 w-full h-screen overflow-hidden bg-[#1a1a18]">
 
         {/* Corner info */}
@@ -788,7 +791,7 @@ const ConstructionScrollCAD = () => {
           SHEET 02 / 09
         </div>
         <div className="absolute top-5 right-6 z-20 font-label text-[11px] tracking-widest text-[#555552] uppercase select-none">
-          {smoothProgress >= 0.48 ? 'MOVE CURSOR TO ORBIT ANGLE · SCALE 1:200' : 'SCALE 1:200'}
+          {smoothProgress >= 0.30 ? 'MOVE CURSOR TO ORBIT ANGLE · SCALE 1:200' : 'SCALE 1:200'}
         </div>
 
         {/* Phase nav — bottom right */}
