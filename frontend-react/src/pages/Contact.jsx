@@ -68,7 +68,7 @@ const Contact = () => {
 
       setSubmitStatus('success');
       setFormData({ name: '', organisation: '', email: '', phone: '', work: '', message: '', _gotcha: '' });
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

@@ -3,71 +3,104 @@ import { Link } from 'react-router-dom';
 const CURRENT_YEAR = new Date().getFullYear();
 
 const Footer = () => {
-
   return (
-    <footer id="contact" className="bg-brand-green text-on-brand-green relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 blueprint-grid-dark opacity-20 pointer-events-none" />
+    <footer id="site-footer" className="relative bg-brand-green text-on-brand-green">
+      <div className="grid grid-cols-1 lg:grid-cols-12">
+        {/* Left Column with Top-Right Chamfered Step */}
+        <div className="lg:col-span-4 relative bg-brand-green p-gutter-xl pt-gutter-xl pb-gutter-xl flex flex-col justify-between gap-12 lg:border-r border-on-brand-green/25">
+          {/* Chamfered Step Overlapping Dark CTA Banner */}
+          <div
+            className="hidden lg:block absolute -top-10 left-0 right-0 h-10 bg-brand-green"
+            style={{ clipPath: 'polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)' }}
+            aria-hidden="true"
+          />
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12">
-        {/* Left Column */}
-        <div className="lg:col-span-5 lg:border-r border-on-brand-green/25 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
           <div className="flex flex-col items-start gap-gutter-lg">
-            <p className="font-body text-body-md uppercase text-on-brand-green max-w-xs text-pretty" data-design-text-token="body-md">
-              BUILDING STRONGER FOUNDATIONS FOR COMMUNITIES, INFRASTRUCTURE, AND FUTURE GROWTH.
+            <p className="font-body text-body-sm uppercase leading-relaxed text-on-brand-green max-w-xs text-pretty" data-design-text-token="body-sm">
+              BUILDING STRONGER FOUNDATIONS FOR BUSINESSES, COMMUNITIES, AND FUTURE GROWTH.
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-gutter-sm bg-surface-dark text-on-surface-dark px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface-dark-elevated transition-colors duration-state-change"
+              data-component-id="button-secondary"
+              data-component-type="button"
+              data-component-variant="secondary"
+              className="inline-flex items-center justify-center gap-gutter-sm bg-primary text-on-primary px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
             >
-              <span>GET IN TOUCH</span>
+              <span data-design-text-token="label-md">GET IN TOUCH</span>
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
             </Link>
           </div>
 
-          <div className="pt-gutter-lg">
-            <svg className="w-28 h-28 text-on-brand-green" viewBox="0 0 64 64" fill="currentColor" aria-label="TRC SVNIT Emblem">
-              <path d="M16 4H48L60 16V24H44V18H20V46H44V36H32V26H60V48L48 60H16L4 48V16L16 4Z" />
+          {/* Large Geometric Octagonal G Emblem */}
+          <div className="pt-gutter-xl">
+            <svg className="w-56 h-56 lg:w-64 lg:h-64 text-on-brand-green" viewBox="0 0 160 160" fill="currentColor" aria-hidden="true">
+              <path d="M48 16H112L144 48V64H116V52L102 38H58L38 58V102L58 122H102L116 108V94H78V72H144V112L112 144H48L16 112V48L48 16Z" />
             </svg>
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="lg:col-span-7 p-gutter-lg lg:p-gutter-xl flex flex-col justify-between gap-gutter-xl">
+        {/* Right Column: Indented Navigation, Socials & Legal */}
+        <div className="lg:col-span-8 p-gutter-xl lg:pl-32 lg:pr-gutter-xl lg:pt-12 flex flex-col justify-between gap-16">
           <div>
-            <nav aria-label="Footer navigation" className="flex flex-col divide-y divide-on-brand-green/25 border-b border-on-brand-green/25">
-              <Link to="/services" className="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change">
-                SERVICES
-              </Link>
-              <Link to="/projects" className="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change">
-                PROJECTS
-              </Link>
-              <Link to="/about" className="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change">
-                ABOUT
-              </Link>
-              <Link to="/contact" className="py-gutter-sm font-headline text-headline-sm uppercase hover:pl-gutter-xs transition-all duration-state-change">
-                CONTACT
-              </Link>
+            <nav aria-label="Footer navigation">
+              <ul className="divide-y divide-on-brand-green/25 border-b border-on-brand-green/25">
+                <li>
+                  <Link to="/services" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    SERVICES
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/projects" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    PROJECTS
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    PROCESS
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    TEAM
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    NEWS
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    CAREERS
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="block py-gutter-md font-label text-label-md uppercase tracking-wider text-on-brand-green hover:opacity-75 transition-opacity" data-design-text-token="label-md">
+                    CONTACT
+                  </Link>
+                </li>
+              </ul>
             </nav>
 
+            {/* Social Links */}
             <div className="flex items-center gap-gutter-sm pt-gutter-lg">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex items-center justify-center w-7 h-7 bg-surface-dark text-on-surface-dark font-label text-label-sm hover:bg-surface hover:text-on-surface transition-colors duration-state-change">
-                <span className="material-symbols-outlined text-body-md" aria-hidden="true">linkedin</span>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-6 h-6 bg-primary text-on-primary flex items-center justify-center font-label text-label-sm font-semibold hover:bg-surface hover:text-on-surface transition-colors">
+                in
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-flex items-center justify-center w-7 h-7 bg-surface-dark text-on-surface-dark font-label text-label-sm hover:bg-surface hover:text-on-surface transition-colors duration-state-change">
-                <span className="material-symbols-outlined text-body-md" aria-hidden="true">alternate_email</span>
-              </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex items-center justify-center w-7 h-7 bg-surface-dark text-on-surface-dark font-label text-label-sm hover:bg-surface hover:text-on-surface transition-colors duration-state-change">
-                <span className="material-symbols-outlined text-body-md" aria-hidden="true">code</span>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="w-6 h-6 bg-primary text-on-primary flex items-center justify-center font-label text-label-sm font-semibold hover:bg-surface hover:text-on-surface transition-colors">
+                X
               </a>
             </div>
           </div>
 
-          <div className="border-t border-on-brand-green/25 pt-gutter-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-gutter-sm font-label text-label-sm uppercase">
-            <span data-design-text-token="label-sm">© {CURRENT_YEAR} TRC SVNIT. ALL RIGHTS RESERVED.</span>
+          {/* Bottom Legal Row */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-gutter-md pt-gutter-xl">
+            <span className="font-label text-label-sm uppercase text-on-brand-green" data-design-text-token="label-sm">
+              © {CURRENT_YEAR} TRC SVNIT. ALL RIGHTS RESERVED.
+            </span>
             <div className="flex items-center gap-gutter-lg">
-              <a href="#privacy" className="hover:underline" data-design-text-token="label-sm">PRIVACY POLICY</a>
-              <a href="#terms" className="hover:underline" data-design-text-token="label-sm">TERMS & CONDITIONS</a>
+              <a href="#site-footer" className="font-label text-label-sm uppercase text-on-brand-green hover:underline" data-design-text-token="label-sm">PRIVACY POLICY</a>
+              <a href="#site-footer" className="font-label text-label-sm uppercase text-on-brand-green hover:underline" data-design-text-token="label-sm">TERMS &amp; CONDITIONS</a>
             </div>
           </div>
         </div>

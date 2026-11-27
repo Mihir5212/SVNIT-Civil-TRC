@@ -56,6 +56,11 @@ body {
   background-size: 8px 8px;
 }
 
+.dot-matrix-overlay {
+  background-image: radial-gradient(rgba(28, 28, 27, 0.35) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
 .chamfer-card {
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
 }
@@ -64,7 +69,7 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
 }
 
-.chamfer-hero-orange {
+.chamfer-hero-green {
   clip-path: polygon(88px 0, 100% 0, 100% 100%, 0 100%, 0 88px);
 }
 
@@ -151,4 +156,7 @@ body {
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+.chamfer-photo-bl {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 40px 100%, 24px calc(100% - 20px), 0 calc(100% - 20px));
 }

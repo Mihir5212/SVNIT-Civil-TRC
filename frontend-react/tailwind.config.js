@@ -8,6 +8,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        'brand-orange': '#0b5d45',
+        'on-brand-orange': '#f0fdf4',
         // TRC SVNIT Green & White Palette
         'brand-green': '#0b5d45',
         'brand-green-dark': '#084734',
@@ -27,8 +29,8 @@ export default {
         'surface-dark-elevated': '#262624',
         'on-surface-dark-elevated': '#f3f3f1',
         'on-surface-dark-muted': '#a8a8a4',
-        'outline': '#d4d4d2',
-        'outline-dark': '#363633',
+        'outline': '#9E9E9B',
+        'outline-dark': '#484844',
       },
       borderRadius: {
         'none': '0px',
