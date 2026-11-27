@@ -84,23 +84,30 @@ const Home = () => {
   const introVideoRef = useRef(null);
   const [activePrinciple, setActivePrinciple] = useState(0);
 
-  // Auto-play intro video when scrolled into view, pause when scrolled away
+  // Auto-play YouTube intro video when scrolled into view, pause when scrolled away
   useEffect(() => {
-    const videoEl = introVideoRef.current;
-    if (!videoEl) return;
+    const iframeEl = introVideoRef.current;
+    if (!iframeEl) return;
+
+    const sendCommand = (func) => {
+      try {
+        iframeEl.contentWindow?.postMessage(
+          JSON.stringify({ event: 'command', func, args: '' }),
+          'https://www.youtube.com'
+        );
+      } catch {
+        // Ignore cross-origin timing errors before iframe initialization
+      }
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          videoEl.play().catch(() => {});
-        } else {
-          videoEl.pause();
-        }
+        sendCommand(entry.isIntersecting ? 'playVideo' : 'pauseVideo');
       },
       { threshold: 0.35 }
     );
 
-    observer.observe(videoEl);
+    observer.observe(iframeEl);
     return () => observer.disconnect();
   }, []);
 
@@ -262,22 +269,19 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right 8 Columns: Framed Intro Video Player */}
+            {/* Right 8 Columns: Framed YouTube Intro Video Player */}
             <div className="lg:col-span-8 p-gutter-md sm:p-gutter-lg lg:p-gutter-xl bg-surface-container/35 flex items-center justify-center">
-              <div className="w-full rounded-xl overflow-hidden border-2 border-brand-green bg-surface-dark shadow-lg aspect-video">
-                <video
+              <div className="w-full max-w-[720px] mx-auto rounded-xl overflow-hidden border-2 border-brand-green bg-surface-dark shadow-lg aspect-video">
+                <iframe
                   ref={introVideoRef}
-                  src="/SVNIT Intro.mp4"
-                  controls
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover block"
-                  aria-label="TEP Research and Consultancy Cell SVNIT Surat Introduction Video"
-                >
-                  Your browser does not support embedded video playback.
-                </video>
+                  src="https://www.youtube.com/embed/EW7HltL0AcI?enablejsapi=1&mute=1&playsinline=1&rel=0&loop=1&playlist=EW7HltL0AcI"
+                  title="TEP Research and Consultancy Cell SVNIT Surat Introduction Video"
+                  className="w-full h-full border-0 block scale-[1.02]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  loading="lazy"
+                />
               </div>
             </div>
           </div>

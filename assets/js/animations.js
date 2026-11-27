@@ -484,24 +484,46 @@
         var video = document.querySelector('.about-intro-video');
         if (!video) return;
 
-        // Browsers strictly require muted for programmatic autoplay
-        video.muted = true;
+        var isIframe = video.tagName && video.tagName.toLowerCase() === 'iframe';
+        if (!isIframe) {
+            // Browsers strictly require muted for programmatic autoplay
+            video.muted = true;
+        }
+
+        function sendYouTubeCommand(func) {
+            try {
+                if (video.contentWindow) {
+                    video.contentWindow.postMessage(
+                        JSON.stringify({ event: 'command', func: func, args: '' }),
+                        'https://www.youtube.com'
+                    );
+                }
+            } catch (e) {}
+        }
 
         if ('IntersectionObserver' in window) {
             var videoObserver = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
-                        video.muted = true;
-                        var promise = video.play();
-                        if (promise !== undefined) {
-                            promise.catch(function () {
-                                video.muted = true;
-                                video.play().catch(function () {});
-                            });
+                        if (isIframe) {
+                            sendYouTubeCommand('playVideo');
+                        } else {
+                            video.muted = true;
+                            var promise = video.play();
+                            if (promise !== undefined) {
+                                promise.catch(function () {
+                                    video.muted = true;
+                                    video.play().catch(function () {});
+                                });
+                            }
                         }
                     } else {
                         // Auto close / pause when scrolled down past or away
-                        video.pause();
+                        if (isIframe) {
+                            sendYouTubeCommand('pauseVideo');
+                        } else {
+                            video.pause();
+                        }
                     }
                 });
             }, {

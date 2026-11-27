@@ -95,13 +95,18 @@ include 'includes/header.php';
 
       <!-- Top Row: Video Player (Left) + Headings & Intro (Right) -->
       <div class="about-top-row">
-        <!-- Left: Rounded Rectangle Media Player embedding images/SVNIT Intro.mp4 -->
+        <!-- Left: Rounded Rectangle Media Player embedding SVNIT YouTube Intro -->
         <div class="about-video-col" data-reveal="fade-in-up">
           <div class="about-video-card">
-            <video class="about-intro-video" muted controls playsinline preload="metadata" poster="images/Hero_1.jpg">
-              <source src="images/SVNIT%20Intro.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              class="about-intro-video"
+              src="https://www.youtube.com/embed/EW7HltL0AcI?enablejsapi=1&mute=1&playsinline=1&rel=0&loop=1&playlist=EW7HltL0AcI"
+              title="TEP Research and Consultancy Cell SVNIT Surat Introduction Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
           </div>
         </div>
 

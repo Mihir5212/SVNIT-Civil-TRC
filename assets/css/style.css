@@ -1359,6 +1359,8 @@ body[data-page="home"] .site-header.scrolled {
 
 .about-video-col {
     width: 100%;
+    max-width: 92%;
+    margin: 0 auto;
 }
 
 .about-video-card {
@@ -1396,7 +1398,9 @@ body[data-page="home"] .site-header.scrolled {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
+    border: 0;
     border-radius: 22px;
+    transform: scale(1.02);
 }
 
 .about-headings-col {
