@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800' width='600' height='800'>
+  <rect width='600' height='800' fill='#ffffff'/>
+  <rect x='22' y='22' width='556' height='756' fill='none' stroke='#0b5d45' stroke-width='3'/>
+  <rect x='32' y='32' width='536' height='736' fill='none' stroke='#d4d4d2' stroke-width='1'/>
+  <rect x='32' y='32' width='536' height='96' fill='#f3f3f1'/>
+  <circle cx='88' cy='80' r='26' fill='none' stroke='#0b5d45' stroke-width='2.5'/>
+  <text x='88' y='85' font-family='monospace' font-size='13' font-weight='bold' fill='#0b5d45' text-anchor='middle'>SVNIT</text>
+  <text x='132' y='72' font-family='sans-serif' font-size='16' font-weight='bold' fill='#1c1c1b'>TEP RESEARCH &amp; CONSULTANCY CELL</text>
+  <text x='132' y='96' font-family='monospace' font-size='12' fill='#555552'>Department of Civil Engineering • SVNIT Surat</text>
+  <line x1='52' y1='160' x2='548' y2='160' stroke='#0b5d45' stroke-width='2'/>
+  <text x='300' y='200' font-family='monospace' font-size='12' fill='#0b5d45' text-anchor='middle' letter-spacing='3'>CERTIFICATE / EMPANELMENT</text>
+  <text x='300' y='244' font-family='sans-serif' font-size='24' font-weight='bold' fill='#1c1c1b' text-anchor='middle'>GOVT. OF GUJARAT</text>
+  <text x='300' y='278' font-family='monospace' font-size='14' fill='#555552' text-anchor='middle'>Roads & Buildings Department (R&B)</text>
+  <rect x='64' y='320' width='472' height='120' fill='#f8faf9' stroke='#d4d4d2' stroke-width='1'/>
+  <text x='300' y='362' font-family='sans-serif' font-size='13' fill='#1c1c1b' text-anchor='middle'>Temporary Placeholder Document — Replace with Scanned Certificate</text>
+  <text x='300' y='392' font-family='monospace' font-size='11' fill='#555552' text-anchor='middle'>Authorized Research & Technical Consultancy Division — Civ</text>
+  <text x='300' y='412' font-family='monospace' font-size='11' fill='#555552' text-anchor='middle'>il Engineering</text>
+  <line x1='80' y1='490' x2='520' y2='490' stroke='#e4e4e1' stroke-width='8'/>
+  <line x1='80' y1='515' x2='480' y2='515' stroke='#e4e4e1' stroke-width='8'/>
+  <line x1='80' y1='540' x2='500' y2='540' stroke='#e4e4e1' stroke-width='8'/>
+  <line x1='80' y1='565' x2='440' y2='565' stroke='#e4e4e1' stroke-width='8'/>
+  <text x='72' y='690' font-family='monospace' font-size='11' fill='#555552'>REF: GOG/RNB/TRC/2025-03</text>
+  <circle cx='470' cy='670' r='36' fill='none' stroke='#0b5d45' stroke-width='2' stroke-dasharray='4 3'/>
+  <text x='470' y='667' font-family='monospace' font-size='10' font-weight='bold' fill='#0b5d45' text-anchor='middle'>VERIFIED</text>
+  <text x='470' y='681' font-family='monospace' font-size='9' fill='#0b5d45' text-anchor='middle'>SVNIT CELL</text>
+  <line x1='72' y1='715' x2='220' y2='715' stroke='#1c1c1b' stroke-width='1.5'/>
+  <text x='72' y='734' font-family='monospace' font-size='11' fill='#555552'>Authorized Signatory</text>
+</svg>
