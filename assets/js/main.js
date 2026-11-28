@@ -674,18 +674,23 @@
         var form = document.getElementById('enquiry-form');
         if (!form) { return; }
         var select = form.elements.work;
-        var labels = {};
-        D.capabilities.forEach(function (s) { labels[s.id] = s.title; });
-        labels.other = 'Something else';
-        Object.keys(labels).forEach(function (k) {
-            var o = document.createElement('option');
-            o.value = k;
-            o.textContent = labels[k];
-            select.appendChild(o);
-        });
-        if (labels[params.get('work')]) {
-            select.value = params.get('work');
-            select.dispatchEvent(new Event('change'));
+        if (select) {
+            var labels = {};
+            D.capabilities.forEach(function (s) { labels[s.id] = s.title; });
+            labels.other = 'Something else';
+            if (select.options.length <= 1) {
+                Object.keys(labels).forEach(function (k) {
+                    var o = document.createElement('option');
+                    o.value = k;
+                    o.textContent = labels[k];
+                    select.appendChild(o);
+                });
+            }
+            var workParam = params.get('work');
+            if (workParam && select.querySelector('option[value="' + workParam + '"]')) {
+                select.value = workParam;
+                select.dispatchEvent(new Event('change'));
+            }
         }
         if (window.__trcAjaxFormHandled) { return; }
 

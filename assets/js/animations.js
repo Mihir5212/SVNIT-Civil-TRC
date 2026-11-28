@@ -1053,12 +1053,24 @@
         setupLightbox('trcCertLightbox', 'data-cert-open', 'trcCert');
     }
 
-    // 20. Contact Page Scope Chip Sync
+    // 20. Contact Page Scope Sync (Dropdown + Dynamic Label + Chips if present)
     function initContactScopeChips() {
-        var chipsWrap = document.getElementById('trcScopeChips');
         var select = document.getElementById('cf-work');
-        if (!chipsWrap || !select) return;
+        var scopeLabel = document.getElementById('trc-scope-label');
+        var chipsWrap = document.getElementById('trcScopeChips');
+        if (!select) return;
 
+        function updateLabel() {
+            if (!scopeLabel) return;
+            var opt = select.options[select.selectedIndex];
+            var text = opt ? opt.textContent.trim() : 'Technical Scope';
+            scopeLabel.textContent = 'Scope & Deliverable Requirements (' + text + ') *';
+        }
+
+        select.addEventListener('change', updateLabel);
+        updateLabel();
+
+        if (!chipsWrap) return;
         var chips = chipsWrap.querySelectorAll('.trc-scope-chip');
 
         function syncChips(val) {
@@ -1075,6 +1087,7 @@
                 if (select.querySelector('option[value="' + val + '"]')) {
                     select.value = val;
                     syncChips(val);
+                    updateLabel();
                 }
             });
         });
