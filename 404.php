@@ -14,7 +14,10 @@ include 'includes/header.php';
         The engineering resource or page you are looking for may have been updated, relocated, or temporarily unavailable.
       </p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="index.php" class="btn btn-primary btn-lg">Back to Home &rarr;</a>
+        <a href="index.php" class="btn btn-primary btn-lg" style="display:inline-flex;align-items:center;gap:8px;">
+          <span>Back to Home</span>
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+        </a>
         <a href="projects.php" class="btn btn-secondary btn-lg">Explore Projects</a>
         <a href="contact.php" class="btn btn-secondary btn-lg">Contact Us</a>
       </div>

@@ -948,6 +948,25 @@
                 });
             });
         });
+
+        var sectionFilterBtns = document.querySelectorAll('.team-filter-btn[data-team-filter]');
+        var teamSections = document.querySelectorAll('.team-section[data-team-section]');
+        if (sectionFilterBtns.length && teamSections.length) {
+            sectionFilterBtns.forEach(function (fBtn) {
+                fBtn.addEventListener('click', function () {
+                    var target = fBtn.getAttribute('data-team-filter');
+                    sectionFilterBtns.forEach(function (b) {
+                        var active = b === fBtn;
+                        b.classList.toggle('is-active', active);
+                        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    });
+                    teamSections.forEach(function (sec) {
+                        var type = sec.getAttribute('data-team-section');
+                        sec.hidden = !(target === 'all' || type === target);
+                    });
+                });
+            });
+        }
     }
 
     // 18. Publication Abstract Toggles

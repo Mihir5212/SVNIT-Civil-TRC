@@ -58,8 +58,14 @@ include 'includes/header.php';
         </p>
 
         <div class="trc-legal-actions">
-          <a href="privacy.php" class="trc-pill-outline-btn">&larr; Read Privacy Policy</a>
-          <a href="contact.php#enquiry-form" class="trc-pill-green-btn">Contact Consultancy Desk &rarr;</a>
+          <a href="privacy.php" class="trc-pill-outline-btn">
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span>
+            <span>Read Privacy Policy</span>
+          </a>
+          <a href="contact.php#enquiry-form" class="trc-pill-green-btn">
+            <span>Contact Consultancy Desk</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+          </a>
         </div>
 
       </div>

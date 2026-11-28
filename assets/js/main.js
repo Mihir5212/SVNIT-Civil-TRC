@@ -149,7 +149,7 @@
     // A page title on a sign hung from an overhead gantry. The sign is yellow for work still in progress.
     function pageHead(title, lead, backHref, backLabel, pictName, boardClass) {
         return '<div class="page-hero"><div class="page-hero-content">' +
-            (backHref ? '<p class="page-hero-breadcrumb"><a href="' + backHref + '">&larr; ' + esc(backLabel) + '</a></p>' : '') +
+            (backHref ? '<p class="page-hero-breadcrumb"><a href="' + backHref + '"><span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span> ' + esc(backLabel) + '</a></p>' : '') +
             '<h1 class="page-hero-title">' + esc(title) + '</h1>' +
             (lead ? '<p style="color:rgba(255,255,255,0.8);max-width:700px;margin:0.5rem auto 0;">' + esc(lead) + '</p>' : '') +
             '</div></div>';
@@ -181,7 +181,7 @@
             '<h3 class="project-card-title">' + esc(p.title) + '</h3>' +
             (p.associatedWith ? '<p class="project-card-org">' + esc(p.associatedWith) + (p.location ? ' &bull; ' + esc(p.location) : '') + '</p>' : '') +
             '</div>' +
-            '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view" aria-label="View project">View &rarr;</a>' +
+            '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view" aria-label="View project">View <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>' +
             '</article>';
     }
 
@@ -206,7 +206,7 @@
             (pill ? '<span class="news-date-pill">' + esc(pill) + '</span>' : '') +
             '<' + headingTag + ' class="news-card-title"><a class="news-card-title-link" href="news-item.php?id=' + encodeURIComponent(n.id) + '">' + esc(n.title) + '</a></' + headingTag + '>' +
             (n.summary ? '<p class="news-card-excerpt">' + esc(headingTag === 'h3' ? excerpt(n.summary, 160) : n.summary) + '</p>' : '') +
-            '<a href="news-item.php?id=' + encodeURIComponent(n.id) + '" class="news-card-link">Read More &rarr;</a>' +
+            '<a href="news-item.php?id=' + encodeURIComponent(n.id) + '" class="news-card-link">Read More <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>' +
             '</li>';
     }
 
@@ -351,7 +351,7 @@
                     '<h3 class="project-card-title">' + esc(p0.title) + '</h3>' +
                     (p0.associatedWith ? '<p class="project-card-org">' + esc(p0.associatedWith) + (p0.location ? ' &bull; ' + esc(p0.location) : '') + '</p>' : '') +
                     '</div>' +
-                    '<a href="project.php?id=' + encodeURIComponent(p0.id) + '" class="project-card-view">View &rarr;</a>' +
+                    '<a href="project.php?id=' + encodeURIComponent(p0.id) + '" class="project-card-view">View <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>' +
                     '</div>';
             }
             if (featured.length > 1) {
@@ -366,7 +366,7 @@
                         '<span class="status-badge ' + cls + '">' + esc(st) + '</span>' +
                         '<h3 class="project-card-title">' + esc(p.title) + '</h3>' +
                         '</div>' +
-                        '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view">View &rarr;</a>' +
+                        '<a href="project.php?id=' + encodeURIComponent(p.id) + '" class="project-card-view">View <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>' +
                         '</div>';
                 });
                 editHtml += '</div>';
@@ -402,7 +402,7 @@
                 s.outputs.map(function (o) { return '<li style="margin-bottom:0.35rem;">' + esc(o) + '</li>'; }).join('') +
                 '</ul>' +
                 '<a class="btn btn-secondary" href="contact.php?work=' + encodeURIComponent(s.id) + '">Discuss ' +
-                esc(s.title) + ' &rarr;</a>' +
+                esc(s.title) + ' <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>' +
                 '</article>';
         }).join(''));
         // Jump to the capability named in the link (content is added after the page loads)
@@ -648,7 +648,7 @@
                         : '<span class="person-photo is-initials" aria-hidden="true">' + esc(initials(m.name)) + '</span>';
                     var links = '';
                     if (m.email) { links += '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + '</a>'; }
-                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Profile Website &rarr;</a>'; }
+                    if (m.profile) { links += '<a href="' + esc(m.profile) + '" target="_blank" rel="noopener" aria-label="Website of ' + esc(m.name) + '">Profile Website <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></a>'; }
                     return '<li class="person"><div class="person-face">' + photo + '<div class="person-text"><h3>' + esc(m.name) + '</h3>' +
                         (m.designation ? '<p class="person-role">' + esc(m.designation) + '</p>' : '') +
                         (m.expertise ? '<p class="person-areas">' + esc(m.expertise) + '</p>' : '') +

@@ -39,7 +39,10 @@ include 'includes/header.php';
             <span class="trc-story-meta-text">&bull; <?php echo htmlspecialchars($story['read_time']); ?></span>
             <?php endif; ?>
           </div>
-          <a href="news.php" class="trc-pill-outline-btn trc-pill-outline-btn--sm">&larr; All News</a>
+          <a href="news.php" class="trc-pill-outline-btn trc-pill-outline-btn--sm">
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span>
+            <span>All News</span>
+          </a>
         </div>
 
         <div class="trc-story-figure">
@@ -63,8 +66,14 @@ include 'includes/header.php';
           <?php endif; ?>
 
           <div class="trc-story-actions">
-            <a href="news.php" class="trc-pill-outline-btn">&larr; Back to Newsroom</a>
-            <a href="contact.php#enquiry-form" class="trc-pill-green-btn">Discuss This Study &rarr;</a>
+            <a href="news.php" class="trc-pill-outline-btn">
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span>
+              <span>Back to Newsroom</span>
+            </a>
+            <a href="contact.php#enquiry-form" class="trc-pill-green-btn">
+              <span>Discuss This Study</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+            </a>
           </div>
         </div>
       </article>
@@ -72,7 +81,10 @@ include 'includes/header.php';
       <div class="trc-empty-card" style="text-align:center;padding:3rem;">
         <h2>Story Not Found</h2>
         <p style="margin:0.75rem 0 1.5rem;">The requested news briefing may have moved or been archived.</p>
-        <a href="news.php" class="trc-pill-green-btn">&larr; Return to Newsroom</a>
+        <a href="news.php" class="trc-pill-green-btn">
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span>
+          <span>Return to Newsroom</span>
+        </a>
       </div>
       <?php endif; ?>
     </div>

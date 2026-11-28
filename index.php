@@ -537,7 +537,7 @@ include 'includes/header.php';
             </a>
             <a href="about.php" class="profile-btn profile-btn--know-more">
               <span>KNOW MORE</span>
-              <span class="profile-btn-arrow">&rarr;</span>
+              <span class="material-symbols-outlined trc-arrow-icon profile-btn-arrow" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </div>
@@ -557,9 +557,9 @@ include 'includes/header.php';
           <h2 style="font-family:'Poppins',sans-serif;font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#062b20;margin:0;">Featured Projects</h2>
         </div>
         <div>
-          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
+          <a href="projects.php" class="btn btn-green" style="min-width:200px;height:48px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#084534;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.02em;">
             <span>VIEW ALL PROJECTS</span>
-            <span style="margin-left:8px;">&rarr;</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
       </div>
@@ -685,7 +685,7 @@ include 'includes/header.php';
         </div>
         <a href="about.php#certificates" class="trc-pill-outline-btn">
           <span>VIEW EMPANELMENTS</span>
-          <span aria-hidden="true">&rarr;</span>
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
         </a>
       </div>
 
@@ -715,7 +715,7 @@ include 'includes/header.php';
         </div>
         <a href="news.php" class="trc-pill-green-btn">
           <span>ALL NEWS &amp; EVENTS</span>
-          <span aria-hidden="true">&rarr;</span>
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
         </a>
       </div>
 
@@ -735,7 +735,7 @@ include 'includes/header.php';
           <p><?php echo htmlspecialchars($homeLeadNews['summary']); ?></p>
           <a href="news-item.php?id=<?php echo urlencode($homeLeadNews['id']); ?>" class="trc-text-arrow-link">
             <span>READ FULL BRIEFING</span>
-            <span aria-hidden="true">&rarr;</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
       </article>
@@ -757,7 +757,7 @@ include 'includes/header.php';
             <p><?php echo htmlspecialchars($n['summary']); ?></p>
             <a href="news-item.php?id=<?php echo urlencode($n['id']); ?>" class="trc-text-arrow-link">
               <span>READ MORE</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </article>

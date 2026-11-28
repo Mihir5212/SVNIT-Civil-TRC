@@ -114,7 +114,7 @@ include 'includes/header.php';
           <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
             <a id="trcCapContactLink" href="contact.php?work=<?php echo urlencode($capabilities[0]['id']); ?>#enquiry-form" class="trc-pill-green-btn">
               <span>DISCUSS THIS CAPABILITY</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
             </a>
             <a id="trcCapServiceLink" href="<?php echo htmlspecialchars($capabilities[0]['service_url']); ?>" class="trc-pill-outline-btn">
               <span>SERVICE OVERVIEW</span>
@@ -140,7 +140,7 @@ include 'includes/header.php';
                 aria-pressed="<?php echo $idx === 0 ? 'true' : 'false'; ?>">
           <span class="trc-cap-tile-num"><?php echo htmlspecialchars($cap['num']); ?></span>
           <strong><?php echo htmlspecialchars($cap['title']); ?></strong>
-          <span class="trc-cap-tile-arrow" aria-hidden="true">&rarr;</span>
+          <span class="material-symbols-outlined trc-arrow-icon trc-cap-tile-arrow" aria-hidden="true">arrow_forward</span>
         </button>
         <?php endforeach; ?>
       </div>
@@ -219,8 +219,8 @@ include 'includes/header.php';
           <span class="trc-lb-counter" id="trcCertCount">1 / 3</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <button type="button" class="trc-lb-btn" id="trcCertPrev">&larr; Prev</button>
-          <button type="button" class="trc-lb-btn" id="trcCertNext">Next &rarr;</button>
+          <button type="button" class="trc-lb-btn" id="trcCertPrev"><span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span> Prev</button>
+          <button type="button" class="trc-lb-btn" id="trcCertNext">Next <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></button>
           <button type="button" class="trc-lb-btn trc-lb-btn--close" id="trcCertClose">Close &times;</button>
         </div>
       </div>

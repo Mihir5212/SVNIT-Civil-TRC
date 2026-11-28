@@ -140,7 +140,10 @@ include 'includes/header.php';
             </div>
 
             <p class="form-note" id="form-note" style="color:var(--muted);font-size:0.85rem;margin-bottom:1.25rem;"></p>
-            <button type="submit" class="btn btn-primary btn-block btn-lg">Submit Enquiry &rarr;</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">
+              <span>Submit Enquiry</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+            </button>
           </form>
         </div>
 

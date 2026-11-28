@@ -133,7 +133,7 @@ include 'includes/header.php';
 
           <a href="contact.php" class="project-sidebar-cta">
             <span>Discuss a Similar Project</span>
-            <span aria-hidden="true">&rarr;</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
       </aside>

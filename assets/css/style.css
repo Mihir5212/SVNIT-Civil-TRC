@@ -6414,95 +6414,374 @@ body {
     color: #ffffff;
 }
 
-/* ---------- Team Page (Faculty & 2-Col Mobile Staff Grid) ---------- */
-.trc-team-section {
+/* ---------- Team Page (Mirrored from React Team.jsx with Rounded Corners in SVNIT Green Theme) ---------- */
+.trc-team-rx-page {
     background: #ffffff;
-    padding: 76px 0;
+    color: #062b20;
 }
 
-.trc-staff-section {
-    background: #f7fbff;
-    padding: 80px 0;
-}
-
-.trc-faculty-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-}
-
-.trc-faculty-card {
+.trc-rx-hero {
     background: #ffffff;
-    border: 1.5px solid rgba(8, 69, 52, 0.14);
-    border-radius: 20px;
-    overflow: hidden;
+    border-bottom: 1px solid #d9e5df;
+    padding: 16px 0 26px;
+}
+
+.trc-rx-hero-inner {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 14px 32px rgba(8, 69, 52, 0.07);
+    gap: 10px;
 }
 
-.trc-faculty-media {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    background: #eef4f2;
-    overflow: hidden;
-}
-
-.trc-faculty-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-}
-
-.trc-faculty-body {
-    padding: 24px;
+.trc-rx-eyebrow-row {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
+    align-items: center;
+    gap: 10px;
 }
 
-.trc-faculty-body h3 {
+.trc-rx-diamond {
+    width: 10px;
+    height: 10px;
+    background: #084534;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.trc-rx-diamond--sm {
+    width: 7px;
+    height: 7px;
+}
+
+.trc-rx-label {
     font-family: 'Poppins', sans-serif;
-    font-size: 19px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4b6359;
+}
+
+.trc-rx-label--muted {
+    color: rgba(209, 250, 229, 0.78);
+}
+
+.trc-rx-hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.85rem, 3vw, 2.75rem);
     font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: #062b20;
     margin: 0;
 }
 
-.trc-faculty-role {
-    font-size: 13px;
-    font-weight: 600;
-    color: #0b5d45;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+.trc-rx-hero-lead {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #475569;
+    max-width: 960px;
     margin: 0;
 }
 
-.trc-faculty-exp {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: #475569;
-    margin: 0 0 12px 0;
-    flex: 1;
-}
-
-.trc-staff-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 22px;
-}
-
-.trc-staff-card {
+.trc-rx-section {
     background: #ffffff;
-    border: 1.5px solid rgba(8, 69, 52, 0.12);
+    border-bottom: 1px solid #d9e5df;
+    padding: 36px 0 44px;
+}
+
+.trc-rx-section--staff {
+    background: #f8fbf9;
+    border-bottom: none;
+    padding-bottom: 52px;
+}
+
+.trc-rx-sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #d9e5df;
+}
+
+.trc-rx-sec-title-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.trc-rx-sec-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-transform: uppercase;
+    color: #062b20;
+    margin: 0;
+}
+
+/* Faculty Centered 3-Col Grid matching React max-w-[980px] */
+.trc-rx-faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 980px;
+    margin: 0 auto;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.trc-rx-faculty-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+}
+
+.trc-rx-faculty-card {
+    background: #062b20;
+    color: #ffffff;
     border-radius: 18px;
+    border: 1px solid rgba(11, 93, 69, 0.35);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    flex: 1;
+    box-shadow: 0 14px 32px rgba(6, 43, 32, 0.12);
+}
+
+.trc-rx-faculty-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trc-rx-card-tag {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(209, 250, 229, 0.72);
+}
+
+.trc-rx-card-num {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: rgba(209, 250, 229, 0.85);
+    font-variant-numeric: tabular-nums;
+}
+
+.trc-rx-faculty-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #e9f2ee;
+    overflow: hidden;
+}
+
+.trc-rx-faculty-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    transition: transform 0.32s ease;
+}
+
+.trc-rx-faculty-card:hover .trc-rx-faculty-media img {
+    transform: scale(1.02);
+}
+
+.trc-rx-faculty-card-foot {
+    padding: 20px 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.trc-rx-faculty-card-foot h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.trc-rx-faculty-card-foot p {
+    font-size: 13px;
+    color: rgba(209, 250, 229, 0.78);
+    margin: 0;
+}
+
+.trc-rx-profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #084534;
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 14px 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.22s ease, transform 0.2s ease;
+}
+
+.trc-rx-profile-btn:hover {
+    background: #0b5d45;
+    transform: translateY(-2px);
+}
+
+/* Staff Role Filter Bar (Rounded Pills) */
+.trc-rx-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.trc-rx-filter-btn {
+    border: 1px solid #d9e5df;
+    border-radius: 999px;
+    background: #f1f7f4;
+    color: #062b20;
+    padding: 9px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.trc-rx-filter-btn:hover {
+    background: #0b5d45;
+    color: #ffffff;
+    border-color: #0b5d45;
+}
+
+.trc-rx-filter-btn.is-active {
+    background: #084534;
+    color: #ffffff;
+    border-color: #084534;
+}
+
+/* Staff Grid (4 cols desktop, 2 cols mobile matching React Team.jsx) */
+.trc-rx-staff-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.trc-rx-staff-card {
+    background: #084534;
+    padding: 1.5px;
+    border-radius: 18px;
+    height: 100%;
+    box-shadow: 0 8px 20px rgba(8, 69, 52, 0.08);
+    transition: background 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.trc-rx-staff-card:hover {
+    background: #0b5d45;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px rgba(8, 69, 52, 0.16);
+}
+
+.trc-rx-staff-inner {
+    background: #ffffff;
+    border-radius: 16.5px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.trc-rx-staff-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #eef4f1;
+    border-bottom: 1.5px solid rgba(8, 69, 52, 0.25);
+    overflow: hidden;
+}
+
+.trc-rx-staff-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    transition: transform 0.32s ease;
+}
+
+.trc-rx-staff-card:hover .trc-rx-staff-media img {
+    transform: scale(1.02);
+}
+
+.trc-rx-staff-num {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(6, 43, 32, 0.9);
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+}
+
+.trc-rx-staff-body {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    flex: 1;
+}
+
+.trc-rx-staff-body h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #062b20;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.trc-rx-staff-role-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #4b6359;
+    line-height: 1.3;
 }
 
 .trc-staff-card[hidden],
@@ -6513,68 +6792,88 @@ body {
     display: none !important;
 }
 
-.trc-staff-card:hover {
-    transform: translateY(-3px);
-    border-color: #0b5d45;
-}
-
-.trc-staff-media {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    background: #eef4f2;
-    overflow: hidden;
-}
-
-.trc-staff-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-}
-
-.trc-staff-body {
-    padding: 16px 18px;
-}
-
-.trc-staff-body h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 15.5px;
-    font-weight: 700;
-    color: #062b20;
-    margin: 0 0 4px 0;
-}
-
-.trc-staff-role {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: #0b5d45;
-    margin: 0;
-}
-
-.trc-staff-callout {
-    background: linear-gradient(145deg, #062b20, #0b5d45);
+/* Collaborative Callout Card (spans remaining 3 slots on 4-col desktop, rounded!) */
+.trc-rx-staff-callout {
+    grid-column: span 3;
+    background: linear-gradient(135deg, #042118 0%, #062b20 55%, #084534 100%);
     color: #ffffff;
     border-radius: 18px;
-    padding: 24px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(135deg, #042118 0%, #062b20 55%, #084534 100%);
+    background-size: 20px 20px, 100% 100%;
+}
+
+.trc-rx-staff-callout .trc-rx-diamond {
+    background: #6ee7b7;
+}
+
+.trc-rx-callout-copy {
+    max-width: 560px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 18px;
+    gap: 8px;
 }
 
-.trc-staff-callout h3 {
+.trc-rx-callout-copy h3 {
     font-family: 'Poppins', sans-serif;
-    font-size: 19px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
     color: #ffffff;
-    margin: 4px 0 8px 0;
+    margin: 2px 0 0 0;
+    line-height: 1.25;
 }
 
-.trc-staff-callout p {
+.trc-rx-callout-copy p {
     font-size: 13.5px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(236, 253, 245, 0.84);
     margin: 0;
+}
+
+.trc-rx-callout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #ffffff;
+    color: #062b20;
+    border-radius: 999px;
+    padding: 13px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.trc-rx-callout-btn:hover {
+    background: #ecfdf5;
+    transform: translateY(-2px);
+}
+
+/* Global bold geometric Material arrow icon matching site theme */
+.material-symbols-outlined.trc-arrow-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15em;
+    line-height: 1 !important;
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 20;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
 
 /* ---------- Publications Page ---------- */
@@ -7218,8 +7517,18 @@ body {
 @media (max-width: 1024px) {
     .trc-partners-grid,
     .trc-staff-grid,
-    .trc-cap-grid {
+    .trc-rx-staff-grid,
+    .trc-cap-grid,
+    .trc-rx-faculty-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trc-rx-staff-callout {
+        grid-column: span 1;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 22px;
     }
 
     .trc-faculty-grid,
@@ -7268,6 +7577,19 @@ body {
         padding: 0 16px;
     }
 
+    .trc-rx-hero {
+        padding: 14px 0 22px;
+    }
+
+    .trc-rx-section {
+        padding: 28px 0 36px;
+    }
+
+    .trc-rx-sec-head {
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+    }
+
     .brand-dept-full {
         display: none;
     }
@@ -7276,6 +7598,7 @@ body {
         display: inline;
     }
 
+    .trc-rx-faculty-grid,
     .trc-faculty-grid,
     .trc-news-3col,
     .trc-events-3col,
@@ -7285,22 +7608,53 @@ body {
         grid-template-columns: 1fr;
     }
 
-    /* Keep staff cards cleanly 2-by-2 on mobile as requested */
-    .trc-staff-grid {
+    /* Keep staff cards cleanly 2-by-2 on mobile matching React Team.jsx */
+    .trc-staff-grid,
+    .trc-rx-staff-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
     }
 
-    .trc-staff-body {
+    .trc-rx-staff-body {
         padding: 12px;
+        gap: 6px;
     }
 
-    .trc-staff-body h3 {
-        font-size: 13.5px;
+    .trc-rx-staff-body h3 {
+        font-size: 13px;
     }
 
-    .trc-staff-callout {
-        grid-column: 1 / -1;
+    .trc-rx-staff-role-row {
+        font-size: 10px;
+        gap: 6px;
+    }
+
+    .trc-rx-staff-num {
+        top: 8px;
+        right: 8px;
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+
+    .trc-rx-staff-callout {
+        grid-column: span 1;
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .trc-rx-callout-copy h3 {
+        font-size: 14px;
+    }
+
+    .trc-rx-callout-copy p {
+        font-size: 11px;
+        line-height: 1.45;
+    }
+
+    .trc-rx-callout-btn {
+        padding: 9px 14px;
+        font-size: 10px;
+        gap: 6px;
     }
 
     .trc-partners-grid {

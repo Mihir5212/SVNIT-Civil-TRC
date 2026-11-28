@@ -51,7 +51,7 @@ include 'includes/header.php';
           <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
             <a href="news-item.php?id=<?php echo urlencode($lead['id']); ?>" class="trc-pill-green-btn">
               <span>READ FULL STORY</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </div>
@@ -93,7 +93,7 @@ include 'includes/header.php';
             <p><?php echo htmlspecialchars($n['summary']); ?></p>
             <a href="news-item.php?id=<?php echo urlencode($n['id']); ?>" class="trc-text-arrow-link">
               <span>READ BRIEFING</span>
-              <span aria-hidden="true">&rarr;</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </article>

@@ -1337,7 +1337,10 @@ include 'includes/header.php';
               <h3><?php echo htmlspecialchars($project['title']); ?></h3>
               <em><?php echo htmlspecialchars($project['tag']); ?></em>
               <p><?php echo htmlspecialchars($project['desc']); ?></p>
-              <a class="l" href="<?php echo htmlspecialchars($project['link']); ?>">Explore Project &rarr;</a>
+              <a class="l" href="<?php echo htmlspecialchars($project['link']); ?>" style="display:inline-flex;align-items:center;gap:6px;">
+                <span>Explore Project</span>
+                <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+              </a>
             </div>
           </div>
         <?php endforeach; ?>

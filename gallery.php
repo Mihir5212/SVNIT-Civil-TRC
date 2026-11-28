@@ -81,8 +81,8 @@ include 'includes/header.php';
           <span class="trc-lb-counter" id="trcLbCount">1 / 12</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <button type="button" class="trc-lb-btn" id="trcLbPrev" aria-label="Previous photo">&larr; Prev</button>
-          <button type="button" class="trc-lb-btn" id="trcLbNext" aria-label="Next photo">Next &rarr;</button>
+          <button type="button" class="trc-lb-btn" id="trcLbPrev" aria-label="Previous photo"><span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span> Prev</button>
+          <button type="button" class="trc-lb-btn" id="trcLbNext" aria-label="Next photo">Next <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span></button>
           <button type="button" class="trc-lb-btn trc-lb-btn--close" id="trcLbClose" aria-label="Close lightbox">Close &times;</button>
         </div>
       </div>
