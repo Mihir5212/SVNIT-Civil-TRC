@@ -8,15 +8,25 @@ $certificates = getTRCCertificates();
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="trc-subpage">
+<main id="main" class="trc-subpage trc-rx-subpage">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">About TRC SVNIT</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; About TRC</p>
+  <!-- Centered Editorial Hero (Matching News & Updates Theme) -->
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>About TRC SVNIT</span>
+      </span>
+
+      <h1 class="trc-ed-hero-h1">
+        Transportation research &amp; road <span class="trc-ed-serif">safety.</span>
+      </h1>
+
+      <p class="trc-ed-hero-sub">
+        Independent road safety audits, traffic engineering evaluations, and empirical highway research within the Department of Civil Engineering at SVNIT Surat.
+      </p>
     </div>
-  </div>
+  </section>
 
   <!-- Intro & Key Numbers -->
   <section class="section">

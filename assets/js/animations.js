@@ -967,6 +967,68 @@
                 });
             });
         }
+
+        // Editorial News & Dispatches page filter + reader dialog
+        var newsFilterBtns = document.querySelectorAll('.tep-news-filter[data-news-filter]');
+        var newsCards = document.querySelectorAll('.tep-news-card[data-news-cat]');
+        if (newsFilterBtns.length && newsCards.length) {
+            newsFilterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var filter = btn.getAttribute('data-news-filter');
+                    newsFilterBtns.forEach(function (b) {
+                        var active = b === btn;
+                        b.classList.toggle('is-active', active);
+                        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    });
+                    newsCards.forEach(function (card) {
+                        var cat = card.getAttribute('data-news-cat');
+                        card.hidden = !(filter === 'all' || cat === filter);
+                    });
+                });
+            });
+        }
+
+        var storyDataEl = document.getElementById('trc-news-stories-json');
+        var newsModal = document.getElementById('tep-news-modal');
+        if (storyDataEl && newsModal && typeof newsModal.showModal === 'function') {
+            var storiesMap = {};
+            try { storiesMap = JSON.parse(storyDataEl.textContent || '{}'); } catch (e) {}
+            var mCat = document.getElementById('tep-modal-cat');
+            var mMeta = document.getElementById('tep-modal-meta');
+            var mTitle = document.getElementById('tep-modal-title');
+            var mBody = document.getElementById('tep-modal-body');
+            var mBullets = document.getElementById('tep-modal-bullets');
+            var mLink = document.getElementById('tep-modal-permalink');
+            var mClose = document.getElementById('tep-modal-close');
+
+            document.querySelectorAll('.tep-read-btn[data-story-id]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var id = btn.getAttribute('data-story-id');
+                    var story = id ? storiesMap[id] : null;
+                    if (!story) return;
+                    if (mCat) mCat.textContent = story.cat || 'Update';
+                    if (mMeta) mMeta.textContent = (story.date || '') + ' • ' + (story.read_time || '');
+                    if (mTitle) mTitle.textContent = story.title || '';
+                    if (mBody) mBody.textContent = story.body || '';
+                    if (mBullets) {
+                        mBullets.innerHTML = (story.bullets || []).map(function (b) {
+                            var li = document.createElement('li');
+                            li.textContent = b;
+                            return li.outerHTML;
+                        }).join('');
+                    }
+                    if (mLink) mLink.href = 'news-item.php?id=' + encodeURIComponent(id);
+                    newsModal.showModal();
+                });
+            });
+
+            if (mClose) {
+                mClose.addEventListener('click', function () { newsModal.close(); });
+            }
+            newsModal.addEventListener('click', function (e) {
+                if (e.target === newsModal) newsModal.close();
+            });
+        }
     }
 
     // 18. Publication Abstract Toggles

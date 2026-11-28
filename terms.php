@@ -5,15 +5,19 @@ $pageDesc = 'Terms of Condition and consultancy governance framework for the Tra
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main">
+<main id="main" class="trc-subpage trc-rx-subpage">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">Terms of Condition</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Terms of Condition</p>
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Legal &amp; Governance</span>
+      </span>
+      <h1 class="trc-ed-hero-h1">
+        Terms of <span class="trc-ed-serif">condition.</span>
+      </h1>
     </div>
-  </div>
+  </section>
 
   <section class="section">
     <div class="wrap" style="max-width: 960px;">

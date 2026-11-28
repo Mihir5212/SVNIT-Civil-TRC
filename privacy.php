@@ -5,15 +5,19 @@ $pageDesc = 'Privacy Policy and data governance principles of the Transportation
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main">
+<main id="main" class="trc-subpage trc-rx-subpage">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">Privacy Policy</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Privacy Policy</p>
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Legal &amp; Governance</span>
+      </span>
+      <h1 class="trc-ed-hero-h1">
+        Privacy <span class="trc-ed-serif">policy.</span>
+      </h1>
     </div>
-  </div>
+  </section>
 
   <section class="section">
     <div class="wrap" style="max-width: 960px;">

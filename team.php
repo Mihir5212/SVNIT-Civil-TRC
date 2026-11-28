@@ -18,20 +18,20 @@ include 'includes/header.php';
 <main id="main" class="trc-subpage trc-team-rx-page">
 
   <!-- ========================================================= -->
-  <!-- PAGE HERO HEADER (Mirrored from React Team.jsx, Rounded)  -->
+  <!-- CENTERED EDITORIAL HERO (Matching News & Updates Theme)   -->
   <!-- ========================================================= -->
-  <section class="trc-rx-hero">
-    <div class="trc-shell trc-rx-hero-inner" data-reveal="fade-in-up">
-      <div class="trc-rx-eyebrow-row">
-        <span class="trc-rx-diamond" aria-hidden="true"></span>
-        <span class="trc-rx-label">OUR PEOPLE &mdash; TEP &bull; SVNIT, SURAT</span>
-      </div>
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Our People &amp; Faculty</span>
+      </span>
 
-      <h1 class="trc-rx-hero-title">
-        PROFESSORS, CONSULTANTS &amp; PROJECT STAFF.
+      <h1 class="trc-ed-hero-h1">
+        Professors, consultants &amp; engineering <span class="trc-ed-serif">specialists.</span>
       </h1>
 
-      <p class="trc-rx-hero-lead">
+      <p class="trc-ed-hero-sub">
         Transportation engineering faculty and dedicated project engineers delivering research-backed consultancy, planning, and field execution.
       </p>
     </div>

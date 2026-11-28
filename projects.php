@@ -16,38 +16,31 @@ if (!array_key_exists($selectedSector, $sectors)) {
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="projects-archive-page">
-  <div class="projects-archive-container">
+<main id="main" class="trc-subpage trc-projects-rx-page">
 
-    <!-- 1. Breadcrumb Bar (Matching Image 1) -->
-    <nav class="projects-breadcrumb-bar" aria-label="Breadcrumb">
-      <ul class="projects-breadcrumb-list">
-        <li class="projects-breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="projects-breadcrumb-sep">/</li>
-        <li class="projects-breadcrumb-item projects-breadcrumb-cur" aria-current="page">Projects</li>
-      </ul>
-    </nav>
+  <!-- Centered Editorial Hero (Matching News & Updates Theme) -->
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Project Portfolio</span>
+      </span>
 
-    <!-- 2. Hero Header: Title & Purpose Statement (Matching Image 1) -->
-    <header class="projects-hero-header">
-      <div class="projects-hero-left">
-        <h1 class="projects-hero-title">Our Projects</h1>
-      </div>
-      <div class="projects-hero-right">
-        <p class="projects-hero-intro">
-          We believe in full ownership across all the work that we do. Here are some notable completed projects that our growth-driven research &amp; consultancy team has done.
-        </p>
-      </div>
-    </header>
+      <h1 class="trc-ed-hero-h1">
+        Highway safety &amp; infrastructure <span class="trc-ed-serif">projects.</span>
+      </h1>
 
-    <!-- 3. Category Filter Navigation Bar with Downward Arrow Indicator (Matching Image 1) -->
-    <div class="projects-filter-wrapper">
-      <nav class="projects-filter-nav" id="projectsFilterNav" aria-label="Filter Projects by Sector">
-        <?php foreach ($sectors as $key => $label): 
+      <p class="trc-ed-hero-sub">
+        We believe in full ownership across all the work that we do. Explore completed road safety audits, traffic planning, and corridor studies.
+      </p>
+
+      <!-- Category Filter Pills directly inside hero matching News -->
+      <nav class="trc-ed-filters" id="projectsFilterNav" aria-label="Filter Projects by Sector">
+        <?php foreach ($sectors as $key => $label):
           $isActive = ($key === $selectedSector);
         ?>
-          <button type="button" 
-                  class="projects-filter-tab<?php echo $isActive ? ' is-active' : ''; ?>" 
+          <button type="button"
+                  class="projects-filter-tab trc-ed-pill-btn<?php echo $isActive ? ' is-active' : ''; ?>"
                   data-filter="<?php echo htmlspecialchars($key); ?>"
                   aria-pressed="<?php echo $isActive ? 'true' : 'false'; ?>">
             <?php echo htmlspecialchars($label); ?>
@@ -55,6 +48,9 @@ include 'includes/header.php';
         <?php endforeach; ?>
       </nav>
     </div>
+  </section>
+
+  <div class="projects-archive-container trc-projects-body-wrap">
 
     <!-- 4. 2-Column Projects Archive Grid (Matching Images 1, 2, 5) -->
     <div class="projects-archive-grid" id="projectsArchiveGrid">

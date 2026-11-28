@@ -15,14 +15,19 @@ $pageDesc = $story
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="trc-subpage">
+<main id="main" class="trc-subpage trc-rx-subpage">
 
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title"><?php echo $story ? htmlspecialchars($story['cat_label']) : 'Article Not Found'; ?></h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; <a href="news.php">News</a> &rsaquo; Briefing</p>
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>News Briefing</span>
+      </span>
+      <h1 class="trc-ed-hero-h1">
+        <?php echo $story ? htmlspecialchars($story['cat_label']) : 'Article'; ?> <span class="trc-ed-serif">report.</span>
+      </h1>
     </div>
-  </div>
+  </section>
 
   <section class="section">
     <div class="trc-shell" style="max-width:960px;">

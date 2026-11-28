@@ -5,11 +5,11 @@ $pageDesc = 'View photographs of field surveys, road safety audit site visits, t
 require_once 'includes/site-data.php';
 $plates = getTRCGalleryPlates();
 $galleryFilters = [
-    'all' => 'ALL PLATES',
-    'corridors' => 'HIGHWAY CORRIDORS',
-    'surveys' => 'FIELD SURVEYS',
-    'safety' => 'SAFETY AUDITS',
-    'structures' => 'STRUCTURES & LAB',
+    'all' => 'All Plates',
+    'corridors' => 'Highway Corridors',
+    'surveys' => 'Field Surveys',
+    'safety' => 'Safety Audits',
+    'structures' => 'Structures & Lab',
 ];
 include 'includes/meta.php';
 include 'includes/header.php';
@@ -17,22 +17,35 @@ include 'includes/header.php';
 <main id="main" class="trc-subpage trc-gallery-rx-page">
 
   <!-- ========================================================= -->
-  <!-- PAGE HERO HEADER (Mirrored from React Gallery.jsx)        -->
+  <!-- CENTERED EDITORIAL HERO (Matching News & Updates Theme)   -->
   <!-- ========================================================= -->
-  <section class="trc-rx-hero">
-    <div class="trc-shell trc-rx-hero-inner">
-      <div class="trc-rx-eyebrow-row">
-        <span class="trc-rx-diamond" aria-hidden="true"></span>
-        <span class="trc-rx-label">GALLERY &mdash; TEP &bull; SVNIT, SURAT</span>
-      </div>
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Photo Gallery</span>
+      </span>
 
-      <h1 class="trc-rx-hero-title">
-        FIELD SURVEYS, LAB TESTING &amp; INFRASTRUCTURE ARCHIVE.
+      <h1 class="trc-ed-hero-h1">
+        Field surveys &amp; infrastructure <span class="trc-ed-serif">archive.</span>
       </h1>
 
-      <p class="trc-rx-hero-lead">
-        Visual documentation from highway safety audits, UAV traffic trajectory studies, structural concrete inspections, and laboratory testing across Gujarat. Click any frame to inspect in full view.
+      <p class="trc-ed-hero-sub">
+        Visual documentation from highway safety audits, UAV traffic trajectory studies, structural inspections, and laboratory testing across Gujarat.
       </p>
+
+      <div class="trc-ed-filters" role="group" aria-label="Filter gallery by discipline" data-filter-group="gallery">
+        <?php foreach ($galleryFilters as $key => $label): ?>
+        <button
+          type="button"
+          class="trc-filter-tab trc-ed-pill-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
+          data-filter="<?php echo htmlspecialchars($key); ?>"
+          aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>"
+        >
+          <?php echo htmlspecialchars($label); ?>
+        </button>
+        <?php endforeach; ?>
+      </div>
     </div>
   </section>
 
@@ -41,29 +54,6 @@ include 'includes/header.php';
   <!-- ========================================================= -->
   <section id="trc-gallery-section" class="trc-rx-section trc-rx-section--gallery">
     <div class="trc-shell">
-      <div class="trc-rx-sec-head trc-rx-sec-head--gallery">
-        <div class="trc-rx-sec-title-wrap">
-          <div class="trc-rx-eyebrow-row">
-            <span class="trc-rx-diamond" aria-hidden="true"></span>
-            <span class="trc-rx-label">MASONRY PLATE ARCHIVE</span>
-          </div>
-          <h2 class="trc-rx-sec-title">PROJECT &amp; FIELD PHOTOGRAPHY</h2>
-        </div>
-
-        <div class="trc-rx-filter-bar" role="group" aria-label="Filter gallery by discipline" data-filter-group="gallery">
-          <?php foreach ($galleryFilters as $key => $label): ?>
-          <button
-            type="button"
-            class="trc-filter-tab trc-rx-filter-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
-            data-filter="<?php echo htmlspecialchars($key); ?>"
-            aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>"
-          >
-            <?php echo htmlspecialchars($label); ?>
-          </button>
-          <?php endforeach; ?>
-        </div>
-      </div>
-
       <p class="trc-gallery-counter" id="trcGalleryCount">Showing <?php echo count($plates); ?> field &amp; infrastructure plates</p>
 
       <div class="trc-rx-masonry" id="trcGalleryGrid">

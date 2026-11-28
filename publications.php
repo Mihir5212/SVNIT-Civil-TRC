@@ -6,24 +6,47 @@ require_once 'includes/site-data.php';
 $publications = getTRCPublications();
 $tracks = getTRCPublicationTracks();
 $pubFilters = [
-    'all' => 'ALL (' . count($publications) . ')',
-    'journal' => 'JOURNAL ARTICLES',
-    'conference' => 'CONFERENCE PAPERS',
-    'report' => 'TECHNICAL REPORTS',
-    'chapter' => 'BOOK CHAPTERS',
+    'all' => 'All (' . count($publications) . ')',
+    'journal' => 'Journal Articles',
+    'conference' => 'Conference Papers',
+    'report' => 'Technical Reports',
+    'chapter' => 'Book Chapters',
 ];
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="trc-subpage">
+<main id="main" class="trc-subpage trc-rx-subpage">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">Publications &amp; Research Papers</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Publications</p>
+  <!-- Centered Editorial Hero (Matching News & Updates Theme) -->
+  <section class="trc-ed-hero trc-ed-hero--band">
+    <div class="trc-shell trc-ed-hero-wrap">
+      <span class="trc-ed-hero-pill">
+        <span class="trc-ed-hero-dot" aria-hidden="true"></span>
+        <span>Publications &amp; Research</span>
+      </span>
+
+      <h1 class="trc-ed-hero-h1">
+        Peer-reviewed journals &amp; IRC <span class="trc-ed-serif">standards.</span>
+      </h1>
+
+      <p class="trc-ed-hero-sub">
+        Indexed journal papers, conference proceedings, Indo-HCM calibration studies, and IRC monographs authored by SVNIT Surat faculty and researchers.
+      </p>
+
+      <div class="trc-ed-filters" role="group" aria-label="Filter publications by category" data-filter-group="publications">
+        <?php foreach ($pubFilters as $key => $label): ?>
+        <button
+          type="button"
+          class="trc-filter-tab trc-ed-pill-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
+          data-filter="<?php echo htmlspecialchars($key); ?>"
+          aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>"
+        >
+          <?php echo htmlspecialchars($label); ?>
+        </button>
+        <?php endforeach; ?>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Publications Metrics Bar -->
   <section class="section trc-metrics-strip">
@@ -57,14 +80,7 @@ include 'includes/header.php';
           <span class="trc-eyebrow">SELECTED SCHOLARSHIP</span>
           <h2 class="trc-h2">Featured Publications &amp; Monographs</h2>
         </div>
-
-        <div class="trc-filter-bar" role="group" aria-label="Filter publications by category" data-filter-group="publications">
-          <?php foreach ($pubFilters as $key => $label): ?>
-          <button type="button" class="trc-filter-tab<?php echo $key === 'all' ? ' is-active' : ''; ?>" data-filter="<?php echo htmlspecialchars($key); ?>" aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>">
-            <?php echo htmlspecialchars($label); ?>
-          </button>
-          <?php endforeach; ?>
-        </div>
+        <span class="trc-pill-badge">PEER-REVIEWED ARCHIVE</span>
       </div>
 
       <div class="trc-pub-grid" id="trcPubGrid">
