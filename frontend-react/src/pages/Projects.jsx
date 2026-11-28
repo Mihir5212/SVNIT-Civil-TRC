@@ -171,7 +171,7 @@ const Projects = () => {
                       key={f.key}
                       type="button"
                       onClick={() => setActiveFilter(f.key)}
-                      className={`px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change cursor-pointer ${
+                      className={`chamfer-btn px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change cursor-pointer ${
                         isActive
                           ? 'bg-brand-green text-on-brand-green'
                           : 'bg-primary text-on-primary hover:bg-brand-green hover:text-on-brand-green'
@@ -215,7 +215,7 @@ const Projects = () => {
                           onClick={() => toggleDetails(project.id)}
                           aria-expanded={isOpen}
                           aria-label={`Toggle details for ${project.title}`}
-                          className="mb-[calc(theme(spacing.gutter-sm)+2px)] mr-gutter-sm w-7 h-7 bg-brand-green text-on-brand-green flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors cursor-pointer shrink-0"
+                          className="chamfer-btn mb-[calc(theme(spacing.gutter-sm)+2px)] mr-gutter-sm w-8 h-8 bg-brand-green text-on-brand-green flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors cursor-pointer shrink-0"
                         >
                           <span className="material-symbols-outlined text-body-md" aria-hidden="true">
                             {isOpen ? 'remove' : 'add'}
@@ -325,7 +325,7 @@ const Projects = () => {
                   data-component-id="button-primary"
                   data-component-type="button"
                   data-component-variant="primary"
-                  className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                  className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
                 >
                   <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
                   <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>

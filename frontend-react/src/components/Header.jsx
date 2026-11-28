@@ -59,12 +59,14 @@ const Header = () => {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`whitespace-nowrap font-label text-[13px] 2xl:text-[14px] font-medium uppercase tracking-wider transition-colors duration-state-change hover:text-brand-green ${
+                className={`whitespace-nowrap font-label text-[13px] 2xl:text-[14px] uppercase tracking-wider transition-all duration-state-change ${
                   item.href === '/contact'
-                    ? 'inline-flex items-center justify-center gap-1.5 bg-brand-green text-on-brand-green px-4 py-2 hover:bg-brand-green-dark hover:text-on-brand-green'
+                    ? `chamfer-btn inline-flex items-center justify-center gap-1.5 px-5 py-2 font-semibold text-on-brand-green hover:text-on-brand-green ${
+                        isActive ? 'bg-brand-green-dark' : 'bg-brand-green hover:bg-brand-green-dark'
+                      }`
                     : isActive
-                    ? 'text-brand-green font-semibold'
-                    : 'text-on-surface'
+                    ? 'text-brand-green font-semibold hover:text-brand-green'
+                    : 'text-on-surface font-medium hover:text-brand-green'
                 }`}
               >
                 <span>{item.label}</span>
@@ -77,7 +79,7 @@ const Header = () => {
         <button
           id="open-menu-btn"
           type="button"
-          className="xl:hidden inline-flex items-center justify-center w-10 h-10 bg-brand-green text-on-brand-green hover:bg-brand-green-dark transition-colors duration-state-change shrink-0 cursor-pointer"
+          className="xl:hidden chamfer-btn inline-flex items-center justify-center w-10 h-10 bg-brand-green text-on-brand-green hover:bg-brand-green-dark transition-colors duration-state-change shrink-0 cursor-pointer"
           onClick={() => setIsMenuOpen(true)}
           aria-label="Open navigation menu"
           aria-expanded={isMenuOpen}
@@ -93,6 +95,7 @@ const Header = () => {
       {/* Mobile / Tablet Menu Drawer (Slides smoothly down from top) */}
       <div
         id="menu-drawer"
+        data-lenis-prevent
         className={`fixed inset-0 z-50 flex flex-col justify-between p-gutter-lg sm:p-gutter-xl bg-surface-dark text-on-surface-dark transition-all duration-300 ease-out overflow-y-auto ${
           isMenuOpen
             ? 'translate-y-0 opacity-100 visible pointer-events-auto'
@@ -120,7 +123,7 @@ const Header = () => {
           <button
             id="close-menu-btn"
             type="button"
-            className="inline-flex items-center gap-gutter-xs sm:gap-gutter-sm bg-brand-green text-on-brand-green px-3 sm:px-gutter-md py-1.5 sm:py-gutter-xs font-label text-[11px] sm:text-label-md uppercase tracking-wider shrink-0 cursor-pointer"
+            className="chamfer-btn inline-flex items-center gap-gutter-xs sm:gap-gutter-sm bg-brand-green text-on-brand-green hover:bg-brand-green-dark px-3.5 sm:px-gutter-md py-1.5 sm:py-gutter-xs font-label text-[11px] sm:text-label-md uppercase tracking-wider shrink-0 cursor-pointer transition-colors duration-state-change"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close menu"
           >

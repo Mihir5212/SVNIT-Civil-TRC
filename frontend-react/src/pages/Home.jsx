@@ -53,29 +53,29 @@ const PRINCIPLES_DATA = [
     id: 'safety',
     title: 'SAFETY FIRST',
     description: 'Unwavering commitment to workplace safety and regulatory compliance on every site, every day.',
-    image: '/images/tep-about-photo.jpg',
-    alt: 'Construction engineer wearing hard hat and safety vest on site',
+    image: '/images/SAFETY FIRST.jpg',
+    alt: 'Civil engineers wearing hard hats and high-visibility vests reviewing site safety plans',
   },
   {
     id: 'quality',
     title: 'QUALITY EXECUTION',
     description: 'Rigorous structural verification, material traceability, and tolerance audits at every construction milestone.',
-    image: '/images/Road Safety Audit.jpg',
-    alt: 'Highway structural inspection and road safety quality audit',
+    image: '/images/QUALITY EXECUTION.jpg',
+    alt: 'Organized civil infrastructure construction yard and precision materials staging',
   },
   {
     id: 'delivery',
     title: 'RELIABLE DELIVERY',
     description: 'Integrated scheduling and transparent milestone reporting ensure handover on time and within budget.',
-    image: '/images/Surveying.jpg',
-    alt: 'Civil engineering field surveying and precise site layout',
+    image: '/images/RELIABLE DELIVERY.jpg',
+    alt: 'Project stakeholders shaking hands on timely infrastructure delivery',
   },
   {
     id: 'partnerships',
     title: 'LONG-TERM PARTNERSHIPS',
     description: 'Dedicated lifecycle support, facility commissioning, and multi-phase collaboration with institutional clients.',
-    image: '/images/Smart Mobility.jpg',
-    alt: 'Modern smart infrastructure and transportation network partnership',
+    image: '/images/LONG-TERM PARTNERSHIPS.jpg',
+    alt: 'Collaborative hands joining four interlocking puzzle pieces representing institutional partnership',
   },
 ];
 
@@ -921,7 +921,7 @@ const Home = () => {
                               <img
                                 src={item.image}
                                 alt={item.alt}
-                                className="w-full h-56 object-cover grayscale contrast-125 chamfer-photo-bl"
+                                className="w-full h-56 object-cover chamfer-photo-bl"
                               />
                             </div>
                           </div>
@@ -942,7 +942,7 @@ const Home = () => {
             <h2 className="font-headline text-headline-lg-mobile lg:text-headline-lg uppercase text-balance max-w-md" data-design-text-token="headline-lg">
               PROJECTS BUILT TO PERFORM FOR DECADES.
             </h2>
-            <Link to="/projects" className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-brand-green-dark transition-colors duration-state-change ease-state-change self-start sm:self-auto">
+            <Link to="/projects" className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-brand-green-dark transition-colors duration-state-change ease-state-change self-start sm:self-auto">
               <span data-design-text-token="label-md">ALL PROJECTS</span>
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
             </Link>
@@ -980,7 +980,7 @@ const Home = () => {
               id="prev-project-btn"
               type="button"
               aria-label="Previous project"
-              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
+              className="chamfer-btn inline-flex items-center justify-center w-9 h-9 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
               onClick={handlePrevProject}
             >
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_back</span>
@@ -989,7 +989,7 @@ const Home = () => {
               id="next-project-btn"
               type="button"
               aria-label="Next project"
-              className="inline-flex items-center justify-center w-8 h-8 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
+              className="chamfer-btn inline-flex items-center justify-center w-9 h-9 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors duration-state-change ease-state-change cursor-pointer"
               onClick={handleNextProject}
             >
               <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
@@ -1027,7 +1027,7 @@ const Home = () => {
                   data-component-id="button-primary"
                   data-component-type="button"
                   data-component-variant="primary"
-                  className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                  className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
                 >
                   <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
                   <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>

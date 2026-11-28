@@ -164,10 +164,10 @@ export default function Contact() {
                       key={scope}
                       type="button"
                       onClick={() => setSelectedScope(scope)}
-                      className={`cursor-pointer px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors ${
+                      className={`chamfer-btn cursor-pointer px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors ${
                         isActive
                           ? 'bg-brand-green text-on-brand-green'
-                          : 'bg-surface-container text-on-surface border border-outline hover:bg-primary hover:text-on-primary'
+                          : 'bg-surface-container text-on-surface hover:bg-primary hover:text-on-primary'
                       }`}
                     >
                       {scope}
@@ -297,7 +297,7 @@ export default function Contact() {
               <div className="flex flex-wrap items-center justify-between gap-gutter-md pt-gutter-sm">
                 <button
                   type="submit"
-                  className="cursor-pointer inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change"
+                  className="chamfer-btn cursor-pointer inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change ease-state-change"
                 >
                   <span>SUBMIT TECHNICAL INQUIRY</span>
                   <span aria-hidden="true">→</span>
@@ -461,7 +461,7 @@ export default function Contact() {
               </h2>
               <a
                 href="#inquiry-form"
-                className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
               >
                 <span>REQUEST A CONSULTATION</span>
                 <span aria-hidden="true">→</span>

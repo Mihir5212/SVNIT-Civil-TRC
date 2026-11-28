@@ -9,7 +9,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 84px;
 }
 
@@ -78,6 +77,10 @@ body {
 
 .chamfer-card-inner {
   clip-path: polygon(0 0, calc(100% - 13.5px) 0, 100% 13.5px, 100% 100%, 13.5px 100%, 0 calc(100% - 13.5px));
+}
+
+.chamfer-btn {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
 }
 
 .chamfer-br {

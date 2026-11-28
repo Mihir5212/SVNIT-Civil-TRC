@@ -263,7 +263,7 @@ export default function Gallery() {
                     key={filter.key}
                     type="button"
                     onClick={() => handleFilterChange(filter.key)}
-                    className={`cursor-pointer px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change ${
+                    className={`chamfer-btn cursor-pointer px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change ${
                       isActive
                         ? 'bg-brand-green text-on-brand-green'
                         : 'bg-primary text-on-primary hover:bg-brand-green hover:text-on-brand-green'
@@ -373,7 +373,7 @@ export default function Gallery() {
             </h2>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+              className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
             >
               <span>REQUEST A CONSULTATION</span>
               <span aria-hidden="true">→</span>
@@ -385,6 +385,7 @@ export default function Gallery() {
       {/* BIG-VIEW LIGHTBOX MODAL */}
       {activePlate && (
         <div
+          data-lenis-prevent
           className="fixed inset-0 z-50 bg-surface-dark/95 text-on-surface-dark flex flex-col p-3 sm:p-gutter-md lg:p-gutter-xl overflow-y-auto"
           role="dialog"
           aria-modal="true"
@@ -408,21 +409,21 @@ export default function Gallery() {
                 <button
                   type="button"
                   onClick={showPrev}
-                  className="cursor-pointer bg-surface-dark border border-outline-dark text-on-surface-dark px-gutter-sm py-gutter-xs font-label text-label-sm uppercase hover:bg-brand-green hover:text-on-brand-green transition-colors"
+                  className="chamfer-btn cursor-pointer bg-surface-dark-elevated text-on-surface-dark px-4 py-gutter-xs font-label text-label-sm uppercase hover:bg-brand-green hover:text-on-brand-green transition-colors"
                 >
                   PREV
                 </button>
                 <button
                   type="button"
                   onClick={showNext}
-                  className="cursor-pointer bg-surface-dark border border-outline-dark text-on-surface-dark px-gutter-sm py-gutter-xs font-label text-label-sm uppercase hover:bg-brand-green hover:text-on-brand-green transition-colors"
+                  className="chamfer-btn cursor-pointer bg-surface-dark-elevated text-on-surface-dark px-4 py-gutter-xs font-label text-label-sm uppercase hover:bg-brand-green hover:text-on-brand-green transition-colors"
                 >
                   NEXT
                 </button>
                 <button
                   type="button"
                   onClick={closeLightbox}
-                  className="cursor-pointer inline-flex items-center gap-gutter-xs bg-brand-green text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-sm uppercase ml-gutter-sm hover:opacity-90 transition-opacity"
+                  className="chamfer-btn cursor-pointer inline-flex items-center gap-gutter-xs bg-brand-green text-on-brand-green px-4 py-gutter-xs font-label text-label-sm uppercase ml-gutter-sm hover:opacity-90 transition-opacity"
                 >
                   <span>CLOSE</span>
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">

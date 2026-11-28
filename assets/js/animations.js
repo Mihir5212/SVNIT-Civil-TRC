@@ -151,8 +151,12 @@
                 var targetEl = document.querySelector(targetId);
                 if (targetEl) {
                     var navHeight = 80;
-                    var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                    window.scrollTo({ top: targetPos, behavior: 'smooth' });
+                    if (window.__trcLenis) {
+                        window.__trcLenis.scrollTo(targetEl, { offset: -navHeight });
+                    } else {
+                        var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+                    }
                 }
             });
         });
@@ -164,7 +168,11 @@
         if (backBtn) {
             backBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (window.__trcLenis) {
+                    window.__trcLenis.scrollTo(0);
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             });
         }
     }
@@ -754,7 +762,39 @@
         initAll();
     }
 
+    // 14. Lenis Smooth Scrolling Wrapper
+    function initLenisScroll() {
+        if (typeof window.Lenis === 'undefined' || window.__trcLenis) return;
+
+        var hasGsap = typeof gsap !== 'undefined';
+        var lenis = new window.Lenis({
+            autoRaf: !hasGsap,
+            lerp: 0.085,
+            duration: 1.15,
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 1.5,
+            anchors: {
+                offset: -80
+            }
+        });
+
+        window.__trcLenis = lenis;
+
+        if (typeof ScrollTrigger !== 'undefined') {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+
+        if (hasGsap && gsap.ticker) {
+            gsap.ticker.add(function (time) {
+                lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        }
+    }
+
     function initAll() {
+        initLenisScroll();
         initStickyNav();
         initHeroSlider();
         initVelaHero();

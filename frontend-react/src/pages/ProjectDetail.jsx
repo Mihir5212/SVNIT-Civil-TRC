@@ -306,7 +306,7 @@ export default function ProjectDetail() {
             <button
               type="button"
               onClick={handleBack}
-              className="cursor-pointer inline-flex items-center gap-gutter-xs bg-primary text-on-primary hover:bg-brand-green hover:text-on-brand-green px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change"
+              className="chamfer-btn cursor-pointer inline-flex items-center gap-gutter-xs bg-primary text-on-primary hover:bg-brand-green hover:text-on-brand-green px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change"
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" />
@@ -315,7 +315,7 @@ export default function ProjectDetail() {
             </button>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-gutter-xs border border-outline bg-surface hover:border-brand-green text-on-surface hover:text-brand-green px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change"
+              className="chamfer-btn inline-flex items-center gap-gutter-xs bg-surface hover:bg-brand-green text-on-surface hover:text-on-brand-green px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change"
             >
               <span>ALL PROJECTS</span>
             </Link>
@@ -481,7 +481,7 @@ export default function ProjectDetail() {
 
                 <Link
                   to="/contact"
-                  className="w-full inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change"
+                  className="chamfer-btn w-full inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors duration-state-change"
                 >
                   <span>DISCUSS A SIMILAR PROJECT</span>
                   <span aria-hidden="true">→</span>
@@ -589,7 +589,7 @@ export default function ProjectDetail() {
               </h2>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
               >
                 <span>REQUEST A CONSULTATION</span>
                 <span aria-hidden="true">→</span>

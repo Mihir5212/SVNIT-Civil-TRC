@@ -99,7 +99,7 @@ export default function PrivacyPolicy() {
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-sm uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors"
+              className="chamfer-btn inline-flex items-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-sm uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors"
             >
               <span>CONTACT CONSULTANCY DESK</span>
               <span aria-hidden="true">→</span>
@@ -135,7 +135,7 @@ export default function PrivacyPolicy() {
               </h2>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
               >
                 <span>REQUEST A CONSULTATION</span>
                 <span aria-hidden="true">→</span>

@@ -361,7 +361,7 @@ const About = () => {
                     data-component-id="button-primary"
                     data-component-type="button"
                     data-component-variant="primary"
-                    className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                    className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
                   >
                     <span data-design-text-token="label-md">{activeCap.cta}</span>
                     <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
@@ -563,7 +563,7 @@ const About = () => {
                   data-component-id="button-primary"
                   data-component-type="button"
                   data-component-variant="primary"
-                  className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                  className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
                 >
                   <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
                   <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>
@@ -579,6 +579,7 @@ const About = () => {
       {/* ========================================================= */}
       {selectedCert && (
         <div
+          data-lenis-prevent
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-8"
           onClick={() => setSelectedCertIdx(null)}
           role="dialog"
@@ -608,7 +609,7 @@ const About = () => {
                 type="button"
                 onClick={() => setSelectedCertIdx(null)}
                 aria-label="Close certificate preview"
-                className="inline-flex items-center gap-1.5 bg-brand-green text-on-brand-green px-3 py-1.5 font-label text-label-sm uppercase tracking-wider hover:bg-brand-green-dark transition-colors shrink-0 cursor-pointer"
+                className="chamfer-btn inline-flex items-center gap-1.5 bg-brand-green text-on-brand-green px-4 py-1.5 font-label text-label-sm uppercase tracking-wider hover:bg-brand-green-dark transition-colors shrink-0 cursor-pointer"
               >
                 <span>CLOSE</span>
                 <span className="material-symbols-outlined text-base" aria-hidden="true">close</span>
@@ -629,7 +630,7 @@ const About = () => {
               <button
                 type="button"
                 onClick={() => setSelectedCertIdx((i) => (i - 1 + CERTIFICATES.length) % CERTIFICATES.length)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-outline-dark text-on-surface-dark hover:border-brand-green hover:text-brand-green font-label text-label-sm uppercase transition-colors cursor-pointer"
+                className="chamfer-btn inline-flex items-center gap-1.5 px-4 py-1.5 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green font-label text-label-sm uppercase transition-colors cursor-pointer"
               >
                 <span className="material-symbols-outlined text-base" aria-hidden="true">arrow_back</span>
                 <span>PREVIOUS</span>
@@ -640,7 +641,7 @@ const About = () => {
               <button
                 type="button"
                 onClick={() => setSelectedCertIdx((i) => (i + 1) % CERTIFICATES.length)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-outline-dark text-on-surface-dark hover:border-brand-green hover:text-brand-green font-label text-label-sm uppercase transition-colors cursor-pointer"
+                className="chamfer-btn inline-flex items-center gap-1.5 px-4 py-1.5 bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green font-label text-label-sm uppercase transition-colors cursor-pointer"
               >
                 <span>NEXT</span>
                 <span className="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>

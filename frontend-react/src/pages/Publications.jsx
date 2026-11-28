@@ -198,10 +198,10 @@ export default function Publications() {
                     key={filter.key}
                     type="button"
                     onClick={() => setActiveFilter(filter.key)}
-                    className={`cursor-pointer border font-label text-label-sm uppercase px-gutter-md py-gutter-sm transition-colors duration-150 ${
+                    className={`chamfer-btn cursor-pointer font-label text-label-sm uppercase px-4 py-gutter-sm transition-colors duration-150 ${
                       isActive
-                        ? 'bg-brand-green text-on-brand-green border-brand-green'
-                        : 'bg-surface border-outline text-on-surface hover:border-brand-green'
+                        ? 'bg-brand-green text-on-brand-green'
+                        : 'bg-surface-container text-on-surface hover:bg-primary hover:text-on-primary'
                     }`}
                   >
                     {filter.label}
@@ -249,7 +249,7 @@ export default function Publications() {
                         onClick={() => toggleDetails(item.id)}
                         aria-expanded={isExpanded}
                         aria-label={`Toggle publication details for ${item.title}`}
-                        className="cursor-pointer bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors w-10 h-10 mb-[2px] flex items-center justify-center border-t border-l border-outline-dark shrink-0 font-headline text-headline-md"
+                        className="chamfer-btn cursor-pointer bg-surface-dark text-on-surface-dark hover:bg-brand-green hover:text-on-brand-green transition-colors w-10 h-10 mb-[2px] flex items-center justify-center shrink-0 font-headline text-headline-md"
                       >
                         {isExpanded ? '-' : '+'}
                       </button>
@@ -355,9 +355,10 @@ export default function Publications() {
             </p>
             <Link
               to="/contact"
-              className="inline-block bg-brand-green text-on-brand-green chamfer-card font-label text-label-md uppercase px-gutter-xl py-gutter-md hover:opacity-90 transition-opacity"
+              className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
             >
-              REQUEST A CONSULTATION →
+              <span>REQUEST A CONSULTATION</span>
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
           <div className="lg:col-span-4 border border-outline-dark bg-surface-dark-elevated p-gutter-md">

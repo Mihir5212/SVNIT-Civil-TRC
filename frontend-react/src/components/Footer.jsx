@@ -41,7 +41,7 @@ const Footer = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-gutter-sm bg-primary text-on-primary px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+              className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-primary text-on-primary px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
             >
               <span>GET IN TOUCH</span>
               <span aria-hidden="true">→</span>

@@ -80,14 +80,14 @@ const STAFF_MEMBERS = [
     name: 'MIHIR KOLADIYA',
     designation: 'Research Project Engineer',
     role: 'research',
-    photo: '/team/Mihir Koladiya.png',
+    photo: '/team/Mihir Koladiya.jpg',
   },
   {
     num: '009',
     name: 'HARSH KAKKAD',
     designation: 'Research Project Engineer',
     role: 'research',
-    photo: '/team/Harsh Kakkad.png',
+    photo: '/team/Harsh Kakkad.jpg',
   },
 ];
 
@@ -239,10 +239,10 @@ const Team = () => {
                       key={f.key}
                       type="button"
                       onClick={() => setActiveRole(f.key)}
-                      className={`px-gutter-md py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change cursor-pointer ${
+                      className={`chamfer-btn px-4 py-gutter-xs font-label text-label-sm uppercase tracking-wider transition-colors duration-state-change cursor-pointer ${
                         isActive
                           ? 'bg-brand-green text-on-brand-green'
-                          : 'bg-surface-container text-on-surface border border-outline hover:bg-primary hover:text-on-primary'
+                          : 'bg-surface-container text-on-surface hover:bg-primary hover:text-on-primary'
                       }`}
                     >
                       <span data-design-text-token="label-sm">{f.label}</span>
@@ -306,7 +306,7 @@ const Team = () => {
                     data-component-id="button-primary"
                     data-component-type="button"
                     data-component-variant="primary"
-                    className="inline-flex items-center justify-center gap-1.5 sm:gap-gutter-sm bg-brand-green text-on-brand-green px-2.5 py-2 sm:px-gutter-md sm:py-gutter-sm font-label text-[10px] sm:text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change self-start"
+                    className="chamfer-btn inline-flex items-center justify-center gap-1.5 sm:gap-gutter-sm bg-brand-green text-on-brand-green px-3.5 py-2 sm:px-5 sm:py-gutter-sm font-label text-[10px] sm:text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change self-start"
                   >
                     <span data-design-text-token="label-md">CONNECT WITH US</span>
                     <span className="material-symbols-outlined text-xs sm:text-body-md" aria-hidden="true">arrow_forward</span>
@@ -346,7 +346,7 @@ const Team = () => {
                   data-component-id="button-primary"
                   data-component-type="button"
                   data-component-variant="primary"
-                  className="inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-gutter-md py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
+                  className="chamfer-btn inline-flex items-center justify-center gap-gutter-sm bg-brand-green text-on-brand-green px-5 py-gutter-sm font-label text-label-md uppercase tracking-wider hover:bg-surface hover:text-on-surface transition-colors duration-state-change ease-state-change"
                 >
                   <span data-design-text-token="label-md">REQUEST A CONSULTATION</span>
                   <span className="material-symbols-outlined text-body-md" aria-hidden="true">arrow_forward</span>

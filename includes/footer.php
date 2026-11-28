@@ -86,9 +86,10 @@
   </div>
 </footer>
 
-<!-- GSAP & ScrollTrigger for High-End Interactive Animations -->
+<!-- GSAP, ScrollTrigger & Lenis Smooth Scroll -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.29/dist/lenis.min.js"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/page-flip.browser.js"></script>
