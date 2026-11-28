@@ -1,19 +1,18 @@
 <?php
-$activePage = 'project';
+$activePage = 'projects';
 require_once 'includes/projects-data.php';
 
 $projects = getTRCProjects();
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-
 if (!isset($projects[$id])) {
-    $id = 1; // default fallback
+    $id = 1;
 }
 $p = $projects[$id];
 
 $pageTitle = htmlspecialchars($p['title']) . ' | TRC SVNIT Surat';
 $pageDesc = htmlspecialchars($p['summary']);
 
-// Find 2 related projects
+// 2 related projects for bottom showcase
 $relatedProjects = [];
 foreach ($projects as $otherId => $otherProj) {
     if ($otherId !== $id) {
@@ -22,161 +21,274 @@ foreach ($projects as $otherId => $otherProj) {
     }
 }
 
+$methods = array_values(array_filter(array_map('trim', explode(',', $p['methodologies']))));
+
+// Faculty investigators matched cleanly to existing portraits in images/team/
+$investigators = [
+    ['name' => 'Dr. Gaurang J. Joshi', 'role' => 'Professor · Principal Investigator', 'photo' => 'images/team/gaurang-joshi.jpg'],
+    ['name' => 'Dr. Shriniwas S. Arkatkar', 'role' => 'Professor · Safety & ITS Lead', 'photo' => 'images/team/shriniwas-arkatkar.jpg'],
+];
+if (in_array($p['sector'], ['safety', 'highways', 'surveying'], true)) {
+    $investigators[] = ['name' => 'Dr. Ashish Dhamaniya', 'role' => 'Professor · Geometrics & Operations', 'photo' => 'images/team/ashish-dhamaniya.jpg'];
+}
+
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="project-detail-page">
-  <div class="project-detail-container">
+<main id="main" class="trc-subpage trc-pd-page">
+  <div class="trc-shell trc-pd-stack">
 
-    <!-- Breadcrumb Bar -->
-    <nav class="projects-breadcrumb-bar" aria-label="Breadcrumb">
-      <ul class="projects-breadcrumb-list">
-        <li class="projects-breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="projects-breadcrumb-sep">/</li>
-        <li class="projects-breadcrumb-item"><a href="projects.php">Projects</a></li>
-        <li class="projects-breadcrumb-sep">/</li>
-        <li class="projects-breadcrumb-item projects-breadcrumb-cur" aria-current="page"><?php echo htmlspecialchars($p['title']); ?></li>
-      </ul>
-    </nav>
-
-    <!-- Project Hero Header -->
-    <header class="project-detail-hero">
-      <span class="project-detail-badge"><?php echo htmlspecialchars($p['sector_label']); ?></span>
-      <h1 class="project-detail-title"><?php echo htmlspecialchars($p['title']); ?></h1>
-    </header>
-
-    <!-- Project Featured Hero Banner -->
-    <div class="project-detail-banner">
-      <img src="<?php echo htmlspecialchars($p['image']); ?>" 
-           alt="<?php echo htmlspecialchars($p['title']); ?>" />
-    </div>
-
-    <!-- Project Content Grid: Main Case Study + Sticky Sidebar -->
-    <div class="project-detail-layout">
-
-      <!-- Left Column: Comprehensive Technical Case Study -->
-      <div class="project-detail-main">
-        <p class="project-detail-lead"><?php echo htmlspecialchars($p['summary']); ?></p>
-
-        <!-- Scope of Work -->
-        <section class="project-detail-section">
-          <h2 class="project-detail-h2">Scope of Work &amp; Investigation</h2>
-          <ul class="project-scope-list">
-            <?php foreach ($p['scope'] as $item): ?>
-              <li>
-                <span class="project-scope-icon" aria-hidden="true">
-                  <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="4 10 8 14 16 6"></polyline>
-                  </svg>
-                </span>
-                <span><?php echo htmlspecialchars($item); ?></span>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        </section>
-
-        <!-- Methodologies & Standards Applied -->
-        <section class="project-detail-section">
-          <h2 class="project-detail-h2">Standards &amp; Engineering Methodology</h2>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
-            <?php 
-              $methods = explode(',', $p['methodologies']);
-              foreach ($methods as $m): 
-                $m = trim($m);
-            ?>
-              <span style="display:inline-block;background:#ffffff;border:1px solid rgba(8,69,52,0.18);padding:6px 16px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#084534;">
-                <?php echo htmlspecialchars($m); ?>
-              </span>
-            <?php endforeach; ?>
-          </div>
-        </section>
-
-        <!-- Measurable Outcomes -->
-        <section class="project-detail-section">
-          <h2 class="project-detail-h2">Key Outcomes &amp; Impact</h2>
-          <div class="project-outcome-box">
-            <p><?php echo htmlspecialchars($p['outcomes']); ?></p>
-          </div>
-        </section>
+    <!-- ========================================================= -->
+    <!-- BREADCRUMB & STATUS BAR                                   -->
+    <!-- ========================================================= -->
+    <div class="trc-pd-topbar">
+      <div class="trc-pd-crumbs">
+        <a href="projects.php" class="trc-pd-back-pill">
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_back</span>
+          <span>All Projects</span>
+        </a>
+        <span class="trc-pd-sep" aria-hidden="true">/</span>
+        <span class="trc-pd-sector-txt"><?php echo htmlspecialchars($p['sector_label']); ?></span>
+        <span class="trc-pd-sep" aria-hidden="true">/</span>
+        <span class="trc-pd-cur"><?php echo htmlspecialchars($p['title']); ?></span>
       </div>
 
-      <!-- Right Column: Sticky Project Facts & Call-to-Action -->
-      <aside class="project-detail-aside">
-        <div class="project-sidebar-card">
-          <h2 class="project-sidebar-title">Project Factsheet</h2>
-          <dl class="project-fact-group">
-            <div class="project-fact-item">
-              <dt>Client / Authority</dt>
-              <dd><?php echo htmlspecialchars($p['client']); ?></dd>
-            </div>
-            <div class="project-fact-item">
-              <dt>Location</dt>
-              <dd><?php echo htmlspecialchars($p['location']); ?></dd>
-            </div>
-            <div class="project-fact-item">
-              <dt>Discipline</dt>
-              <dd><?php echo htmlspecialchars($p['sector_label']); ?></dd>
-            </div>
-            <div class="project-fact-item">
-              <dt>Completion Year</dt>
-              <dd><?php echo htmlspecialchars($p['year']); ?></dd>
-            </div>
-            <div class="project-fact-item">
-              <dt>Status</dt>
-              <dd>
-                <span style="display:inline-block;background:#eaf4f0;color:#084534;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:700;letter-spacing:0.04em;">
-                  <?php echo htmlspecialchars($p['status_label']); ?>
-                </span>
-              </dd>
-            </div>
-          </dl>
+      <span class="trc-pd-status-pill">
+        <span class="trc-pd-status-dot" aria-hidden="true"></span>
+        <span><?php echo htmlspecialchars($p['status_label']); ?> &bull; Final Report Submitted</span>
+      </span>
+    </div>
 
-          <a href="contact.php" class="project-sidebar-cta">
-            <span>Discuss a Similar Project</span>
+    <!-- ========================================================= -->
+    <!-- 1. PROJECT HERO SPLIT CARD                                -->
+    <!-- ========================================================= -->
+    <section class="trc-pd-hero-card">
+      <div class="trc-pd-hero-grid">
+
+        <!-- Left Overview + Key Specs (7 cols) -->
+        <div class="trc-pd-hero-left">
+          <div class="trc-pd-hero-copy">
+            <div class="trc-pd-hero-badges">
+              <span class="trc-pd-badge-emerald">SVNIT Consultancy Mandate</span>
+              <span class="trc-pd-badge-slate"><?php echo htmlspecialchars($p['sector_label']); ?></span>
+            </div>
+
+            <h1><?php echo htmlspecialchars($p['title']); ?></h1>
+
+            <p class="trc-pd-lead"><?php echo htmlspecialchars($p['summary']); ?></p>
+          </div>
+
+          <!-- 4-Column Key Specification Strip -->
+          <div class="trc-pd-specs-row">
+            <div>
+              <span class="trc-pd-spec-label">Client Agency</span>
+              <strong class="trc-pd-spec-val"><?php echo htmlspecialchars($p['client']); ?></strong>
+            </div>
+            <div>
+              <span class="trc-pd-spec-label">Location</span>
+              <strong class="trc-pd-spec-val"><?php echo htmlspecialchars($p['location']); ?></strong>
+            </div>
+            <div>
+              <span class="trc-pd-spec-label">Completion Year</span>
+              <strong class="trc-pd-spec-val"><?php echo htmlspecialchars($p['year']); ?></strong>
+            </div>
+            <div>
+              <span class="trc-pd-spec-label">Status</span>
+              <strong class="trc-pd-spec-val is-emerald"><?php echo htmlspecialchars($p['status_label']); ?></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Photo (5 cols) -->
+        <div class="trc-pd-hero-media">
+          <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="eager" />
+          <div class="trc-pd-hero-scrim" aria-hidden="true"></div>
+          <div class="trc-pd-hero-caption">
+            <span>PROJECT CORRIDOR</span>
+            <p><?php echo htmlspecialchars($p['location']); ?></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 2. TWO-COLUMN TECHNICAL BREAKDOWN                         -->
+    <!-- ========================================================= -->
+    <section class="trc-pd-body-grid">
+
+      <!-- Left Narrative & Technical Blocks (8 cols) -->
+      <div class="trc-pd-main-col">
+
+        <!-- 01. Engineering Mandate & Context -->
+        <div class="trc-pd-panel">
+          <span class="trc-pd-kicker">01 &bull; Project Context &amp; Mandate</span>
+          <h2>Commissioned Technical Investigation</h2>
+          <p>
+            Commissioned by <strong><?php echo htmlspecialchars($p['client']); ?></strong> at <strong><?php echo htmlspecialchars($p['location']); ?></strong>, this mandate addressed critical operational, geometric, and safety performance challenges under empirical Indian traffic conditions and national IRC compliance frameworks.
+          </p>
+        </div>
+
+        <!-- 02. Three-Stage Diagnostic Protocol -->
+        <div class="trc-pd-panel">
+          <div>
+            <span class="trc-pd-kicker">02 &bull; Field Methodology</span>
+            <h2>Three-Stage Diagnostic Protocol</h2>
+          </div>
+
+          <div class="trc-pd-stages-grid">
+            <div class="trc-pd-stage-card">
+              <span class="trc-pd-stage-icon">
+                <span class="material-symbols-outlined" aria-hidden="true">analytics</span>
+              </span>
+              <h3>Empirical Field Survey</h3>
+              <p>Multi-day sensor, speed, geometry, and classified volume logging calibrated at site conditions.</p>
+            </div>
+
+            <div class="trc-pd-stage-card">
+              <span class="trc-pd-stage-icon">
+                <span class="material-symbols-outlined" aria-hidden="true">videocam</span>
+              </span>
+              <h3>Simulation &amp; Modeling</h3>
+              <p>Analytical conflict extraction, network modeling, and structural evaluation per IRC codes.</p>
+            </div>
+
+            <div class="trc-pd-stage-card">
+              <span class="trc-pd-stage-icon">
+                <span class="material-symbols-outlined" aria-hidden="true">verified</span>
+              </span>
+              <h3>Compliance Validation</h3>
+              <p>Ranked actionable engineering remedies vetted by SVNIT Civil Engineering faculty.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03. Scope of Work & Countermeasures -->
+        <div class="trc-pd-panel">
+          <div>
+            <span class="trc-pd-kicker">03 &bull; Scope &amp; Deliverables</span>
+            <h2>Scope of Investigation &amp; Solutions</h2>
+          </div>
+
+          <div class="trc-pd-scope-grid">
+            <?php foreach ($p['scope'] as $item): ?>
+            <div class="trc-pd-scope-card">
+              <span class="material-symbols-outlined trc-pd-check-icon" aria-hidden="true">check_circle</span>
+              <p><?php echo htmlspecialchars($item); ?></p>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
+        <!-- 04. Key Outcomes & Measured Impact -->
+        <div class="trc-pd-panel trc-pd-outcome-panel">
+          <span class="trc-pd-kicker">04 &bull; Measured Outcomes &amp; Impact</span>
+          <h2>Key Engineering Results</h2>
+          <p class="trc-pd-outcome-text"><?php echo htmlspecialchars($p['outcomes']); ?></p>
+        </div>
+
+      </div>
+
+      <!-- Right Technical Dossier Sidebar (4 cols) -->
+      <aside class="trc-pd-sidebar">
+
+        <!-- Standards & Codes Applied -->
+        <div class="trc-pd-side-card">
+          <h3>Standards &amp; Codes Applied</h3>
+          <div class="trc-pd-tags-wrap">
+            <?php foreach ($methods as $m): ?>
+            <span class="trc-pd-code-pill"><?php echo htmlspecialchars($m); ?></span>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
+        <!-- Faculty Investigators -->
+        <div class="trc-pd-side-card">
+          <h3>Faculty Investigators</h3>
+          <div class="trc-pd-inv-list">
+            <?php foreach ($investigators as $inv): ?>
+            <div class="trc-pd-inv-item">
+              <img src="<?php echo htmlspecialchars($inv['photo']); ?>" alt="<?php echo htmlspecialchars($inv['name']); ?>" loading="lazy" />
+              <div>
+                <div class="trc-pd-inv-name"><?php echo htmlspecialchars($inv['name']); ?></div>
+                <div class="trc-pd-inv-role"><?php echo htmlspecialchars($inv['role']); ?></div>
+              </div>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
+        <!-- Deliverables Submitted -->
+        <div class="trc-pd-side-card">
+          <h3>Deliverables Submitted</h3>
+          <ul class="trc-pd-deliv-list">
+            <li>
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              <span>Vetted Technical Consultancy Report</span>
+            </li>
+            <li>
+              <span class="material-symbols-outlined" aria-hidden="true">map</span>
+              <span>Corridor Field Diagnostics &amp; Strip Plans</span>
+            </li>
+            <li>
+              <span class="material-symbols-outlined" aria-hidden="true">architecture</span>
+              <span>CAD Countermeasure &amp; Geometry Drawings</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Deep Emerald Consultation CTA Card -->
+        <div class="trc-pd-cta-card">
+          <h3>Need a similar safety audit or DPR review?</h3>
+          <p>
+            Engage SVNIT’s Transportation Engineering &amp; Planning Cell for IRC-compliant field diagnostics.
+          </p>
+          <a href="contact.php" class="trc-pd-cta-btn">
+            <span>Request Technical Proposal</span>
             <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
+
       </aside>
 
-    </div>
+    </section>
 
-    <!-- Related Work Section with Rotating Center Buttons -->
+    <!-- ========================================================= -->
+    <!-- 3. OTHER CONSULTANCY PROJECTS PREVIEW                     -->
+    <!-- ========================================================= -->
     <?php if (!empty($relatedProjects)): ?>
-    <section style="margin-top:80px;padding-top:48px;border-top:1px solid rgba(8,69,52,0.12);">
-      <h2 style="font-family:'Poppins',sans-serif;font-size:32px;font-weight:600;color:#062b20;margin-bottom:32px;">Related Projects</h2>
-      <div class="projects-archive-grid">
-        <?php foreach ($relatedProjects as $rp): 
-          $rpUrl = 'project.php?id=' . urlencode($rp['id']);
-        ?>
-        <article class="project-card-item">
-          <a href="<?php echo $rpUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($rp['title']); ?>">
-            <img src="<?php echo htmlspecialchars($rp['image']); ?>" alt="<?php echo htmlspecialchars($rp['title']); ?>" class="project-card-img" loading="lazy" />
-            <div class="project-card-overlay" aria-hidden="true"></div>
-            <div class="project-center-btn" aria-hidden="true">
-              <span class="project-center-icon">
-                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="16" y1="6" x2="16" y2="26"></line>
-                  <line x1="6" y1="16" x2="26" y2="16"></line>
-                </svg>
-              </span>
+    <section class="trc-pd-related">
+      <div class="trc-pr-grid-head">
+        <h2>Explore Related Projects</h2>
+        <a href="projects.php" class="trc-stitch-read-link">
+          <span>All Projects</span>
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
+
+      <div class="trc-pd-rel-grid">
+        <?php foreach ($relatedProjects as $rp): ?>
+        <article class="trc-pr-card">
+          <div class="trc-pr-card-top">
+            <div class="trc-pr-card-media">
+              <img src="<?php echo htmlspecialchars($rp['image']); ?>" alt="<?php echo htmlspecialchars($rp['title']); ?>" loading="lazy" />
+              <span class="trc-pr-card-badge"><?php echo htmlspecialchars($rp['sector_label']); ?></span>
             </div>
-          </a>
-          <div class="project-card-info">
-            <div class="project-card-left">
-              <h3 class="project-card-title"><a href="<?php echo $rpUrl; ?>"><?php echo htmlspecialchars($rp['title']); ?></a></h3>
-              <span class="project-card-category"><?php echo htmlspecialchars($rp['sector_label']); ?></span>
+            <div class="trc-pr-card-body">
+              <div class="trc-pr-card-client">
+                <?php echo htmlspecialchars($rp['client']); ?> &bull; <?php echo htmlspecialchars($rp['year']); ?>
+              </div>
+              <h3><?php echo htmlspecialchars($rp['title']); ?></h3>
+              <p><?php echo htmlspecialchars($rp['summary']); ?></p>
             </div>
-            <div class="project-card-right">
-              <p class="project-card-summary"><?php echo htmlspecialchars($rp['summary']); ?></p>
-              <a href="<?php echo $rpUrl; ?>" class="project-explore-link">
-                <span>EXPLORE PROJECT</span>
-                <span class="project-explore-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </span>
-              </a>
-            </div>
+          </div>
+
+          <div class="trc-pr-card-foot">
+            <span class="trc-pr-card-loc"><?php echo htmlspecialchars($rp['location']); ?></span>
+            <a href="project.php?id=<?php echo urlencode((string)$rp['id']); ?>" class="trc-stitch-card-btn">
+              <span>View Brief</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+            </a>
           </div>
         </article>
         <?php endforeach; ?>

@@ -17,11 +17,11 @@ $dispatchCats = [
 ];
 
 $newsFilters = [
-    'all' => 'All News',
-    'research' => 'Research',
-    'safety' => 'Safety Audits',
-    'irc' => 'IRC Standards',
-    'field' => 'Field Work',
+  'all' => 'All News',
+  'research' => 'Research',
+  'safety' => 'Safety Audits',
+  'irc' => 'IRC Standards',
+  'field' => 'Field Work',
 ];
 
 // Build story lookup map for interactive editorial modal reader
@@ -70,14 +70,11 @@ include 'includes/header.php';
       <!-- Category Filter Pills -->
       <div class="trc-ed-filters" role="group" aria-label="Filter news updates">
         <?php foreach ($newsFilters as $key => $label): ?>
-        <button
-          type="button"
-          data-news-filter="<?php echo htmlspecialchars($key); ?>"
-          class="tep-news-filter trc-ed-pill-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
-          aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>"
-        >
-          <?php echo htmlspecialchars($label); ?>
-        </button>
+          <button type="button" data-news-filter="<?php echo htmlspecialchars($key); ?>"
+            class="tep-news-filter trc-ed-pill-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
+            aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>">
+            <?php echo htmlspecialchars($label); ?>
+          </button>
         <?php endforeach; ?>
       </div>
     </section>
@@ -87,7 +84,8 @@ include 'includes/header.php';
     <!-- ========================================================= -->
     <article class="trc-stitch-lead-card">
       <div class="trc-stitch-lead-media">
-        <img src="<?php echo htmlspecialchars($lead['image']); ?>" alt="<?php echo htmlspecialchars($lead['alt']); ?>" loading="lazy" />
+        <img src="<?php echo htmlspecialchars($lead['image']); ?>" alt="<?php echo htmlspecialchars($lead['alt']); ?>"
+          loading="lazy" />
         <div class="trc-stitch-lead-fade" aria-hidden="true"></div>
       </div>
 
@@ -107,11 +105,8 @@ include 'includes/header.php';
             <span>&middot;</span>
             <span><?php echo htmlspecialchars(ucwords(strtolower($lead['date']))); ?></span>
           </div>
-          <button
-            type="button"
-            data-story-id="<?php echo htmlspecialchars($lead['id']); ?>"
-            class="tep-read-btn trc-stitch-read-link"
-          >
+          <button type="button" data-story-id="<?php echo htmlspecialchars($lead['id']); ?>"
+            class="tep-read-btn trc-stitch-read-link">
             <span>Read Story</span>
             <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
           </button>
@@ -124,32 +119,32 @@ include 'includes/header.php';
     <!-- ========================================================= -->
     <section class="trc-stitch-news-grid" id="trcNewsGrid">
       <?php foreach ($items as $n): ?>
-      <?php $catInfo = $dispatchCats[$n['id']] ?? ['key' => 'research', 'label' => $n['cat_label']]; ?>
-      <article data-news-cat="<?php echo htmlspecialchars($catInfo['key']); ?>" class="tep-news-card trc-stitch-news-card">
-        <div class="trc-stitch-news-top">
-          <div class="trc-stitch-news-media">
-            <img src="<?php echo htmlspecialchars($n['image']); ?>" alt="<?php echo htmlspecialchars($n['alt']); ?>" loading="lazy" />
-            <div class="trc-stitch-news-img-fade" aria-hidden="true"></div>
-            <span class="trc-stitch-card-badge"><?php echo htmlspecialchars($catInfo['label']); ?></span>
+        <?php $catInfo = $dispatchCats[$n['id']] ?? ['key' => 'research', 'label' => $n['cat_label']]; ?>
+        <article data-news-cat="<?php echo htmlspecialchars($catInfo['key']); ?>"
+          class="tep-news-card trc-stitch-news-card">
+          <div class="trc-stitch-news-top">
+            <div class="trc-stitch-news-media">
+              <img src="<?php echo htmlspecialchars($n['image']); ?>" alt="<?php echo htmlspecialchars($n['alt']); ?>"
+                loading="lazy" />
+              <div class="trc-stitch-news-img-fade" aria-hidden="true"></div>
+              <span class="trc-stitch-card-badge"><?php echo htmlspecialchars($catInfo['label']); ?></span>
+            </div>
+            <div class="trc-stitch-news-card-copy">
+              <h3><?php echo htmlspecialchars($n['title']); ?></h3>
+              <p><?php echo htmlspecialchars($n['summary']); ?></p>
+            </div>
           </div>
-          <div class="trc-stitch-news-card-copy">
-            <h3><?php echo htmlspecialchars($n['title']); ?></h3>
-            <p><?php echo htmlspecialchars($n['summary']); ?></p>
-          </div>
-        </div>
 
-        <div class="trc-stitch-news-card-foot">
-          <span class="trc-stitch-card-readtime">&bull; <?php echo htmlspecialchars(strtolower($n['read_time'])); ?></span>
-          <button
-            type="button"
-            data-story-id="<?php echo htmlspecialchars($n['id']); ?>"
-            class="tep-read-btn trc-stitch-card-btn"
-          >
-            <span>Read more</span>
-            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
-          </button>
-        </div>
-      </article>
+          <div class="trc-stitch-news-card-foot">
+            <span class="trc-stitch-card-readtime">&bull;
+              <?php echo htmlspecialchars(strtolower($n['read_time'])); ?></span>
+            <button type="button" data-story-id="<?php echo htmlspecialchars($n['id']); ?>"
+              class="tep-read-btn trc-stitch-card-btn">
+              <span>Read more</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+            </button>
+          </div>
+        </article>
       <?php endforeach; ?>
     </section>
 

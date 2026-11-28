@@ -842,6 +842,20 @@
     function initCapabilitiesSelector() {
         var grid = document.getElementById('trcCapSelectorGrid');
         var stage = document.getElementById('trcCapStage');
+        var aboutCapCards = document.querySelectorAll('#capability-grid [data-cap-card]');
+        if (aboutCapCards.length) {
+            aboutCapCards.forEach(function (card) {
+                card.addEventListener('click', function () {
+                    aboutCapCards.forEach(function (c) {
+                        c.classList.remove('is-active');
+                        c.setAttribute('aria-pressed', 'false');
+                    });
+                    card.classList.add('is-active');
+                    card.setAttribute('aria-pressed', 'true');
+                });
+            });
+        }
+
         if (!grid || !stage) return;
 
         var img = document.getElementById('trcCapImg');
@@ -1027,6 +1041,67 @@
             }
             newsModal.addEventListener('click', function (e) {
                 if (e.target === newsModal) newsModal.close();
+            });
+        }
+
+        // Projects Showcase filter + Case Study dialog modal
+        var prFilterBtns = document.querySelectorAll('.trc-pr-filter[data-pr-filter]');
+        var prCards = document.querySelectorAll('#projects-grid [data-pr-cat]');
+        var prCountEl = document.getElementById('visible-count');
+        if (prFilterBtns.length && prCards.length) {
+            prFilterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var cat = btn.getAttribute('data-pr-filter');
+                    prFilterBtns.forEach(function (b) {
+                        var active = b === btn;
+                        b.classList.toggle('is-active', active);
+                        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    });
+                    var visible = 0;
+                    prCards.forEach(function (card) {
+                        var match = (cat === 'all' || card.getAttribute('data-pr-cat') === cat);
+                        card.hidden = !match;
+                        if (match) visible++;
+                    });
+                    if (prCountEl) {
+                        prCountEl.textContent = 'Showing ' + visible + ' of ' + prCards.length;
+                    }
+                });
+            });
+        }
+
+        var prDataEl = document.getElementById('trc-projects-modal-json');
+        var prModal = document.getElementById('tep-project-modal');
+        if (prDataEl && prModal && typeof prModal.showModal === 'function') {
+            var prMap = {};
+            try { prMap = JSON.parse(prDataEl.textContent || '{}'); } catch (e) {}
+            var pmImg = document.getElementById('modal-project-img');
+            var pmBadge = document.getElementById('modal-project-badge');
+            var pmMeta = document.getElementById('modal-project-meta');
+            var pmTitle = document.getElementById('modal-project-title');
+            var pmSummary = document.getElementById('modal-project-summary');
+            var pmOutcome = document.getElementById('modal-project-outcome');
+            var pmPage = document.getElementById('modal-project-page');
+            var pmClose = document.getElementById('close-project-modal');
+
+            document.querySelectorAll('[data-open-project]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var item = prMap[btn.getAttribute('data-open-project')];
+                    if (!item) return;
+                    if (pmImg) pmImg.src = item.img || '';
+                    if (pmBadge) pmBadge.textContent = item.badge || '';
+                    if (pmMeta) pmMeta.textContent = item.meta || '';
+                    if (pmTitle) pmTitle.textContent = item.title || '';
+                    if (pmSummary) pmSummary.textContent = item.summary || '';
+                    if (pmOutcome) pmOutcome.textContent = item.outcome || '';
+                    if (pmPage && item.id) pmPage.href = 'project.php?id=' + encodeURIComponent(item.id);
+                    prModal.showModal();
+                });
+            });
+
+            if (pmClose) pmClose.addEventListener('click', function () { prModal.close(); });
+            prModal.addEventListener('click', function (e) {
+                if (e.target === prModal) prModal.close();
             });
         }
     }

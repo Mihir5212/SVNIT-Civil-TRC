@@ -1,188 +1,233 @@
 <?php
 $activePage = 'projects';
 $pageTitle = 'Our Projects | TRC SVNIT Surat';
-$pageDesc = 'Explore notable completed civil and transportation engineering projects, road safety audits, and traffic planning consultancy by TEP Research & Consultancy Cell, SVNIT Surat.';
+$pageDesc = 'Explore completed highway safety audits, traffic engineering evaluations, DPR reviews, and smart mobility research projects by TRC SVNIT Surat.';
 require_once 'includes/projects-data.php';
 
-$projects = getTRCProjects();
-$sectors = getTRCSectors();
+$allProjects = getTRCProjects();
+$flagship = $allProjects[2]; // Project #2: NH-48 Blackspot Rectification & Road Safety Audit
 
-// Check for sector filter in query parameter
-$selectedSector = isset($_GET['sector']) ? trim(strtolower($_GET['sector'])) : 'all';
-if (!array_key_exists($selectedSector, $sectors)) {
-    $selectedSector = 'all';
+// Remaining 9 projects form a symmetric 3x3 showcase grid
+$gridProjects = [];
+$categoryMap = [
+    1 => 'highways',
+    3 => 'traffic',
+    4 => 'transit',
+    5 => 'transit',
+    6 => 'traffic',
+    7 => 'surveying',
+    8 => 'highways',
+    9 => 'highways',
+    10 => 'transit',
+];
+$categoryBadgeMap = [
+    'highways' => 'Highways & Safety',
+    'traffic' => 'Traffic & Infra',
+    'transit' => 'Transit & ITS',
+    'surveying' => 'Geodesy & Survey',
+];
+$filterTabs = [
+    'all' => 'All Projects (' . (count($allProjects) - 1) . ')',
+    'highways' => 'Highways & Safety',
+    'traffic' => 'Traffic & Infra',
+    'transit' => 'Transit & ITS',
+    'surveying' => 'Geodesy & Survey',
+];
+
+$modalPayload = [
+    'p' . $flagship['id'] => [
+        'id' => $flagship['id'],
+        'badge' => 'Flagship Mandate • ' . $flagship['sector_label'],
+        'meta' => $flagship['client'] . ' • ' . $flagship['location'] . ' • ' . $flagship['year'],
+        'title' => $flagship['title'],
+        'img' => $flagship['image'],
+        'summary' => $flagship['summary'],
+        'outcome' => $flagship['outcomes'],
+    ],
+];
+
+foreach ($allProjects as $id => $p) {
+    if ($id === 2) continue;
+    $catKey = $categoryMap[$id] ?? 'highways';
+    $p['filter_cat'] = $catKey;
+    $p['filter_badge'] = $categoryBadgeMap[$catKey] ?? $p['sector_label'];
+    $gridProjects[] = $p;
+
+    $modalPayload['p' . $id] = [
+        'id' => $id,
+        'badge' => $p['sector_label'],
+        'meta' => $p['client'] . ' • ' . $p['location'] . ' • ' . $p['year'],
+        'title' => $p['title'],
+        'img' => $p['image'],
+        'summary' => $p['summary'],
+        'outcome' => $p['outcomes'],
+    ];
 }
 
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main" class="trc-subpage trc-projects-rx-page">
+<main id="main" class="trc-subpage trc-projects-stitch-page">
+  <div class="trc-shell trc-projects-stitch-stack">
 
-  <!-- Centered Editorial Hero (Matching News & Updates Theme) -->
-  <section class="trc-ed-hero trc-ed-hero--band">
-    <div class="trc-shell trc-ed-hero-wrap">
+    <!-- ======================================================= -->
+    <!-- 1. CENTERED EDITORIAL HERO + CATEGORY FILTERS           -->
+    <!-- ======================================================= -->
+    <section class="trc-ed-hero">
       <span class="trc-ed-hero-pill">
         <span class="trc-ed-hero-dot" aria-hidden="true"></span>
-        <span>Project Portfolio</span>
+        <span>Research &amp; Consultancy Portfolio</span>
       </span>
 
-      <h1 class="trc-ed-hero-h1">
-        Highway safety &amp; infrastructure <span class="trc-ed-serif">projects.</span>
+      <h1 class="trc-ed-hero-h1 trc-pr-hero-h1">
+        Corridors engineered for <span class="trc-ed-serif">safety &amp; capacity.</span>
       </h1>
 
       <p class="trc-ed-hero-sub">
-        We believe in full ownership across all the work that we do. Explore completed road safety audits, traffic planning, and corridor studies.
+        Selected highway safety audits, traffic impact assessments, DPR proof-checking mandates, and ITS research studies delivered for NHAI, MoRTH, R&amp;B Gujarat, and urban transit authorities.
       </p>
 
-      <!-- Category Filter Pills directly inside hero matching News -->
-      <nav class="trc-ed-filters" id="projectsFilterNav" aria-label="Filter Projects by Sector">
-        <?php foreach ($sectors as $key => $label):
-          $isActive = ($key === $selectedSector);
-        ?>
-          <button type="button"
-                  class="projects-filter-tab trc-ed-pill-btn<?php echo $isActive ? ' is-active' : ''; ?>"
-                  data-filter="<?php echo htmlspecialchars($key); ?>"
-                  aria-pressed="<?php echo $isActive ? 'true' : 'false'; ?>">
-            <?php echo htmlspecialchars($label); ?>
-          </button>
+      <!-- Filter Pills -->
+      <div id="project-filters" class="trc-ed-filters" role="group" aria-label="Filter projects by category">
+        <?php foreach ($filterTabs as $key => $label): ?>
+        <button
+          type="button"
+          data-pr-filter="<?php echo htmlspecialchars($key); ?>"
+          class="trc-pr-filter trc-ed-pill-btn<?php echo $key === 'all' ? ' is-active' : ''; ?>"
+          aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>"
+        >
+          <?php echo htmlspecialchars($label); ?>
+        </button>
         <?php endforeach; ?>
-      </nav>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <div class="projects-archive-container trc-projects-body-wrap">
+    <!-- ======================================================= -->
+    <!-- 2. FEATURED FLAGSHIP PROJECT SHOWCASE                   -->
+    <!-- ======================================================= -->
+    <section aria-label="Featured Project" class="trc-pr-flagship-card">
+      <div class="trc-pr-flagship-grid">
+        <div class="trc-pr-flagship-media">
+          <img src="<?php echo htmlspecialchars($flagship['image']); ?>" alt="<?php echo htmlspecialchars($flagship['title']); ?>" loading="eager" />
+          <div class="trc-pr-flagship-scrim" aria-hidden="true"></div>
+          <span class="trc-pr-flagship-badge">Flagship Mandate</span>
+        </div>
 
-    <!-- 4. 2-Column Projects Archive Grid (Matching Images 1, 2, 5) -->
-    <div class="projects-archive-grid" id="projectsArchiveGrid">
-
-      <?php foreach ($projects as $p): 
-        $sectorKey = htmlspecialchars($p['sector']);
-        $projectUrl = 'project.php?id=' . urlencode($p['id']);
-        $isVisible = ($selectedSector === 'all' || $selectedSector === $p['sector']);
-      ?>
-      <article class="project-card-item<?php echo $isVisible ? '' : ' is-hidden'; ?>" 
-               data-sector="<?php echo $sectorKey; ?>" 
-               id="project-<?php echo $p['id']; ?>">
-
-        <!-- Top: Photo Frame with Center Rotating Action Button (Images 3 & 4) -->
-        <a href="<?php echo $projectUrl; ?>" class="project-card-media" aria-label="Explore <?php echo htmlspecialchars($p['title']); ?>">
-          <img src="<?php echo htmlspecialchars($p['image']); ?>" 
-               alt="<?php echo htmlspecialchars($p['title']); ?>" 
-               class="project-card-img" 
-               loading="lazy" />
-          
-          <div class="project-card-overlay" aria-hidden="true"></div>
-
-          <!-- Rotating Center Circular Button (Image 3 & Image 4) -->
-          <div class="project-center-btn" aria-hidden="true">
-            <span class="project-center-icon">
-              <!-- Thin cross icon rotating from + to × on hover -->
-              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="16" y1="6" x2="16" y2="26"></line>
-                <line x1="6" y1="16" x2="26" y2="16"></line>
-              </svg>
-            </span>
-          </div>
-        </a>
-
-        <!-- Bottom: Card Information in 2 Columns (Image 2 & 5) -->
-        <div class="project-card-info">
-          <!-- Left Column: Title & Category -->
-          <div class="project-card-left">
-            <h2 class="project-card-title">
-              <a href="<?php echo $projectUrl; ?>"><?php echo htmlspecialchars($p['title']); ?></a>
-            </h2>
-            <span class="project-card-category"><?php echo htmlspecialchars($p['sector_label']); ?></span>
+        <div class="trc-pr-flagship-body">
+          <div class="trc-pr-flagship-copy">
+            <div class="trc-pr-meta-line">
+              <span class="trc-pr-meta-accent">NHAI &bull; IRC:SP:88</span>
+              <span class="trc-pr-meta-sep">&bull;</span>
+              <span><?php echo htmlspecialchars($flagship['location']); ?></span>
+            </div>
+            <h2><?php echo htmlspecialchars($flagship['title']); ?></h2>
+            <p><?php echo htmlspecialchars($flagship['summary']); ?></p>
           </div>
 
-          <!-- Right Column: Scope Summary & Explore Link -->
-          <div class="project-card-right">
-            <p class="project-card-summary"><?php echo htmlspecialchars($p['summary']); ?></p>
-            <a href="<?php echo $projectUrl; ?>" class="project-explore-link">
-              <span>EXPLORE PROJECT</span>
-              <span class="project-explore-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </span>
+          <!-- Key Outcome Metrics -->
+          <div class="trc-pr-flagship-stats">
+            <div>
+              <strong>28 km</strong>
+              <span>Corridor Audited</span>
+            </div>
+            <div>
+              <strong class="is-emerald">7</strong>
+              <span>Blackspots Rectified</span>
+            </div>
+            <div>
+              <strong>58%</strong>
+              <span>Fatal Crash Drop</span>
+            </div>
+          </div>
+
+          <div class="trc-pr-flagship-foot">
+            <span class="trc-pr-lead-note">Client: <?php echo htmlspecialchars($flagship['client']); ?></span>
+            <a href="project.php?id=<?php echo urlencode((string)$flagship['id']); ?>" class="trc-ab-cta-pill trc-pr-case-btn">
+              <span>View Case Study</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
             </a>
           </div>
         </div>
+      </div>
+    </section>
 
-      </article>
-      <?php endforeach; ?>
-
-      <!-- Empty State (if filter has no items) -->
-      <div class="projects-empty-state" id="projectsEmptyState">
-        <h3>No projects found in this category</h3>
-        <p>Please select another category or view all completed projects.</p>
+    <!-- ======================================================= -->
+    <!-- 3. 3-COLUMN PROJECT SHOWCASE GRID                       -->
+    <!-- ======================================================= -->
+    <section aria-label="Project Showcase Grid" class="trc-pr-grid-sec">
+      <div class="trc-pr-grid-head">
+        <h2>Selected Consultancy &amp; Research Mandates</h2>
+        <span id="visible-count" class="trc-pr-count">Showing <?php echo count($gridProjects); ?> of <?php echo count($gridProjects); ?></span>
       </div>
 
-    </div>
+      <div id="projects-grid" class="trc-pr-cards-grid">
+        <?php foreach ($gridProjects as $p): ?>
+        <article data-pr-cat="<?php echo htmlspecialchars($p['filter_cat']); ?>" class="trc-pr-card">
+          <div class="trc-pr-card-top">
+            <div class="trc-pr-card-media">
+              <img src="<?php echo htmlspecialchars($p['image']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy" />
+              <span class="trc-pr-card-badge"><?php echo htmlspecialchars($p['filter_badge']); ?></span>
+            </div>
+            <div class="trc-pr-card-body">
+              <div class="trc-pr-card-client">
+                <?php echo htmlspecialchars($p['client']); ?> &bull; <?php echo htmlspecialchars($p['year']); ?>
+              </div>
+              <h3><?php echo htmlspecialchars($p['title']); ?></h3>
+              <p><?php echo htmlspecialchars($p['summary']); ?></p>
+            </div>
+          </div>
+
+          <div class="trc-pr-card-foot">
+            <span class="trc-pr-card-loc"><?php echo htmlspecialchars($p['location']); ?></span>
+            <a href="project.php?id=<?php echo urlencode((string)$p['id']); ?>" class="trc-stitch-card-btn">
+              <span>View Brief</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+            </a>
+          </div>
+        </article>
+        <?php endforeach; ?>
+      </div>
+    </section>
 
   </div>
+
+  <!-- ========================================================= -->
+  <!-- PROJECT CASE STUDY DIALOG MODAL                           -->
+  <!-- ========================================================= -->
+  <dialog id="tep-project-modal" class="trc-pr-modal" data-lenis-prevent aria-labelledby="modal-project-title">
+    <div class="trc-pr-modal-box">
+      <div class="trc-pr-modal-hero">
+        <img id="modal-project-img" src="" alt="Project preview" />
+        <button id="close-project-modal" type="button" aria-label="Close project brief" class="trc-pr-modal-close">
+          <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">close</span>
+        </button>
+        <span id="modal-project-badge" class="trc-pr-modal-badge">Safety Audits</span>
+      </div>
+
+      <div class="trc-pr-modal-body">
+        <div id="modal-project-meta" class="trc-pr-modal-meta">NHAI &bull; IRC:SP:88</div>
+        <h3 id="modal-project-title">Project Title</h3>
+        <p id="modal-project-summary" class="trc-pr-modal-summary"></p>
+
+        <div class="trc-pr-modal-outcome">
+          <span>Key Deliverables &amp; Outcome</span>
+          <p id="modal-project-outcome"></p>
+        </div>
+
+        <div class="trc-pr-modal-actions">
+          <a id="modal-project-page" href="project.php" class="trc-pr-modal-link">
+            <span>Full Technical Sheet</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+          </a>
+          <a href="contact.php" class="trc-ab-cta-pill">
+            <span>Request Similar Study</span>
+            <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script id="trc-projects-modal-json" type="application/json"><?php echo json_encode($modalPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
 </main>
-
-<!-- Interactive Client-side Tab Filtering Script -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterTabs = document.querySelectorAll('.projects-filter-tab');
-    const projectCards = document.querySelectorAll('.project-card-item');
-    const emptyState = document.getElementById('projectsEmptyState');
-
-    function applyFilter(targetSector) {
-        let visibleCount = 0;
-
-        projectCards.forEach(card => {
-            const cardSector = card.getAttribute('data-sector');
-            if (targetSector === 'all' || cardSector === targetSector) {
-                card.classList.remove('is-hidden');
-                visibleCount++;
-            } else {
-                card.classList.add('is-hidden');
-            }
-        });
-
-        if (emptyState) {
-            if (visibleCount === 0) {
-                emptyState.classList.add('is-visible');
-            } else {
-                emptyState.classList.remove('is-visible');
-            }
-        }
-
-        // Update active tab styling
-        filterTabs.forEach(tab => {
-            const isMatch = tab.getAttribute('data-filter') === targetSector;
-            tab.classList.toggle('is-active', isMatch);
-            tab.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
-        });
-
-        // Update URL query parameter without full reload
-        const url = new URL(window.location);
-        if (targetSector === 'all') {
-            url.searchParams.delete('sector');
-        } else {
-            url.searchParams.set('sector', targetSector);
-        }
-        window.history.replaceState({}, '', url);
-    }
-
-    filterTabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
-            e.preventDefault();
-            const sector = this.getAttribute('data-filter');
-            applyFilter(sector);
-        });
-    });
-
-    // Check URL parameters on back/forward
-    window.addEventListener('popstate', function() {
-        const params = new URLSearchParams(window.location.search);
-        const sector = params.get('sector') || 'all';
-        applyFilter(sector);
-    });
-});
-</script>
-
 <?php include 'includes/footer.php'; ?>
