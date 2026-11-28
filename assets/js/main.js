@@ -384,6 +384,7 @@
     };
 
     pages.about = function () {
+        if (document.getElementById('trcCapStage')) { return; }
         set('count-projects', String(D.projects.length));
         set('count-pubs', String(D.publications.length));
         set('count-professors', String(D.team.filter(function (m) { return m.group === 'professors'; }).length));
@@ -678,7 +679,11 @@
             o.textContent = labels[k];
             select.appendChild(o);
         });
-        if (labels[params.get('work')]) { select.value = params.get('work'); }
+        if (labels[params.get('work')]) {
+            select.value = params.get('work');
+            select.dispatchEvent(new Event('change'));
+        }
+        if (window.__trcAjaxFormHandled) { return; }
 
         var usingEmailApp = !S.formEndpoint;
         if (usingEmailApp) {

@@ -27,10 +27,10 @@ window.TRC = {
         dept: 'Department of Civil Engineering',
         institute: 'Sardar Vallabhbhai National Institute of Technology, Surat',
         instituteShort: 'SVNIT Surat',
-        email: 'trc@example.com',
-        phone: '+91 00000 00000',
+        email: 'trc@svnit.ac.in',
+        phone: '+91 261 2259571',
         address: ['Department of Civil Engineering', 'SVNIT, Ichchhanath', 'Surat 395007, Gujarat, India'],
-        hours: 'Monday to Friday, 9:30 am to 5:30 pm',
+        hours: 'Monday – Friday: 9:30 AM – 5:30 PM',
         mapEmbed: 'https://www.google.com/maps?q=SVNIT+Surat+Civil+Engineering+Department&output=embed',
 
         // Thin bar at the top of every page. Set to '' to hide it.
@@ -297,54 +297,51 @@ window.TRC = {
     /* ---------- Publications ---------- */
     // type: 'journal', 'conference', 'report' or 'chapter'. link: DOI or paper page, or ''.
     publications: [
-        { authors: 'Author, A., Author, B.', title: 'Sample journal article title on crash frequency modelling', venue: 'Journal name, Vol. X, pp. 1–20', type: 'journal', year: 2026, link: '' },
-        { authors: 'Author, A., Author, C.', title: 'Sample conference paper title on blackspot identification', venue: 'Conference name, City', type: 'conference', year: 2026, link: '' },
-        { authors: 'Author, B., Author, D.', title: 'Sample paper title on mixed-traffic vehicle trajectories', venue: 'Journal name', type: 'journal', year: 2025, link: '' },
-        { authors: 'Author, A.', title: 'Sample technical report title on corridor traffic study', venue: 'Report for a partner agency (sample)', type: 'report', year: 2025, link: '' },
-        { authors: 'Author, C., Author, A.', title: 'Sample paper title on pedestrian safety at urban intersections', venue: 'Conference name, City', type: 'conference', year: 2024, link: '' },
+        { authors: 'Dr. Shriniwas S. Arkatkar, Dr. Gaurang J. Joshi, Siddharth Umrigar', title: 'Expressway Capacity & Heterogeneous Flow', venue: 'Journal of Transportation Engineering, Part A: Systems (ASCE) • Vol. 150(4)', type: 'journal', year: 2024, link: '' },
+        { authors: 'Dr. Ashish Dhamaniya, Dr. Shriniwas S. Arkatkar, Maitrik Bhadresa', title: 'Proactive Corridor Crash Risk Modeling', venue: 'Accident Analysis & Prevention (Elsevier) • Vol. 196', type: 'journal', year: 2024, link: '' },
+        { authors: 'Dr. Gaurang J. Joshi, Krushnaraj Chaudhari, Dr. Ashish Dhamaniya', title: 'Connected Corridor Signal Optimization', venue: 'Transportation Research Board (TRB) Annual Meeting • Washington, D.C.', type: 'conference', year: 2023, link: '' },
+        { authors: 'Dr. Gaurang J. Joshi, TEP Consultancy Cell, SVNIT Surat', title: 'Comprehensive Mobility Plan Methodology', venue: 'SVNIT–MOUD Statutory Consultancy Monograph • Gujarat Urban Nodes', type: 'report', year: 2023, link: '' },
+        { authors: 'Siddharth Umrigar, Dr. Gaurang J. Joshi, Maitrik Bhadresa', title: 'Multimodal Rail Terminal Accessibility', venue: 'World Conference on Transport Research (WCTR) • Montreal', type: 'conference', year: 2023, link: '' },
+        { authors: 'Dr. Ashish Dhamaniya, Krushnaraj Chaudhari, TEP Geomatics Group', title: 'BIM & UAV Surveying in Geometric Audits', venue: 'Springer Lecture Notes in Civil Engineering • Advances in Geomatics', type: 'chapter', year: 2022, link: '' },
     ],
 
     /* ---------- Our Associations (moving strip on the Home page) ---------- */
-    // name: the organisation's name. logo: path to the logo, e.g. 'images/associations/organisation-name.png'.
-    // Leave logo as '' to show the name as text. An empty list (associations: []) hides the whole strip.
     associations: [
-        { name: 'Municipal corporation (sample)', logo: '' },
-        { name: 'Highway authority (sample)', logo: '' },
-        { name: 'State agency (sample)', logo: '' },
-        { name: 'Traffic police (sample)', logo: '' },
-        { name: 'Urban local body (sample)', logo: '' },
-        { name: 'Private developer (sample)', logo: '' },
+        { name: 'NHAI (National Highways Authority of India)', logo: '' },
+        { name: 'MoRTH (Ministry of Road Transport & Highways)', logo: '' },
+        { name: 'GSRDC (Gujarat State Road Dev. Corp.)', logo: '' },
+        { name: 'SMC (Surat Municipal Corporation)', logo: '' },
+        { name: 'GIDC (Gujarat Industrial Dev. Corp.)', logo: '' },
+        { name: 'SSCDL (Surat Smart City Dev. Ltd.)', logo: '' },
     ],
 
     /* ---------- Gallery ---------- */
-    // Photos appear in the order listed here, so put your best ones first.
-    // image: path to the photo, e.g. 'images/gallery/ring-road-survey.jpg'.
-    // title: a short caption. category: one of the keys in galleryCategories.
-    // place and year are optional: leave '' if not needed.
     galleryCategories: {
-        field: 'Field surveys',
-        site: 'Site inspections',
-        workshop: 'Workshops and training',
-        events: 'Events and visits',
+        corridors: 'Highway Corridors',
+        surveys: 'Field Surveys',
+        safety: 'Safety Audits',
+        structures: 'Structures & Lab',
     },
     gallery: [
-        { image: 'images/gallery/sample-1.svg', title: 'Video survey at a city junction (sample)', category: 'field', place: 'Surat, Gujarat', year: 2026 },
-        { image: 'images/gallery/sample-4.svg', title: 'Road safety audit on a highway stretch (sample)', category: 'site', place: 'Gujarat', year: 2025 },
-        { image: 'images/gallery/sample-6.svg', title: 'Workshop on road safety audits (sample)', category: 'workshop', place: 'SVNIT Surat', year: 2026 },
-        { image: 'images/gallery/sample-2.svg', title: 'Classified traffic count beside an arterial road (sample)', category: 'field', place: 'Surat, Gujarat', year: 2025 },
-        { image: 'images/gallery/sample-5.svg', title: 'Junction layout review for signal design (sample)', category: 'site', place: 'Gujarat', year: 2024 },
-        { image: 'images/gallery/sample-8.svg', title: 'Group visit to the institute (sample)', category: 'events', place: 'SVNIT Surat', year: 2026 },
-        { image: 'images/gallery/sample-3.svg', title: 'Spot speed survey (sample)', category: 'field', place: 'Gujarat', year: 2024 },
-        { image: 'images/gallery/sample-7.svg', title: 'Hands-on traffic data session (sample)', category: 'workshop', place: 'SVNIT Surat', year: 2025 },
+        { image: 'images/SVNIT Building.jpg', title: 'Civil Engineering & Research Block', category: 'structures', place: 'SVNIT Campus, Surat', year: 2026 },
+        { image: 'images/Smart Mobility.jpg', title: 'UAV Trajectory & ITS Command Lab', category: 'surveys', place: 'SVNIT Traffic Lab', year: 2026 },
+        { image: 'images/Transportation.jpg', title: 'Six-Lane Interurban Expressway', category: 'corridors', place: 'NH-48 Bharuch–Surat', year: 2025 },
+        { image: 'images/Road Safety Audit.jpg', title: 'IRC:SP:88 Stage-III Road Safety Audit', category: 'safety', place: 'Ahmedabad–Vadodara', year: 2025 },
+        { image: 'images/daniel-mccullough-HtBlQdxfG9k-unsplash.jpg', title: 'Modular Steel & Viaduct Frame', category: 'structures', place: 'GIFT City Corridor', year: 2025 },
+        { image: 'images/Traffic Engineering.jpg', title: 'Classified Traffic Volume & ATCC', category: 'surveys', place: 'Hazira Industrial Corridor', year: 2025 },
+        { image: 'images/Hero_1.jpg', title: 'Grade-Separated Interchange Ramp', category: 'corridors', place: 'Surat–Navsari', year: 2024 },
+        { image: 'images/tep-about-photo.jpg', title: 'Work-Zone Traffic Management', category: 'safety', place: 'NH-48 Widening', year: 2025 },
+        { image: 'images/Rail Services.jpg', title: 'BRTS & Multimodal Transit Corridor', category: 'corridors', place: 'Surat BRTS', year: 2024 },
+        { image: 'images/Land Development.jpg', title: 'Urban Arterial Pavement & Drainage', category: 'structures', place: 'Hazira Port Node', year: 2024 },
+        { image: 'images/Surveying.jpg', title: 'RTK-GNSS & Corridor Topography', category: 'surveys', place: 'Dahej PCPIR', year: 2024 },
+        { image: 'images/Hero_5.jpg', title: 'Coastal Logistics Link Road', category: 'corridors', place: 'South Gujarat Port Link', year: 2024 },
     ],
 
     /* ---------- Team ---------- */
-    // group: 'professors' or 'staff'. order: lower numbers appear first.
-    // profile: the person's own website, shown as a "Website" link. Leave '' to hide it.
     team: [
-        { name: 'Dr. Gaurang J. Joshi', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://gjjoshisvnit.com/', photo: 'images/team/gaurang-joshi.jpg', order: 10 },
-        { name: 'Dr. Shriniwas S. Arkatkar', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://shriniwasprofile.wordpress.com/', photo: 'images/team/shriniwas-arkatkar.jpg', order: 20 },
-        { name: 'Dr. Ashish Dhamaniya', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: '', email: '', profile: 'https://sites.google.com/view/drashishdhamaniya', photo: 'images/team/ashish-dhamaniya.jpg', order: 30 },
+        { name: 'Dr. Gaurang J. Joshi', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: 'Traffic Flow Theory, Urban Public Transport Planning, ITS', email: '', profile: 'https://gjjoshisvnit.com/', photo: 'images/team/gaurang-joshi.jpg', order: 10 },
+        { name: 'Dr. Shriniwas S. Arkatkar', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: 'Highway Capacity (Indo-HCM), Road Safety Audits (IRC:SP:88), Simulation', email: '', profile: 'https://shriniwasprofile.wordpress.com/', photo: 'images/team/shriniwas-arkatkar.jpg', order: 20 },
+        { name: 'Dr. Ashish Dhamaniya', designation: 'Professor, SVNIT, Surat', group: 'professors', expertise: 'Mixed Traffic Operations, Intersection Diagnostics, Highway Audits', email: '', profile: 'https://sites.google.com/view/drashishdhamaniya', photo: 'images/team/ashish-dhamaniya.jpg', order: 30 },
         { name: 'Maitrik Bhadresa', designation: 'Senior Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/maitrik-bhadresa.jpg', order: 60 },
         { name: 'Krushnaraj Chaudhari', designation: 'Senior Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/krushnaraj-chaudhari.jpg', order: 70 },
         { name: 'Siddharth Umrigar', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/siddharth-umrigar.jpg', order: 80 },
@@ -352,5 +349,7 @@ window.TRC = {
         { name: 'Meshvi Patel', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/meshvi-patel.jpg', order: 100 },
         { name: 'Darshit Lad', designation: 'Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/darshit-lad.jpg', order: 110 },
         { name: 'Sunil Kumar', designation: 'Draftsman', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/sunil-kumar.jpg', order: 120 },
+        { name: 'Mihir Koladiya', designation: 'Research Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/Mihir Koladiya.jpg', order: 130 },
+        { name: 'Harsh Kakkad', designation: 'Research Project Engineer', group: 'staff', expertise: '', email: '', profile: '', photo: 'images/team/Harsh Kakkad.jpg', order: 140 },
     ],
 };

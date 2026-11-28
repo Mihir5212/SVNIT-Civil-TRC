@@ -2,6 +2,7 @@
 $activePage = 'home';
 $pageTitle = 'TRC | TEP Research & Consultancy Cell | SVNIT Surat';
 $pageDesc = 'TRC is the Transportation Engineering & Planning Research & Consultancy Cell at SVNIT Surat. Providing Road Safety Audits, Traffic Engineering, and Transportation Research since 2010.';
+require_once 'includes/site-data.php';
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
@@ -610,6 +611,158 @@ include 'includes/header.php';
         <?php endforeach; ?>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ===== 6. GUIDING PRINCIPLES (Interactive 4-Pillar Accordion with Natural Color Photos) ===== -->
+  <?php $principles = getTRCPrinciples(); ?>
+  <section class="section trc-principles-section" id="principles-section">
+    <div class="trc-shell">
+      <div class="trc-section-head-split" data-reveal="fade-in-up">
+        <div>
+          <span class="trc-eyebrow">CORE METHODOLOGY</span>
+          <h2 class="trc-h2">Guided by Engineering Principles</h2>
+        </div>
+        <p class="trc-head-sub">
+          Every consultancy audit, traffic simulation, and highway safety intervention rests on empirical field data, unbiased academic scrutiny, and timely institutional delivery.
+        </p>
+      </div>
+
+      <div class="trc-principles-layout" data-reveal="fade-in-up">
+        <!-- Interactive Preview Frame -->
+        <div class="trc-principle-stage">
+          <div class="trc-principle-photo-card">
+            <img
+              id="trcPrinciplePhoto"
+              src="<?php echo htmlspecialchars($principles[0]['image']); ?>"
+              alt="<?php echo htmlspecialchars($principles[0]['alt']); ?>"
+              class="trc-principle-img"
+              loading="lazy"
+            />
+            <div class="trc-principle-caption-bar">
+              <span class="trc-principle-num-badge" id="trcPrincipleBadge"><?php echo htmlspecialchars($principles[0]['num']); ?> / 04</span>
+              <strong id="trcPrincipleCaptionTitle"><?php echo htmlspecialchars($principles[0]['title']); ?></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion Items -->
+        <div class="trc-principles-accordion" id="trcPrinciplesAccordion">
+          <?php foreach ($principles as $idx => $pr):
+            $isFirst = ($idx === 0);
+          ?>
+          <div class="trc-acc-item<?php echo $isFirst ? ' is-open' : ''; ?>"
+               data-principle-img="<?php echo htmlspecialchars($pr['image']); ?>"
+               data-principle-alt="<?php echo htmlspecialchars($pr['alt']); ?>"
+               data-principle-num="<?php echo htmlspecialchars($pr['num']); ?> / 04"
+               data-principle-title="<?php echo htmlspecialchars($pr['title']); ?>">
+            <button type="button" class="trc-acc-trigger" aria-expanded="<?php echo $isFirst ? 'true' : 'false'; ?>">
+              <span class="trc-acc-title-wrap">
+                <span class="trc-acc-num"><?php echo htmlspecialchars($pr['num']); ?></span>
+                <span class="trc-acc-title"><?php echo htmlspecialchars($pr['title']); ?></span>
+              </span>
+              <span class="trc-acc-icon" aria-hidden="true"><?php echo $isFirst ? '&minus;' : '+'; ?></span>
+            </button>
+            <div class="trc-acc-body"<?php echo $isFirst ? '' : ' hidden'; ?>>
+              <p><?php echo htmlspecialchars($pr['description']); ?></p>
+              <img src="<?php echo htmlspecialchars($pr['image']); ?>" alt="<?php echo htmlspecialchars($pr['alt']); ?>" class="trc-acc-mobile-img" loading="lazy" />
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. PARTNERING AUTHORITIES & ASSOCIATIONS ===== -->
+  <?php $associations = getTRCAssociations(); ?>
+  <section class="section trc-partners-section" id="partners-section">
+    <div class="trc-shell">
+      <div class="trc-section-head-split" data-reveal="fade-in-up">
+        <div>
+          <span class="trc-eyebrow">INSTITUTIONAL STANDING</span>
+          <h2 class="trc-h2">Trusted by Public Authorities &amp; Agencies</h2>
+        </div>
+        <a href="about.php#certificates" class="trc-pill-outline-btn">
+          <span>VIEW EMPANELMENTS</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <div class="trc-partners-grid" data-reveal="fade-in-up">
+        <?php foreach ($associations as $assoc): ?>
+        <div class="trc-partner-card">
+          <span class="trc-partner-code"><?php echo htmlspecialchars($assoc['code']); ?></span>
+          <h3 class="trc-partner-name"><?php echo htmlspecialchars($assoc['name']); ?></h3>
+          <span class="trc-partner-sector"><?php echo htmlspecialchars($assoc['sector']); ?></span>
+        </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. LATEST RESEARCH & FIELD NEWSROOM ===== -->
+  <?php
+    $homeLeadNews = getTRCNewsLead();
+    $homeRecentNews = array_slice(getTRCNewsItems(), 0, 3);
+  ?>
+  <section class="section trc-home-news-section" id="home-news-section">
+    <div class="trc-shell">
+      <div class="trc-section-head-split" data-reveal="fade-in-up">
+        <div>
+          <span class="trc-eyebrow">NEWSROOM &amp; FIELD UPDATES</span>
+          <h2 class="trc-h2">Latest Research &amp; Milestones</h2>
+        </div>
+        <a href="news.php" class="trc-pill-green-btn">
+          <span>ALL NEWS &amp; EVENTS</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Featured Lead Update -->
+      <article class="trc-news-lead-card" data-reveal="fade-in-up">
+        <div class="trc-news-lead-media">
+          <img src="<?php echo htmlspecialchars($homeLeadNews['image']); ?>" alt="<?php echo htmlspecialchars($homeLeadNews['alt']); ?>" loading="lazy" />
+          <span class="trc-news-badge"><?php echo htmlspecialchars($homeLeadNews['cat_label']); ?></span>
+        </div>
+        <div class="trc-news-lead-body">
+          <div class="trc-news-meta-row">
+            <span><?php echo htmlspecialchars($homeLeadNews['date']); ?></span>
+            <span>&bull;</span>
+            <span><?php echo htmlspecialchars($homeLeadNews['sponsor']); ?></span>
+          </div>
+          <h3><?php echo htmlspecialchars($homeLeadNews['title']); ?></h3>
+          <p><?php echo htmlspecialchars($homeLeadNews['summary']); ?></p>
+          <a href="news-item.php?id=<?php echo urlencode($homeLeadNews['id']); ?>" class="trc-text-arrow-link">
+            <span>READ FULL BRIEFING</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- 3-Column Recent Briefings -->
+      <div class="trc-news-3col">
+        <?php foreach ($homeRecentNews as $n): ?>
+        <article class="trc-news-card" data-reveal="fade-in-up">
+          <a href="news-item.php?id=<?php echo urlencode($n['id']); ?>" class="trc-news-card-img-wrap">
+            <img src="<?php echo htmlspecialchars($n['image']); ?>" alt="<?php echo htmlspecialchars($n['alt']); ?>" loading="lazy" />
+            <span class="trc-news-card-pill"><?php echo htmlspecialchars($n['cat_label']); ?></span>
+          </a>
+          <div class="trc-news-card-body">
+            <div class="trc-news-meta-row">
+              <span><?php echo htmlspecialchars($n['date']); ?></span>
+              <span><?php echo htmlspecialchars($n['read_time']); ?></span>
+            </div>
+            <h4><a href="news-item.php?id=<?php echo urlencode($n['id']); ?>"><?php echo htmlspecialchars($n['title']); ?></a></h4>
+            <p><?php echo htmlspecialchars($n['summary']); ?></p>
+            <a href="news-item.php?id=<?php echo urlencode($n['id']); ?>" class="trc-text-arrow-link">
+              <span>READ MORE</span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </article>
+        <?php endforeach; ?>
+      </div>
     </div>
   </section>
 

@@ -1,47 +1,103 @@
 <?php
 $activePage = 'gallery';
 $pageTitle = 'Photo Gallery | TRC SVNIT Surat';
-$pageDesc = 'View photographs of field surveys, road safety audit site visits, traffic laboratory testing, and academic conferences by TRC SVNIT.';
+$pageDesc = 'View photographs of field surveys, road safety audit site visits, traffic laboratory instrumentation, and highway corridors by TRC SVNIT.';
+require_once 'includes/site-data.php';
+$plates = getTRCGalleryPlates();
+$galleryFilters = [
+    'all' => 'ALL PLATES (' . count($plates) . ')',
+    'corridors' => 'HIGHWAY CORRIDORS',
+    'surveys' => 'FIELD SURVEYS',
+    'safety' => 'SAFETY AUDITS',
+    'structures' => 'STRUCTURES & LAB',
+];
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main">
+<main id="main" class="trc-subpage">
 
   <!-- Page Hero Banner -->
   <div class="page-hero">
     <div class="page-hero-content">
-      <h1 class="page-hero-title">Photo Gallery</h1>
+      <h1 class="page-hero-title">Field &amp; Lab Photo Archive</h1>
       <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Gallery</p>
     </div>
   </div>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="chips-row" id="gallery-chips" style="margin-bottom:2rem;"></div>
-      <p class="gallery-count" id="gallery-count" style="color:var(--muted);font-size:0.9rem;font-weight:600;margin-bottom:1.5rem;"></p>
-      <ul class="gallery-grid" id="gallery-grid" style="list-style:none;padding:0;">
-        <!-- Rendered dynamically by main.js pages.gallery() -->
-      </ul>
-      <div id="gallery-empty" style="text-align:center;padding:3rem 0;"></div>
+  <!-- Filterable Photographic Masonry / Grid -->
+  <section class="section trc-gallery-section">
+    <div class="trc-shell">
+      <div class="trc-section-head-split" data-reveal="fade-in-up">
+        <div>
+          <span class="trc-eyebrow">FIELD &amp; INFRASTRUCTURE PLATES</span>
+          <h2 class="trc-h2">Project Surveys &amp; Audit Inspections</h2>
+        </div>
+
+        <div class="trc-filter-bar" role="group" aria-label="Filter gallery by discipline" data-filter-group="gallery">
+          <?php foreach ($galleryFilters as $key => $label): ?>
+          <button type="button" class="trc-filter-tab<?php echo $key === 'all' ? ' is-active' : ''; ?>" data-filter="<?php echo htmlspecialchars($key); ?>" aria-pressed="<?php echo $key === 'all' ? 'true' : 'false'; ?>">
+            <?php echo htmlspecialchars($label); ?>
+          </button>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <p class="trc-gallery-counter" id="trcGalleryCount">Showing <?php echo count($plates); ?> field &amp; infrastructure plates</p>
+
+      <div class="trc-gallery-grid" id="trcGalleryGrid">
+        <?php foreach ($plates as $idx => $p): ?>
+        <article class="trc-gallery-card" data-category="<?php echo htmlspecialchars($p['category']); ?>" data-reveal="fade-in-up">
+          <button type="button"
+                  class="trc-gallery-trigger"
+                  data-gallery-open="<?php echo $idx; ?>"
+                  data-src="<?php echo htmlspecialchars($p['src']); ?>"
+                  data-title="<?php echo htmlspecialchars($p['title']); ?>"
+                  data-cat="<?php echo htmlspecialchars($p['cat_label']); ?>"
+                  data-meta="<?php echo htmlspecialchars($p['meta']); ?>"
+                  data-desc="<?php echo htmlspecialchars($p['description']); ?>"
+                  aria-label="Inspect <?php echo htmlspecialchars($p['title']); ?>">
+            <div class="trc-gallery-thumb">
+              <img src="<?php echo htmlspecialchars($p['src']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy" />
+              <span class="trc-gallery-badge"><?php echo htmlspecialchars($p['badge_label']); ?></span>
+              <span class="trc-gallery-expand">EXPAND &nearr;</span>
+            </div>
+            <div class="trc-gallery-caption">
+              <h3><?php echo htmlspecialchars($p['title']); ?></h3>
+              <span><?php echo htmlspecialchars($p['meta']); ?></span>
+            </div>
+          </button>
+        </article>
+        <?php endforeach; ?>
+      </div>
     </div>
   </section>
 
-  <!-- Photo Viewer Modal Dialog -->
-  <dialog id="photo-viewer" class="photo-viewer">
-    <div class="viewer-stage" id="viewer-stage">
-      <img id="viewer-image" src="" alt="" class="viewer-img">
-    </div>
-    <div class="viewer-controls">
-      <button type="button" id="viewer-prev" class="viewer-btn viewer-prev" aria-label="Previous photo"></button>
-      <div class="viewer-meta">
-        <figcaption id="viewer-caption" class="viewer-caption"></figcaption>
-        <span id="viewer-count" class="viewer-count"></span>
+  <!-- Photo Viewer Lightbox Dialog -->
+  <dialog id="trcPhotoLightbox" class="trc-lightbox-dialog" data-lenis-prevent aria-label="Image lightbox viewer">
+    <div class="trc-lightbox-box">
+      <div class="trc-lightbox-bar">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span class="trc-news-card-pill trc-news-card-pill--inline" id="trcLbCat">CATEGORY</span>
+          <span class="trc-lb-counter" id="trcLbCount">1 / 12</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button type="button" class="trc-lb-btn" id="trcLbPrev" aria-label="Previous photo">&larr; Prev</button>
+          <button type="button" class="trc-lb-btn" id="trcLbNext" aria-label="Next photo">Next &rarr;</button>
+          <button type="button" class="trc-lb-btn trc-lb-btn--close" id="trcLbClose" aria-label="Close lightbox">Close &times;</button>
+        </div>
       </div>
-      <button type="button" id="viewer-next" class="viewer-btn viewer-next" aria-label="Next photo"></button>
+      <div class="trc-lightbox-content">
+        <div class="trc-lightbox-stage">
+          <img id="trcLbImg" src="" alt="" />
+        </div>
+        <div class="trc-lightbox-info">
+          <span class="trc-eyebrow" id="trcLbMeta">LOCATION</span>
+          <h3 id="trcLbTitle">Title</h3>
+          <p id="trcLbDesc"></p>
+          <div class="trc-lb-foot">TEP RESEARCH &amp; CONSULTANCY CELL &bull; SVNIT SURAT</div>
+        </div>
+      </div>
     </div>
-    <button type="button" id="viewer-close" class="viewer-close" aria-label="Close photo viewer">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-    </button>
   </dialog>
 
 </main>

@@ -17,6 +17,7 @@
         function updateNav() {
             var currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
             var navMenu = header.querySelector('.nav');
+            var mobileDrawer = document.getElementById('mobile-nav-menu');
 
             // 1. Scrolled styling
             if (currentScrollY > 20) {
@@ -26,7 +27,7 @@
             }
 
             // If mobile menu is open, never hide navbar
-            if (navMenu && navMenu.classList.contains('is-open')) {
+            if ((navMenu && navMenu.classList.contains('is-open')) || (mobileDrawer && !mobileDrawer.hidden)) {
                 header.classList.remove('nav-hidden');
                 lastScrollY = currentScrollY;
                 ticking = false;
@@ -182,6 +183,7 @@
         var form = document.getElementById('quick-query-form') || document.getElementById('enquiry-form');
         var feedback = document.getElementById('query-feedback') || document.getElementById('form-status');
         if (!form) return;
+        window.__trcAjaxFormHandled = true;
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -793,9 +795,318 @@
         }
     }
 
+    // 15. Guiding Principles Accordion + Natural Photo Switcher
+    function initPrinciplesAccordion() {
+        var accordion = document.getElementById('trcPrinciplesAccordion');
+        if (!accordion) return;
+
+        var photo = document.getElementById('trcPrinciplePhoto');
+        var badge = document.getElementById('trcPrincipleBadge');
+        var captionTitle = document.getElementById('trcPrincipleCaptionTitle');
+        var items = accordion.querySelectorAll('.trc-acc-item');
+
+        function activate(targetItem) {
+            items.forEach(function (item) {
+                var btn = item.querySelector('.trc-acc-trigger');
+                var body = item.querySelector('.trc-acc-body');
+                var icon = item.querySelector('.trc-acc-icon');
+                var isTarget = item === targetItem;
+                item.classList.toggle('is-open', isTarget);
+                if (btn) btn.setAttribute('aria-expanded', isTarget ? 'true' : 'false');
+                if (body) body.hidden = !isTarget;
+                if (icon) icon.innerHTML = isTarget ? '&minus;' : '+';
+            });
+
+            if (photo && targetItem.dataset.principleImg) {
+                photo.src = targetItem.dataset.principleImg;
+                photo.alt = targetItem.dataset.principleAlt || '';
+            }
+            if (badge && targetItem.dataset.principleNum) {
+                badge.textContent = targetItem.dataset.principleNum;
+            }
+            if (captionTitle && targetItem.dataset.principleTitle) {
+                captionTitle.textContent = targetItem.dataset.principleTitle;
+            }
+        }
+
+        items.forEach(function (item) {
+            var btn = item.querySelector('.trc-acc-trigger');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                activate(item);
+            });
+        });
+    }
+
+    // 16. About Capabilities Interactive Selector Grid
+    function initCapabilitiesSelector() {
+        var grid = document.getElementById('trcCapSelectorGrid');
+        var stage = document.getElementById('trcCapStage');
+        if (!grid || !stage) return;
+
+        var img = document.getElementById('trcCapImg');
+        var idxBadge = document.getElementById('trcCapIndex');
+        var title = document.getElementById('trcCapTitle');
+        var desc = document.getElementById('trcCapDesc');
+        var outputsList = document.getElementById('trcCapOutputs');
+        var contactLink = document.getElementById('trcCapContactLink');
+        var serviceLink = document.getElementById('trcCapServiceLink');
+        var tiles = grid.querySelectorAll('.trc-cap-tile');
+
+        function selectTile(tile) {
+            tiles.forEach(function (t) {
+                var active = t === tile;
+                t.classList.toggle('is-active', active);
+                t.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+
+            if (img) {
+                img.src = tile.dataset.capImage || '';
+                img.alt = tile.dataset.capTitle || '';
+            }
+            if (idxBadge) idxBadge.textContent = tile.dataset.capNum || '';
+            if (title) title.textContent = tile.dataset.capTitle || '';
+            if (desc) desc.textContent = tile.dataset.capSummary || '';
+            if (contactLink && tile.dataset.capId) {
+                contactLink.href = 'contact.php?work=' + encodeURIComponent(tile.dataset.capId) + '#enquiry-form';
+            }
+            if (serviceLink && tile.dataset.capService) {
+                serviceLink.href = tile.dataset.capService;
+            }
+            if (outputsList && tile.dataset.capOutputs) {
+                try {
+                    var outputs = JSON.parse(tile.dataset.capOutputs);
+                    outputsList.innerHTML = '';
+                    outputs.forEach(function (text) {
+                        var li = document.createElement('li');
+                        li.textContent = text;
+                        outputsList.appendChild(li);
+                    });
+                } catch (e) {}
+            }
+        }
+
+        tiles.forEach(function (tile) {
+            tile.addEventListener('click', function () {
+                selectTile(tile);
+            });
+        });
+
+        if (window.location.hash) {
+            var hashId = window.location.hash.slice(1);
+            var matched = document.getElementById(hashId);
+            if (matched && matched.classList.contains('trc-cap-tile')) {
+                selectTile(matched);
+            }
+        }
+    }
+
+    // 17. Filter Tabs for Staff, Publications, News, and Gallery
+    function initTrcFilters() {
+        var groups = document.querySelectorAll('[data-filter-group]');
+        groups.forEach(function (bar) {
+            var type = bar.getAttribute('data-filter-group');
+            var buttons = bar.querySelectorAll('.trc-filter-tab');
+            buttons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var filter = btn.getAttribute('data-filter');
+                    buttons.forEach(function (b) {
+                        var active = b === btn;
+                        b.classList.toggle('is-active', active);
+                        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+                    });
+
+                    if (type === 'staff') {
+                        document.querySelectorAll('.trc-staff-card').forEach(function (card) {
+                            var match = (filter === 'all' || card.getAttribute('data-role') === filter);
+                            card.hidden = !match;
+                        });
+                        var callout = document.getElementById('trcStaffCallout');
+                        if (callout) callout.hidden = (filter !== 'all');
+                    } else if (type === 'publications') {
+                        document.querySelectorAll('.trc-pub-card').forEach(function (card) {
+                            var match = (filter === 'all' || card.getAttribute('data-category') === filter);
+                            card.hidden = !match;
+                        });
+                    } else if (type === 'news') {
+                        document.querySelectorAll('#trcNewsGrid .trc-news-card').forEach(function (card) {
+                            var match = (filter === 'all' || card.getAttribute('data-category') === filter);
+                            card.hidden = !match;
+                        });
+                    } else if (type === 'gallery') {
+                        var visibleCount = 0;
+                        document.querySelectorAll('#trcGalleryGrid .trc-gallery-card').forEach(function (card) {
+                            var match = (filter === 'all' || card.getAttribute('data-category') === filter);
+                            card.hidden = !match;
+                            if (match) visibleCount++;
+                        });
+                        var counter = document.getElementById('trcGalleryCount');
+                        if (counter) {
+                            counter.textContent = 'Showing ' + visibleCount + (visibleCount === 1 ? ' field plate' : ' field & infrastructure plates');
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    // 18. Publication Abstract Toggles
+    function initPublicationToggles() {
+        document.querySelectorAll('[data-pub-toggle]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var card = btn.closest('.trc-pub-card');
+                if (!card) return;
+                var abs = card.querySelector('.trc-pub-abstract');
+                var plus = btn.querySelector('.trc-pub-toggle-plus');
+                if (!abs) return;
+                var willOpen = abs.hidden;
+                abs.hidden = !willOpen;
+                btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+                if (plus) plus.textContent = willOpen ? '−' : '+';
+            });
+        });
+    }
+
+    // 19. Gallery & Certificates Lightbox Dialogs
+    function setupLightbox(dialogId, triggerAttr, prefix) {
+        var dialog = document.getElementById(dialogId);
+        var triggers = Array.prototype.slice.call(document.querySelectorAll('[' + triggerAttr + ']'));
+        if (!dialog || !triggers.length || typeof dialog.showModal !== 'function') return;
+
+        var img = document.getElementById(prefix + 'Img');
+        var cat = document.getElementById(prefix === 'trcLb' ? 'trcLbCat' : 'trcCertIssuer');
+        var count = document.getElementById(prefix + 'Count');
+        var meta = document.getElementById(prefix + 'Meta');
+        var title = document.getElementById(prefix + 'Title');
+        var desc = document.getElementById(prefix + 'Desc');
+        var prevBtn = document.getElementById(prefix + 'Prev');
+        var nextBtn = document.getElementById(prefix + 'Next');
+        var closeBtn = document.getElementById(prefix + 'Close');
+
+        var activeList = triggers;
+        var activeIdx = 0;
+
+        function getVisibleTriggers() {
+            var filtered = triggers.filter(function (el) {
+                var card = el.closest('article');
+                return !card || !card.hidden;
+            });
+            return filtered.length ? filtered : triggers;
+        }
+
+        function showIndex(idx) {
+            activeIdx = (idx + activeList.length) % activeList.length;
+            var el = activeList[activeIdx];
+            if (img) {
+                img.src = el.dataset.src || '';
+                img.alt = el.dataset.title || '';
+            }
+            if (cat) cat.textContent = el.dataset.cat || '';
+            if (count) count.textContent = (activeIdx + 1) + ' / ' + activeList.length;
+            if (meta) meta.textContent = el.dataset.meta || '';
+            if (title) title.textContent = el.dataset.title || '';
+            if (desc) desc.textContent = el.dataset.desc || '';
+        }
+
+        triggers.forEach(function (el) {
+            el.addEventListener('click', function () {
+                activeList = getVisibleTriggers();
+                var idx = activeList.indexOf(el);
+                showIndex(idx >= 0 ? idx : 0);
+                dialog.showModal();
+            });
+        });
+
+        if (prevBtn) prevBtn.addEventListener('click', function () { showIndex(activeIdx - 1); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { showIndex(activeIdx + 1); });
+        if (closeBtn) closeBtn.addEventListener('click', function () { dialog.close(); });
+        dialog.addEventListener('click', function (e) {
+            if (e.target === dialog) dialog.close();
+        });
+        dialog.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') showIndex(activeIdx - 1);
+            if (e.key === 'ArrowRight') showIndex(activeIdx + 1);
+        });
+    }
+
+    function initTrcLightboxes() {
+        setupLightbox('trcPhotoLightbox', 'data-gallery-open', 'trcLb');
+        setupLightbox('trcCertLightbox', 'data-cert-open', 'trcCert');
+    }
+
+    // 20. Contact Page Scope Chip Sync
+    function initContactScopeChips() {
+        var chipsWrap = document.getElementById('trcScopeChips');
+        var select = document.getElementById('cf-work');
+        if (!chipsWrap || !select) return;
+
+        var chips = chipsWrap.querySelectorAll('.trc-scope-chip');
+
+        function syncChips(val) {
+            chips.forEach(function (chip) {
+                var active = chip.dataset.scopeVal === val;
+                chip.classList.toggle('is-active', active);
+                chip.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+
+        chips.forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                var val = chip.dataset.scopeVal;
+                if (select.querySelector('option[value="' + val + '"]')) {
+                    select.value = val;
+                    syncChips(val);
+                }
+            });
+        });
+
+        select.addEventListener('change', function () {
+            syncChips(select.value);
+        });
+
+        if (select.value) syncChips(select.value);
+    }
+
+    // 21. Stitch Mobile Dropdown Menu Toggle
+    function initMobileDrawer() {
+        var btn = document.getElementById('mobile-nav-toggle');
+        var menu = document.getElementById('mobile-nav-menu');
+        if (!btn || !menu) return;
+
+        function setOpen(open) {
+            menu.hidden = !open;
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            btn.classList.toggle('is-open', open);
+        }
+
+        btn.addEventListener('click', function () {
+            setOpen(menu.hidden);
+        });
+
+        menu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                setOpen(false);
+            });
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !menu.hidden) {
+                setOpen(false);
+                btn.focus();
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!menu.hidden && !menu.contains(e.target) && !btn.contains(e.target)) {
+                setOpen(false);
+            }
+        });
+    }
+
     function initAll() {
         initLenisScroll();
         initStickyNav();
+        initMobileDrawer();
         initHeroSlider();
         initVelaHero();
         initCountUp();
@@ -808,5 +1119,11 @@
         initStatsBannerGSAP();
         initServiceButtons();
         initProfileFlipbook();
+        initPrinciplesAccordion();
+        initCapabilitiesSelector();
+        initTrcFilters();
+        initPublicationToggles();
+        initTrcLightboxes();
+        initContactScopeChips();
     }
 })();

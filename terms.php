@@ -57,6 +57,11 @@ include 'includes/header.php';
           Any legal proceedings or disputes arising out of consultancy agreements or site terms shall be governed by the laws of India and subject exclusively to the jurisdiction of courts in Surat, Gujarat.
         </p>
 
+        <div class="trc-legal-actions">
+          <a href="privacy.php" class="trc-pill-outline-btn">&larr; Read Privacy Policy</a>
+          <a href="contact.php#enquiry-form" class="trc-pill-green-btn">Contact Consultancy Desk &rarr;</a>
+        </div>
+
       </div>
 
     </div>

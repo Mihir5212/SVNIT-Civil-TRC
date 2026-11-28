@@ -68,6 +68,11 @@ include 'includes/header.php';
           Email: <a href="contact.php" style="color:#084534;text-decoration:underline;">Contact Coordinator</a>
         </p>
 
+        <div class="trc-legal-actions">
+          <a href="terms.php" class="trc-pill-outline-btn">Read Terms &amp; Conditions &rarr;</a>
+          <a href="contact.php#enquiry-form" class="trc-pill-green-btn">Contact Consultancy Desk &rarr;</a>
+        </div>
+
       </div>
 
     </div>

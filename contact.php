@@ -85,8 +85,20 @@ include 'includes/header.php';
         </div>
 
         <!-- Right: Quick Query Form -->
-        <div class="contact-query-card" data-reveal="fade-in-right">
+        <div class="contact-query-card" id="enquiry-form-card" data-reveal="fade-in-right">
           <h2>Send an Enquiry</h2>
+          <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1rem;">Select your consultancy scope below or fill in project corridor specifications.</p>
+
+          <!-- Interactive Consultancy Scope Chips -->
+          <div class="trc-scope-chips" id="trcScopeChips" role="group" aria-label="Select consultancy scope">
+            <button type="button" class="trc-scope-chip" data-scope-val="road-safety">Road Safety Audit</button>
+            <button type="button" class="trc-scope-chip" data-scope-val="traffic-studies">Traffic Survey</button>
+            <button type="button" class="trc-scope-chip" data-scope-val="traffic-impact">TIA Study</button>
+            <button type="button" class="trc-scope-chip" data-scope-val="junction-design">Junction Design</button>
+            <button type="button" class="trc-scope-chip" data-scope-val="transport-planning">Transport Planning</button>
+            <button type="button" class="trc-scope-chip" data-scope-val="independent-review">DPR Review</button>
+          </div>
+
           <div id="form-status" hidden tabindex="-1"></div>
           <div id="query-feedback" class="query-feedback" style="display:none;margin-bottom:1.5rem;padding:1rem;border-radius:8px;"></div>
           
@@ -104,7 +116,7 @@ include 'includes/header.php';
               <input type="text" id="cf-org" name="organisation" placeholder="e.g. NHAI / GSRDC / Municipal Corporation / Consultancy" autocomplete="organization">
             </div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="contact-two-col">
               <div class="field">
                 <label for="cf-email">Email Address <span style="color:var(--red);">*</span></label>
                 <input type="email" id="cf-email" name="email" placeholder="you@domain.com" required autocomplete="email">
