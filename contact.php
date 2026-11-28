@@ -5,146 +5,222 @@ $pageDesc = 'Get in touch with the TEP Research & Consultancy Cell at SVNIT Sura
 include 'includes/meta.php';
 include 'includes/header.php';
 ?>
-<main id="main">
+<main id="main" class="trc-subpage trc-contact-rx-page">
 
-  <!-- Page Hero Banner -->
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <h1 class="page-hero-title">Contact Us</h1>
-      <p class="page-hero-breadcrumb"><a href="index.php">Home</a> &rsaquo; Contact</p>
-    </div>
-  </div>
+  <!-- ========================================================= -->
+  <!-- PAGE HERO WITH LIVE SVNIT MAP IN RIGHT CORNER             -->
+  <!-- ========================================================= -->
+  <section id="svnit-map" class="trc-rx-contact-hero">
+    <div class="trc-shell">
+      <div class="trc-rx-contact-hero-grid">
+        <!-- Left Hero Header -->
+        <div class="trc-rx-contact-hero-left">
+          <div class="trc-rx-contact-copy">
+            <div class="trc-rx-eyebrow-row">
+              <span class="trc-rx-diamond" aria-hidden="true"></span>
+              <span class="trc-rx-label">CONTACT US &mdash; TEP &bull; SVNIT, SURAT</span>
+            </div>
 
-  <section class="section">
-    <div class="wrap">
-      
-      <!-- Interactive Google Map -->
-      <div class="contact-map-wrap" data-reveal="fade-in-up">
-        <div id="contact-map">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.196901844297!2d72.78441117596827!3d21.16484398311545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04dec8b56fdf3%3A0x423b99f85d267087!2sSardar%20Vallabhbhai%20National%20Institute%20of%20Technology%2C%20Surat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-            title="Map showing SVNIT Surat" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade" 
-            style="width:100%;height:420px;border:0;display:block;">
-          </iframe>
+            <h1 class="trc-rx-contact-title">
+              INITIATE A CONSULTATION OR LABORATORY INQUIRY.
+            </h1>
+
+            <p class="trc-rx-hero-lead">
+              Reach our Transportation Engineering &amp; Planning faculty and project engineers for traffic studies, IRC:SP:88 road safety audits, DPR proof checking, and laboratory material testing at SVNIT Surat.
+            </p>
+          </div>
+
+          <div class="trc-rx-contact-meta-bar">
+            <span class="trc-rx-hours-tag">
+              HOURS: MON &ndash; FRI &bull; 09:30 &ndash; 17:30 IST
+            </span>
+            <a href="#enquiry-section" class="trc-rx-jump-btn">
+              <span>INQUIRY FORM</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_downward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Corner: Live SVNIT Surat Google Map -->
+        <div class="trc-rx-contact-map-col">
+          <div class="trc-rx-map-bar">
+            <span class="trc-rx-map-status">
+              <span class="trc-rx-map-dot" aria-hidden="true"></span>
+              <span>SVNIT SURAT &bull; LIVE LOCATION</span>
+            </span>
+            <a
+              href="https://maps.google.com/?q=Sardar+Vallabhbhai+National+Institute+of+Technology+Surat"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="trc-rx-map-ext"
+            >
+              <span>OPEN IN MAPS</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">open_in_new</span>
+            </a>
+          </div>
+
+          <div class="trc-rx-map-frame" id="contact-map">
+            <iframe
+              title="Map showing SVNIT Surat"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14882.454124282574!2d72.788812!3d21.167773!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04dec8b56fdf3%3A0x423b99085d26d1f9!2sSardar%20Vallabhbhai%20National%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1795792525775!5m2!1sen!2sin"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="trc-rx-map-bar">
+            <span>21.1663&deg; N, 72.7833&deg; E</span>
+            <span>ICHCHHANATH &bull; SURAT 395007</span>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Split Contact Cards Row -->
-      <div class="contact-cards-row">
-        
-        <!-- Left: Direct Meet Us -->
-        <div class="contact-info-card" data-reveal="fade-in-left">
-          <h2>Direct Meet Us</h2>
-          
-          <div class="contact-info-item">
-            <svg class="contact-info-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
-            </svg>
-            <div>
-              <strong style="display:block;margin-bottom:0.25rem;">Address</strong>
-              <div id="contact-address">
-                Department of Civil Engineering,<br>
-                Sardar Vallabhbhai National Institute of Technology (SVNIT),<br>
-                Ichchhanath, Surat &ndash; 395007, Gujarat, India
-              </div>
+  <!-- ========================================================= -->
+  <!-- SECTION 1: CONSULTATION FORM & LAB DIRECTORY              -->
+  <!-- ========================================================= -->
+  <section id="enquiry-section" class="trc-rx-contact-body">
+    <div class="trc-shell">
+      <div class="trc-rx-contact-main-grid">
+
+        <!-- Left: Interactive Inquiry Form -->
+        <div class="trc-rx-form-col" id="enquiry-form-card">
+          <div class="trc-rx-form-head">
+            <div class="trc-rx-eyebrow-row">
+              <span class="trc-rx-diamond" aria-hidden="true"></span>
+              <span class="trc-rx-label">TECHNICAL BRIEFING</span>
             </div>
+            <h2 class="trc-rx-sec-title">REQUEST A PROPOSAL OR LAB TEST</h2>
           </div>
 
-          <div class="contact-info-item">
-            <svg class="contact-info-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-            </svg>
-            <div>
-              <strong style="display:block;margin-bottom:0.25rem;">Email</strong>
-              <a href="mailto:trc@svnit.ac.in" data-email class="contact-link">trc@svnit.ac.in</a>
+          <!-- Scope Selector Pills -->
+          <div class="trc-rx-scope-wrap">
+            <span class="trc-rx-label">SELECT CONSULTANCY SCOPE</span>
+            <div class="trc-scope-chips trc-rx-scope-chips" id="trcScopeChips" role="group" aria-label="Select consultancy scope">
+              <button type="button" class="trc-scope-chip is-active" data-scope-val="traffic-studies" aria-pressed="true">TRAFFIC SURVEY</button>
+              <button type="button" class="trc-scope-chip" data-scope-val="road-safety" aria-pressed="false">ROAD SAFETY AUDIT</button>
+              <button type="button" class="trc-scope-chip" data-scope-val="independent-review" aria-pressed="false">DPR PROOF CHECK</button>
+              <button type="button" class="trc-scope-chip" data-scope-val="traffic-impact" aria-pressed="false">TRAFFIC IMPACT (TIA)</button>
+              <button type="button" class="trc-scope-chip" data-scope-val="training" aria-pressed="false">RESEARCH &amp; LABS</button>
             </div>
-          </div>
-
-          <div class="contact-info-item">
-            <svg class="contact-info-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-            </svg>
-            <div>
-              <strong style="display:block;margin-bottom:0.25rem;">Phone / Extension</strong>
-              <a href="tel:+912612259571" data-phone class="contact-link">+91 261 2259571 &bull; Ext: 1500</a>
-            </div>
-          </div>
-
-          <div class="contact-info-item">
-            <svg class="contact-info-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-            </svg>
-            <div>
-              <strong style="display:block;margin-bottom:0.25rem;">Consultation Hours</strong>
-              <span id="contact-hours">Monday &ndash; Friday: 9:30 AM &ndash; 5:30 PM</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Right: Quick Query Form -->
-        <div class="contact-query-card" id="enquiry-form-card" data-reveal="fade-in-right">
-          <h2>Send an Enquiry</h2>
-          <p style="font-size:0.9rem;color:var(--muted);margin-bottom:1rem;">Select your consultancy scope below or fill in project corridor specifications.</p>
-
-          <!-- Interactive Consultancy Scope Chips -->
-          <div class="trc-scope-chips" id="trcScopeChips" role="group" aria-label="Select consultancy scope">
-            <button type="button" class="trc-scope-chip" data-scope-val="road-safety">Road Safety Audit</button>
-            <button type="button" class="trc-scope-chip" data-scope-val="traffic-studies">Traffic Survey</button>
-            <button type="button" class="trc-scope-chip" data-scope-val="traffic-impact">TIA Study</button>
-            <button type="button" class="trc-scope-chip" data-scope-val="junction-design">Junction Design</button>
-            <button type="button" class="trc-scope-chip" data-scope-val="transport-planning">Transport Planning</button>
-            <button type="button" class="trc-scope-chip" data-scope-val="independent-review">DPR Review</button>
           </div>
 
           <div id="form-status" hidden tabindex="-1"></div>
-          <div id="query-feedback" class="query-feedback" style="display:none;margin-bottom:1.5rem;padding:1rem;border-radius:8px;"></div>
-          
-          <form id="enquiry-form" class="contact-form" action="contact-handler.php" method="POST" novalidate>
+          <div id="query-feedback" class="query-feedback" style="display:none;margin-bottom:0.5rem;padding:1rem;border-radius:12px;"></div>
+
+          <form id="enquiry-form" class="trc-rx-form" action="contact-handler.php" method="POST" novalidate>
             <!-- Honeypot anti-spam field -->
             <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-            <div class="field">
-              <label for="cf-name">Your Full Name <span style="color:var(--red);">*</span></label>
-              <input type="text" id="cf-name" name="name" placeholder="Dr. / Er. / Mr. / Ms. Your Name" required autocomplete="name">
-            </div>
-
-            <div class="field">
-              <label for="cf-org">Agency / Organisation</label>
-              <input type="text" id="cf-org" name="organisation" placeholder="e.g. NHAI / GSRDC / Municipal Corporation / Consultancy" autocomplete="organization">
-            </div>
-
-            <div class="contact-two-col">
-              <div class="field">
-                <label for="cf-email">Email Address <span style="color:var(--red);">*</span></label>
-                <input type="email" id="cf-email" name="email" placeholder="you@domain.com" required autocomplete="email">
+            <div class="trc-rx-form-row">
+              <div class="trc-rx-field">
+                <label for="cf-name">FULL NAME *</label>
+                <input type="text" id="cf-name" name="name" placeholder="Dr. / Er. Rajesh Patel" required autocomplete="name">
               </div>
-              <div class="field">
-                <label for="cf-phone">Mobile / Phone</label>
+              <div class="trc-rx-field">
+                <label for="cf-org">ORGANIZATION / AGENCY *</label>
+                <input type="text" id="cf-org" name="organisation" placeholder="Gujarat R&amp;B / NHAI / EPC" autocomplete="organization">
+              </div>
+            </div>
+
+            <div class="trc-rx-form-row">
+              <div class="trc-rx-field">
+                <label for="cf-email">OFFICIAL EMAIL *</label>
+                <input type="email" id="cf-email" name="email" placeholder="engineer@agency.gov.in" required autocomplete="email">
+              </div>
+              <div class="trc-rx-field">
+                <label for="cf-phone">PHONE NUMBER</label>
                 <input type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
               </div>
             </div>
 
-            <div class="field">
-              <label for="cf-work">Area of Technical Work <span style="color:var(--red);">*</span></label>
-              <select id="cf-work" name="work" required>
-                <option value="">Choose the area of study&hellip;</option>
-              </select>
+            <div class="trc-rx-form-row">
+              <div class="trc-rx-field">
+                <label for="cf-corridor">CORRIDOR / PROJECT LOCATION</label>
+                <input type="text" id="cf-corridor" name="corridor" placeholder="e.g., NH-48 Bharuch&ndash;Surat Section (KM 198&ndash;264)">
+              </div>
+              <div class="trc-rx-field">
+                <label for="cf-work">AREA OF TECHNICAL WORK *</label>
+                <select id="cf-work" name="work" required>
+                  <option value="">Choose area of study&hellip;</option>
+                </select>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="cf-message">Project Description &amp; Requirements <span style="color:var(--red);">*</span></label>
-              <textarea id="cf-message" name="message" placeholder="Describe the corridor location, engineering scope, and requested deliverables (at least 20 characters)." rows="4" required></textarea>
+            <div class="trc-rx-field">
+              <label for="cf-message">SCOPE &amp; DELIVERABLE REQUIREMENTS *</label>
+              <textarea id="cf-message" name="message" placeholder="Describe survey duration, IRC standard (IRC:SP:88 / Indo-HCM), or laboratory testing batch volume..." rows="4" required></textarea>
             </div>
 
-            <p class="form-note" id="form-note" style="color:var(--muted);font-size:0.85rem;margin-bottom:1.25rem;"></p>
-            <button type="submit" class="btn btn-primary btn-block btn-lg" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;">
-              <span>Submit Enquiry</span>
-              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
-            </button>
+            <p class="form-note" id="form-note" style="color:#64748b;font-size:12.5px;margin:0;"></p>
+
+            <div class="trc-rx-form-actions">
+              <button type="submit" class="trc-rx-submit-btn">
+                <span>SUBMIT TECHNICAL INQUIRY</span>
+                <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_forward</span>
+              </button>
+              <span class="trc-rx-response-note">RESPONSE WITHIN 24 BUSINESS HOURS</span>
+            </div>
           </form>
+        </div>
+
+        <!-- Right: Direct Contact Channels (3 Rounded Emerald/White Cards) -->
+        <div class="trc-rx-channels-col">
+          <div class="trc-rx-channels-top">
+            <div class="trc-rx-channels-head">
+              <span class="trc-rx-label">DIRECT CHANNELS</span>
+              <span class="trc-rx-label">SURAT &bull; GUJARAT</span>
+            </div>
+
+            <!-- Channel 01 -->
+            <div class="trc-rx-channel-card">
+              <div class="trc-rx-channel-card-top">
+                <span>01 &bull; LABORATORY HQ</span>
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+              </div>
+              <h3>TRANSPORTATION ENGINEERING LAB (DOCE)</h3>
+              <p id="contact-address">
+                Department of Civil Engineering, SVNIT Campus, Ichchhanath, Dumas Road, Surat &mdash; 395007, Gujarat, India.
+              </p>
+            </div>
+
+            <!-- Channel 02 (Dark Deep Emerald Card) -->
+            <div class="trc-rx-channel-card is-dark">
+              <div class="trc-rx-channel-card-top">
+                <span>02 &bull; CONSULTANCY DESK</span>
+                <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+              </div>
+              <div class="trc-rx-channel-links">
+                <a href="mailto:trc@svnit.ac.in" data-email class="trc-rx-channel-email-lg">trc@svnit.ac.in</a>
+                <a href="mailto:tep-consultancy@ced.svnit.ac.in" class="trc-rx-channel-email-sm">tep-consultancy@ced.svnit.ac.in</a>
+              </div>
+              <p class="trc-rx-channel-phone">
+                Direct Phone: <a href="tel:+912612259571" data-phone>+91 261 225 9571</a> &bull; Ext. 1500
+              </p>
+            </div>
+
+            <!-- Channel 03 -->
+            <div class="trc-rx-channel-card">
+              <div class="trc-rx-channel-card-top">
+                <span>03 &bull; MATERIAL QA/QC LAB</span>
+                <span class="material-symbols-outlined" aria-hidden="true">science</span>
+              </div>
+              <h3>HIGHWAY MATERIALS &amp; BITUMEN LAB</h3>
+              <p>
+                Sample drop-off &amp; third-party cube, core &amp; bitumen testing: Mon&ndash;Fri, 10:00&ndash;16:30 IST.
+              </p>
+            </div>
+          </div>
+
+          <div class="trc-rx-channels-foot">
+            <span id="contact-hours">MON &ndash; FRI &bull; 09:30 &ndash; 17:30 IST</span>
+            <a href="#svnit-map" class="trc-rx-back-map">
+              <span>VIEW SVNIT MAP</span>
+              <span class="material-symbols-outlined trc-arrow-icon" aria-hidden="true">arrow_upward</span>
+            </a>
+          </div>
         </div>
 
       </div>

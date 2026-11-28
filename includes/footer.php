@@ -153,9 +153,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.29/dist/lenis.min.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/data.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/data.js') ?: '20261128'; ?>"></script>
+<script src="assets/js/main.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/main.js') ?: '20261128'; ?>"></script>
 <script src="assets/js/page-flip.browser.js"></script>
-<script src="assets/js/animations.js"></script>
+<script src="assets/js/animations.js?v=<?php echo @filemtime(__DIR__ . '/../assets/js/animations.js') ?: '20261128'; ?>"></script>
 </body>
 </html>

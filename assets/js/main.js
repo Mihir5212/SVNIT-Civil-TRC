@@ -600,6 +600,7 @@
     }
 
     pages.gallery = function () {
+        if (document.getElementById('trcGalleryGrid')) { return; }
         var photos = D.gallery || [];
         var cats = D.galleryCategories || {};
         var used = {};
@@ -661,10 +662,13 @@
     pages.contact = function () {
         set('contact-address', S.address.map(esc).join('<br>'));
         set('contact-hours', esc(S.hours));
-        if (S.mapEmbed) {
-            set('contact-map', '<iframe src="' + esc(S.mapEmbed) + '" title="Map showing SVNIT Surat" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
-        } else {
-            hide('contact-map');
+        var mapBox = document.getElementById('contact-map');
+        if (mapBox && !mapBox.querySelector('iframe')) {
+            if (S.mapEmbed) {
+                set('contact-map', '<iframe src="' + esc(S.mapEmbed) + '" title="Map showing SVNIT Surat" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
+            } else {
+                hide('contact-map');
+            }
         }
 
         var form = document.getElementById('enquiry-form');
